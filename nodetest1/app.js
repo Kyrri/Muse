@@ -1,16 +1,20 @@
-var express = require('express')
-  , routes = require('./routes');
-
 var app = require("express")();
+var routes = require('./routes');
+var mysql = require('mysql');
+// var connection = mysql.createConnection({
+//   host: "",
+//   user: "",
+//   password: "" ,
+//   database: ""
+// });
 
 // Configuration
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-app.use(express.static(__dirname + '/public'));
+app.use(app.static(__dirname + '/public'));
 
 // Routes
-
 app.get('/', routes.index);
 app.get('/artInfo', routes.artInfo);
 //app.get('/artInfo/:id', routes.artInfo);
