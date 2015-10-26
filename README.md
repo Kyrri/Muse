@@ -6,6 +6,7 @@ To make sure you don't, before a commit, type 'git reset nodetest1/node_modules'
 in your terminal from your source folder where the .git file is (probably called Muse)
 
 To install/use:
+
 1) Download and install Node.js. To do this on Mac, follow this guide up until, and including "Installing NPM".
   You'll end up with Node.js, and NPM (Node Package Manager) installed on your computer. All these commands are run
   from your terminal, which is an app you can find in Utilities.
