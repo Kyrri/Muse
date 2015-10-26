@@ -1,0 +1,1 @@
+res.render('index', { title: 'Muse', imgref: '/images/cat1.jpg' });
