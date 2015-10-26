@@ -11,7 +11,10 @@ To install/use:
   You'll end up with Node.js, and NPM (Node Package Manager) installed on your computer. All these commands are run
   from your terminal, which is an app you can find in Utilities.
   http://dandean.com/nodejs-npm-express-osx/
+
 2) Navigate in your terminal to Muse/nodetest1, and from here type 'npm install'. This will install package dependencies defined
   in package.json 
+
 3) To run the server, type "node app.js" from the terminal in your Muse/nodetest1 directory (if this fails, try "nodejs app.js")
+
 4) To test server, in your browser, go to http://localhost:3000
