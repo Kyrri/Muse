@@ -1,13 +1,24 @@
 var express = require('express');
 var app = require("express")();
 var routes = require('./routes');
+
+// MySQL connection
 var mysql = require('mysql');
-// var connection = mysql.createConnection({
-//   host: "",
-//   user: "",
-//   password: "" ,
-//   database: ""
-// });
+var conn = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'muse_dev'
+});
+conn.connect();
+
+// test query - to sanity check it connects to the right db
+conn.query('SELECT * FROM visitor LIMIT 1', function(err, results) {
+  if (err) throw err;
+ 
+  console.log(results[0]);
+});
+
 
 // Configuration
 
