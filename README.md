@@ -4,6 +4,7 @@ FYPD - Museum Project Muse repo
 **DO NOT commit the folder 'node_modules' if you make any changes. This folder is created when you install package dependencies.
 To make sure you don't, before a commit, type 'git reset nodetest1/node_modules' (the path to the folder node_modules, that is) 
 in your terminal from your source folder where the .git file is (probably called Muse)
+*** /nodetest1/node_modules/ is added to gitignore, git will not track this file
 
 To install/use:
 
