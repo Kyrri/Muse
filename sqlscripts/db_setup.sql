@@ -21,12 +21,9 @@ CREATE TABLE visitorGroup (
 CREATE TABLE visitorGroupMemeber (
     visitorGroupId INT NOT NULL,
     visitorId INT NOT NULL,
-    active TINYINT NOT NULL, 
+    active TINYINT NOT NULL DEFAULT 1, 
     updateTime TIMESTAMP NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (visitorGroupId, visitorId),
 	FOREIGN KEY (visitorGroupId) REFERENCES visitorGroup(visitorGroupId),
 	FOREIGN KEY (visitorId) REFERENCES visitor(visitorId)
 );
-
-INSERT INTO visitor (visitorName)
-VALUES ('Andrew');
