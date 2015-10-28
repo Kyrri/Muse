@@ -1,5 +1,6 @@
 -- database scripts
 -- create database
+-- taylor was here
 DROP SCHEMA muse_dev;
 
 CREATE SCHEMA `muse_dev` DEFAULT CHARACTER SET utf8 ;
