@@ -10,14 +10,14 @@ var conn = mysql.createConnection({
   password: '',
   database: 'muse_dev'
 });
-conn.connect();
+// conn.connect();
 
-// test query - to sanity check it connects to the right db
-conn.query('SELECT * FROM visitor LIMIT 1', function(err, results) {
-  if (err) throw err;
+// // test query - to sanity check it connects to the right db
+// conn.query('SELECT * FROM visitor LIMIT 1', function(err, results) {
+//   if (err) throw err;
  
-  console.log(results[0]);
-});
+//   console.log(results[0]);
+// });
 
 
 // Configuration
@@ -31,7 +31,10 @@ app.use(express.static(__dirname + '/public'));
     res.render('index', { title: 'Muse'});
   });
   app.get('/artInfo', function(req, res){
-     res.render('artInfo', { title: 'Art Info', imgref: '/images/cat1.jpg' });
+     res.render('artInfo', { title: 'Art Info'});
+  });
+  app.get('/partial_artInfo0', function(req, res){
+     res.render('partial_artInfo0', { title: 'Art Info', imgref: '/images/cat1.jpg' });
   });
   //app.get('/artInfo/:id', function(req, res){
     //res.render('artInfo', {title: 'Art Info', data: data, imgref: imgref });

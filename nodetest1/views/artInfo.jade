@@ -1,5 +1,9 @@
-.container
-	.mainContent
-		img(src='#{imgref}')
-		p It's a grumpy cat you're welcome.
-		a(href="/") Link back to main
+extends layout
+block headScripts
+	script(src="/javascripts/serve_subJade.js")
+
+block mainContainer
+	p(id='showImage') Show Image?
+	div(id='displayImage')
+
+	a(href="/") Link back to main
