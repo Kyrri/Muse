@@ -7,11 +7,13 @@ CREATE SCHEMA `muse_dev` DEFAULT CHARACTER SET utf8 ;
 USE muse_dev ;
 
 -- create tables and sample data
-CREATE TABLE visitor (
-	visitorId INT NOT NULL AUTO_INCREMENT,
-    visitorName VARCHAR(255) NOT NULL,
-    PRIMARY KEY (visitorId)
-);
+CREATE TABLE `visitor` (
+  `visitorId` int(11) NOT NULL AUTO_INCREMENT,
+  `visitorName` varchar(255) NOT NULL,
+  `login` varchar(255) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`visitorId`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 CREATE TABLE visitorGroup (
 	visitorGroupId INT NOT NULL AUTO_INCREMENT,
