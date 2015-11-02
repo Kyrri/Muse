@@ -1,8 +1,8 @@
-h1= title
-p Welcome to #{title}
+extends layout
 
-.container
-	.mainContent
-		a(href="artInfo") Link to Art Info
+block mainContainer
+	h1= title
+	p Welcome to #{title}
+	a(href="artInfo") Link to Art Info
 		
 	
