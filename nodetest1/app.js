@@ -35,7 +35,7 @@ app.post('/partial_artInfo0', function(req, res){
   conn.connect();
 
   // test query - to sanity check it connects to the right db
-  conn.query('SELECT ? FROM visitor LIMIT 1', [req.body.test], function(err, results) {
+  conn.query('SELECT ? FROM users LIMIT 1', [req.body.test], function(err, results) {
     if (err) throw err;
    
     console.log(results[0]);
@@ -44,7 +44,7 @@ app.post('/partial_artInfo0', function(req, res){
   conn.end();
 
   // res.render('partial_artInfo0', { title: 'Art Info', imgref: '/images/cat1.jpg' });
-  // });
+  });
 
 
 // Run Server
