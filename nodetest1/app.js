@@ -1,6 +1,7 @@
 var express = require('express');
 var app = require("express")();
 var routes = require('./routes');
+var bodyParser = require('body-parser')
 // MySQL connection
 var mysql = require('mysql');
 var conn = mysql.createConnection({
@@ -15,7 +16,10 @@ var conn = mysql.createConnection({
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/public'));
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 // Routes
   app.get('/', function(req, res){
     res.render('index', { title: 'Muse'});
@@ -26,26 +30,21 @@ app.use(express.static(__dirname + '/public'));
   //app.get('/artInfo/:id', function(req, res){
     //res.render('artInfo', {title: 'Art Info', data: data, imgref: imgref });
   //});
-app.get('/partial_artInfo0', function(req, res){
-  // conn.connect();
+app.post('/partial_artInfo0', function(req, res){
+  console.log(req.body.test);
+  conn.connect();
 
-  // // test query - to sanity check it connects to the right db
-  // conn.query('SELECT * FROM visitor LIMIT 1', function(err, results) {
-  //   if (err) throw err;
+  // test query - to sanity check it connects to the right db
+  conn.query('SELECT ? FROM visitor LIMIT 1', [req.body.test], function(err, results) {
+    if (err) throw err;
    
-  //   console.log(results[0]);
-    //res.render('partial_artInfo0', { title: 'Art Info', imgref: '/images/cat1.jpg', data: results });
-  // });
-  //conn.end();
-
-  res.render('partial_artInfo0', { title: 'Art Info', imgref: '/images/cat1.jpg' });
-     
+    console.log(results[0]);
+    res.render('partial_artInfo0', { title: 'Art Info', imgref: '/images/cat1.jpg', data: results });
   });
+  conn.end();
 
-// Queries
-
-
-
+  // res.render('partial_artInfo0', { title: 'Art Info', imgref: '/images/cat1.jpg' });
+  // });
 
 
 // Run Server
