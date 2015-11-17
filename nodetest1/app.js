@@ -24,6 +24,9 @@ app.use(bodyParser.urlencoded({
   app.get('/', function(req, res){
     res.render('index', { title: 'Muse'});
   });
+  app.get('/login', function(req, res){
+    res.render('login', { title: 'LogIn'});
+  });
   app.get('/artInfo', function(req, res){
      res.render('artInfo', { title: 'Art Info'});
   });
@@ -52,6 +55,5 @@ app.post('/partial_artInfo0', function(req, res){
 
 // Run Server
 app.listen(3000, function(){
-  //console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
   console.log("Listening on 3000");
 });
