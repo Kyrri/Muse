@@ -12,7 +12,6 @@ var conn = mysql.createConnection({
 });
 
 // Configuration
-
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/public'));
@@ -20,12 +19,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
 // Routes
-  app.get('/', function(req, res){
-    res.render('index', { title: 'Muse'});
-  });
-  app.get('/login', function(req, res){
+  app.get('/:var(|login)?', function(req, res){
+    loggedIn = false;
     res.render('login', { title: 'LogIn'});
+  });
+  app.get('/index', function(req, res){
+    res.render('index', { title: 'Muse'});
   });
   app.get('/artInfo', function(req, res){
      res.render('artInfo', { title: 'Art Info'});
@@ -50,6 +51,13 @@ app.post('/partial_artInfo0', function(req, res){
   conn.end();
 
   // res.render('partial_artInfo0', { title: 'Art Info', imgref: '/images/cat1.jpg' });
+  });
+
+// Non-Renders
+  app.post('/updateFB', function(req, res){
+    //SQL -check if user already exists, if not, add user
+    //req.body.name/gender/birthday
+    console.log(req.body.name);
   });
 
 
