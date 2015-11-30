@@ -1,12 +1,12 @@
 h1{
-	  font: 55px "Lucida Grande", Helvetica, Arial, sans-serif;
+	  font: 10vw "Lucida Grande", Helvetica, Arial, sans-serif;
 	  color: #6D6E72;
 	  text-align: center;
 	  margin-top: 0px;
 }
 
 body{
-  font: 40px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 8vw "Lucida Grande", Helvetica, Arial, sans-serif;
   color: #6D6E72;
   text-align: center;
   margin-left: 0px;
@@ -15,7 +15,7 @@ body{
 }
 
 h2{
-	font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+	font: 6vw "Lucida Grande", Helvetica, Arial, sans-serif;
 	color: #6D6E72;
 	font-weight: normal;
 	padding: 45px;
@@ -31,7 +31,7 @@ h2{
 h3{ 
 	padding-left: 50px;
 	padding-right: 50px;
-  	font: 12px "Lucida Grande", Helvetica, Arial, sans-serif;
+  	font: 2vw "Lucida Grande", Helvetica, Arial, sans-serif;
   	color: #6D6E72;
   	margin-left: 0px;
   	text-align: justify;
@@ -39,6 +39,27 @@ h3{
 
 div{
 margin-left: 0px;
-
-
 }
+
+.button {
+    background-color: #6D6E72;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 8vw;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20px;
+    width: 30%;
+    height: 10vw;
+}
+
+input[type="text"]
+{
+	font-size:5vw;
+	border-radius: 5px;
+}
+
