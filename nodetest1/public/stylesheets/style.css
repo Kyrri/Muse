@@ -1,11 +1,44 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+h1{
+	  font: 55px "Lucida Grande", Helvetica, Arial, sans-serif;
+	  color: #6D6E72;
+	  text-align: center;
+	  margin-top: 0px;
 }
 
-a {
-  color: #00B7FF;
+body{
+  font: 40px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: #6D6E72;
+  text-align: center;
+  margin-left: 0px;
+  margin-top: 0px;
+
 }
-p{
-	color: blue;
+
+h2{
+	font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+	color: #6D6E72;
+	font-weight: normal;
+	padding: 45px;
+	background-repeat: repeat-x;
+	background-color: #d1d2d4;
+	text-align: center;
+	margin-left: 0px;
+	margin-top: 0px;
+	position: fixed;
+	width: 90%;
+}
+
+h3{ 
+	padding-left: 50px;
+	padding-right: 50px;
+  	font: 12px "Lucida Grande", Helvetica, Arial, sans-serif;
+  	color: #6D6E72;
+  	margin-left: 0px;
+  	text-align: justify;
+}
+
+div{
+margin-left: 0px;
+
+
 }
