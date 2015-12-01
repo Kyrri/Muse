@@ -1,8 +1,19 @@
 extends layout
 
 block mainContainer
-	h1= title
-	p Welcome to #{title}
-	a(href="artInfo") Link to Art Info
+	.indexContainer
+		//h1#page-title= title
+		h2(class='welcome') Welcome, Visitor
+		//a(href="artInfo") Link to Art Info
+		.upcoming
+			h3(class='welcome') Upcoming Visits
+			.boxVisits
+				h4 Upcoming Visit 1
+				p Text
+		.recent
+			h3(class='welcome') Recent Visits
+			.boxVisits
+				h4 Recent Visit 1
+
+			
 		
-	

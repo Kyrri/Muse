@@ -2,12 +2,21 @@ doctype html
 html
 	head
 		title= title
+		meta(charset="utf-8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge")
+		meta(name="viewport", content="width=device-width, initial-scale=1")
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		link(rel='stylesheet', href='/stylesheets/test_styles.css')
 		script(src='/javascripts/jquery-1.11.3.min.js')
 		script(src="/javascripts/FB_login.js")
+		script(src="https://use.typekit.net/srl4fhb.js")
+		script try{Typekit.load({ async: true });}catch(e){}
 		block headScripts
 	body
 	.container
+		nav.menubar
+			//p Muse
+			img(src="/images/Muse-MenuTitle.png")
 		.mainContainer
 			block mainContainer
+			
