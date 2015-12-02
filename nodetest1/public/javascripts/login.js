@@ -1,7 +1,8 @@
 var index_url="/index";
 
 $(document).ready(function() {
-		$('#login_submit').on("click", function(){
+		$('#login_form').on('submit',function(e){
+			e.preventDefault();
 			var login_data = $('#login_form').serialize().split("&");
 			var email = login_data[0].replace("email=", "");
 			var password = login_data[1].replace("password=","");

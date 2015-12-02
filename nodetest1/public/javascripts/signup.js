@@ -1,7 +1,9 @@
 var index_url="/index";
 
 $(document).ready(function() {
-		$('#login_submit').on("click", function(){
+		$('#login_form').on('submit',function(e){
+			alert("here");
+			e.preventDefault();
 			var login_data = $('#login_form').serialize().split("&");
 			var email = login_data[0].replace("email=", "");
 			if(!validateEmail(decodeURIComponent(email))){
@@ -36,7 +38,6 @@ $(document).ready(function() {
             	}
        		 }); 
 			//submit data to database, global-variable login made true, user is signed up
-
 		});
 		//should re-validate in server
 		function validateEmail(email) {
