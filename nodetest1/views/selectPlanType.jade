@@ -1,0 +1,18 @@
+extends layout
+
+block mainContainer
+	.selectPlanTypeContainer
+		h2(class='welcome') Select Plan Type :
+
+		.planList
+			button.select Curator-Designed Route
+			p Navigate through the museum on a path designed by the exhibit curators!
+
+			button.select Create Custom Plan
+			p Create a personalized route based on what you want to see!
+
+			button.select Free Exploration
+			p Choose your own adventure!
+
+		.next
+			a.button(href="/beginTour/") Next

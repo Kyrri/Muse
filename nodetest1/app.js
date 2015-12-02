@@ -57,6 +57,18 @@ var loggedIn = false;
   app.get('/artInfo', function(req, res){
      res.render('artInfo', { title: 'Art Info'});
   });
+  app.get('/selectMuseum', function(req, res){
+    res.render('selectMuseum', { title: 'Select Museum'});
+  });
+  app.get('/info', function(req, res){
+    res.render('info', { title: 'Info'});
+  });
+  app.get('/selectPlanType', function(req, res){
+    res.render('selectPlanType', { title: 'Select Plan Type'});
+  });
+  app.get('/beginTour', function(req, res){
+    res.render('beginTour', { title: 'Begin Tour'});
+  });
   //app.get('/artInfo/:id', function(req, res){
     //res.render('artInfo', {title: 'Art Info', data: data, imgref: imgref });
   //});
