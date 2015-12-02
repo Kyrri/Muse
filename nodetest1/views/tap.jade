@@ -1,16 +1,17 @@
 extends layout
-
+block headScripts
+    script(src='/javascripts/tap.js')
 block mainContainer
 
     h1 Welcome to ABC Gallery
     br
     h4
-        | Tab your phone at an NFC sticker to check-in!
+        | Tap your phone at an NFC sticker to check-in!
         br
         br
         br
 
-        |or enter the 6 digit code
+        |or enter the 4 digit code
 
         input(type='text', name='code' id='txt' )
         br
