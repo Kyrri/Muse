@@ -63,6 +63,9 @@ var loggedIn = false;
   app.get('/info', function(req, res){
     res.render('info', { title: 'Info'});
   });
+    app.get('/tap', function(req, res){
+    res.render('tap', { title: 'tap'});
+  });
   app.get('/selectPlanType', function(req, res){
     res.render('selectPlanType', { title: 'Select Plan Type'});
   });
