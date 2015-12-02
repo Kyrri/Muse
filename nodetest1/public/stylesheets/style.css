@@ -16,7 +16,7 @@ p{
   font-weight: normal;
   font-size:4vw;
   margin:7px;
-  text-align: justify;
+  /*text-align: justify;*/
 }
 
 h1{
@@ -189,6 +189,14 @@ button, a.button {
 button.selected {
   background-color: #414042;
   border-color: #414042;
+
+}
+
+a {
+  font-family: "servus-slab", sans-serif;
+  font-variant: small-caps;
+  color: #6d6f71;
+  text-decoration: none;
 }
 
 /* Accordion List Styling */
