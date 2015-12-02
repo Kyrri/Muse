@@ -4,16 +4,18 @@ block mainContainer
 
     h1 Welcome to ABC Gallery
     br
-    p
-    p
-      div
+    h4
         | Tab your phone at an NFC sticker to check-in!
         br
-        p or enter the 6 digit code
-        input(type='text', name='code' id='txt')
         br
         br
+
+        |or enter the 6 digit code
+
+        input(type='text', name='code' id='txt' )
         br
         br
-        a(href='#' class='button') Next
+
+        .next
+            a.button(href='/') Next
         
