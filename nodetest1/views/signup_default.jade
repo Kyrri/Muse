@@ -1,0 +1,38 @@
+extends layout
+block headScripts
+	script(src='/javascripts/signup.js')
+block mainContainer
+	a(href='/login') Already have an account? Log-in
+	form(name='login_form', id='login_form')
+		label(for='email') E-mail
+			input(id='email', type='text', value='', placeholder='example@muse.com', name='email')
+		label(for='password') Password
+			input(id='password', value='', placeholder='password', name='password', type='password')
+		label(for='fName') First Name
+			input(id='fName', type='text', value='', placeholder='John', name='fName')
+		label(for='lName') Last Name
+			input(id='lName', type='text', value='', placeholder='John', name='lName')
+		label(for='gender')
+			select(id='gender', name='gender')
+				option(value='null', selected='selected') Please Choose
+				option(value='Male') Male
+				option(value='Female') Female
+				option(value='Other') Other
+				option(value='NA') Prefer not to answer
+
+				//- Instead of Select, consider using twitter bootstrap dropdown - it's currently commented out but the script include for bootstrap is in layout.jade if you want it and it's already in the javascripts folder
+
+		label(for='ageRange') Age
+			select(id='ageRange', name='ageRange')
+				option(value='null', selected='selected') Please Choose
+				option(value='18-20') 18-20
+				option(value='20-25') 20-25
+				option(value='25-30') 25-30
+				option(value='30-40') 30-40
+				option(value='40-50') 40-50
+				option(value='50-60') 50-60
+				option(value='60-70') 60-70
+				option(value='70+') 70+
+				option(value='NA') Prefer not to answer
+
+	button(id='login_submit') Login

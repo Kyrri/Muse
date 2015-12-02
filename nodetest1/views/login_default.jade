@@ -1,0 +1,14 @@
+extends layout
+block headScripts
+	script(src='/javascripts/login.js')
+block mainContainer
+	a(href='/signup') Sign-Up
+	form(name='login_form', id='login_form')
+		label(for='email') E-mail
+			input(id='email', type='text', value='', placeholder='example@muse.com', name='email')
+		label(for='password') Password
+			input(id='password', value='', placeholder='password', name='password', type='password')
+
+	button(id='login_submit') Login
+
+

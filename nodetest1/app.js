@@ -20,11 +20,37 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+// Important Globals
+var loggedIn = false;
+
 // Routes
-  app.get('/:var(|login)?', function(req, res){
-    loggedIn = false;
-    res.render('login', { title: 'LogIn'});
-  });
+  
+  //  FACEBOOK LOGIN  //
+    // app.get('/:var(|login)?', function(req, res){
+    //   res.render('login', { title: 'LogIn'});
+    // });
+  //  INSECURE LOGIN  //
+    app.get('/:var(|login)?', function(req, res){
+      res.render('login_default', { title: 'Log In'});
+    });
+    app.post('/login', function(req,res){
+      console.log("login");
+      //SQL Check Exists
+      loggedIn = true;
+      //if exists
+      res.send(true);
+    });
+    app.get('/signup', function(req, res){
+      res.render('signup_default', { title: 'Sign Up'});
+    });
+    app.post('/signup', function(req,res){
+      console.log("signup");
+      //SQL add to database
+      loggedIn = true;
+      //if successful
+      res.send(true);
+    });
+  //  STARTING PAGE  //
   app.get('/index', function(req, res){
     res.render('index', { title: 'Muse'});
   });
