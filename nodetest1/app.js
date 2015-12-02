@@ -76,6 +76,9 @@ var loggedIn = false;
         //Check SQL if piece exists, if so
         res.send(true);
       });
+      app.get('/tap', function(req, res){
+        res.render('tap', { title: 'tap'});
+      });
       app.get('/info', function(req, res){
         res.render('info', { title: 'Info'});
       });
@@ -86,7 +89,6 @@ var loggedIn = false;
     app.post('/partial_artInfo0', function(req, res){
       //console.log(req.body.test);
       conn.connect();
-
       // test query - to sanity check it connects to the right db
       conn.query('SELECT ? FROM users LIMIT 1', [req.body.test], function(err, results) {
         if (err){
