@@ -148,8 +148,23 @@ input[type="text"]
   margin-top: 20px;
 }
 
+.planList {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.planList button {
+  margin-top: 20px;
+}
+
+.planList p {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .next {
-  width: 70%;
+  width: 50%;
   margin-top: 50px;
   margin-left:auto;
   margin-right:auto;

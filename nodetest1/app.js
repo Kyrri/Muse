@@ -40,6 +40,9 @@ app.use(bodyParser.urlencoded({
   app.get('/selectPlanType', function(req, res){
     res.render('selectPlanType', { title: 'Select Plan Type'});
   });
+  app.get('/beginTour', function(req, res){
+    res.render('beginTour', { title: 'Begin Tour'});
+  });
   //app.get('/artInfo/:id', function(req, res){
     //res.render('artInfo', {title: 'Art Info', data: data, imgref: imgref });
   //});
