@@ -22,6 +22,13 @@ CREATE TABLE `planType` (
 INSERT INTO `muse_dev`.`planType` (`planType`) VALUES ("Visitor Defined");
 INSERT INTO `muse_dev`.`planType` (`planType`) VALUES ("Curator Defined");
 
+CREATE TABLE `actionType` (
+  `actionTypeId` int(11) NOT NULL AUTO_INCREMENT,
+  `actionType` varchar(255) NOT NULL,
+  PRIMARY KEY (`actionTypeId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 CREATE TABLE `users` (
   `userId` int(11) NOT NULL AUTO_INCREMENT,
   `active` tinyint(4) NOT NULL DEFAULT '1',
@@ -204,6 +211,18 @@ CREATE TABLE `planArtifacts` (
   KEY `artifactId` (`artifactId`),
   CONSTRAINT `planartifacts_ibfk_1` FOREIGN KEY (`planId`) REFERENCES `plan` (`planId`),
   CONSTRAINT `planartifacts_ibfk_2` FOREIGN KEY (`artifactId`) REFERENCES `artifact` (`artifactId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `interactions` (
+  `interactionId` int(11) NOT NULL AUTO_INCREMENT,
+  `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `userId` int(11) NOT NULL,
+  `artifactId` int(11) NOT NULL,
+  PRIMARY KEY (`interactionId`),
+  KEY `userId` (`userId`),
+  KEY `artifactId` (`artifactId`),
+  CONSTRAINT `interactions_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`),
+  CONSTRAINT `interactions_ibfk_2` FOREIGN KEY (`artifactId`) REFERENCES `artifact` (`artifactId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
