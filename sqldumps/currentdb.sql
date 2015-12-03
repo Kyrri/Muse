@@ -51,6 +51,31 @@ INSERT INTO `ageRange` VALUES (1,'18-20'),(2,'20-25'),(3,'25-30'),(4,'30-40'),(5
 UNLOCK TABLES;
 
 --
+-- Table structure for table `element`
+--
+
+DROP TABLE IF EXISTS `element`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `element` (
+  `elementId` int(11) NOT NULL AUTO_INCREMENT,
+  `active` tinyint(4) NOT NULL DEFAULT '1',
+  `image` longblob,
+  PRIMARY KEY (`elementId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `element`
+--
+
+LOCK TABLES `element` WRITE;
+/*!40000 ALTER TABLE `element` DISABLE KEYS */;
+INSERT INTO `element` VALUES (1,1,NULL);
+/*!40000 ALTER TABLE `element` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `elementType`
 --
 
@@ -309,4 +334,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-02 21:35:07
+-- Dump completed on 2015-12-02 21:55:43
