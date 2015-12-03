@@ -79,7 +79,9 @@ var loggedIn = false;
       app.get('/tap', function(req, res){
         res.render('tap', { title: 'tap'});
       });
-      app.get('/info', function(req, res){
+      app.get('/info/:id', function(req, res){
+        var id = req.params.id;
+        //SQL - use id to get art info, render in info
         res.render('info', { title: 'Info'});
       });
 

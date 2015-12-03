@@ -30,7 +30,7 @@ $(document).ready(function() {
 		        	if(result){
 		        		alert("yay");
 		        		//Route to specific artpiecece
-		        		//window.location.replace("/info/"+code);
+		        		window.location.replace("/info/"+code);
 		        	}
 		        	else{
 		        		//wrong code, try again
