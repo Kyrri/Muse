@@ -21,9 +21,12 @@ html
 	.container
 		nav.menubar
 			//p Muse
-			a#menuBarHomeLink(href="/index/")
-				img#home(src="/images/home_icon.png")
-			img(src="/images/Muse-MenuTitle.png")
+			#menuHomeLink.menubarItem
+				a(href="/index/")
+					img#home(src="/images/home_icon.png")
+			#menuTitle.menubarItem
+				img(src="/images/Muse-MenuTitle.png")
+			#menuHamburger.menubarItem
 		.mainContainer
 			block mainContainer
 			
