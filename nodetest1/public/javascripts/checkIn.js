@@ -20,7 +20,7 @@ $(document).ready(function() {
 		}
 		else{
 			var parameters = JSON.stringify({"code": code});
-			$.ajax('checkIn',{
+			$.ajax('/checkIn',{
 		 		type: "POST",
 		 		contentType: "application/json",
 		 		//dataType: boolean,
