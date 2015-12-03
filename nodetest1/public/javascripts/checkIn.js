@@ -28,7 +28,6 @@ $(document).ready(function() {
 		        success: function(result) {
 		        	//if user exists
 		        	if(result){
-		        		alert("yay");
 		        		//Route to specific artpiecece
 		        		window.location.replace("/info/"+code);
 		        	}
