@@ -275,13 +275,14 @@ UNLOCK TABLES;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getElementDataFromCode`(
 	IN vCode INTEGER,
+    
+	OUT vStat INTEGER,
     OUT vTitle VARCHAR(255),
     OUT vArtist VARCHAR(255),
     OUT vYear INTEGER,
     OUT vDesc LONGTEXT,
     OUT vType VARCHAR(255),
-    OUT vImgLnk VARCHAR(255),
-    OUT vStat INTEGER
+    OUT vImgLnk VARCHAR(255)
 )
 BEGIN
     
@@ -327,9 +328,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `userCreate`(
     IN vlastName VARCHAR(255),
     IN vgender INTEGER,
     IN vageRange INTEGER,
-    OUT vmsg VARCHAR(255),
-    OUT vsuc TINYINT
-    
+	
+    OUT vsuc TINYINT,
+    OUT vmsg VARCHAR(255)
+
 )
 BEGIN
 	-- check if login is valid
@@ -372,6 +374,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `userLogin`(
 	IN vlogin VARCHAR(255),
     IN vpass VARCHAR(255),
     IN vloginType INTEGER,
+    
     OUT vuserId INTEGER,
     OUT vmsg VARCHAR(255)
 )
@@ -408,4 +411,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-02 23:00:26
+-- Dump completed on 2015-12-02 23:10:27

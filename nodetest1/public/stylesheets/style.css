@@ -94,6 +94,12 @@ select
   color:#ffffff;
   margin:0;
 }
+.menubar:after {
+  content: " ";
+  display: block;
+  clear: both;
+}
+
 
 .menubar img{
   height:45px;
@@ -102,18 +108,27 @@ select
   position: relative;
 }
 
-#menuBarHomeLink {
-  position: absolute;
-  top: 0;
-  left: 0;
+.menubarItem {
+  float: left;
+  width: 20%
+}
+
+#menuTitle {
+  width: 60%;
+}
+#menuHomeLink {
+  text-align: left;
+}
+
+#menuHamburger {
+  text-align: right;
 }
 
 img#home {
-  float:left;
   height: 35px;
   margin-top: 13px;
   margin-left: 13px;
-}
+} 
 
 .upcoming {
   text-align: left;
@@ -209,7 +224,7 @@ button.selected {
 
 }
 
-.signupContainer {
+.signupContainer, .login_defaultContainer {
   text-align: center;
   font-family: "servus-slab", sans-serif;
   font-variant: small-caps;
@@ -219,12 +234,14 @@ button.selected {
   color: #6d6f71;
 }
 
-.signupContainer form {
+.signupContainer form, 
+.login_defaultContainer form {
   margin-top: 30px;
   text-align: left;
 }
 
-.signupContainer label {
+.signupContainer label,
+.login_defaultContainer label {
   font-size: 7vw;
   margin-bottom:;
 }
@@ -232,24 +249,32 @@ button.selected {
 .signupContainer label,
 .signupContainer input[type="text"],
 .signupContainer input[type="password"],
-.signupContainer select {
+.signupContainer select,
+.login_defaultContainer label,
+.login_defaultContainer input[type="text"],
+.login_defaultContainer input[type="password"],
+.login_defaultContainer select {
   display: block;
   width: 100%
 }
 
 .signupContainer input[type="text"],
-.signupContainer input[type="password"] {
+.signupContainer input[type="password"],
+.login_defaultContainer input[type="text"],
+.login_defaultContainer input[type="password"] {
   padding: 10px;
   width: calc(100% - 24px);
 }
 
-.signupContainer input {
+.signupContainer input,
+.login_defaultContainer input {
   margin-top: 0px;
   margin-bottom: 10px;
   /*margin-left: 10px;*/
 }
 
-.signupContainer select {
+.signupContainer select,
+.login_defaultContainer select {
   border: 1px solid #aaa;
   margin-top: 5px;
 }
@@ -270,7 +295,7 @@ button.selected {
   margin-right: 3px;
 }
 
-.checkInContainer input[type="submit"]{
+.checkInContainer input[type="submit"] {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -282,9 +307,20 @@ form#checkIn {
   margin-top: 20px;
 }
 
-.fields{
-  float: right;
+.login_defaultContainer input[type="submit"] {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  width: 100%;
 }
+
+
+/*.fields{
+  float: right;
+}*/
+
+.
 
 
 
