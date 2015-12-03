@@ -21,8 +21,9 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// Important Globals
-var loggedIn = false;
+// Important Exports
+var exports = module.exports = {};
+exports.loggedIn = false;
 
 // Routes
   
@@ -67,8 +68,8 @@ var loggedIn = false;
           //error occured connecting to DB
         }
         else{
-          if(results[1][0]['@o2']==-1){
-            console.log(results[1][0]['@o1']);
+          if(results[1][0]['@o1']==-1){
+            console.log(results[1][0]['@o2']);
             //User Already Exists
           }
           else{
@@ -104,38 +105,70 @@ var loggedIn = false;
         res.render('checkIn', {title:'Check In'});
       });
       app.post('/checkIn', function(req, res){
-        //Check SQL if piece exists, if so
-        res.send(true);
+        req.body.code;
+
+        conn.query('CALL getElementDataFromCode('+req.body.code+',@o1, @o2, @o3,@o4,@o5,@o6,@o7); SELECT @o1, @o2, @o3,@o4,@o5,@o6,@o7', function(err, results) {
+          if (err){
+            console.log(err);
+            //error occured connecting to DB
+          }
+          else{
+            if(results[1][0]['@o1']==-1){
+              console.log("Invalid Code");
+              //Artwork doesn't exist
+            }
+            else{
+              res.send(true);
+            }
+          }
+        });
       });
       app.get('/tap', function(req, res){
         res.render('tap', { title: 'tap'});
       });
       app.get('/info/:id', function(req, res){
-        var id = req.params.id;
-        //SQL - use id to get art info, render in info
-        res.render('info', { title: 'Info'});
+         conn.query('CALL getElementDataFromCode('+req.params.id+',@o1, @o2, @o3,@o4,@o5,@o6,@o7); SELECT @o1, @o2, @o3,@o4,@o5,@o6,@o7', function(err, results) {
+        if (err){
+          console.log(err);
+          //error occured connecting to DB
+        }
+        else{
+          if(results[1][0]['@o1']==-1){
+            console.log("Invalid Code");
+            //Artwork doesn't exist
+          }
+          else{
+            res.render('info', { title: results[1][0]['@o2'], data: {
+              "artist": results[1][0]['@o3'],
+              "year": results[1][0]['@o4'],
+              "description": results[1][0]['@o5'], //Empty, unknown cause
+              "type": results[1][0]['@o6'],
+              "imgRef": results[1][0]['@o7']
+              }
+            });
+          }
+        }
+      });
       });
 
       //app.get('/artInfo/:id', function(req, res){
         //res.render('artInfo', {title: 'Art Info', data: data, imgref: imgref });
       //});
-    app.post('/partial_artInfo0', function(req, res){
-      //console.log(req.body.test);
-      conn.connect();
-      // test query - to sanity check it connects to the right db
-      conn.query('SELECT ? FROM users LIMIT 1', [req.body.test], function(err, results) {
-        if (err){
-          res.send("<html><body><p>Error Occured - Please Try Again</p></body></html>")
-        }
-        else{
-          console.log(results[0]);
-          res.render('partial_artInfo0', { title: 'Art Info', imgref: '/images/cat1.jpg', data: results });
-        }
-      });
-      conn.end();
+    // app.post('/partial_artInfo0', function(req, res){
+    //   //console.log(req.body.test);
+    //   // test query - to sanity check it connects to the right db
+    //   conn.query('SELECT ? FROM users LIMIT 1', [req.body.test], function(err, results) {
+    //     if (err){
+    //       res.send("<html><body><p>Error Occured - Please Try Again</p></body></html>")
+    //     }
+    //     else{
+    //       console.log(results[0]);
+    //       res.render('partial_artInfo0', { title: 'Art Info', imgref: '/images/cat1.jpg', data: results });
+    //     }
+    //   });
 
-      // res.render('partial_artInfo0', { title: 'Art Info', imgref: '/images/cat1.jpg' });
-      });
+    //   // res.render('partial_artInfo0', { title: 'Art Info', imgref: '/images/cat1.jpg' });
+    //   });
 
     //  FB POST  //
       // app.post('/updateFB', function(req, res){
