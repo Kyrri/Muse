@@ -16,7 +16,7 @@ p{
   font-weight: normal;
   font-size:4vw;
   margin:7px;
-  text-align: justify;
+  /*text-align: justify;*/
 }
 
 h1{
@@ -44,12 +44,13 @@ h3{
   font-size: 6vw;
   color: #6d6f71;
   margin: 0px;
-  text-align: justify;
+  /*text-align: justify;*/
 }
 
 h4{
   font-size:4vw;
   margin:0px;
+  text-align: center;
 }
 
 div{
@@ -72,7 +73,9 @@ margin-left: 0px;
     height: 10vw;
 }*/
 
-input[type="text"]
+input[type="text"],
+input[type="password"],
+select
 {
 	font-size:5vw;
 	border-radius: 5px;
@@ -149,15 +152,30 @@ input[type="text"]
   margin-top: 20px;
 }
 
+.planList {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.planList button {
+  margin-top: 20px;
+}
+
+.planList p {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .next {
-  width: 70%;
+  width: 50%;
   margin-top: 50px;
   margin-left:auto;
   margin-right:auto;
 }
 
 
-button, a.button {
+button, a.button, input.button, input[type='submit'] {
   border: 2px solid #6d6f71;
   border-radius: 15px;
   overflow:hidden;
@@ -174,7 +192,84 @@ button, a.button {
 button.selected {
   background-color: #414042;
   border-color: #414042;
+
 }
+
+.signupContainer {
+  text-align: center;
+  font-family: "servus-slab", sans-serif;
+  font-variant: small-caps;
+}
+
+.signupContainer a {
+  color: #6d6f71;
+}
+
+.signupContainer form {
+  margin-top: 30px;
+  text-align: left;
+}
+
+.signupContainer label {
+  font-size: 7vw;
+  margin-bottom:;
+}
+
+.signupContainer label,
+.signupContainer input[type="text"],
+.signupContainer input[type="password"],
+.signupContainer select {
+  display: block;
+  width: 100%
+}
+
+.signupContainer input[type="text"],
+.signupContainer input[type="password"] {
+  padding: 10px;
+  width: calc(100% - 24px);
+}
+
+.signupContainer input {
+  margin-top: 0px;
+  margin-bottom: 10px;
+  /*margin-left: 10px;*/
+}
+
+.signupContainer select {
+  border: 1px solid #aaa;
+  margin-top: 5px;
+}
+
+.signupContainer .button { 
+  margin-top: 30px;
+  margin-left: 0px;  
+  width: ;
+}
+
+.checkInContainer {
+
+}
+
+.checkInContainer input[type="text"]{
+  width: 10%;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.checkInContainer input[type="submit"]{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  width: 70%;
+}
+
+form#checkIn {
+  margin-top: 20px;
+}
+
+
+
 
 /* Accordion List Styling */
 .accordion-toggle {cursor: pointer;}
