@@ -2,8 +2,10 @@ extends layout
 block headScripts
   script(src='/javascripts/info.js')
 block mainContainer
-    h2
-      |#{title}, #{data.artist}, #{data.year}
+    h3
+      |#{title}
+      h4 Artist: #{data.artist} 
+      h4 Created: #{data.year}
 
     div
 
