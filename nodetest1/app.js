@@ -7,8 +7,9 @@ var mysql = require('mysql');
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
-  database: 'muse_dev'
+  password: 'root',
+  database: 'muse_dev',
+  multipleStatements: true
 });
 
 // Configuration
@@ -34,19 +35,49 @@ var loggedIn = false;
       res.render('login_default', { title: 'Log In'});
     });
     app.post('/login', function(req,res){
-      //SQL Check Exists
-      loggedIn = true;
-      //if exists
-      res.send(true);
+      // test query - to sanity check it connects to the right db
+      conn.query('CALL userLogin("'+req.body.email+'","'+req.body.password+'",'+1+',@o1, @o2); SELECT @o1, @o2', function(err, results) {
+        if (err){
+          console.log(err);
+
+        }
+        else{
+          if(results[1][0]['@o1']==-1){
+            console.log(results[1][0]['@o2']);
+            //User Doesn't Exist
+          }
+          else{
+            loggedIn = true;
+            res.send(true);
+          }
+        }
+      });
+
     });
     app.get('/signup', function(req, res){
       res.render('signup_default', { title: 'Sign Up'});
     });
     app.post('/signup', function(req,res){
-      //SQL add to database
-      loggedIn = true;
-      //if successful
-      res.send(true);
+       
+      // test query - to sanity check it connects to the right db
+
+      conn.query('CALL userCreate("'+req.body.email+'","'+req.body.password+'",'+1+','+1+',"'+req.body.fName+'","'+req.body.lName+'",'+1+','+1+',@o1, @o2); SELECT @o1, @o2', function(err, results) {
+        if (err){
+          console.log(err);
+          //error occured connecting to DB
+        }
+        else{
+          if(results[1][0]['@o2']==-1){
+            console.log(results[1][0]['@o1']);
+            //User Already Exists
+          }
+          else{
+          loggedIn = true;
+          res.send(true);
+          }
+        }
+      });
+     
     });
 
   //  STARTING PAGE  //
