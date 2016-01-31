@@ -1,6 +1,6 @@
 var express = require('express');
 var app = require("express")();
-var routes = require('./routes');
+//var routes = require('./routes');
 var bodyParser = require('body-parser')
 // MySQL connection
 var mysql = require('mysql');
@@ -28,7 +28,7 @@ exports.loggedIn = false;
 // Routes
    
   //  STARTING PAGE  //
-    app.get('/index', function(req, res){
+    app.get('/:var(|index)?', function(req, res){
       res.render('index', { title: 'Muse Admin'});
     });
 

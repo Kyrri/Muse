@@ -1,0 +1,13 @@
+extends layout
+block mainContainer
+	//example structure 
+	- var data ={"exhibit0":{"piece_name0":"piece_date0", "piece_name1":"piece_date1"}, "exhibit1":{"piece_name0":"piece_date0", "piece_name1":"piece_date1"}}
+	
+	for drop, val0 in data
+		.dropdown
+			button(class='btn btn-primary dropdown-toggle', type="button", data-toggle="dropdown") #{val0}
+				span.caret
+			ul.dropdown-menu 
+				for val1, key in drop
+					li
+						a(href="#")  #{key}: #{val1}
