@@ -25,7 +25,16 @@ create table user (
 );
 
 
-
+create table element (
+	elementId integer not null auto_increment,
+    active tinyint not null default 1,
+    title varchar(255) not null,
+    artist varchar(255),
+    paintYear integer, 
+    description longtext,
+    elementType integer,
+	primary key (elementId)
+);
 
 
 --candidate key tables
@@ -55,4 +64,11 @@ create table userType (
 	userType integer not null auto_increment, 
     userTypeDesc varchar(255) unique,
     primary key(userType)
+);
+
+
+create table elementType (
+	elementType integer not null auto_increment,
+    elementTYpeDesc varchar(255) unique,
+    primary key(elementType)
 );
