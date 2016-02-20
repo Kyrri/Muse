@@ -10,13 +10,19 @@ html
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		//- link(rel='stylesheet', href='/stylesheets/test_styles.css')
 
-		script(src='/javascripts/jquery-1.11.3.min.js')
+		link(rel='manifest' href='manifest.json')
+
+		script(defer, src='/javascripts/jquery-1.11.3.min.js')
+		script(src='/javascripts/nfc_utils.js')
 		script(src='/javascripts/NFC.js')
 		//- script(src='/javascripts/bootstrap.min.js')
 		//- script(src="/javascripts/FB_login.js")
+		
+
 		script(src="https://use.typekit.net/srl4fhb.js")
 		script try{Typekit.load({ async: true });}catch(e){}
 		script(src='/javascripts/scripts.js')
+		
 		block headScripts
 	body
 	.container

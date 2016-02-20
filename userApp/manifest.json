@@ -1,0 +1,22 @@
+{
+  "name": "Muse: Your Guide to Museums",
+  "short_name": "Muse",
+
+  "scope": "/racer/",
+  "start_url": "/index",
+  "display": "fullscreen",
+  "orientation": "portrait",
+   "activities": {
+    "nfc-ndef-discovered": {
+      "filters": {
+        "type": "text",
+        "url": {
+          "required":true, "pattern":"https?:.{1,16384}", "patternFlags":"i"
+         }
+      }
+    }
+  },
+  "permissions": {
+   "nfc-share": {}
+ }
+}
