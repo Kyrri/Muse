@@ -1,13 +1,54 @@
 extends layout
+block headScripts
+	script(src='/javascripts/chartDraw.js')
+
 block mainContainer
 	//example structure 
-	- var data ={"exhibit0":{"piece_name0":"piece_date0", "piece_name1":"piece_date1"}, "exhibit1":{"piece_name0":"piece_date0", "piece_name1":"piece_date1"}}
-	
+	- var data ={"exhibit0":{"piece_name0":"piece_date0", "piece_name1":"piece_date1"}, "exhibit1":{"piece_name0":"piece_date0", "piece_name1":"piece_date1"},"exhibit2":{"piece_name0":"piece_date0", "piece_name1":"piece_date1"},"exhibit3":{"piece_name0":"piece_date0", "piece_name1":"piece_date1"}}
+
+	h4 Search
+		input(placeholder='Search here')
+	h4 Group By
+		div(class='btn-group', role='group', aria-label='...')
+			button(type='button', class='btn btn-default') Exhibit
+			button(type='button', class='btn btn-default') Time-Period
+			button(type='button', class='btn btn-default') Individual Pieces
+			button(type='button', class='btn btn-default') Artist
+	table
+		tr
+			td(style='width:16%;') Piece
+				span.caret
+			td(style='width:16%;') Artist
+				span.caret
+			td(style='width:16%;') Year
+				span.caret
+			td(style='width:16%;') Exhibit
+				span.caret
+			td(style='width:16%;') # Views
+				span.caret
+			td(style='width:16%;') # Avg. Holding Time
+				span.caret
+		tr
+			td Bananas in a Bowl
+			td Drunk Lindsay
+			td 2016
+			td Still Lives for Alternate Lives
+			td all
+			td forever
 	for drop, val0 in data
 		.dropdown
-			button(class='btn btn-primary dropdown-toggle', type="button", data-toggle="dropdown") #{val0}
+			button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown") #{val0}
 				span.caret
 			ul.dropdown-menu 
 				for val1, key in drop
 					li
 						a(href="#")  #{key}: #{val1}
+	h4 Metrics on Bananas in a Bowl
+	div#myPieChart
+	h5 Filter
+		div(class='btn-group', role='group', aria-label='...')
+			button(type='button', class='btn btn-default') avg Holding Power
+			button(type='button', class='btn btn-default') Likes
+			button(type='button', class='btn btn-default') Favourites
+			button(type='button', class='btn btn-default') Comparatives
+
