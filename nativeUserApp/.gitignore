@@ -1,0 +1,5 @@
+platforms
+!platforms/*.json
+
+plugins
+!plugins/*.json
