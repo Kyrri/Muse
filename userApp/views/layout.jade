@@ -18,22 +18,32 @@ html
 		//- script(src='/javascripts/bootstrap.min.js')
 		//- script(src="/javascripts/FB_login.js")
 		
+		if nfc
+			script var URL = "http://INSERT-CORRECT-ID-HERE.ngrok.com/";
+		else 
+			script var URL = "";
 
 		script(src="https://use.typekit.net/srl4fhb.js")
 		script try{Typekit.load({ async: true });}catch(e){}
 		script(src='/javascripts/scripts.js')
+
+
 		
 		block headScripts
 	body
-	.container
-		nav.menubar
-			//p Muse
-			#menuHomeLink.menubarItem
-				a(href="/")
-					img#home(src="/images/home_icon.png")
-			#menuTitle.menubarItem
-				img(src="/images/Muse-MenuTitle.png")
-			#menuHamburger.menubarItem
-		.mainContainer
-			block mainContainer
-			
+		.app
+			.container
+				nav.menubar
+					//p Muse
+					#menuHomeLink.menubarItem
+						a(href="/")
+							img#home(src="/images/home_icon.png")
+					#menuTitle.menubarItem
+						img(src="/images/Muse-MenuTitle.png")
+					#menuHamburger.menubarItem
+				.mainContainer
+					block mainContainer
+		if nfc	
+			script(type="text/javascript" src="cordova.js")
+			script(type="text/javascript" src="js/index.js")
+

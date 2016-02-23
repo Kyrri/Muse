@@ -63,7 +63,7 @@ $(document).ready(function() {
 		window.location.replace(login_url);
 	}
 	function updateInfo(parameters){
-		$.ajax('updateFB',{
+		$.ajax(URL + '/updateFB',{
 	 		type: "POST",
 	 		contentType: "application/json",
             data: parameters								
