@@ -72,3 +72,19 @@ create table elementType (
     elementTYpeDesc varchar(255) unique,
     primary key(elementType)
 );
+
+create table visit (
+    visitId integer not null auto_increment, 
+    tstamp timestamp not null default now(),
+    active tinyint not null default 1,
+    visitDate date not null,
+    userId integer not null, 
+    museumId integer not null,
+    primary key(visitId)
+);
+
+create table elementTagType (
+    elementTagTypeId integer not null auto_increment,
+    elementTagTypeDesc varchar(255) unique,
+    primary key(elementTagTypeId)
+);
