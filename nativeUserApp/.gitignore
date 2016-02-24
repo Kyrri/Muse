@@ -3,3 +3,9 @@ platforms
 
 plugins
 !plugins/*.json
+
+www/*.html
+
+www/javascripts
+www/images
+www/stylesheets
