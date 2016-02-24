@@ -6,26 +6,25 @@ html
 		meta(http-equiv="X-UA-Compatible", content="IE=edge")
 		meta(name="viewport", content="width=device-width, initial-scale=1")
 		link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css')
-		//- link(rel='stylesheet', href='/stylesheets/css/bootstrap.min.css')
-		link(rel='stylesheet', href='/stylesheets/style.css')
-		//- link(rel='stylesheet', href='/stylesheets/test_styles.css')
+		//- link(rel='stylesheet', href='stylesheets/css/bootstrap.min.css')
+		link(rel='stylesheet', href='stylesheets/style.css')
+		//- link(rel='stylesheet', href='stylesheets/test_styles.css')
 
 		link(rel='manifest' href='manifest.json')
 
-		script(defer, src='/javascripts/jquery-1.11.3.min.js')
-		script(src='/javascripts/nfc_utils.js')
-		script(src='/javascripts/NFC.js')
-		//- script(src='/javascripts/bootstrap.min.js')
-		//- script(src="/javascripts/FB_login.js")
-		
+		script(defer, src='javascripts/jquery-1.11.3.min.js')
+		script(src='javascripts/nfc_utils.js')
+		script(src='javascripts/NFC.js')
+		//- script(src='javascripts/bootstrap.min.js')
+		//- script(src="javascripts/FB_login.js")
 		if nfc
-			script var URL = "http://INSERT-CORRECT-ID-HERE.ngrok.com/";
+			script var URL = "http://#####.ngrok.io/";
 		else 
 			script var URL = "";
 
 		script(src="https://use.typekit.net/srl4fhb.js")
 		script try{Typekit.load({ async: true });}catch(e){}
-		script(src='/javascripts/scripts.js')
+		script(src='javascripts/scripts.js')
 
 
 		
@@ -37,13 +36,13 @@ html
 					//p Muse
 					#menuHomeLink.menubarItem
 						a(href="/")
-							img#home(src="/images/home_icon.png")
+							img#home(src="images/home_icon.png")
 					#menuTitle.menubarItem
-						img(src="/images/Muse-MenuTitle.png")
+						img(src="images/Muse-MenuTitle.png")
 					#menuHamburger.menubarItem
 				.mainContainer
 					block mainContainer
 		if nfc	
 			script(type="text/javascript" src="cordova.js")
-			script(type="text/javascript" src="js/index.js")
+			script(type="text/javascript" src="javascripts/index.js")
 
