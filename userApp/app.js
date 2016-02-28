@@ -2,6 +2,7 @@ var express = require('express');
 var app = require("express")();
 var routes = require('./routes');
 var bodyParser = require('body-parser')
+var password = require('password-hash-and-salt');
 // MySQL connection
 var mysql = require('mysql');
 var conn = mysql.createConnection({
@@ -37,7 +38,7 @@ exports.loggedIn = false;
     });
     app.post('/login', function(req,res){
       // test query - to sanity check it connects to the right db
-      conn.query('CALL userLogin("'+req.body.email+'","'+req.body.password+'",'+1+',@o1, @o2); SELECT @o1, @o2', function(err, results) {
+      conn.query('CALL userLogin("'+req.body.email+'",'+1+',@o1); SELECT @o1, @o2', function(err, results) {
         if (err){
           console.log(err);
 
@@ -48,8 +49,20 @@ exports.loggedIn = false;
             //User Doesn't Exist
           }
           else{
-            loggedIn = true;
-            res.send(true);
+            password(req.body.password).verifyAgainst(results[1][0]['@o2'], function(error, verified){
+              if(error){
+                console.log("error in password verification");
+              }
+              else if(!verified){
+                console.log("password is incorrect");
+                res.send(false);
+              }
+              else{
+                loggedIn = true;
+                res.send(true);
+              }
+
+            });
           }
         }
       });
@@ -59,23 +72,31 @@ exports.loggedIn = false;
       res.render('signup_default', { title: 'Sign Up'});
     });
     app.post('/signup', function(req,res){
-       
-      // test query - to sanity check it connects to the right db
-
-      conn.query('CALL userCreate("'+req.body.email+'","'+req.body.password+'",'+1+','+1+',"'+req.body.fName+'","'+req.body.lName+'",'+1+','+1+',@o1, @o2); SELECT @o1, @o2', function(err, results) {
-        if (err){
-          console.log(err);
-          //error occured connecting to DB
+       password(req.body.password).hash(function(error, hash) {
+        if(error){
+          throw new Error('Error in hashing: ' + error);
+          res.send(false);
+          //PW hash failed
         }
         else{
-          if(results[1][0]['@o1']==-1){
-            console.log(results[1][0]['@o2']);
-            //User Already Exists
-          }
-          else{
-          loggedIn = true;
-          res.send(true);
-          }
+          conn.query('CALL userCreate("'+req.body.email+'","'+hash+'",'+1+','+1+',"'+req.body.fName+'","'+req.body.lName+'",'+1+','+1+', @o1, @o2); SELECT @o1, @o2', function(err, results) {
+            if (err){
+              console.log(err);
+              res.send(false);
+              //error occured connecting to DB
+            }
+            else{
+              if(results[1][0]['@o1']==-1){
+                console.log(results[1][0]['@o2']);
+                res.send(false);
+                //User Already Exists
+              }
+              else{
+              loggedIn = true;
+              res.send(true);
+              }
+            }
+          });
         }
       });
      
