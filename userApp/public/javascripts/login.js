@@ -6,14 +6,13 @@ $(document).ready(function() {
 	});
 	$("#email").on("blur",  function(){
 		if(!validateEmail(decodeURIComponent($("#email").val())) && $("#email").val().length>0){
-			updateEmail("Email Invalid");
+			updateFeedback("email", "Email Invalid");
 		}
 		else{
 			updateValidity("#email");
 		}
 	});
 		$('#login_form').on('submit',function(e){
-			alert("Works")
 			e.preventDefault();
 			var login_data = $('#login_form').serialize().split("&");
 			var email = login_data[0].replace("email=", "");
@@ -25,7 +24,7 @@ $(document).ready(function() {
 			$.ajax('login',{
 		 		type: "POST",
 		 		contentType: "application/json",
-		 		dataType: JSON,
+		 		dataType: 'JSON',
 	            data: parameters,								
 	            success: function(result) {
 	            	//if user exists
@@ -33,7 +32,7 @@ $(document).ready(function() {
 	            		window.location.replace(index_url);
 	            	}
 	            	else{
-	            		updateFeedback(result.ErrType, result.message);
+	            		updateFeedback(result.ErrType, result.Message);
 	            	} 
             	}
        		 }); 
@@ -41,7 +40,9 @@ $(document).ready(function() {
 		});
 	function updateFeedback(element, newText){
 		$("#FB_"+element).text(newText);
-		$("#"+element).addClass("invalid");
+		$("#"+element).fadeIn("slow", function(){
+			$(this).addClass("invalid");
+		});
 	}
 	function updateValidity(element){
 		if($(element).hasClass("invalid") && validateEmail(decodeURIComponent($(element).val()))){

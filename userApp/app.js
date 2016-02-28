@@ -37,15 +37,14 @@ exports.loggedIn = false;
       res.render('login_default', { title: 'Log In'});
     });
     app.post('/login', function(req,res){
-      // test query - to sanity check it connects to the right db
+      test query - to sanity check it connects to the right db
       conn.query('CALL userLogin("'+req.body.email+'",'+1+',@o1); SELECT @o1, @o2', function(err, results) {
         if (err){
           console.log(err);
-
         }
         else{
           if(results[1][0]['@o1']==-1){
-            console.log(results[1][0]['@o2']);
+
             res.send(JSON.stringify({"Success": false, "ErrType": "email", "Message": results[1][0]['@o2']}));
             //User Doesn't Exist
           }
@@ -56,11 +55,11 @@ exports.loggedIn = false;
               }
               else if(!verified){
                 console.log("password is incorrect");
-                res.send("Success": false, "ErrType": "password", "Message": "Incorrect Password"});
+                res.send(JSON.stringify({"Success": false, "ErrType": "password", "Message": "Incorrect Password"}));
               }
               else{
                 loggedIn = true;
-                res.send("Success": true, "ErrType": null, "Message": "Login Successful"});
+                res.send(JSON.stringify({"Success": true, "ErrType": null, "Message": "Login Successful"}));
               }
 
             });
