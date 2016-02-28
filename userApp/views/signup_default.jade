@@ -8,9 +8,11 @@ block mainContainer
 		form(name='login_form', id='login_form')
 			label(for='email') E-mail
 			input(id='email', type='text', value='', placeholder='example@muse.com', name='email')
+			div(id='FB_email', class='feedback')
 
 			label(for='password') Password
 			input(id='password', value='', placeholder='password', name='password', type='password')
+			div(id='FB_password', class='feedback')
 
 			label(for='fName') First Name
 			input(id='fName', type='text', value='', placeholder='John', name='fName')
@@ -31,6 +33,7 @@ block mainContainer
 			label(for='ageRange') Age
 			select(id='ageRange', name='ageRange')
 				option(value='null', selected='selected') Please Choose
+				option(value='<18') <18
 				option(value='18-20') 18-20
 				option(value='20-25') 20-25
 				option(value='25-30') 25-30

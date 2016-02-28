@@ -37,7 +37,7 @@ exports.loggedIn = false;
       res.render('login_default', { title: 'Log In'});
     });
     app.post('/login', function(req,res){
-      test query - to sanity check it connects to the right db
+     // test query - to sanity check it connects to the right db
       conn.query('CALL userLogin("'+req.body.email+'",'+1+',@o1); SELECT @o1, @o2', function(err, results) {
         if (err){
           console.log(err);
@@ -72,28 +72,27 @@ exports.loggedIn = false;
       res.render('signup_default', { title: 'Sign Up'});
     });
     app.post('/signup', function(req,res){
+      console.log("trying");
        password(req.body.password).hash(function(error, hash) {
         if(error){
           throw new Error('Error in hashing: ' + error);
-          res.send(false);
           //PW hash failed
         }
         else{
           conn.query('CALL userCreate("'+req.body.email+'","'+hash+'",'+1+','+1+',"'+req.body.fName+'","'+req.body.lName+'",'+1+','+1+', @o1, @o2); SELECT @o1, @o2', function(err, results) {
             if (err){
               console.log(err);
-              res.send(false);
               //error occured connecting to DB
             }
             else{
               if(results[1][0]['@o1']==-1){
                 console.log(results[1][0]['@o2']);
-                res.send(false);
+                res.send(JSON.stringify({"Success": false, "ErrType": "email", "Message": results[1][0]['@o2']}));
                 //User Already Exists
               }
               else{
               loggedIn = true;
-              res.send(true);
+              res.send(JSON.stringify({"Success": true, "ErrType": null, "Message": "Create User Successful"}));
               }
             }
           });
