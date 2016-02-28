@@ -46,6 +46,7 @@ exports.loggedIn = false;
         else{
           if(results[1][0]['@o1']==-1){
             console.log(results[1][0]['@o2']);
+            res.send(JSON.stringify({"Success": false, "ErrType": "email", "Message": results[1][0]['@o2']}));
             //User Doesn't Exist
           }
           else{
@@ -55,11 +56,11 @@ exports.loggedIn = false;
               }
               else if(!verified){
                 console.log("password is incorrect");
-                res.send(false);
+                res.send("Success": false, "ErrType": "password", "Message": "Incorrect Password"});
               }
               else{
                 loggedIn = true;
-                res.send(true);
+                res.send("Success": true, "ErrType": null, "Message": "Login Successful"});
               }
 
             });

@@ -8,14 +8,14 @@ block mainContainer
 
 		form(name='login_form', id='login_form')
 			h3(class='fields' )
-				
 				label(for='email') E-mail
 				input(id='email', type='text', value='', placeholder='example@muse.com', name='email')
+				div(id='FB_email', class='feedback')
 			
 			h3(class='fields' )
 				label(for='password') Password
 				input(id='password', value='', placeholder='password', name='password', type='password')
-			
+				div(id='FB_password', class='feedback')
 			input(type='submit', value='Log In') 
 
 
