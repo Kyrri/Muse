@@ -4,8 +4,8 @@ block headScripts
 block mainContainer
     h3
       |#{title}
-      h4 Artist: #{data.artist} 
-      h4 Created: #{data.year}
+      //h4 Artist: #{data.artist} 
+      //h4 Created: #{data.year}
 
     div
 
@@ -17,5 +17,5 @@ block mainContainer
       br
       hr
       p
-        | #{data.description}
-      a.button(href='/checkIn/') Next Check-In
+        //#{data.description}
+      a.button(href= URL + '/checkIn/') Next Check-In

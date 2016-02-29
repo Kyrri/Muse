@@ -7,15 +7,15 @@ block mainContainer
 			a(href='/signup' style='color: #6d6f71') Sign-Up
 
 		form(name='login_form', id='login_form')
-			h3(class='fields' )
-				
+			h3(class='fields')
 				label(for='email') E-mail
-				input(id='email', type='text', value='', placeholder='example@muse.com', name='email')
+				input(id='email', type='text', value='', placeholder='example@muse.com', name='email' class='placeholdertext')
+				div(id='FB_email', class='feedback')
 			
-			h3(class='fields' )
+			h3(class='fields')
 				label(for='password') Password
-				input(id='password', value='', placeholder='password', name='password', type='password')
-			
+				input(id='password', value='', placeholder='password', name='password', type='password' class='placeholdertext')
+				div(id='FB_password', class='feedback')
 			input(type='submit', value='Log In') 
 
 

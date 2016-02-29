@@ -1,0 +1,11 @@
+platforms
+!platforms/*.json
+
+plugins
+!plugins/*.json
+
+www/*.html
+
+www/javascripts
+www/images
+www/stylesheets
