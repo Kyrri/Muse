@@ -12,7 +12,7 @@ jQuery(document).ready(function($) {
 			$(this).next().slideToggle('fast');
 
 			//Hide the other panels
-			$accordion.find(".accordion-content").not($(this).next()).slideUp('fast');
+			/*$accordion.find(".accordion-content").not($(this).next()).slideUp('fast');*/
 
 		});
 	});
