@@ -242,8 +242,9 @@ CREATE TABLE `interaction` (
   `interactionId` int(11) NOT NULL AUTO_INCREMENT,
   `tstamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `interactionType` int(11) NOT NULL,
-  `user` int(11) NOT NULL,
-  `element` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `elementId` int(11) NOT NULL,
+  `visitId` int(11) NOT NULL,
   PRIMARY KEY (`interactionId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -254,7 +255,7 @@ CREATE TABLE `interaction` (
 
 LOCK TABLES `interaction` WRITE;
 /*!40000 ALTER TABLE `interaction` DISABLE KEYS */;
-INSERT INTO `interaction` VALUES (1,'2016-02-23 18:21:43',1,2,1325);
+INSERT INTO `interaction` VALUES (1,'2016-02-23 18:21:43',1,2,1325,0);
 /*!40000 ALTER TABLE `interaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -295,7 +296,7 @@ CREATE TABLE `login` (
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `loginType` int(11) NOT NULL,
   `login` varchar(255) NOT NULL,
-  `pass` varchar(255) NOT NULL,
+  `pass` varchar(720) NOT NULL,
   `userId` int(11) NOT NULL,
   PRIMARY KEY (`loginId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
@@ -375,6 +376,7 @@ CREATE TABLE `user` (
   `lastName` varchar(255) DEFAULT NULL,
   `gender` int(11) DEFAULT NULL,
   `ageRange` int(11) DEFAULT NULL,
+  `userTypeId` int(11) NOT NULL,
   PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -385,7 +387,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (7,1,'test1','test11',1,1),(8,1,'test2','',1,1),(9,1,'test2','lastnametest',1,1),(10,1,'adfadfadsf','afasdfad',1,1),(11,1,'Gloria','McPlot',1,1),(12,1,'','',1,1),(13,1,'Potato','Tomato',1,1),(14,1,'Nathan','Yim',1,1),(15,1,'A','A',1,1),(16,1,'m','bristow',1,1),(17,1,'Ian','Easterbrook',1,1),(18,1,'Chelsea','Haemel',1,1),(19,1,'Theo','Chan',1,1),(20,1,'','',1,1),(21,1,'','',1,1),(22,1,'Djdhrh','',1,1),(23,1,'Dhdhdhd','Dhdhdhd',1,1),(24,1,'Bob','Smith',1,1),(25,1,'','',1,1),(26,1,'','',1,1),(27,1,'Melissa','Lynett',1,1),(28,1,'','',1,1),(29,1,'Dhdhdhdh','',1,1);
+INSERT INTO `user` VALUES (7,1,'test1','test11',1,1,1),(8,1,'test2','',1,1,1),(9,1,'test2','lastnametest',1,1,1),(10,1,'adfadfadsf','afasdfad',1,1,1),(11,1,'Gloria','McPlot',1,1,1),(12,1,'','',1,1,1),(13,1,'Potato','Tomato',1,1,1),(14,1,'Nathan','Yim',1,1,1),(15,1,'A','A',1,1,1),(16,1,'m','bristow',1,1,1),(17,1,'Ian','Easterbrook',1,1,1),(18,1,'Chelsea','Haemel',1,1,1),(19,1,'Theo','Chan',1,1,1),(20,1,'','',1,1,1),(21,1,'','',1,1,1),(22,1,'Djdhrh','',1,1,1),(23,1,'Dhdhdhd','Dhdhdhd',1,1,1),(24,1,'Bob','Smith',1,1,1),(25,1,'','',1,1,1),(26,1,'','',1,1,1),(27,1,'Melissa','Lynett',1,1,1),(28,1,'','',1,1,1),(29,1,'Dhdhdhdh','',1,1,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -397,10 +399,10 @@ DROP TABLE IF EXISTS `userType`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `userType` (
-  `userType` int(11) NOT NULL AUTO_INCREMENT,
-  `userTypeDesc` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`userType`),
-  UNIQUE KEY `userTypeDesc` (`userTypeDesc`)
+  `userTypeId` int(11) NOT NULL AUTO_INCREMENT,
+  `userType` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`userTypeId`),
+  UNIQUE KEY `userTypeDesc` (`userType`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -446,6 +448,22 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary view structure for view `v_users`
+--
+
+DROP TABLE IF EXISTS `v_users`;
+/*!50001 DROP VIEW IF EXISTS `v_users`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_users` AS SELECT 
+ 1 AS `id`,
+ 1 AS `userType`,
+ 1 AS `login`,
+ 1 AS `firstName`,
+ 1 AS `lastName`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `visit`
 --
 
@@ -459,6 +477,7 @@ CREATE TABLE `visit` (
   `visitDate` date NOT NULL,
   `userId` int(11) NOT NULL,
   `museumId` int(11) NOT NULL,
+  `visitTypeId` int(11) NOT NULL,
   PRIMARY KEY (`visitId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -470,6 +489,31 @@ CREATE TABLE `visit` (
 LOCK TABLES `visit` WRITE;
 /*!40000 ALTER TABLE `visit` DISABLE KEYS */;
 /*!40000 ALTER TABLE `visit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `visitType`
+--
+
+DROP TABLE IF EXISTS `visitType`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `visitType` (
+  `visitTypeId` int(11) NOT NULL AUTO_INCREMENT,
+  `visitType` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`visitTypeId`),
+  UNIQUE KEY `visitType` (`visitType`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `visitType`
+--
+
+LOCK TABLES `visitType` WRITE;
+/*!40000 ALTER TABLE `visitType` DISABLE KEYS */;
+INSERT INTO `visitType` VALUES (1,'Free Roam'),(2,'Museum Curated');
+/*!40000 ALTER TABLE `visitType` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -518,6 +562,45 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `loginPasswordReturn` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `loginPasswordReturn`(
+	IN vLogin VARCHAR(255),
+    IN vLoginType INTEGER,
+    OUT vPass VARCHAR(720),
+    OUT vmsg VARCHAR(255)
+)
+BEGIN
+	DECLARE vvalidLogin TINYINT DEFAULT 0;
+    
+	SELECT COUNT(*) INTO vvalidLogin
+    FROM login
+	WHERE login=vLogin AND loginType=vLoginType;
+    
+    IF vvalidLogin = 0 THEN
+		SELECT "login does not exist" INTO vmsg;
+        SELECT -1 INTO vPass;
+	ELSE
+		SELECT pass INTO vPass
+		FROM login
+		WHERE login=vLogin AND loginType=vLoginType;
+        
+        SELECT "return sucessful" INTO vmsg;
+    END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `userCreate` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -554,8 +637,8 @@ BEGIN
 		SELECT "login already exisits" INTO vmsg;
         SELECT -1 INTO vsuc;
 	ELSE
-		INSERT INTO user (firstName, lastName, gender, ageRange)
-        VALUES (vfirstName,vlastName,vgender,vageRange);
+		INSERT INTO user (firstName, lastName, gender, ageRange,userTypeId)
+        VALUES (vfirstName,vlastName,vgender,vageRange,vuserType);
         
         INSERT INTO login (loginType, login, pass, userId)
         VALUES (vloginType, vlogin, vpass, (SELECT MAX(userId) FROM user));
@@ -652,6 +735,24 @@ USE `muse_dev`;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_users`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_users`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_users` AS select distinct `l`.`userId` AS `id`,`t`.`userType` AS `userType`,`l`.`login` AS `login`,`u`.`firstName` AS `firstName`,`u`.`lastName` AS `lastName` from ((`login` `l` left join `user` `u` on((`l`.`userId` = `u`.`userId`))) left join `usertype` `t` on((`u`.`userTypeId` = `t`.`userTypeId`))) where (`u`.`active` = 1) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -662,4 +763,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-23 14:28:48
+-- Dump completed on 2016-02-28 20:34:29
