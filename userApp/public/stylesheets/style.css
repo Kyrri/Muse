@@ -5,7 +5,7 @@ body{
   margin: 0;
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5 {
     font-family: "servus-slab", sans-serif;
     font-variant: small-caps;
     font-weight: normal;
@@ -54,6 +54,12 @@ h4{
   text-align: center;
 }
 
+h5{
+  font-size:6vw;
+  margin:0px;
+  text-align: center;
+}
+
 div{
 margin-left: 0px;
 }
@@ -82,6 +88,15 @@ select
 	border-radius: 5px;
 }
 
+.artifact{
+  font-family:"servus-slab", sans-serif;
+  font-weight: normal;
+  font-size:4vw;
+  margin:7px;
+  text-align: justify;
+}
+
+}
 .mainContainer{
     padding:15px;
 }
@@ -153,12 +168,29 @@ img#home {
   margin-top: 5px;
 }
 
+.boxSignup{
+  border: 5px clear;
+  border-radius: 15px;
+  overflow:hidden;
+  margin-top: 20px;
+}
+
+
 .boxVisits h4{
   background-color:#6d6f71;
   color:#ffffff;
   padding-left: 8px;
   padding-bottom: 4px;
   font-size: 6vw;
+}
+
+.boxSignup h5{
+  background-color:#6d6f71;
+  color:#ffffff;
+  padding-left: 8px;
+  padding-bottom: 4px;
+  font-size: 8vw;
+
 }
 
 .boxVisits p{
@@ -168,8 +200,8 @@ img#home {
 .planVisit{
   margin-top: 30px;
   margin-bottom: 10px;
- /* position: fixed;
-  bottom: 0px;*/
+
+  width:81%;
 
 }
 
@@ -209,7 +241,18 @@ img#home {
   margin-right:auto;
 }
 
+.signup
+{
+  width: 100%;
+  margin-top: 50px;
+  margin-left:auto;
+  margin-right:auto;
+}
 
+.signupbox {
+  text-align: left;
+  margin-top: 50px;
+}
 button, a.button, input.button, input[type='submit'] {
   border: 2px solid #6d6f71;
   border-radius: 15px;
@@ -346,4 +389,34 @@ form#checkIn {
 .accordion-toggle {cursor: pointer;}
 .accordion-content {display: none;}
 .accordion-content.default {display: block;}
- 
+
+.header{
+  color: #6d6f71;
+  text-align: center;
+  padding: 5px;
+  font-size: 4vw;
+}
+
+.button{
+  color: #6d6f71;
+  padding: 5px;
+}
+
+.additional_info{
+  font-family:"servus-slab", sans-serif;
+  font-weight: normal;
+  font-size:2vw;
+  margin:7px;
+  text-align: justify;
+  overflow: scroll;
+  height:200px;
+
+}
+
+.footer{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  position: fixed;
+  bottom: -10px;
+}
