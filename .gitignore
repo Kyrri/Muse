@@ -1,6 +1,6 @@
 /nodetest1/node_modules/
 /ngrok
-*/sqlbak*
+*sqlbak*
 
 # Logs
 logs
