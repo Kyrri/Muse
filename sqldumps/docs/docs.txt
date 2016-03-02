@@ -1,0 +1,11 @@
+loginPasswordReturn
+
+ - returns a password and userId for a given login
+
+	CALL `muse_dev`.`loginPasswordReturn`(
+	'test1@test.com', 
+	1, 
+	@successCriteria, 
+	@passwordHash, 
+	@userId);
+	SELECT @successCriteria,@passwordHash,@userId;

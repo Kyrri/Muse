@@ -575,8 +575,9 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `loginPasswordReturn`(
 	IN vLogin VARCHAR(255),
     IN vLoginType INTEGER,
+    OUT vSuccess INTEGER,
     OUT vPass VARCHAR(720),
-    OUT vmsg VARCHAR(255)
+    OUT vUserId INTEGER
 )
 BEGIN
 	DECLARE vvalidLogin TINYINT DEFAULT 0;
@@ -586,14 +587,16 @@ BEGIN
 	WHERE login=vLogin AND loginType=vLoginType;
     
     IF vvalidLogin = 0 THEN
-		SELECT "login does not exist" INTO vmsg;
+		SELECT -1 INTO vSuccess;
         SELECT -1 INTO vPass;
+        SELECT -1 INTO vUserId;
 	ELSE
-		SELECT pass INTO vPass
+		SELECT pass, userId
+        INTO vPass, vUserId
 		FROM login
 		WHERE login=vLogin AND loginType=vLoginType;
         
-        SELECT "return sucessful" INTO vmsg;
+        SELECT 1 INTO vSuccess;
     END IF;
 END ;;
 DELIMITER ;
@@ -763,4 +766,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-28 20:34:29
+-- Dump completed on 2016-03-02 12:36:52
