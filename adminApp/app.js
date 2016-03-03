@@ -96,11 +96,44 @@ function genSqlString(queryType, queryTable){
 
     });
 
-    app.post('/insertTag', function(req,res){
-      var tag = req.body.elementTag;
-      var tagType = req.body.elementTagType;
+    app.post('/exec_sp',function(req,res){
+      // this is a general call that will execute any sp with parameters in the form:
+      /*  
+          var params = JSON.stringify({
+          'sp' : 'insert_elementTag',     // the name of the SP, exactly as in the db
+          'input_params' : {              // the values of the input parameters, name of key does not mater
+            'i1' : 'Automotive',          // number of input parameters in emebeded JSON must match number in SP definition
+            'i2' : 'Industry'
+          },
+          'output_params' : 1             // the number of output parameters
+          });
+      */     
 
-      var sqlStr = "CALL insert_elementTag('" + tag + "','" + tagType + "', @success); SELECT @success AS 'success';"
+      var sp = req.body.sp;
+      var input_params = req.body.input_params;
+      var output_params = req.body.output_params;
+      var sqlStr = "CALL "
+
+      sqlStr += sp + "('";
+      for (x in input_params) {
+        sqlStr += input_params[x] + "','"
+      }
+      sqlStr = sqlStr.substring(0, sqlStr.length - 1); //remove the last ', output vars dont need it
+
+      if (output_params > 1) {
+        for (i=1;i<output_params;i++) {
+          sqlStr += "@o" + i + ",";
+        }
+      } 
+      sqlStr += "@o" + output_params + "); ";
+      
+      sqlStr += "SELECT ";
+      if (output_params > 1) {
+        for (i=1;i<output_params;i++) {
+          sqlStr += "@o" + i + ",";
+        }
+      } 
+      sqlStr += "@o" + output_params + ";";
 
       //console.log(sqlStr);
 
@@ -113,7 +146,6 @@ function genSqlString(queryType, queryTable){
       });
 
     });
-
 
 
 // Run Server

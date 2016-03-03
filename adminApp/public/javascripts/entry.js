@@ -87,20 +87,23 @@ $(document).ready(function(){
 		}
 
 		function addTag() {
-
 			var params = JSON.stringify({
-				'elementTag': tag.val(),
-				'elementTagType': tagType.val() 
-			});	
+				'sp' : 'insert_elementTag',
+				'input_params' : {
+					'elementTag' : tag.val(),
+					'elementTagType' : tagType.val()
+				},
+				'output_params' : 1
+			});
 
-			$.ajax('insertTag',{
+			$.ajax('exec_sp',{
 				type: "POST",
 				contentType: "application/json",
 		 		dataType: 'JSON',
 				data: params,
 				success: function (results){
 					//console.log(results[1][0].success);
-					err = results[1][0].success
+					err = results[1][0]['@o1'];
 					//console.log(errCheck(err));
 					if (err == 0) {
 						//alert(errCheck(err));
@@ -111,9 +114,7 @@ $(document).ready(function(){
 						//console.log(errCheck(err));
 					}
 				}
-
 			});
-
 		}	
 
 		dialog = $("#addTagWindow").dialog({
@@ -140,7 +141,24 @@ $(document).ready(function(){
 
 	// testButton
 	$('#testButton').click(function(){
-		console.log(elementTagTypes);
+		var params = JSON.stringify({
+			'sp' : 'insert_elementTag',
+			'input_params' : {
+				'i1' : 'Automotive',
+				'i2' : 'Industry'
+			},
+			'output_params' : 1
+		});
+
+		$.ajax('exec_sp',{
+				type: "POST",
+				contentType: "application/json",
+		 		dataType: 'JSON',
+		 		data: params,
+				success: function (results){
+					console.log(results);
+				}
+			});
 	});
 	
 
