@@ -16,19 +16,9 @@ block mainContainer
 				h4 Recent Visit 1
 				p Text
 
-		.upcoming
-			h3(class='welcome') Upcoming Visits
-			#visits_accordion_upcoming
-				.boxVisits
-					h4.accordion-toggle Upcoming Visit 1
-					.accordion-content.default
-						p Text
-						p More text
-				.boxVisits
-					h4.accordion-toggle Upcoming Visit 2
-					.accordion-content.default
-						p Text
-						p More text
+		.planVisit
+			a.button(href='selectMuseum.html') Start Visit
+			a.button(href='fav.html') View Favorites
 
 		.recent
 			h3(class='welcome') Recent Visits
@@ -38,10 +28,9 @@ block mainContainer
 					.accordion-content.default
 						p Text
 						p More text
-				//.boxVisits
+				.boxVisits
 					h4.accordion-toggle Recent Visit 2
 					.accordion-content
 						p Text
 						p More text
-		.planVisit
-			a.button(href='selectMuseum.html') Plan Visit
+

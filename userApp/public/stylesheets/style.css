@@ -18,6 +18,7 @@ p{
   font-size:4vw;
   margin:7px;
   text-align: justify;
+
 }
 
 h1{
@@ -44,7 +45,7 @@ h2{
 h3{ 
   font-size: 6vw;
   color: #6d6f71;
-  margin: 0px;
+  margin: 10px;
   /*text-align: justify;*/
 }
 
@@ -173,6 +174,7 @@ img#home {
   border-radius: 15px;
   overflow:hidden;
   margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 
@@ -200,7 +202,8 @@ img#home {
 .planVisit{
   margin-top: 30px;
   margin-bottom: 10px;
-
+  margin-left:auto;
+  margin-right:auto;
   width:81%;
 
 }
@@ -258,13 +261,14 @@ button, a.button, input.button, input[type='submit'] {
   border-radius: 15px;
   overflow:hidden;
   background-color: #6d6f71;
-  width: 100%;
+  width: 95%;
   font-family: "servus-slab", sans-serif;
   font-variant: small-caps;
   color: #ffffff;
   font-size: 8vw;
   display: inline-block;
   text-decoration: none;
+
 }
 
 button.selected {
@@ -283,8 +287,7 @@ button.selected {
   color: #6d6f71;
 }
 
-.signupContainer form, 
-.login_defaultContainer form {
+.signupContainer form,.login_defaultContainer form {
   margin-top: 30px;
   text-align: left;
 }
@@ -361,7 +364,7 @@ form#checkIn {
   margin-left: auto;
   margin-right: auto;
   margin-top: 30px;
-  width: 100%;
+  width: 95%;
 }
 
 .feedback{
@@ -397,7 +400,7 @@ form#checkIn {
   font-size: 4vw;
 }
 
-.button{
+.infobutton{
   color: #6d6f71;
   padding: 5px;
 }
@@ -409,7 +412,7 @@ form#checkIn {
   margin:7px;
   text-align: justify;
   overflow: scroll;
-  height:200px;
+  height: 200px;
 
 }
 
@@ -417,6 +420,7 @@ form#checkIn {
   width: 80%;
   margin-left: auto;
   margin-right: auto;
-  position: fixed;
-  bottom: -10px;
+ /*position: fixed;
+  bottom: 10px;*/
 }
+
