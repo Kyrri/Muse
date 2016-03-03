@@ -1,3 +1,18 @@
+@font-face{
+  font-family: MuseoSans;
+  src: 'MuseoSans_500-webfont.ttf';
+}
+
+@font-face{
+  font-family: Museo;
+  src: 'Museo500-Regular-webfont.ttf';
+}
+
+@font-face{
+  font-family: MuseoSansThin;
+  src: 'MuseoSansCyrl.otf';
+}
+
 body{
   font: 8vw "Lucida Grande", Helvetica, Arial, sans-serif;
   color: #6D6E72;
@@ -104,9 +119,11 @@ select
     padding:5%;
 }
 
+/* Menu Bar */
+
 .menubar{
   width:100%;
-  background-color:#6d6f71;
+  background-color:#939598;
   color:#ffffff;
   margin:0;
 }
@@ -115,7 +132,6 @@ select
   display: block;
   clear: both;
 }
-
 
 .menubar img{
   height:45px;
@@ -132,6 +148,17 @@ select
 #menuTitle {
   width: 60%;
 }
+
+#menuTitle h2 {
+  color: #ffffff;
+  font-family: Museo, Museo;
+  font-weight: bold;
+  font-size: 40px;
+  letter-spacing: 4px;
+  padding-top: 5px;
+  
+}
+
 #menuHomeLink {
   text-align: left;
 }
@@ -257,10 +284,11 @@ button, a.button, input.button, input[type='submit'] {
   border: 2px solid #6d6f71;
   border-radius: 15px;
   overflow:hidden;
-  background-color: #6d6f71;
+  background-color: #808285;
   width: 100%;
-  font-family: "servus-slab", sans-serif;
-  font-variant: small-caps;
+  font-family: MuseoSans, Museo Sans;
+  text-transform: uppercase;
+  font-weight: lighter;
   color: #ffffff;
   font-size: 8vw;
   display: inline-block;
@@ -275,12 +303,12 @@ button.selected {
 
 .signupContainer, .login_defaultContainer {
   text-align: center;
-  font-family: "servus-slab", sans-serif;
-  font-variant: small-caps;
+  font-family: MuseoSans, Museo Sans;
+  
 }
 
 .signupContainer a {
-  color: #6d6f71;
+  color: #6d6e71;
 }
 
 .signupContainer form, 
@@ -291,8 +319,10 @@ button.selected {
 
 .signupContainer label,
 .login_defaultContainer label {
-  font-size: 7vw;
+  font-size: 5vw;
   margin-bottom:;
+  font-family: MuseoSans, Museo Sans;
+  text-transform: uppercase;
 }
 
 .signupContainer label,
@@ -398,7 +428,7 @@ form#checkIn {
 }
 
 .button{
-  color: #6d6f71;
+  color: #808285;
   padding: 5px;
 }
 
