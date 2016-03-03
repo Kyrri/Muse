@@ -26,15 +26,21 @@ var exports = module.exports = {};
 exports.loggedIn = false;
 
 // SQL Types
-function genSqlString(queryType, queryTable){
+function genSqlString(queryType, queryVal){
   var sqlStr = '';
   switch(queryType) {
+    case 0:
+      sqlStr = "SELECT * FROM elementTag WHERE elementTagTypeId=f_getElementTagTypeId('" + queryVal + "');"; 
+      break;
+    case 1:
+      sqlStr = "SELECT * FROM exhibit WHERE museumId=f_getMuseumId('" + queryVal + "');"; 
+      break;
     default:
-      sqlStr = 'SELECT * FROM ';
+      sqlStr = 'SELECT * FROM ' + queryVal + ';';
       break;
   }
 
-  return sqlStr + queryTable + ';';
+  return sqlStr
 }
 
 // Routes
@@ -80,11 +86,11 @@ function genSqlString(queryType, queryTable){
 
     app.post('/entry',function(req, res){
       var queryType = req.body.queryType;
-      var queryTable = req.body.queryTable;
+      var queryTable = req.body.queryVal;
 
       // returns the element tag types, in a 1xn array
       var sqlStr = genSqlString(queryType,queryTable);
-      //console.log(sqlStr);
+      console.log(sqlStr);
       
       conn.query(sqlStr,function(err,results){
         if(err){

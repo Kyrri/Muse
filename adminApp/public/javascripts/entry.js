@@ -2,17 +2,27 @@ $(document).ready(function(){
 
 	// PAGE VARIABLES
 	var elementTagTypes = [];
+	var elementTags = [];
+	var museums = [];
+	var exhibits = [];
 	var selectedTagType = '';
 
 	// FUNCTIONS
 	// gets a list of tag types
+	function appendOptions(id,options) {
+		$(id).empty().append('<option selected disabled>Select value</option>')
+		for (x in options) {
+			$(id).append('<option>' + options[x] + '</options>');
+		}
+	}
+
 	function getTagTypeList() {
 		elementTagTypes = [];
 		//console.log(elementTagTypes)
 
 		var parameters = JSON.stringify({
 			'queryType': null, 
-			'queryTable': 'elementTagType'
+			'queryVal': 'elementTagType'
 		});
 		$.ajax('entry',{
 			type: "POST",
@@ -27,19 +37,89 @@ $(document).ready(function(){
 	      		}
 	      		//console.log(elementTagTypes);
 
-	      		$('#addTagForm-elementTagType').empty().append('<option>Select tag type</option>');
-	  			for (x in elementTagTypes) {
-	  				$('#addTagForm-elementTagType').append('<option>' + elementTagTypes[x] +'</option>')
-	  			}
+	      		appendOptions('#addTagForm-elementTagType', elementTagTypes);
 			}
 		});
 	}
 
+	function getMuseumList() {
+		museums = [];
+
+		var parameters = JSON.stringify({
+			'queryType': null, 
+			'queryVal': 'museum'
+		});
+		$.ajax('entry',{
+			type: "POST",
+			contentType: "application/json",
+		 	dataType: 'JSON',
+			data: parameters,
+			success: function(results){
+				// read the tag types into an array
+				for (x in results) {
+	        		museums[x] = results[x].museumName;
+	      		}
+	      		appendOptions('#tagElementForm-museum', museums);
+			}
+		});
+	}
+
+	// gets tags of a particular tag type, store in in page variable
+	function getTagList(tagType) {
+		elementTags = [];
+		var parameters = JSON.stringify({
+			'queryType': 0, // see cases in app.js
+			'queryVal': tagType
+		});
+		$.ajax('entry',{
+			type: "POST",
+			contentType: "application/json",
+		 	dataType: 'JSON',
+			data: parameters,
+			success: function(results){
+				// read the tag types into an array
+				//console.log(results);
+				for (x in results) {
+	        		//console.log(results[x]);
+	        		elementTags[x] = results[x].elementTag;
+	      		}
+	      		console.log(elementTags);
+			}
+		});
+	}
+
+	function getExhibitList(museum) {
+		elementTags = [];
+		var parameters = JSON.stringify({
+			'queryType': 1, // see cases in app.js
+			'queryVal': museum
+		});
+		$.ajax('entry',{
+			type: "POST",
+			contentType: "application/json",
+		 	dataType: 'JSON',
+			data: parameters,
+			success: function(results){
+				// read the tag types into an array
+				//console.log(results);
+				for (x in results) {
+	        		//console.log(results[x]);
+	        		exhibits[x] = results[x].exhibitName;
+	      		}
+	      		//console.log(exhibits);
+	      		appendOptions('#tagElementForm-exhibit', exhibits);
+			}
+		});
+	}
+
+
 	// load the tag types
 	getTagTypeList();
+	getMuseumList();
 
   	// hide the addElementTag form
 	$('#addTagWindow').hide();
+	$('#tagElementWindow').hide();
 
 	// CLICK ACTIONS
 	// get tagTypeList
@@ -139,26 +219,49 @@ $(document).ready(function(){
       	dialog.dialog( "open" );
     });
 
-	// testButton
-	$('#testButton').click(function(){
-		var params = JSON.stringify({
-			'sp' : 'insert_elementTag',
-			'input_params' : {
-				'i1' : 'Automotive',
-				'i2' : 'Industry'
-			},
-			'output_params' : 1
+	// add element tag form 
+    $( "#tagElementButton" ).click(function() {
+      	var dialog, form, err;
+      	var museum = $('#tagElementForm-museum');
+      	var exhibit = $('#tagElementForm-exhibit');
+
+		function tagElement() {
+
+		}	
+
+		museum.change(function(){
+			//console.log(museum.val());
+			getExhibitList(museum.val());
 		});
 
-		$.ajax('exec_sp',{
-				type: "POST",
-				contentType: "application/json",
-		 		dataType: 'JSON',
-		 		data: params,
-				success: function (results){
-					console.log(results);
+		dialog = $("#tagElementWindow").dialog({
+			autoOpen: false, 
+			modal: true,
+			buttons: {
+				"Add Tag" : tagElement,
+				Cancel: function() {
+					dialog.dialog('close');
 				}
-			});
+			},
+			close: function() {
+		        form[ 0 ].reset();
+	    	}
+		});
+
+		form = dialog.find( "form" ).on( "submit", function( event ) {
+	      	event.preventDefault();
+	      	tagElement();
+	    });
+
+      	dialog.dialog( "open" );
+    });
+    
+	
+
+
+	// testButton
+	$('#testButton').click(function(){
+		getExhibitList('Muse Sample');
 	});
 	
 
