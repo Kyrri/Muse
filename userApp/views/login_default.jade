@@ -1,14 +1,8 @@
 extends layout
 block headScripts
 	script(src='/javascripts/login.js')
-	script(src='/javascripts/signup.js')
-
-
 block mainContainer
 	.login_defaultContainer
-			
-
-
 		form(name='login_form', id='login_form')
 			h3(class='fields')
 				label(for='email') E-mail
@@ -21,51 +15,5 @@ block mainContainer
 				div(id='FB_password', class='feedback')
 			input(type='submit', value='Log In') 
 
-		.upcoming
-			#signupbox
-				.boxSignup
-					h5.accordion-toggle Sign Up
-					.accordion-content.default
-						.signupContainer
-							form(name='login_form', id='login_form')
-								label(for='email') E-mail
-								input(id='email', type='text', value='', placeholder='example@muse.com', name='email' class='placeholdertext')
-								div(id='FB_email', class='feedback')
-								label(for='password') Password
-								input(id='password', value='', placeholder='password', name='password', type='password' class='placeholdertext')
-								div(id='FB_password', class='feedback')
-
-								label(for='fName') First Name
-								input(id='fName', type='text', value='', placeholder='John', name='fName' class='placeholdertext')
-
-								label(for='lName') Last Name
-								input(id='lName', type='text', value='', placeholder='Johnston', name='lName' class='placeholdertext')
-
-								label(for='gender') Gender
-								select(id='gender', name='gender' class='placeholdertext')
-									option(value='null', selected='selected' class='placeholdertext') Please Choose
-									option(value='Male' class='placeholdertext') Male
-									option(value='Female' class='placeholdertext') Female
-									option(value='Other' class='placeholdertext') Other
-									option(value='NA' class='placeholdertext') Prefer not to answer
-
-										//- Instead of Select, consider using twitter bootstrap dropdown - it's currently commented out but the script include for bootstrap is in layout.jade if you want it and it's already in the javascripts folder
-
-								label(for='ageRange') Age
-								select(id='ageRange', name='ageRange' class='placeholdertext')
-									option(value='null', selected='selected' class='placeholdertext') Please Choose
-									option(value='<18') <18
-									option(value='18-20') 18-20
-									option(value='20-25') 20-25
-									option(value='25-30') 25-30
-									option(value='30-40') 30-40
-									option(value='40-50') 40-50
-									option(value='50-60') 50-60
-									option(value='60-70') 60-70
-									option(value='70+') 70+
-									option(value='NA' class='placeholdertext') Prefer not to answer
-
-								input(class='button', type='submit', value='Sign Up') 
-
-
-
+	.login_defaultContainer
+		a.button(href='signup_default') Sign Up

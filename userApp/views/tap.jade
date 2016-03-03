@@ -1,28 +1,32 @@
 extends layout
+block headScripts
+  script(src='/javascripts/info.js')
 
 block mainContainer
     .header
         div(id='header', class='artifact')
-            h4 title 
-            h4 artist
-            h4 date
-    .button
-        div(id='buttons')
+          //h4{title}
+          //h4 Artist: #{data.artist} 
+          //h4 Created: #{data.year}
+    .infobutton
+        div(id='infobutton')
             img(id='likebtn',src='../images/like.png' align='left' width='10%')
             img(id='favbtn', src='../images/fav.png' align='right' width='10%')
             br       
             hr
 
-    .aditional_info
-        div(id='additiona_info' style='height:200px')
-            p   London is the capital city of England. It is the most populous city in the United Kingdom,
-                with a metropolitan area of over 13 million inhabitants.Standing on the River Thames, London has been a major settlement for two millennia. its history going back to its founding by the Romans, who named it Londinium.
-                London is the capital city of England. It is the most populous city in the United Kingdom,
-                with a metropolitan area of over 13 million inhabitants.Standing on the River Thames, London has been a major settlement for two millennia. its history going back to its founding by the Romans, who named it Londinium.
-                London is the capital city of England. It is the most populous city in the United Kingdom,
-                with a metropolitan area of over 13 million inhabitants.Standing on the River Thames, London has been a major settlement for two millennia. its history going back to its founding by the Romans, who named it Londinium.
-                London is the capital city of England. It is the most populous city in the United Kingdom,
-                with a metropolitan area of over 13 million inhabitants.Standing on the River Thames, London has been a major settlement for two millennia. its history going back to its founding by the Romans, who named it Londinium.
-    .footer
+
+        .upcoming
+            #signupbox
+                .additionalinfo
+                    h5.accordion-toggle Additional Information
+
+                    .accordion-content.default
+                       //p   {data.description}
+
         div(id='footer')
             a.button(href='checkin') Next Check-In
+
+        div(id='footer')
+            a.button(href='index') End Tour
+  
