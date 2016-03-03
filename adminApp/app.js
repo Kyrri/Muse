@@ -46,6 +46,9 @@ exports.loggedIn = false;
       //   });
       res.render('index', { title: 'Muse Admin'});
     });
+    app.get('/tableTest', function(req, res){
+      res.render('tableTest', {title:'Table Test'});
+    });
 
 // Run Server
 app.listen(3333, function(){
