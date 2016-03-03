@@ -1,0 +1,44 @@
+extends layout
+block headScripts
+	script(src='/javascripts/entry.js')
+	script(src='//code.jquery.com/ui/1.11.4/jquery-ui.js')
+	link(rel='stylesheet' href='//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css')
+block mainContainer
+	h1 Museum Elements
+	
+	// general structure to get data from a query
+	table(id='elementList')
+		tr
+			each val, index in data[0][0]
+				th=index
+		each rows in data[0]
+			tr
+				each val, index in rows
+					td=val
+
+
+	h1 Element Tags
+	table
+		tr
+			each val, index in data[1][0]
+				th=index
+		each rows in data[1]
+			tr
+				each val, index in rows
+					td=val
+
+	h1 List of Tag Types
+	div(id='tagTypeList', class='clickLink') Click here
+	div(id='tagTypeList-results')
+
+	h1 Windows
+	div(id='addTagButton', class='clickLink') Click to add tag
+		div(id='addTagWindow', title="Add Tag")
+			form(id='addTagForm')
+				fieldset
+					label(for='elementTag') Tag Name
+					input(type='text',name='elementTag',id='addTagForm-elementTag',class="text ui-widget-content ui-corner-all")
+					label(for='elementTagType') Tag Type
+					input(type='text',name='elementTagType',id='addTagForm-elementTagType',class="text ui-widget-content ui-corner-all")
+					input(type='submit',style='position:absolute; top:-1000px')
+

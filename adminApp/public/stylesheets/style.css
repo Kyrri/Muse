@@ -14,3 +14,28 @@
     color: black;
     margin-top: 80px;
 }
+
+table, th, td {
+   border: 1px solid black;
+}
+
+td {
+  padding: 2px;
+}
+
+.clickLink {
+  text-decoration: underline;
+}
+
+#tagTypeList {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#selectedTagType {
+  font-weight: bold;
+}
+
+#selectedElement {
+  font-weight: bold;
+}

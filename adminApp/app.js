@@ -25,6 +25,18 @@ app.use(bodyParser.urlencoded({
 var exports = module.exports = {};
 exports.loggedIn = false;
 
+// SQL Types
+function genSqlString(queryType, queryTable){
+  var sqlStr = '';
+  switch(queryType) {
+    default:
+      sqlStr = 'SELECT * FROM ';
+      break;
+  }
+
+  return sqlStr + queryTable + ';';
+}
+
 // Routes
    
   //  STARTING PAGE  //
@@ -46,6 +58,63 @@ exports.loggedIn = false;
       //   });
       res.render('index', { title: 'Muse Admin'});
     });
+
+    //  ENTRY PAGE //
+    app.get('/entry', function(req, res){
+      
+      //return list of elements 
+      var sqlStr = 'SELECT * FROM v_elements; SELECT * FROM v_tags;';
+      conn.query(sqlStr,function(err,results){
+        if (err){
+          console.log(err);
+        } else {
+          //console.log(results);
+          res.render('entry', { 
+            title: 'Muse Admin', 
+            data: results
+          });
+        }
+      });
+
+    });
+
+    app.post('/entry',function(req, res){
+      var queryType = req.body.queryType;
+      var queryTable = req.body.queryTable;
+
+      // returns the element tag types, in a 1xn array
+      var sqlStr = genSqlString(queryType,queryTable);
+      //console.log(sqlStr);
+      
+      conn.query(sqlStr,function(err,results){
+        if(err){
+          console.log(err);
+        } else {
+          res.send(results);
+        }
+      });
+
+    });
+
+    app.post('/insertTag', function(req,res){
+      var tag = req.body.elementTag;
+      var tagType = req.body.elementTagType;
+
+      var sqlStr = "CALL insert_elementTag('" + tag + "','" + tagType + "', @success); SELECT @success AS 'success';"
+
+      //console.log(sqlStr);
+
+      conn.query(sqlStr,function(err,results){
+        if(err){
+          console.log(err);
+        } else {
+          res.send(results);
+        }
+      });
+
+    });
+
+
 
 // Run Server
 app.listen(3333, function(){
