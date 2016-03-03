@@ -1,14 +1,12 @@
 $(document).ready(function(){
 
-	// page variables 
+	// PAGE VARIABLES
+	var elementTagTypes = [];
 	var selectedTagType = '';
 
-	// hidden form
-	$('#addTagWindow').hide();
-
+	// FUNCTIONS
 	// gets a list of tag types
-	$('#tagTypeList').click(function(){
-		var tagTypes = [];
+	function getTagTypeList() {
 		var parameters = JSON.stringify({
 			'queryType': null, 
 			'queryTable': 'elementTagType'
@@ -20,23 +18,44 @@ $(document).ready(function(){
 			data: parameters,
 			success: function(results){
 				// read the tag types into an array
+				elementTagTypes = [];
 				for (x in results) {
-            		//console.log(results[x]);
-            		tagTypes[x] = results[x].elementTagType;
-          		}
-
-          		// display the tag types as a list
-				$('#tagTypeList').html('Click tag type to select');
-				$('#tagTypeList-results').empty();
-				for (x in tagTypes) {
-					//console.log(results[x]);
-					$('#tagTypeList-results').append('<div class="tagType">'+tagTypes[x]+'</div>');
-				}
+	        		//console.log(results[x]);
+	        		elementTagTypes[x] = results[x].elementTagType;
+	      		}
+	      		//console.log(elementTagTypes);
 			}
-		})
+		});
+	}
+
+	// ON LOAD ITEMS
+    // dynamically populate the tagTypes
+  	getTagTypeList();
+  	$(document).ajaxComplete(function(){
+  		for (x in elementTagTypes) {
+  			$('#addTagForm-elementTagType').append('<option>' + elementTagTypes[x] +'</option>')
+  		}
+  	});
+
+  	// hide the addElementTag form
+	$('#addTagWindow').hide();
+
+	// CLICK ACTIONS
+	// get tagTypeList
+	$('#tagTypeList').click(function(){
+		getTagTypeList();
+		$(document).ajaxComplete(function() {
+		    // display the tag types as a list
+			$('#tagTypeList').html('Click tag type to select');
+			$('#tagTypeList-results').empty();
+			for (x in elementTagTypes) {
+				//console.log(results[x]);
+				$('#tagTypeList-results').append('<div class="tagType">'+elementTagTypes[x]+'</div>');
+			}
+		});
 	});
 
-	// set a tag type variable 
+	// keep track of tag type varialbe 
 	$('#tagTypeList-results').on('click','div.tagType',function(){
 		$('.tagType').removeAttr('id');
 		$(this).attr('id','selectedTagType');
@@ -44,21 +63,8 @@ $(document).ready(function(){
 		//console.log(selectedTagType);
 	});
 
-	// select a row
-	/*$('#elementList').on('click','tr',function(){
-		$('tr').removeAttr('id');
-		$(this).attr('id','selectedElement');
-	});*/
-
-	/*$('#addTagButton').click(function(){
-		$('#addTagWindow').dialog();
-	});*/
-
-
-	// add element tag
-	
+	// add element tag form 
     $( "#addTagButton" ).click(function() {
-      	
       	var dialog, form, err;
       	var tag = $('#addTagForm-elementTag');
       	var tagType = $('#addTagForm-elementTagType');
@@ -127,8 +133,12 @@ $(document).ready(function(){
 	    });
 
       	dialog.dialog( "open" );
-
     });
+
+	// testButton
+	$('#testButton').click(function(){
+		console.log(elementTagTypes);
+	});
 	
 
 });
