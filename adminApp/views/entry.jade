@@ -46,10 +46,21 @@ block mainContainer
 		div(id='tagElementWindow', title="Tag Element")
 			form(id='tagElementForm')
 				fieldset
-					label(for='museum') Select Museum
-					select(type='text',name='museum',id='tagElementForm-museum',class="text ui-widget-content ui-corner-all")
-					label(for='exbibit') Select Exhibit
-					select(type='text',name='exhibit',id='tagElementForm-exhibit',class="text ui-widget-content ui-corner-all")
+					div(id="tagElementForm-museumBox")
+						label(for='museum') Select Museum
+						select(type='text',name='museum',id='tagElementForm-museum',class="text ui-widget-content ui-corner-all")
+					div(id="tagElementForm-exhibitBox")
+						label(for='exbibit') Select Exhibit
+						select(type='text',name='exhibit',id='tagElementForm-exhibit',class="text ui-widget-content ui-corner-all")
+					div(id="tagElementForm-elementBox")
+						label(for='element') Select Element
+						select(type='text',name='element',id='tagElementForm-element',class="text ui-widget-content ui-corner-all")
+					div(id="tagElementForm-tagTypeBox")
+						lable(for='tagType') Select Tag Type
+						select(type='text',name='tagType',id='tagElementForm-tagType',class="text ui-widget-content ui-corner-all")
+					div(id='tagElementForm-tagBox')
+						lable(for='tag') Select Tag
+						select(type='text',name='tag',id='tagElementForm-tag',class="text ui-widget-content ui-corner-all")
 
 
 					

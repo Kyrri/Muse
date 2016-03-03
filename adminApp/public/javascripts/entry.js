@@ -1,121 +1,96 @@
 $(document).ready(function(){
 
 	// PAGE VARIABLES
-	var elementTagTypes = [];
-	var elementTags = [];
-	var museums = [];
-	var exhibits = [];
 	var selectedTagType = '';
 
 	// FUNCTIONS
-	// gets a list of tag types
-	function appendOptions(id,options) {
-		$(id).empty().append('<option selected disabled>Select value</option>')
-		for (x in options) {
-			$(id).append('<option>' + options[x] + '</options>');
+	function logLists(var_array) {
+		for (x in var_array) {
+			console.log(var_array[x]);
 		}
 	}
 
-	function getTagTypeList() {
-		elementTagTypes = [];
-		//console.log(elementTagTypes)
-
-		var parameters = JSON.stringify({
-			'queryType': null, 
-			'queryVal': 'elementTagType'
-		});
-		$.ajax('entry',{
-			type: "POST",
-			contentType: "application/json",
-		 	dataType: 'JSON',
-			data: parameters,
-			success: function(results){
-				// read the tag types into an array
-				for (x in results) {
-	        		//console.log(results[x]);
-	        		elementTagTypes[x] = results[x].elementTagType;
-	      		}
-	      		//console.log(elementTagTypes);
-
-	      		appendOptions('#addTagForm-elementTagType', elementTagTypes);
+	function appendOptions(ids,options) {
+		// appends list options to select forms given ids
+		for (id in ids) {
+			$(ids[id]).empty().append('<option selected disabled>Select value</option>')
+			for (x in options) {
+				$(ids[id]).append('<option>' + options[x] + '</options>');
 			}
-		});
+		}
 	}
 
-	function getMuseumList() {
-		museums = [];
+	function getLists(params,col,append_ids) {
+		// gets lists of values from the db, uses the 'exec_qry' parameter format
+		// returns an array
 
-		var parameters = JSON.stringify({
-			'queryType': null, 
-			'queryVal': 'museum'
-		});
-		$.ajax('entry',{
-			type: "POST",
-			contentType: "application/json",
-		 	dataType: 'JSON',
-			data: parameters,
-			success: function(results){
-				// read the tag types into an array
+		var var_array = [];
+		$.ajax('exec_qry',{
+			type : 'POST',
+			contentType : 'application/json',
+			dataType : 'JSON',
+			data : params,
+			success : function(results){
 				for (x in results) {
-	        		museums[x] = results[x].museumName;
-	      		}
-	      		appendOptions('#tagElementForm-museum', museums);
+					var_array[x] = results[x][col];
+				}
+				appendOptions(append_ids,var_array);
+				logLists(var_array);
 			}
 		});
+		return var_array;
 	}
 
-	// gets tags of a particular tag type, store in in page variable
-	function getTagList(tagType) {
-		elementTags = [];
+	// FUNCTIONS WITH STATIC DATA
+	function getElementTagTypeList(ids) {
 		var parameters = JSON.stringify({
-			'queryType': 0, // see cases in app.js
-			'queryVal': tagType
+			'table': 'elementTagType'
 		});
-		$.ajax('entry',{
-			type: "POST",
-			contentType: "application/json",
-		 	dataType: 'JSON',
-			data: parameters,
-			success: function(results){
-				// read the tag types into an array
-				//console.log(results);
-				for (x in results) {
-	        		//console.log(results[x]);
-	        		elementTags[x] = results[x].elementTag;
-	      		}
-	      		console.log(elementTags);
+		getLists(parameters,'elementTagType',ids);
+	}
+
+	function getMuseumList(ids) {
+		var parameters = JSON.stringify({
+			'table': 'museum'
+		});
+		getLists(parameters,'museumName',ids);
+	}
+
+	function getElementTagList(elementTagType,ids) {
+		var parameters = JSON.stringify({
+			'table' : 'elementTag',
+			'clauses' : {
+				'elementTagTypeId' : "f_getElementTagTypeId('" + elementTagType + "')" 
 			}
 		});
+		getLists(parameters,'elementTag',ids);
 	}
 
-	function getExhibitList(museum) {
-		elementTags = [];
+	function getExhibitList(museum,ids) {
 		var parameters = JSON.stringify({
-			'queryType': 1, // see cases in app.js
-			'queryVal': museum
-		});
-		$.ajax('entry',{
-			type: "POST",
-			contentType: "application/json",
-		 	dataType: 'JSON',
-			data: parameters,
-			success: function(results){
-				// read the tag types into an array
-				//console.log(results);
-				for (x in results) {
-	        		//console.log(results[x]);
-	        		exhibits[x] = results[x].exhibitName;
-	      		}
-	      		//console.log(exhibits);
-	      		appendOptions('#tagElementForm-exhibit', exhibits);
+			'table' : 'exhibit',
+			'clauses' : {
+				'museumId' : "f_getMuseumId('" + museum + "')" 
 			}
 		});
+		getLists(parameters,'exhibitName',ids);
 	}
 
+	function getElementList(exhibit,ids) {
+		var parameters = JSON.stringify({
+			'table' : 'element',
+			'clauses' : {
+				'exhibitId' : "f_getExhibitId('" + exhibit + "')"
+			}
+		});
+		getLists(parameters,'title',ids);
+	}
 
-	// load the tag types
-	getTagTypeList();
-	getMuseumList();
+	// debugging stuff 
+	//getElementTagList('Industry');
+	/*$(document).ajaxComplete(function(){
+		logLists(elementTagTypes);
+	});*/
 
   	// hide the addElementTag form
 	$('#addTagWindow').hide();
@@ -124,26 +99,21 @@ $(document).ready(function(){
 	// CLICK ACTIONS
 	// get tagTypeList
 	$('#tagTypeList').click(function(){
-		getTagTypeList();
-		$(document).ajaxComplete(function() {
-		    // display the tag types as a list
-			$('#tagTypeList').html('Click tag type to select');
-			$('#tagTypeList-results').empty();
-			for (x in elementTagTypes) {
-				//console.log(results[x]);
-				$('#tagTypeList-results').append('<div class="tagType">'+elementTagTypes[x]+'</div>');
-			}
-		});
+		getElementTagTypeList([
+			'#tagTypeList-results'
+		]);
+		$(this).hide();
 	});
 
 	// keep track of tag type varialbe 
-	$('#tagTypeList-results').on('click','div.tagType',function(){
-		$('.tagType').removeAttr('id');
+	$('#tagTypeList-results').on('click','option',function(){
+		$('option').removeAttr('id');
 		$(this).attr('id','selectedTagType');
 		selectedTagType = $(this).text();
 		//console.log(selectedTagType);
 	});
 
+	// FORMS
 	// add element tag form 
     $( "#addTagButton" ).click(function() {
       	var dialog, form, err;
@@ -197,6 +167,11 @@ $(document).ready(function(){
 			});
 		}	
 
+		// list dependencies
+		getElementTagTypeList([
+			'#addTagForm-elementTagType'
+		]);
+
 		dialog = $("#addTagWindow").dialog({
 			autoOpen: false, 
 			modal: true,
@@ -224,14 +199,82 @@ $(document).ready(function(){
       	var dialog, form, err;
       	var museum = $('#tagElementForm-museum');
       	var exhibit = $('#tagElementForm-exhibit');
+      	var element = $('#tagElementForm-element');
+      	var tagType = $('#tagElementForm-tagType');
+      	var tag = $('#tagElementForm-tag');
+      	var museumBox = $('#tagElementForm-museumBox');
+      	var exhibitBox = $('#tagElementForm-exhibitBox');
+      	var elementBox = $('#tagElementForm-elementBox');
 
 		function tagElement() {
 
+			var params = JSON.stringify({
+				'sp' : 'insert_elementTagMapping',
+				'input_params' : {
+					'element' : element.val(),
+					'exhibit' :  exhibit.val(),
+					'elementTag' : tag.val()
+				},
+				'output_params' : 1
+			});
+
+			console.log(tag.val());
+			console.log(params);
+
+			$.ajax('exec_sp',{
+				type: "POST",
+				contentType: "application/json",
+		 		dataType: 'JSON',
+				data: params,
+				success: function (results){
+					//console.log(results[1][0].success);
+					err = results[1][0]['@o1'];
+					//console.log(errCheck(err));
+					if (err == -1) {
+						alert('Error');
+						dialog.dialog('close');
+					} else {
+						dialog.dialog('close');
+					}
+				}
+			});
 		}	
 
+		// list dependencies
+		museumBox.show();
+		exhibitBox.hide();
+		elementBox.hide();
+
+		getMuseumList([
+			'#tagElementForm-museum'
+		]);
+
+		getElementTagTypeList([
+			'#tagElementForm-tagType'
+		]);
+
 		museum.change(function(){
-			//console.log(museum.val());
-			getExhibitList(museum.val());
+			// update exhibit list when museum selected
+			getExhibitList(museum.val(),[
+				'#tagElementForm-exhibit'
+			]);
+			museumBox.hide();
+			exhibitBox.show();
+		});
+
+		exhibit.change(function(){
+			// update element list when exhibit selected
+			getElementList(exhibit.val(),[
+				'#tagElementForm-element'
+			]);
+			exhibitBox.hide();
+			elementBox.show();
+		});
+
+		tagType.change(function(){
+			getElementTagList(tagType.val(),[
+				'#tagElementForm-tag'
+			])
 		});
 
 		dialog = $("#tagElementWindow").dialog({
@@ -261,7 +304,7 @@ $(document).ready(function(){
 
 	// testButton
 	$('#testButton').click(function(){
-		getExhibitList('Muse Sample');
+		getMuseumList();
 	});
 	
 
