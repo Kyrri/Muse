@@ -7,6 +7,9 @@ $(document).ready(function(){
 	// FUNCTIONS
 	// gets a list of tag types
 	function getTagTypeList() {
+		elementTagTypes = [];
+		//console.log(elementTagTypes)
+
 		var parameters = JSON.stringify({
 			'queryType': null, 
 			'queryTable': 'elementTagType'
@@ -18,24 +21,22 @@ $(document).ready(function(){
 			data: parameters,
 			success: function(results){
 				// read the tag types into an array
-				elementTagTypes = [];
 				for (x in results) {
 	        		//console.log(results[x]);
 	        		elementTagTypes[x] = results[x].elementTagType;
 	      		}
 	      		//console.log(elementTagTypes);
+
+	      		$('#addTagForm-elementTagType').empty().append('<option>Select tag type</option>');
+	  			for (x in elementTagTypes) {
+	  				$('#addTagForm-elementTagType').append('<option>' + elementTagTypes[x] +'</option>')
+	  			}
 			}
 		});
 	}
 
-	// ON LOAD ITEMS
-    // dynamically populate the tagTypes
-  	getTagTypeList();
-  	$(document).ajaxComplete(function(){
-  		for (x in elementTagTypes) {
-  			$('#addTagForm-elementTagType').append('<option>' + elementTagTypes[x] +'</option>')
-  		}
-  	});
+	// load the tag types
+	getTagTypeList();
 
   	// hide the addElementTag form
 	$('#addTagWindow').hide();
@@ -102,10 +103,12 @@ $(document).ready(function(){
 					err = results[1][0].success
 					//console.log(errCheck(err));
 					if (err == 0) {
-						alert(errCheck(err));
+						//alert(errCheck(err));
+						//console.log(errCheck(err));
 						dialog.dialog('close');
 					} else {
 						alert(errCheck(err));
+						//console.log(errCheck(err));
 					}
 				}
 
