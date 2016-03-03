@@ -67,7 +67,7 @@ CREATE TABLE `element` (
   `imageLink` varchar(255) DEFAULT NULL,
   `exhibitId` int(11) NOT NULL,
   PRIMARY KEY (`elementId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,7 +76,7 @@ CREATE TABLE `element` (
 
 LOCK TABLES `element` WRITE;
 /*!40000 ALTER TABLE `element` DISABLE KEYS */;
-INSERT INTO `element` VALUES (1,1,'Luncheon of the Boating Party','Pierre-Auguste Renoir',1881,'Luncheon of the Boating Party by Pierre-Auguste Renoir remains the best known and most popular work of art at The Phillips Collection, just as Duncan Phillips imagined it would be when he bought it in 1923. The painting captures an idyllic atmosphere as Renoir\'s friends share food, wine, and conversation on a balcony overlooking the Seine at the Maison Fournaise restaurant in Chatou. Parisians flocked to the Maison Fournaise to rent rowing skiffs, eat a good meal, or stay the night.\nThe painting also reflects the changing character of French society in the mid- to late 19th century. The restaurant welcomed customers of many classes, including businessmen, society women, artists, actresses, writers, critics, seamstresses, and shop girls. This diverse group embodied a new, modern Parisian society.\nRenoir seems to have composed this complicated scene without advance studies or underdrawing. He spent months making numerous changes to the canvas, painting the individual figures when his models were available, and adding the striped awning along the top edge. Nonetheless, Renoir retained the freshness of his vision, even as he revised, rearranged, and crafted an exquisite work of art.',NULL,1),(2,1,'Composition VIII','Wassily Kandinsky',1923,'Composition VIII by Wassily Kandinsky is small oil on canvas painting dating from 1923 that is currently in the Guggenheim Museum in New York.\nAs the name implies, it is the eighth in a series of paintings, begun in 1911, in which the artist expresses what he is trying to achieve. Kandinsky wanted to explore the medium of painting rather than be concerned with subject matter. His goal was to paint what music sounds like.\n \nComposition VIII can accurately be described as a geometric composition. The viewer is immediately struck by the large concentric circles at the top left of the picture. The two inner circles are perfect circles, while the outer has a fuzzy outline.\nThe rest of the painting is comprised of other circles, semi-circles, triangles, squares, parallelograms and other shapes. Coloring throughout the painting is subtle, except for the striking black and purple of the top left circle.\n',NULL,1),(3,1,'Café Terrace at Night','Vincent van Gogh',1888,'Café Terrace at Night, also known as The Cafe Terrace on the Place du Forum, is a coloured oil painting executed by the Dutch artist Vincent van Gogh on an industrially primed canvas of size 25 (Toile de 25 figure) in Arles, France, mid-September 1888. The painting is not signed, but described and mentioned by the artist in three letters. There is also a large pen drawing of the composition which originates from the artist\'s estate.\nVisitors of the site can still stand at the northeastern corner of the Place du Forum, where the artist set up his easel. He looked south towards the artificially lit terrace of the popular coffee house, as well as into the enforced darkness of the rue du Palais leading up to the building structure (to the left, not pictured) and, beyond this structure, the tower of a former church (now Musée Lapidaire). Towards the right, Van Gogh indicated a lighted shop as well, and some branches of the trees surrounding the place—but he omitted the remainders of the Roman monuments just beside this little shop.\n',NULL,1);
+INSERT INTO `element` VALUES (1,1,'Luncheon of the Boating Party','Pierre-Auguste Renoir',1881,'Luncheon of the Boating Party by Pierre-Auguste Renoir remains the best known and most popular work of art at The Phillips Collection, just as Duncan Phillips imagined it would be when he bought it in 1923. The painting captures an idyllic atmosphere as Renoir\'s friends share food, wine, and conversation on a balcony overlooking the Seine at the Maison Fournaise restaurant in Chatou. Parisians flocked to the Maison Fournaise to rent rowing skiffs, eat a good meal, or stay the night.\nThe painting also reflects the changing character of French society in the mid- to late 19th century. The restaurant welcomed customers of many classes, including businessmen, society women, artists, actresses, writers, critics, seamstresses, and shop girls. This diverse group embodied a new, modern Parisian society.\nRenoir seems to have composed this complicated scene without advance studies or underdrawing. He spent months making numerous changes to the canvas, painting the individual figures when his models were available, and adding the striped awning along the top edge. Nonetheless, Renoir retained the freshness of his vision, even as he revised, rearranged, and crafted an exquisite work of art.',NULL,1),(2,1,'Composition VIII','Wassily Kandinsky',1923,'Composition VIII by Wassily Kandinsky is small oil on canvas painting dating from 1923 that is currently in the Guggenheim Museum in New York.\nAs the name implies, it is the eighth in a series of paintings, begun in 1911, in which the artist expresses what he is trying to achieve. Kandinsky wanted to explore the medium of painting rather than be concerned with subject matter. His goal was to paint what music sounds like.\n \nComposition VIII can accurately be described as a geometric composition. The viewer is immediately struck by the large concentric circles at the top left of the picture. The two inner circles are perfect circles, while the outer has a fuzzy outline.\nThe rest of the painting is comprised of other circles, semi-circles, triangles, squares, parallelograms and other shapes. Coloring throughout the painting is subtle, except for the striking black and purple of the top left circle.\n',NULL,1),(3,1,'Café Terrace at Night','Vincent van Gogh',1888,'Café Terrace at Night, also known as The Cafe Terrace on the Place du Forum, is a coloured oil painting executed by the Dutch artist Vincent van Gogh on an industrially primed canvas of size 25 (Toile de 25 figure) in Arles, France, mid-September 1888. The painting is not signed, but described and mentioned by the artist in three letters. There is also a large pen drawing of the composition which originates from the artist\'s estate.\nVisitors of the site can still stand at the northeastern corner of the Place du Forum, where the artist set up his easel. He looked south towards the artificially lit terrace of the popular coffee house, as well as into the enforced darkness of the rue du Palais leading up to the building structure (to the left, not pictured) and, beyond this structure, the tower of a former church (now Musée Lapidaire). Towards the right, Van Gogh indicated a lighted shop as well, and some branches of the trees surrounding the place—but he omitted the remainders of the Roman monuments just beside this little shop.\n',NULL,1),(4,1,'Maeby','Interwebs',2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2),(5,1,'Baby Cat','Interwebs',2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2);
 /*!40000 ALTER TABLE `element` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,9 +115,8 @@ CREATE TABLE `elementTag` (
   `elementTagId` int(11) NOT NULL AUTO_INCREMENT,
   `elementTag` varchar(255) DEFAULT NULL,
   `elementTagTypeId` int(11) DEFAULT NULL,
-  PRIMARY KEY (`elementTagId`),
-  UNIQUE KEY `elementTagDesc` (`elementTag`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`elementTagId`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,7 +125,7 @@ CREATE TABLE `elementTag` (
 
 LOCK TABLES `elementTag` WRITE;
 /*!40000 ALTER TABLE `elementTag` DISABLE KEYS */;
-INSERT INTO `elementTag` VALUES (1,'Oil on Canvas',1);
+INSERT INTO `elementTag` VALUES (1,'Oil on Canvas',1),(2,'Aerospace',4),(3,'Automotive',4),(4,'Watercolour',1),(5,'Charcoal',1),(6,'pencil',1),(7,'ink',1),(8,'test',2),(9,'Enter tag name',2),(10,'test1',2),(15,'test5',1),(20,'test',4);
 /*!40000 ALTER TABLE `elementTag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +150,7 @@ CREATE TABLE `elementTagMapping` (
 
 LOCK TABLES `elementTagMapping` WRITE;
 /*!40000 ALTER TABLE `elementTagMapping` DISABLE KEYS */;
-INSERT INTO `elementTagMapping` VALUES (1,1,1),(1,2,1),(1,3,1);
+INSERT INTO `elementTagMapping` VALUES (1,1,1),(1,2,1),(1,3,1),(3,4,1),(3,5,1);
 /*!40000 ALTER TABLE `elementTagMapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,7 +166,7 @@ CREATE TABLE `elementTagType` (
   `elementTagType` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`elementTagTypeId`),
   UNIQUE KEY `elementTagTypeDesc` (`elementTagType`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +175,7 @@ CREATE TABLE `elementTagType` (
 
 LOCK TABLES `elementTagType` WRITE;
 /*!40000 ALTER TABLE `elementTagType` DISABLE KEYS */;
-INSERT INTO `elementTagType` VALUES (2,'Genre'),(1,'Medium'),(3,'Style');
+INSERT INTO `elementTagType` VALUES (2,'Genre'),(4,'Industry'),(1,'Medium'),(3,'Style');
 /*!40000 ALTER TABLE `elementTagType` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,7 +192,7 @@ CREATE TABLE `exhibit` (
   `exhibitName` varchar(255) DEFAULT NULL,
   `museumId` int(11) NOT NULL,
   PRIMARY KEY (`exhibitId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,7 +201,7 @@ CREATE TABLE `exhibit` (
 
 LOCK TABLES `exhibit` WRITE;
 /*!40000 ALTER TABLE `exhibit` DISABLE KEYS */;
-INSERT INTO `exhibit` VALUES (1,1,'Muse Sample 1',1);
+INSERT INTO `exhibit` VALUES (1,1,'Muse Sample 1',1),(2,1,'Internet Cats',1);
 /*!40000 ALTER TABLE `exhibit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,7 +245,7 @@ CREATE TABLE `interaction` (
   `elementId` int(11) NOT NULL,
   `visitId` int(11) NOT NULL,
   PRIMARY KEY (`interactionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -255,7 +254,7 @@ CREATE TABLE `interaction` (
 
 LOCK TABLES `interaction` WRITE;
 /*!40000 ALTER TABLE `interaction` DISABLE KEYS */;
-INSERT INTO `interaction` VALUES (1,'2016-02-23 18:21:43',1,2,1325,0);
+INSERT INTO `interaction` VALUES (1,'2016-02-23 18:21:43',1,2,1325,0),(2,'0000-00-00 00:00:00',1,1,1,1),(3,'2016-03-02 19:42:39',1,1,1,1),(4,'0000-00-00 00:00:00',1,1,1,1),(5,'0000-00-00 00:00:00',1,1,1,1),(6,'0000-00-00 00:00:00',1,1,1,1),(7,'0000-00-00 00:00:00',1,1,1,1),(8,'2016-02-03 05:00:00',1,1,1,1),(9,'2016-03-02 19:46:47',1,1,1,1),(10,'2016-03-02 19:47:09',1,1,1,1);
 /*!40000 ALTER TABLE `interaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -519,6 +518,121 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'muse_dev'
 --
+/*!50003 DROP FUNCTION IF EXISTS `f_getElementId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `f_getElementId`(elementName varchar(255),exhibitName varchar(255)) RETURNS int(11)
+BEGIN
+	declare id integer;
+	select elementId into id
+	from element where title=elementName and exhibitId=f_getExhibitId(exhibitName);
+
+	RETURN id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `f_getElementTagId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `f_getElementTagId`(textName varchar(255)) RETURNS int(11)
+BEGIN
+	declare id integer;
+	select elementTagId into id
+	from elementTag where elementTag=textName;
+
+	RETURN id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `f_getElementTagTypeId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `f_getElementTagTypeId`(textName VARCHAR(255)) RETURNS int(11)
+BEGIN
+	declare id integer;
+	select elementTagTypeId into id
+	from elementTagType where elementTagType=textName;
+
+	RETURN id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `f_getExhibitId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `f_getExhibitId`(textName varchar(255)) RETURNS int(11)
+BEGIN
+	declare id integer;
+	select exhibitId into id
+	from exhibit where exhibitName=textName;
+
+	RETURN id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `f_getMuseumId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `f_getMuseumId`(textName VARCHAR(255)) RETURNS int(11)
+BEGIN
+	declare id integer;
+	select museumId into id
+	from museum where museumName=textName;
+
+	RETURN id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `getElementDataFromCode` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -556,6 +670,163 @@ BEGIN
 		SELECT -1 INTO vStat;
     END IF;
     
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insert_elementTag` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_elementTag`(
+	in vElementTag varchar(255),
+    in vElementTagType varchar(255),
+    out vSuccess integer
+)
+BEGIN
+	declare vValid integer default 0;
+    declare vElementTagTypeId integer default -1;
+    
+    select count(*) into vValid
+    from elementTagType
+    where elementTagType = vElementTagType;
+    
+    if vValid = 1 then 
+		select elementTagTypeId into vElementTagTypeId 
+        from elementTagType where elementTagType=vElementTagType;
+        
+        select count(*) into vValid 
+        from elementTag where elementTag=vElementTag and elementTagTypeId=vElementTagTypeId;
+        
+        if vValid > 0 then
+			select -2 into vSuccess; 
+        else
+			insert into elementTag (
+				elementTag,
+				elementTagTypeId
+			) values (
+				vElementTag,
+				(select elementTagTypeId from elementTagType where elementTagType=vElementTagType)
+			);
+            select 0 into vSuccess;
+        end if;
+	else
+		select -1 into vSuccess;
+	end if;
+    
+    -- -1 error = tagType does not exist
+    -- -2 error = tag already exists
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insert_elementTagMapping` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_elementTagMapping`(
+	in vElement varchar(255),
+    in vExhibit varchar(255),
+    in vElementTag varchar(255),
+    out vSuccess integer
+)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
+
+	insert into elementTagMapping (
+		elementTagId, elementId
+	) values (
+		f_getElementTagId(vElementTag), f_getElementId(vElement,vExhibit)
+	);
+	select 1 into vSuccess;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insert_interaction` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_interaction`(
+	IN vInteractionType INTEGER,
+    IN vUserId INTEGER, 
+    IN vElementId INTEGER,
+    IN vVisitId INTEGER,
+    IN vTstamp TIMESTAMP
+)
+BEGIN
+    INSERT INTO interaction (
+		interactionType, 
+        userId,
+        elementId,
+        visitId, 
+        tstamp
+    ) VALUES (
+		vInteractionType, 
+        vUserId, 
+        vElementId,
+        vVisitId,
+        vTstamp
+    );
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insert_visit` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_visit`(
+	IN vVisitDate date, 
+    IN vUserId integer, 
+    IN vMuseumId integer, 
+    IN vVisitTypeId integer
+)
+BEGIN
+	INSERT INTO visit (
+		visitDate,
+        userId,
+        museumId,
+        visitTypeId
+    ) VALUES (
+		vVisitDate,
+        vUserId,
+        vMuseumId,
+        vVisitTypeId
+    );
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -766,4 +1037,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-02 12:42:54
+-- Dump completed on 2016-03-03 14:48:42
