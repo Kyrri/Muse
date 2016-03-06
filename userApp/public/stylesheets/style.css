@@ -1,3 +1,6 @@
+
+/* Custom Fonts */
+
 @font-face{
   font-family: MuseoSans;
   src: 'MuseoSans_500-webfont.ttf';
@@ -13,6 +16,7 @@
   src: 'MuseoSansCyrl.otf';
 }
 
+/* General */
 body{
   font: 8vw "Lucida Grande", Helvetica, Arial, sans-serif;
   color: #6D6E72;
@@ -80,22 +84,6 @@ div{
 margin-left: 0px;
 }
 
-/*.button {
-    background-color: #6D6E72;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 8vw;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 20px;
-    width: 30%;
-    height: 10vw;
-}*/
-
 input[type="text"],
 input[type="password"],
 select
@@ -104,21 +92,7 @@ select
 	border-radius: 5px;
 }
 
-.artifact{
-  font-family:"servus-slab", sans-serif;
-  font-weight: normal;
-  font-size:4vw;
-  margin:7px;
-  text-align: justify;
-}
 
-}
-.mainContainer{
-    padding:15px;
-}
-.indexContainer{
-    padding:5%;
-}
 
 /* Menu Bar */
 
@@ -135,9 +109,9 @@ select
 }
 
 .menubar img{
-  height:45px;
-  margin-top:5px;
-  margin-bottom:5px;
+  height: 10vw;
+  margin-top: 5px;
+  margin-bottom: 5px;
   position: relative;
 }
 
@@ -154,7 +128,7 @@ select
   color: #ffffff;
   font-family: Museo, Museo;
   font-weight: bold;
-  font-size: 40px;
+  font-size: 10vw;
   letter-spacing: 4px;
   padding-top: 5px;
   
@@ -173,6 +147,67 @@ img#home {
   margin-top: 13px;
   margin-left: 13px;
 } 
+
+
+
+/* Splash Screen */
+
+#splashscreen{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #8beabf;
+  vertical-align: middle;
+  padding-top: 35%;
+  padding-bottom: 50%;
+  opacity: 0.95;
+}
+
+#splashscreen h1 {
+  font-family: Museo, Museo;
+  color: #ffffff;
+  font-size: 18vw;
+  font-weight: bold;
+}
+
+.enter_login, .enter_signup {
+  border: 2px solid #6d6f71;
+  border-radius: 15px;
+  overflow:hidden;
+  background-color: #808285;
+  width: 80%;
+  font-family: MuseoSans, Museo Sans;
+  text-transform: uppercase;
+  font-weight: lighter;
+  color: #ffffff;
+  font-size: 9vw;
+  display: inline-block;
+  text-decoration: none;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 30px;
+}
+
+
+
+
+.artifact{
+  font-family:"servus-slab", sans-serif;
+  font-weight: normal;
+  font-size:4vw;
+  margin:7px;
+  text-align: justify;
+}
+
+}
+.mainContainer{
+    padding:15px;
+}
+.indexContainer{
+    padding:5%;
+}
 
 
 .additionalinfo{
@@ -385,12 +420,9 @@ button.selected {
 .signupContainer .button { 
   margin-top: 30px;
   margin-left: 0px;  
-  width: ;
+  width: 95%;
 }
 
-.checkInContainer {
-
-}
 
 .checkInContainer input[type="text"]{
   width: 10%;
@@ -411,6 +443,14 @@ form#checkIn {
 }
 
 .login_defaultContainer input[type="submit"] {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  width: 95%;
+}
+
+.login_defaultContainer a.button {
   display: block;
   margin-left: auto;
   margin-right: auto;

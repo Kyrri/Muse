@@ -2,6 +2,12 @@ extends layout
 block headScripts
 	script(src='/javascripts/login.js')
 block mainContainer
+
+	#splashscreen
+		h1 MUSE
+		.enter_login(href='#') Log In
+		.enter_signup(href='#') Sign Up
+
 	.login_defaultContainer
 		form(name='login_form', id='login_form')
 			h3(class='fields')
@@ -16,4 +22,4 @@ block mainContainer
 			input(type='submit', value='Log In') 
 
 	.login_defaultContainer
-		a.button(href='signup_default') Sign Up
+		a.button(href='signup') Sign Up
