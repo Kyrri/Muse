@@ -100,7 +100,7 @@ CREATE TABLE `element` (
 
 LOCK TABLES `element` WRITE;
 /*!40000 ALTER TABLE `element` DISABLE KEYS */;
-INSERT INTO `element` VALUES (1,1,'Luncheon of the Boating Party',1,1881,'',NULL,1),(2,1,'Composition VIII',2,1923,'',NULL,1),(3,1,'Café Terrace at Night',3,1888,'',NULL,1),(4,1,'Maeby',4,2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2),(5,1,'Baby Cat',4,2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2),(6,1,'test1',1,1993,'test','testtest',1),(7,1,'test2',1,1993,'test','testtest',1),(8,1,'test3',1,1993,'test','testtest',1),(9,1,'Demo Project 1',2,1993,'This is a description','',1);
+INSERT INTO `element` VALUES (1,1,'Luncheon of the Boating Party',1,1881,'',NULL,1),(2,1,'Composition VIII',2,1923,'',NULL,1),(3,1,'Café Terrace at Night',3,1888,'',NULL,1),(4,1,'Maeby',4,2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2),(5,1,'Baby Cat',4,2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2),(6,0,'test1',1,1993,'test','testtest',1),(7,0,'test2',1,1993,'test','testtest',1),(8,0,'test3',1,1993,'test','testtest',1),(9,1,'Demo Project 1',2,1993,'This is a description','',1);
 /*!40000 ALTER TABLE `element` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -476,6 +476,7 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_elements` AS SELECT 
  1 AS `id`,
+ 1 AS `active`,
  1 AS `museum`,
  1 AS `exhibit`,
  1 AS `element`,
@@ -483,7 +484,8 @@ SET character_set_client = utf8;
  1 AS `artist`,
  1 AS `year`,
  1 AS `description`,
- 1 AS `imageLink`*/;
+ 1 AS `imageLink`,
+ 1 AS `numTags`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -510,6 +512,7 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_tags` AS SELECT 
  1 AS `id`,
+ 1 AS `active`,
  1 AS `element`,
  1 AS `type`,
  1 AS `tag`*/;
@@ -1173,7 +1176,7 @@ USE `muse_dev`;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_elements` AS select `e`.`elementId` AS `id`,`m`.`museumName` AS `museum`,`x`.`exhibitName` AS `exhibit`,`e`.`title` AS `element`,`c`.`code` AS `code`,`a`.`artist` AS `artist`,`e`.`paintYear` AS `year`,`e`.`description` AS `description`,`e`.`imageLink` AS `imageLink` from ((((`element` `e` left join `exhibit` `x` on((`e`.`exhibitId` = `x`.`exhibitId`))) left join `museum` `m` on((`x`.`museumId` = `m`.`museumId`))) left join `elementcode` `c` on((`e`.`elementId` = `c`.`elementId`))) left join `artist` `a` on((`e`.`artistId` = `a`.`artistId`))) */;
+/*!50001 VIEW `v_elements` AS select `e`.`elementId` AS `id`,(case `e`.`active` when 1 then 'Active' when 0 then 'Inactive' end) AS `active`,`m`.`museumName` AS `museum`,`x`.`exhibitName` AS `exhibit`,`e`.`title` AS `element`,`c`.`code` AS `code`,`a`.`artist` AS `artist`,`e`.`paintYear` AS `year`,`e`.`description` AS `description`,`e`.`imageLink` AS `imageLink`,(select count(0) from `elementtagmapping` `tm` where (`tm`.`elementId` = `e`.`elementId`)) AS `numTags` from ((((`element` `e` left join `exhibit` `x` on((`e`.`exhibitId` = `x`.`exhibitId`))) left join `museum` `m` on((`x`.`museumId` = `m`.`museumId`))) left join `elementcode` `c` on((`e`.`elementId` = `c`.`elementId`))) left join `artist` `a` on((`e`.`artistId` = `a`.`artistId`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1209,7 +1212,7 @@ USE `muse_dev`;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_tags` AS select `m`.`elementId` AS `id`,`e`.`title` AS `element`,`tt`.`elementTagType` AS `type`,`t`.`elementTag` AS `tag` from (((`elementtagmapping` `m` left join `element` `e` on((`m`.`elementId` = `e`.`elementId`))) left join `elementtag` `t` on((`m`.`elementTagId` = `t`.`elementTagId`))) left join `elementtagtype` `tt` on((`t`.`elementTagTypeId` = `tt`.`elementTagTypeId`))) */;
+/*!50001 VIEW `v_tags` AS select `m`.`elementId` AS `id`,(case `m`.`active` when 1 then 'Active' when 0 then 'Inactive' end) AS `active`,`e`.`title` AS `element`,`tt`.`elementTagType` AS `type`,`t`.`elementTag` AS `tag` from (((`elementtagmapping` `m` left join `element` `e` on((`m`.`elementId` = `e`.`elementId`))) left join `elementtag` `t` on((`m`.`elementTagId` = `t`.`elementTagId`))) left join `elementtagtype` `tt` on((`t`.`elementTagTypeId` = `tt`.`elementTagTypeId`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1241,4 +1244,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-06 21:58:57
+-- Dump completed on 2016-03-06 23:48:09

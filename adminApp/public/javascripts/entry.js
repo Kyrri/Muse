@@ -3,6 +3,16 @@ $(document).ready(function(){
 	// PAGE VARIABLES
 	var selectedTagType = '';
 
+	function loadTasks() {
+		getMuseumList(['#museumSelector']);
+		
+		$('#addTagWindow').hide();
+		$('#tagElementWindow').hide();
+		$('#addExhibitWindow').hide();
+		$('#addElementWindow').hide();
+		$('#hidden-exhibitList').hide();
+	}
+
 	// FUNCTIONS
 	function logLists(var_array) {
 		for (x in var_array) {
@@ -35,7 +45,7 @@ $(document).ready(function(){
 					var_array[x] = results[x][col];
 				}
 				appendOptions(append_ids,var_array);
-				logLists(var_array);
+				//logLists(var_array);
 			}
 		});
 		return var_array;
@@ -81,7 +91,8 @@ $(document).ready(function(){
 		var parameters = JSON.stringify({
 			'table' : 'element',
 			'clauses' : {
-				'exhibitId' : "f_getExhibitId('" + exhibit + "')"
+				'exhibitId' : "f_getExhibitId('" + exhibit + "')",
+				'active' : 1
 			}
 		});
 		getLists(parameters,'title',ids);
@@ -95,56 +106,111 @@ $(document).ready(function(){
 	}
 
 	function sqlErrCheck(errCode) {
-			var errMsg;
-			switch(errCode){
-				case -1:
-					errMsg = 'Unexpect SQL Error.';
-					break;
-				case -2:
-					errMsg = 'Insert Failed. Record already exists.';
-					break;	
-				case 0:
-					errMsg = 'Success.';
-					break;
-			}
-			return errMsg;
+		var errMsg;
+		switch(errCode){
+			case -1:
+				errMsg = 'Unexpect SQL Error.';
+				break;
+			case -2:
+				errMsg = 'Insert Failed. Record already exists.';
+				break;	
+			case 0:
+				errMsg = 'Success.';
+				break;
 		}
+		return errMsg;
+	}
 
 	// DYNATABLES
-	function loadvElementsTable() {
-		var dbParams = JSON.stringify({
-			'table' : 'v_elements'
-		});
+	function loadvElementsTable(museum, exhibit, active) {
+		var dbParams;
+		//console.log([museum,exhibit,active]);
+		if (active=='All') {
+			if (!exhibit) {
+				dbParams = JSON.stringify({
+					'table' : 'v_elements',
+					'clauses' : {
+						'museum' : "'" + museum + "'"
+					}
+				});
+			} else {
+				dbParams = JSON.stringify({
+					'table' : 'v_elements',
+					'clauses' : {
+						'museum' : "'" + museum + "'",
+						'exhibit' : "'" + exhibit + "'"
+					}
+				});
+			}
+		} else {
+			if (!exhibit) {
+				dbParams = JSON.stringify({
+					'table' : 'v_elements',
+					'clauses' : {
+						'museum' : "'" + museum + "'",
+						'active' : "'" + active + "'"
+					}
+				});
+			} else {
+				dbParams = JSON.stringify({
+					'table' : 'v_elements',
+					'clauses' : {
+						'museum' : "'" + museum + "'",
+						'exhibit' : "'" + exhibit + "'",
+						'active' : "'" + active + "'"
+					}
+				});
+			}
+		}
 		$.ajax('exec_qry',{
 			type : 'POST',
 			contentType : 'application/json',
 			dataType : 'JSON',
 			data : dbParams,
 			success : function(results){
-				$('#vElementsTable').dynatable({
+				var dynatable = $('#vElementsTable').dynatable({
 					dataset : {
 						records : results
 					}
-				});
+				}).data('dynatable');
+				dynatable.settings.dataset.originalRecords = results;
+                dynatable.process();
 			}
 		});
 	}
 
-	function loadvTagsTable() {
-		var dbParams = JSON.stringify({
-			'table' : 'v_tags'
-		});
+	function loadvTagsTable(element,active) {
+		var dbParams;
+		//console.log([museum,exhibit,active]);
+		if (active=='All') {
+			dbParams = JSON.stringify({
+				'table' : 'v_tags',
+				'clauses' : {
+					'element' : "'" + element + "'"
+				}
+			});
+		} else {
+			dbParams = JSON.stringify({
+				'table' : 'v_tags',
+				'clauses' : {
+					'element' : "'" + element + "'",
+					'active' : "'" + active + "'"
+				}
+			});
+		}
 		$.ajax('exec_qry',{
 			type : 'POST',
 			contentType : 'application/json',
 			dataType : 'JSON',
 			data : dbParams,
 			success : function(results){
-				$('#vTagsTable').dynatable({
+				var dynatable = $('#vTagsTable').dynatable({
 					dataset : {
 						records : results
 					}
-				});
+				}).data('dynatable');
+				dynatable.settings.dataset.originalRecords = results;
+                dynatable.process();
 			}
 		});
 	}
@@ -162,35 +228,66 @@ $(document).ready(function(){
 			dataType : 'JSON',
 			data : dbParams,
 			success : function(results){
-				$('#vExhibitsTable').dynatable({
+				var dynatable = $('#vExhibitsTable')
+				dynatable.dynatable({
 					features : {
 						paginate : false,
 						search : false,
 						recordCount : false
 					},
-					dataset : {
-						records : results
-					}
-				});
+					dataset: { records: results
+					}  
+				}).data('dynatable');
+				dynatable.settings.dataset.originalRecords = results;
+                dynatable.process();
 			}
 		});
 	}
-
-	loadvElementsTable();
-	loadvTagsTable();
 
 	// debugging stuff 
 	//getElementTagList('Industry');
 	/*$(document).ajaxComplete(function(){
 		logLists(elementTagTypes);
 	});*/
+	
+	loadTasks();
 
-  	// hide the addElementTag form
-	$('#addTagWindow').hide();
-	$('#tagElementWindow').hide();
-	$('#addExhibitWindow').hide();
-	$('#addElementWindow').hide();
-	$('#hidden-exhibitList').hide();
+	$('#museumSelector').change(function(){
+		getExhibitList($(this).val(),['#exhibitSelector']);
+		loadvElementsTable(
+			$(this).val(),
+			undefined,
+			$('#vElementsTable-activeSelector').val()
+		);
+	});
+	$('#exhibitSelector').change(function(){
+		getElementList($(this).val(),['#vTagsTable-elementSelector'])
+		loadvElementsTable(
+			$('#museumSelector').val(),
+			$(this).val(),
+			$('#vElementsTable-activeSelector').val()
+		);
+	});
+	$('#vElementsTable-activeSelector').change(function(){
+		loadvElementsTable(
+			$('#museumSelector').val(),
+			$('#exhibitSelector').val(),
+			$(this).val()
+		);
+	});
+	$('#vTagsTable-elementSelector').change(function(){
+		loadvTagsTable(
+			$(this).val(),
+			$('#vTagsTable-activeSelector').val()
+		);
+	});
+	$('#vTagsTable-activeSelector').change(function(){
+		loadvTagsTable(
+			$('#vTagsTable-elementSelector').val(),
+			$(this).val()
+		);
+	});
+
 
 	// CLICK ACTIONS
 	/* Deprecated

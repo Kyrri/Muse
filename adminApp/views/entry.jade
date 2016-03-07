@@ -3,10 +3,23 @@ block headScripts
 	script(src='/javascripts/entry.js')
 	
 block mainContainer
+	h2 Parameters
+	div
+		label(for='museum') Select Museum:
+		select(type='text',name='museum',id='museumSelector',class="text ui-widget-content ui-corner-all")
+		label(for='exhibit') Select Exhibit:
+		select(type='text',name='museum',id='exhibitSelector',class="text ui-widget-content ui-corner-all")
+			option Select museum first
 	h1 Museum Elements	
+	div
+		label(for='active') Active:
+		select(type='text',name='active',id='vElementsTable-activeSelector',class="text ui-widget-content ui-corner-all")
+			option(selected='selected') Active
+			option Inactive
+			option All
 	table(id='vElementsTable')
 		thead
-			th Museum
+			th Active
 			th Exhibit
 			th Element
 			th Code
@@ -14,13 +27,23 @@ block mainContainer
 			th Year
 			th Description
 			th Image Link
+			th Num Tags
 		tbody
 
 
 	h1 Element Tags
+	div
+		label(for='element') Select Element:
+		select(type='text',name='active',id='vTagsTable-elementSelector',class="text ui-widget-content ui-corner-all")
+			option Select exhibit first
+		label(for='active') Active:
+		select(type='text',name='active',id='vTagsTable-activeSelector',class="text ui-widget-content ui-corner-all")
+			option(selected='selected') Active
+			option Inactive
+			option All
 	table(id='vTagsTable')
 		thead
-			th Element
+			th Active
 			th Type
 			th Tag
 		tbody
