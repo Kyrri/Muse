@@ -280,6 +280,7 @@ $(document).ready(function(){
 			$(this).val(),
 			$('#vTagsTable-activeSelector').val()
 		);
+		//$('#tagElementWindow').attr('title', 'Add tag to - ' + $('#vTagsTable-elementSelector').val());
 	});
 	$('#vTagsTable-activeSelector').change(function(){
 		loadvTagsTable(
@@ -355,7 +356,7 @@ $(document).ready(function(){
 						//console.log(errCheck(err));
 						dialog.dialog('close');
 					} else {
-						alert(errCheck(err));
+						alert(sqlErrCheck(err));
 						//console.log(errCheck(err));
 					}
 				}
@@ -392,14 +393,14 @@ $(document).ready(function(){
 	// add element tag form 
     $( "#tagElementButton" ).click(function() {
       	var dialog, form, err;
-      	var museum = $('#tagElementForm-museum');
-      	var exhibit = $('#tagElementForm-exhibit');
-      	var element = $('#tagElementForm-element');
+      	var museum = $('#museumSelector');
+      	var exhibit = $('#exhibitSelector');
+      	var element = $('#vTagsTable-elementSelector');
       	var tagType = $('#tagElementForm-tagType');
       	var tag = $('#tagElementForm-tag');
-      	var museumBox = $('#tagElementForm-museumBox');
-      	var exhibitBox = $('#tagElementForm-exhibitBox');
-      	var elementBox = $('#tagElementForm-elementBox');
+      	//var museumBox = $('#tagElementForm-museumBox');
+      	//var exhibitBox = $('#tagElementForm-exhibitBox');
+      	//var elementBox = $('#tagElementForm-elementBox');
 
 		function tagElement() {
 
@@ -408,7 +409,8 @@ $(document).ready(function(){
 				'input_params' : {
 					'element' : element.val(),
 					'exhibit' :  exhibit.val(),
-					'elementTag' : tag.val()
+					'elementTag' : tag.val(), 
+					'elementTagType' : tagType.val()
 				},
 				'output_params' : 1
 			});
@@ -425,24 +427,23 @@ $(document).ready(function(){
 					//console.log(results[1][0].success);
 					err = results[1][0]['@o1'];
 					//console.log(errCheck(err));
-					if (err == -1) {
-						alert('Error');
+					if (err == 0) {
+						//alert('Error');
 						dialog.dialog('close');
 					} else {
-						dialog.dialog('close');
+						alert(sqlErrCheck(err));
 					}
-					loadvTagsTable();
+					loadvTagsTable(element.val(),$('#vTagsTable-activeSelector').val());
 				}
 			});
 		}	
 
 		// list dependencies
-		museumBox.show();
+		/*museumBox.show();
 		exhibitBox.hide();
 		elementBox.hide();
 
 		getMuseumList(['#tagElementForm-museum']);
-		getElementTagTypeList(['#tagElementForm-tagType']);
 		museum.change(function(){
 			// update exhibit list when museum selected
 			getExhibitList(museum.val(),['#tagElementForm-exhibit']);
@@ -454,7 +455,8 @@ $(document).ready(function(){
 			getElementList(exhibit.val(),['#tagElementForm-element']);
 			exhibitBox.hide();
 			elementBox.show();
-		});
+		});*/
+		getElementTagTypeList(['#tagElementForm-tagType']);
 		tagType.change(function(){
 			getElementTagList(tagType.val(),['#tagElementForm-tag'])
 		});
@@ -462,6 +464,7 @@ $(document).ready(function(){
 		dialog = $("#tagElementWindow").dialog({
 			autoOpen: false, 
 			modal: true,
+			title : 'Add tag to - ' + $('#vTagsTable-elementSelector').val(),
 			buttons: {
 				"Add Tag" : tagElement,
 				Cancel: function() {

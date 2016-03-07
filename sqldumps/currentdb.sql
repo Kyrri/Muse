@@ -200,7 +200,7 @@ CREATE TABLE `elementTagMapping` (
 
 LOCK TABLES `elementTagMapping` WRITE;
 /*!40000 ALTER TABLE `elementTagMapping` DISABLE KEYS */;
-INSERT INTO `elementTagMapping` VALUES (1,1,1),(1,2,1),(1,3,1),(3,4,1),(3,5,1),(10,4,1);
+INSERT INTO `elementTagMapping` VALUES (1,1,1),(1,2,1),(1,3,1),(3,4,1),(3,5,1),(4,4,1),(8,1,1),(8,2,1),(9,1,1),(9,5,1),(10,1,1),(10,4,1);
 /*!40000 ALTER TABLE `elementTagMapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -646,11 +646,11 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `f_getElementTagId`(textName varchar(255)) RETURNS int(11)
+CREATE DEFINER=`root`@`localhost` FUNCTION `f_getElementTagId`(textName varchar(255), tagType varchar(255)) RETURNS int(11)
 BEGIN
 	declare id integer;
 	select elementTagId into id
-	from elementTag where elementTag=textName;
+	from elementTag where elementTag=textName and elementTagTypeId=f_getElementTagTypeId(tagType);
 
 	RETURN id;
 END ;;
@@ -893,18 +893,27 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_elementTagMapping`(
 	in vElement varchar(255),
     in vExhibit varchar(255),
     in vElementTag varchar(255),
+    in vElementTagType varchar(255),
     out vSuccess integer
 )
 BEGIN
-	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	declare vExists integer default 0;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
         SELECT -1 into vSuccess;
 
-	insert into elementTagMapping (
-		elementTagId, elementId
-	) values (
-		f_getElementTagId(vElementTag), f_getElementId(vElement,vExhibit)
-	);
-	select 1 into vSuccess;
+	select count(*) into vExists from elementTagMapping
+    where elementTagId=f_getElementTagId(vElementTag,vElementTagType) and elementId=f_getElementId(vElement,vExhibit);
+    
+    if vExists=0 then 
+		insert into elementTagMapping (
+			elementTagId, elementId
+		) values (
+			f_getElementTagId(vElementTag,vElementTagType), f_getElementId(vElement,vExhibit)
+		);
+		select 0 into vSuccess;
+	else 
+		select -2 into vSuccess;
+	end if;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1244,4 +1253,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-06 23:48:09
+-- Dump completed on 2016-03-07  0:51:59
