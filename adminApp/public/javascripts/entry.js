@@ -702,7 +702,11 @@ $(document).ready(function(){
 					} else {
 						alert(sqlErrCheck(err));
 					}
-					loadvElementsTable();
+					loadvElementsTable(
+						$('#museumSelector').val(),
+						$('#exhibitSelector').val(),
+						$('#vElementsTable-activeSelector').val()
+					);
 				}
 			});
 		}
