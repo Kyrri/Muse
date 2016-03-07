@@ -12,14 +12,17 @@ $(document).ready(function(){
 		$('#addElementWindow').hide();
 		$('#deleteElementWindow').hide();
 		$('#restoreElementWindow').hide();
+		$('#codeElementWindow').hide();
 		$('#editElementWindow').hide();
 		$('#hidden-exhibitList').hide();
+		$('#addArtistWindow').hide();
 
 		// Disable buttons on start until requisite fields are filled 
 		$('#addElementButton').prop('disabled', true);
 		$('#deleteElementButton').prop('disabled', true);
 		$('#restoreElementButton').prop('disabled', true);
 		$('#editElementButton').prop('disabled', true);
+		$('#codeElementButton').prop('disabled', true);
 
 		$('#tagElementButton').prop('disabled', true);
 
@@ -34,21 +37,22 @@ $(document).ready(function(){
 		}
 	}
 
-	function appendOptions(ids,options) {
+	function appendOptions(ids,options,val) {
 		// appends list options to select forms given ids
 		for (id in ids) {
 			$(ids[id]).empty().append('<option selected disabled>Select value</option>');
 			for (x in options) {
-				$(ids[id]).append('<option>' + options[x] + '</options>');
+				$(ids[id]).append('<option value="' + val[x] + '">' + options[x] + '</options>');
 			}
 		}
 	}
 
-	function getLists(params,col,append_ids) {
+	function getLists(params,col,idCol,append_ids) {
 		// gets lists of values from the db, uses the 'exec_qry' parameter format
 		// returns an array
 
 		var var_array = [];
+		var id_array = [];
 		$.ajax('exec_qry',{
 			type : 'POST',
 			contentType : 'application/json',
@@ -57,8 +61,9 @@ $(document).ready(function(){
 			success : function(results){
 				for (x in results) {
 					var_array[x] = results[x][col];
+					id_array[x] = results[x][idCol];
 				}
-				appendOptions(append_ids,var_array);
+				appendOptions(append_ids,var_array,id_array);
 				//logLists(var_array);
 			}
 		});
@@ -84,7 +89,6 @@ $(document).ready(function(){
 					for (x in results) {
 						var_array[x] = results[x]['Field'];
 					}
-				console.log(var_array);
 				appendOptions(ids,var_array);
 				}
 			}
@@ -95,35 +99,42 @@ $(document).ready(function(){
 		var parameters = JSON.stringify({
 			'table': 'elementTagType'
 		});
-		getLists(parameters,'elementTagType',ids);
+		getLists(parameters,'elementTagType','elementTagTypeId',ids);
+	}
+
+	function getArtistList(ids) {
+		var parameters = JSON.stringify({
+			'table' : 'artist'
+		});
+		getLists(parameters,'artist','artistId',ids);
 	}
 
 	function getMuseumList(ids) {
 		var parameters = JSON.stringify({
 			'table': 'museum'
 		});
-		getLists(parameters,'museumName',ids);
+		getLists(parameters,'museumName','museumId',ids);
 	}
 
 	function getElementTagList(elementTagType,ids) {
 		var parameters = JSON.stringify({
 			'table' : 'elementTag',
 			'clauses' : {
-				'elementTagTypeId' : "f_getElementTagTypeId('" + elementTagType + "')" 
+				'elementTagTypeId' : elementTagType
 			}
 		});
-		getLists(parameters,'elementTag',ids);
+		getLists(parameters,'elementTag','elementTagId',ids);
 	}
 
 	function getExhibitList(museum,ids) {
 		var parameters = JSON.stringify({
 			'table' : 'exhibit',
 			'clauses' : {
-				'museumId' : "f_getMuseumId('" + museum + "')",
+				'museumId' : museum,
 				'active' : 1
 			}
 		});
-		getLists(parameters,'exhibitName',ids);
+		getLists(parameters,'exhibitName','exhibitId',ids);
 	}
 
 	function getElementList(exhibit,ids,inactive) {
@@ -131,7 +142,7 @@ $(document).ready(function(){
 			var parameters = JSON.stringify({
 				'table' : 'element',
 				'clauses' : {
-					'exhibitId' : "f_getExhibitId('" + exhibit + "')",
+					'exhibitId' : exhibit,
 					'active' : 1
 				}
 			});
@@ -139,20 +150,12 @@ $(document).ready(function(){
 			var parameters = JSON.stringify({
 				'table' : 'element',
 				'clauses' : {
-					'exhibitId' : "f_getExhibitId('" + exhibit + "')",
+					'exhibitId' : exhibit,
 					'active' : 0
 				}
 			});
 		}
-		
-		getLists(parameters,'title',ids);
-	}
-
-	function getArtistList(ids) {
-		var parameters = JSON.stringify({
-			'table' : 'artist'
-		});
-		getLists(parameters,'artist',ids);
+		getLists(parameters,'title','elementId',ids);
 	}
 
 	function sqlErrCheck(errCode) {
@@ -166,6 +169,9 @@ $(document).ready(function(){
 				break;	
 			case -3:
 				errMsg = 'Update Failed. Record does not exists.'
+			case -4:
+				errMsg = 'Code already in use.'
+				break;
 			case 0:
 				errMsg = 'Success.';
 				break;
@@ -174,32 +180,33 @@ $(document).ready(function(){
 	}
 
 	// DYNATABLES
-	function loadvElementsTable(museum, exhibit, active) {
+	//  Museum elements table
+	function loadvElementsTable(museumId, exhibitId, active) {
 		var dbParams;
 		//console.log([museum,exhibit,active]);
 		if (active=='All') {
-			if (!exhibit) {
+			if (!exhibitId) {
 				dbParams = JSON.stringify({
 					'table' : 'v_elements',
 					'clauses' : {
-						'museum' : "'" + museum + "'"
+						'museumId' : museumId
 					}
 				});
 			} else {
 				dbParams = JSON.stringify({
 					'table' : 'v_elements',
 					'clauses' : {
-						'museum' : "'" + museum + "'",
-						'exhibit' : "'" + exhibit + "'"
+						'museumId' : museum,
+						'exhibitId' : exhibitId
 					}
 				});
 			}
 		} else {
-			if (!exhibit) {
+			if (!exhibitId) {
 				dbParams = JSON.stringify({
 					'table' : 'v_elements',
 					'clauses' : {
-						'museum' : "'" + museum + "'",
+						'museumId' : museumId,
 						'active' : "'" + active + "'"
 					}
 				});
@@ -207,8 +214,8 @@ $(document).ready(function(){
 				dbParams = JSON.stringify({
 					'table' : 'v_elements',
 					'clauses' : {
-						'museum' : "'" + museum + "'",
-						'exhibit' : "'" + exhibit + "'",
+						'museumId' : museumId,
+						'exhibitId' : exhibitId,
 						'active' : "'" + active + "'"
 					}
 				});
@@ -231,21 +238,21 @@ $(document).ready(function(){
 		});
 	}
 
-	function loadvTagsTable(element,active) {
+	function loadvTagsTable(elementId,active) {
 		var dbParams;
 		//console.log([museum,exhibit,active]);
 		if (active=='All') {
 			dbParams = JSON.stringify({
 				'table' : 'v_tags',
 				'clauses' : {
-					'element' : "'" + element + "'"
+					'elementId' : elementId
 				}
 			});
 		} else {
 			dbParams = JSON.stringify({
 				'table' : 'v_tags',
 				'clauses' : {
-					'element' : "'" + element + "'",
+					'elementId' : elementId,
 					'active' : "'" + active + "'"
 				}
 			});
@@ -267,11 +274,11 @@ $(document).ready(function(){
 		});
 	}
 
-	function loadvExhibitsTable(museum) {
+	function loadvExhibitsTable(museumId) {
 		var dbParams = JSON.stringify({
 			'table' : 'v_exhibits',
 			'clauses' : {
-				'museum' : "'" + museum + "'"
+				'museumId' : museumId
 			}
 		});
 		$.ajax('exec_qry',{
@@ -324,6 +331,7 @@ $(document).ready(function(){
 		$('#deleteElementButton').prop('disabled', false);
 		$('#restoreElementButton').prop('disabled', false);
 		$('#editElementButton').prop('disabled', false);
+		$('#codeElementButton').prop('disabled', false);
 		$('#vTagsTable-elementSelector').prop('disabled', false);
 	});
 	$('#vElementsTable-activeSelector').change(function(){
@@ -465,10 +473,8 @@ $(document).ready(function(){
 			var params = JSON.stringify({
 				'sp' : 'insert_elementTagMapping',
 				'input_params' : {
-					'element' : element.val(),
-					'exhibit' :  exhibit.val(),
-					'elementTag' : tag.val(), 
-					'elementTagType' : tagType.val()
+					'elementId' : element.val(),
+					'elementTagId' : tag.val()
 				},
 				'output_params' : 1
 			});
@@ -522,7 +528,7 @@ $(document).ready(function(){
 		dialog = $("#tagElementWindow").dialog({
 			autoOpen: false, 
 			modal: true,
-			title : 'Add tag to - ' + $('#vTagsTable-elementSelector').val(),
+			title : 'Add tag to - ' + $('#vTagsTable-elementSelector option:selected').text(),
 			buttons: {
 				"Tag Element" : tagElement,
 				Cancel: function() {
@@ -555,7 +561,7 @@ $(document).ready(function(){
 			var params = JSON.stringify({
 				'sp' : 'insert_exhibit',
 				'input_params' : {
-					'museum' : museum.val(),
+					'museumId' : museum.val(),
 					'exhibit' :  exhibit.val()
 				},
 				'output_params' : 1
@@ -676,9 +682,9 @@ $(document).ready(function(){
 			var params = JSON.stringify({
 				'sp' : 'insert_element',
 				'input_params' : {
-					'exhibit' : exhibit.val(),
+					'exhibitId' : exhibit.val(),
 					'title' :  element.val(),
-					'artist' : artist.val(),
+					'artistId' : artist.val(),
 					'year' : year.val(),
 					'description' : desc.val(),
 					'imgLink' : link.val()
@@ -714,7 +720,7 @@ $(document).ready(function(){
 		dialog = $("#addElementWindow").dialog({
 			autoOpen: false, 
 			modal: true,
-			title: 'Add element to exhibit - ' + exhibit.val(),
+			title: 'Add element to exhibit - ' + $("#exhibitSelector option:selected").text(),
 			buttons: {
 				"Add Element" : submitForm,
 				Cancel: function() {
@@ -745,8 +751,7 @@ $(document).ready(function(){
 			var params = JSON.stringify({
 				'sp' : 'delete_element',
 				'input_params' : {
-					'element' : element.val(),
-					'exhibit' :  exhibit.val()
+					'elementId' : element.val()
 				},
 				'output_params' : 1
 			});
@@ -777,7 +782,7 @@ $(document).ready(function(){
 		dialog = $("#deleteElementWindow").dialog({
 			autoOpen: false, 
 			modal: true,
-			title: 'Delete element from exhibit - ' + exhibit.val(),
+			title: 'Delete element from exhibit - ' + $("#exhibitSelector option:selected").text(),
 			buttons: {
 				"Delete Element" : submitForm,
 				Cancel: function() {
@@ -803,8 +808,7 @@ $(document).ready(function(){
 			var params = JSON.stringify({
 				'sp' : 'restore_element',
 				'input_params' : {
-					'element' : element.val(),
-					'exhibit' :  exhibit.val()
+					'elementId' : element.val()
 				},
 				'output_params' : 1
 			});
@@ -835,9 +839,69 @@ $(document).ready(function(){
 		dialog = $("#restoreElementWindow").dialog({
 			autoOpen: false, 
 			modal: true,
-			title: 'Restore element from exhibit - ' + exhibit.val(),
+			title: 'Restore element from exhibit - ' + $("#exhibitSelector option:selected").text(),
 			buttons: {
 				"Restore Element" : submitForm,
+				Cancel: function() {
+					dialog.dialog('close');
+				}
+			},
+			close: function() {
+		        form[0].reset();
+	    	}
+		});
+		form = dialog.find("form").on("submit",function(event){event.preventDefault();submitForm();});
+      	dialog.dialog("open");
+
+	});
+
+	//  CODE ELEMENT FORM //
+	$('#codeElementButton').click(function(){
+		var dialog, form;
+		var museum = $('#museumSelector');
+		var exhibit = $('#exhibitSelector');
+		var element = $('#codeElementForm-element');
+		var code = $('#codeElementForm-code');
+
+		function submitForm(){
+			var params = JSON.stringify({
+				'sp' : 'insert_elementCode',
+				'input_params' : {
+					'elementId' : element.val(),
+					'elementCode' : code.val()
+				},
+				'output_params' : 1
+			});
+
+			$.ajax('exec_sp',{
+				type: "POST",
+				contentType: "application/json",
+		 		dataType: 'JSON',
+				data: params,
+				success: function (results){
+					var err = results[1][0]['@o1'];
+					if (err == 0) {
+						dialog.dialog('close');
+					} else {
+						alert(sqlErrCheck(err));
+					}
+					loadvElementsTable(
+						$('#museumSelector').val(),
+						$('#exhibitSelector').val(),
+						$('#vElementsTable-activeSelector').val()
+					);
+				}
+			});
+		}
+
+		getElementList(exhibit.val(),['#codeElementForm-element']);
+
+		dialog = $("#codeElementWindow").dialog({
+			autoOpen: false, 
+			modal: true,
+			title: 'Code element from exhibit - ' + $("#exhibitSelector option:selected").text(),
+			buttons: {
+				"Code Element" : submitForm,
 				Cancel: function() {
 					dialog.dialog('close');
 				}
@@ -882,13 +946,13 @@ $(document).ready(function(){
 					}
 					break;
 				case 'Exhibit':
-					sqlField = 'exhibit';
+					sqlField = 'exhibitId';
 					break;
 				case 'Element Name':
 					sqlField = 'title';
 					break;
 				case 'Artist':
-					sqlField = 'artist';
+					sqlField = 'artistId';
 					break;
 				case 'Year':
 					sqlField = 'paintYear';
@@ -901,10 +965,9 @@ $(document).ready(function(){
 			var params = JSON.stringify({
 				'sp' : 'update_element',
 				'input_params' : {
-					'element' : element.val(),
-					'exhibit' :  exhibit.val(),
+					'elementId' : element.val(),
 					'field' : sqlField,
-					'value' : sqlValue,
+					'value' : sqlValue
 				},
 				'output_params' : 1
 			});
@@ -980,7 +1043,7 @@ $(document).ready(function(){
 		dialog = $("#editElementWindow").dialog({
 			autoOpen: false, 
 			modal: true,
-			title: 'Edit element from exhibit - ' + exhibit.val(),
+			title: 'Edit element from exhibit - ' + $("#exhibitSelector option:selected").text(),
 			buttons: {
 				"Edit Element" : submitForm,
 				Cancel: function() {
@@ -990,6 +1053,45 @@ $(document).ready(function(){
 			close: function() {
 		        form[0].reset();
 	    	}
+		});
+		form = dialog.find("form").on("submit",function(event){event.preventDefault();submitForm();});
+      	dialog.dialog("open");
+
+	});
+
+	$('#addArtistButton').click(function(){
+		var dialog, form;
+		var artistName = $('#addArtistForm-artist');
+
+		function submitForm(){
+			var params = JSON.stringify({
+				'sp' : 'insert_artist',
+				'input_params' : {
+					'artist' : artistName.val()
+				},
+				'output_params' : 1
+			});
+
+			$.ajax('exec_sp',{
+				type: "POST",
+				contentType: "application/json",
+		 		dataType: 'JSON',
+				data: params,
+				success: function (results){
+					var err = results[1][0]['@o1'];
+					if (err == 0) {dialog.dialog('close');} else {alert(sqlErrCheck(err));}
+				}
+			});
+		}
+
+		dialog = $("#addArtistWindow").dialog({
+			autoOpen: false, 
+			modal: true,
+			buttons: {
+				"Add Artist" : submitForm,
+				Cancel: function() {dialog.dialog('close');}
+			},
+			close: function(){form[0].reset();}
 		});
 		form = dialog.find("form").on("submit",function(event){event.preventDefault();submitForm();});
       	dialog.dialog("open");

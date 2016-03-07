@@ -75,6 +75,16 @@ block mainContainer
 					label(for='element') Select Element:
 					select(type='text',name='element',id='restoreElementForm-element',class="text ui-widget-content ui-corner-all")
 					input(type='submit',style='position:absolute; top:-1000px')
+
+		button(id='codeElementButton', class='clickLink') CODE ELEMENT
+		div(id='codeElementWindow')
+			form(id='codeElementForm')
+				fieldset
+					label(for='element') Select Element:
+					select(type='text',name='element',id='codeElementForm-element',class="text ui-widget-content ui-corner-all")
+					label(for='code') Enter Code:
+					input(type='number',name='element',id='codeElementForm-code',class="text ui-widget-content ui-corner-all")
+					input(type='submit',style='position:absolute; top:-1000px')
 	
 	h3 Table Filters
 	div
@@ -171,6 +181,14 @@ block mainContainer
 					div(id='addExhibitForm-exhibitBox')
 						lable(for='exhibit') Enter Exhibit Name:
 						input(type='text',name='exhibit',id='addExhibitForm-exhibit',class="text ui-widget-content ui-corner-all")
+					input(type='submit',style='position:absolute; top:-1000px')
+	div
+		button(id='addArtistButton', class='clickLink') ADD ARTIST
+		div(id='addArtistWindow', title="Add Artist")
+			form(id='addArtistForm')
+				fieldset
+					label(for='artist') Enter Artist Name:
+					input(type='text',name='artist',id='addArtistForm-artist',class="text ui-widget-content ui-corner-all")
 					input(type='submit',style='position:absolute; top:-1000px')
 	h2 Other
 

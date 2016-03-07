@@ -60,8 +60,9 @@ DROP TABLE IF EXISTS `artist`;
 CREATE TABLE `artist` (
   `artistId` int(11) NOT NULL AUTO_INCREMENT,
   `artist` varchar(255) DEFAULT NULL,
+  `active` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`artistId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +71,7 @@ CREATE TABLE `artist` (
 
 LOCK TABLES `artist` WRITE;
 /*!40000 ALTER TABLE `artist` DISABLE KEYS */;
-INSERT INTO `artist` VALUES (1,'Pierre-Auguste Renoir'),(2,'Wassily Kandinsky'),(3,'Vincent van Gogh'),(4,'Interwebs');
+INSERT INTO `artist` VALUES (1,'Pierre-Auguste Renoir',1),(2,'Wassily Kandinsky',1),(3,'Vincent van Gogh',1),(4,'Interwebs',1),(5,'test1',1);
 /*!40000 ALTER TABLE `artist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +92,7 @@ CREATE TABLE `element` (
   `imageLink` varchar(255) DEFAULT NULL,
   `exhibitId` int(11) NOT NULL,
   PRIMARY KEY (`elementId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +101,7 @@ CREATE TABLE `element` (
 
 LOCK TABLES `element` WRITE;
 /*!40000 ALTER TABLE `element` DISABLE KEYS */;
-INSERT INTO `element` VALUES (1,1,'Luncheon of the Boating Party',1,1881,'Test description',NULL,1),(2,1,'Composition VIII',2,1923,'',NULL,1),(3,1,'Café Terrace at Night',3,1888,'',NULL,1),(4,1,'Maeby',4,2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2),(5,1,'Baby Cat',4,2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2),(6,0,'test1',1,1993,'test','testtest',1),(7,0,'test2',1,1993,'test','testtest',1),(8,0,'test3',1,1993,'test','testtest',1),(9,0,'Demo Project 1',2,1993,'This is a description','',1);
+INSERT INTO `element` VALUES (1,0,'Luncheon of the Boating Party',1,1881,'Test description',NULL,1),(2,0,'Composition VIII',2,1923,'',NULL,1),(3,1,'Café Terrace at Night',3,1888,'',NULL,1),(4,1,'Maeby',4,2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2),(5,1,'Baby Cat',4,2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2),(6,0,'test1',1,1993,'test','testtest',1),(7,0,'test2',1,1993,'test','testtest',1),(8,0,'test3',1,1993,'test','testtest',1),(9,0,'Demo Project 1',2,1993,'This is a description','',1),(10,0,'Andrews Test',4,1456,'The form works','testtest',1),(11,0,'Another Test',1,1234,'1234','1234',1),(12,0,'Another Test1',1,0,'','',1),(13,1,'At1',1,1333,'adfadsfad','adfasdfadsfad',1);
 /*!40000 ALTER TABLE `element` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,7 +125,7 @@ CREATE TABLE `elementCode` (
 
 LOCK TABLES `elementCode` WRITE;
 /*!40000 ALTER TABLE `elementCode` DISABLE KEYS */;
-INSERT INTO `elementCode` VALUES (1,1325),(2,5728),(3,7793);
+INSERT INTO `elementCode` VALUES (1,1325),(2,5728),(3,7793),(4,1234),(13,1122);
 /*!40000 ALTER TABLE `elementCode` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,8 +166,9 @@ CREATE TABLE `elementTag` (
   `elementTagId` int(11) NOT NULL AUTO_INCREMENT,
   `elementTag` varchar(255) DEFAULT NULL,
   `elementTagTypeId` int(11) DEFAULT NULL,
+  `active` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`elementTagId`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +177,7 @@ CREATE TABLE `elementTag` (
 
 LOCK TABLES `elementTag` WRITE;
 /*!40000 ALTER TABLE `elementTag` DISABLE KEYS */;
-INSERT INTO `elementTag` VALUES (1,'Oil on Canvas',1),(2,'Aerospace',4),(3,'Automotive',4),(4,'Watercolour',1),(5,'Charcoal',1),(6,'pencil',1),(7,'ink',1),(8,'test',2),(9,'Enter tag name',2),(10,'test1',2),(15,'test5',1),(20,'test',4);
+INSERT INTO `elementTag` VALUES (1,'Oil on Canvas',1,1),(2,'Aerospace',4,1),(3,'Automotive',4,1),(4,'Watercolour',1,1),(5,'Charcoal',1,1),(6,'pencil',1,1),(7,'ink',1,1),(8,'test',2,1),(9,'Enter tag name',2,1),(10,'test1',2,1),(15,'test5',1,1),(20,'test',4,1),(21,'itest1',4,1);
 /*!40000 ALTER TABLE `elementTag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,7 +202,7 @@ CREATE TABLE `elementTagMapping` (
 
 LOCK TABLES `elementTagMapping` WRITE;
 /*!40000 ALTER TABLE `elementTagMapping` DISABLE KEYS */;
-INSERT INTO `elementTagMapping` VALUES (1,1,1),(1,2,1),(1,3,1),(3,4,1),(3,5,1),(4,4,1),(8,1,1),(8,2,1),(9,1,1),(9,5,1),(10,1,1),(10,4,1);
+INSERT INTO `elementTagMapping` VALUES (1,1,1),(1,2,1),(1,3,1),(3,4,1),(3,5,1),(4,4,1),(8,1,1),(8,2,1),(9,1,1),(9,5,1),(10,1,1),(10,4,1),(21,4,1);
 /*!40000 ALTER TABLE `elementTagMapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,7 +245,7 @@ CREATE TABLE `exhibit` (
   `museumId` int(11) NOT NULL,
   PRIMARY KEY (`exhibitId`),
   UNIQUE KEY `exhibitName` (`exhibitName`,`museumId`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -252,7 +254,7 @@ CREATE TABLE `exhibit` (
 
 LOCK TABLES `exhibit` WRITE;
 /*!40000 ALTER TABLE `exhibit` DISABLE KEYS */;
-INSERT INTO `exhibit` VALUES (1,1,'Muse Sample 1',1),(2,1,'Internet Cats',1),(3,0,'Test1',1),(6,0,'Test2',1),(7,0,'Test3',1);
+INSERT INTO `exhibit` VALUES (1,1,'Muse Sample 1',1),(2,1,'Internet Cats',1),(3,0,'Test1',1),(6,0,'Test2',1),(7,0,'Test3',1),(8,1,'test4',1);
 /*!40000 ALTER TABLE `exhibit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -475,7 +477,9 @@ DROP TABLE IF EXISTS `v_elements`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_elements` AS SELECT 
- 1 AS `id`,
+ 1 AS `museumId`,
+ 1 AS `exhibitId`,
+ 1 AS `elementId`,
  1 AS `active`,
  1 AS `museum`,
  1 AS `exhibit`,
@@ -511,7 +515,7 @@ DROP TABLE IF EXISTS `v_tags`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_tags` AS SELECT 
- 1 AS `id`,
+ 1 AS `elementId`,
  1 AS `active`,
  1 AS `element`,
  1 AS `type`,
@@ -692,11 +696,11 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `f_getExhibitId`(textName varchar(255)) RETURNS int(11)
+CREATE DEFINER=`root`@`localhost` FUNCTION `f_getExhibitId`(textName varchar(255),museumName varchar(255)) RETURNS int(11)
 BEGIN
 	declare id integer;
 	select exhibitId into id
-	from exhibit where exhibitName=textName;
+	from exhibit where exhibitName=textName and museumId=f_getMuseumId(museumName);
 
 	RETURN id;
 END ;;
@@ -739,26 +743,33 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_element`(
-	in vElement varchar(255), 
-    in vExhibit varchar(255),
+	in vElementId integer,
     out vSuccess integer
 )
 BEGIN
 	declare vExists integer default 0;
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
         SELECT -1 into vSuccess;
+        
+	start transaction;
     
     select count(*) into vExists from element
-    where elementId=f_getElementId(vElement,vExhibit);
+    where elementId=vElementId;
     
     if vExists = 1 then
 		update element set active=0
-        where elementId=f_getElementId(vElement,vExhibit);
+        where elementId=vElementId;
         select 0 into vSuccess;
 	elseif vExists = 0 then 
 		select -3 into vSuccess;
 	else
 		select -1 into vSuccess;
+	end if;
+    
+    if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
 	end if;
 END ;;
 DELIMITER ;
@@ -809,6 +820,49 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insert_artist` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_artist`(
+	in vArtistName varchar(255),
+    out vSuccess integer
+)
+BEGIN
+	declare vValid integer default 0;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
+        
+	start transaction;
+    
+    select count(*) into vValid from artist
+    where artist=vArtistName;
+    
+    if vValid = 0 then 
+		insert into artist (artist) 
+        values (vArtistName);
+        select 0 into vSuccess;
+	else
+		select -2 into vSuccess;
+	end if;
+    
+	if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
+	end if;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `insert_element` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -820,9 +874,9 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_element`(
-	in vExhibit varchar(255), 
+	in vExhibitId varchar(255), 
     in vTitle varchar(255),
-    in vArtist varchar(255),
+    in vArtistId varchar(255),
     in vYear integer,
     in vDesc varchar(500), 
     in vImageLink varchar(255),
@@ -833,8 +887,10 @@ BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
         SELECT -1 into vSuccess;
         
+	start transaction;
+        
 	select count(*) into vExists from element
-    where exhibitId=f_getExhibitId(vExhibit) and title=vTitle;
+    where exhibitId=vExhibitId and title=vTitle;
     
     if vExists=0 then 
 		insert into element (
@@ -846,17 +902,67 @@ BEGIN
             exhibitId
         ) values (
 			vTitle, 
-            f_getArtistId(vArtist),
+            vArtistId,
             vYear,
             vDesc,
             vImageLink,
-            f_getExhibitId(vExhibit)
+            vExhibitId
         );
         select 0 into vSuccess;
     else
 		select -2 into vSuccess;
 	end if;
     
+    if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
+	end if;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insert_elementCode` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_elementCode`(
+	in vElementId integer,
+    in vElementCode integer,
+    out vSuccess integer
+)
+BEGIN
+	declare vValid integer default 0;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
+        
+	start transaction;
+    
+    select count(*) into vValid from elementCode
+    where code=vElementCode;
+    
+    if vValid = 0 then 
+		insert into elementCode (elementId,code) 
+        values (vElementId,vElementCode);
+        select 0 into vSuccess;
+	else
+		select -4 into vSuccess;
+	end if;
+    
+	if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
+	end if;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -875,41 +981,33 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_elementTag`(
 	in vElementTag varchar(255),
-    in vElementTagType varchar(255),
+    in vElementTagTypeId integer,
     out vSuccess integer
 )
 BEGIN
 	declare vValid integer default 0;
-    declare vElementTagTypeId integer default -1;
-    
-    select count(*) into vValid
-    from elementTagType
-    where elementTagType = vElementTagType;
-    
-    if vValid = 1 then 
-		select elementTagTypeId into vElementTagTypeId 
-        from elementTagType where elementTagType=vElementTagType;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
         
-        select count(*) into vValid 
-        from elementTag where elementTag=vElementTag and elementTagTypeId=vElementTagTypeId;
-        
-        if vValid > 0 then
-			select -2 into vSuccess; 
-        else
-			insert into elementTag (
-				elementTag,
-				elementTagTypeId
-			) values (
-				vElementTag,
-				(select elementTagTypeId from elementTagType where elementTagType=vElementTagType)
-			);
-            select 0 into vSuccess;
-        end if;
+	start transaction;
+    
+    select count(*) into vValid from elementTag
+    where elementTag=vElementTag and elementTagTypeId=vElementTagTypeId;
+    
+    if vValid = 0 then 
+		insert into elementTag (elementTag,elementTagTypeId) 
+        values (vElementTag,vElementTagTypeId);
+        select 0 into vSuccess;
 	else
-		select -1 into vSuccess;
+		select -2 into vSuccess;
 	end if;
     
-    -- -1 error = tagType does not exist
+	if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
+	end if;
+    
     -- -2 error = tag already exists
 END ;;
 DELIMITER ;
@@ -928,29 +1026,35 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_elementTagMapping`(
-	in vElement varchar(255),
-    in vExhibit varchar(255),
-    in vElementTag varchar(255),
-    in vElementTagType varchar(255),
+	in vElementId integer,
+    in vElementTagId integer,
     out vSuccess integer
 )
 BEGIN
 	declare vExists integer default 0;
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
         SELECT -1 into vSuccess;
+        
+	start transaction;
 
 	select count(*) into vExists from elementTagMapping
-    where elementTagId=f_getElementTagId(vElementTag,vElementTagType) and elementId=f_getElementId(vElement,vExhibit);
+    where elementId=vElementId and elementTagId=vElementTagId;
     
     if vExists=0 then 
 		insert into elementTagMapping (
 			elementTagId, elementId
 		) values (
-			f_getElementTagId(vElementTag,vElementTagType), f_getElementId(vElement,vExhibit)
+			vElementTagId, vElementId
 		);
 		select 0 into vSuccess;
 	else 
 		select -2 into vSuccess;
+	end if;
+    
+    if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
 	end if;
 END ;;
 DELIMITER ;
@@ -969,7 +1073,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_exhibit`(
-	in vMuseum varchar(255),
+	in vMuseumId integer,
     in vExhibitName varchar(255),
     out vSuccess integer
 )
@@ -977,20 +1081,27 @@ BEGIN
 	declare vExists integer default 0;
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
         SELECT -1 into vSuccess;
+        
+	start transaction;
 
-    select count(*) into vExists
-    from exhibit
-    where exhibitName=vExhibitName and museumId=f_getMuseumId(vMuseum);
+    select count(*) into vExists from exhibit
+    where exhibitName=vExhibitName and museumId=vMuseumId;
 
 	if vExists=0 then 
 		insert into exhibit (
 			exhibitName, museumId
 		) values (
-			vExhibitName, f_getMuseumId(vMuseum)
+			vExhibitName, vMuseumId
 		);
 		select 0 into vSuccess;
 	else 
 		select -2 into vSuccess;
+	end if;
+    
+    if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
 	end if;
 END ;;
 DELIMITER ;
@@ -1122,8 +1233,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `restore_element`(
-	in vElement varchar(255), 
-    in vExhibit varchar(255),
+	in vElementId integer,
     out vSuccess integer
 )
 BEGIN
@@ -1131,17 +1241,25 @@ BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
         SELECT -1 into vSuccess;
     
+    start transaction;
+    
     select count(*) into vExists from element
-    where elementId=f_getElementId(vElement,vExhibit);
+    where elementId=vElementId;
     
     if vExists = 1 then
 		update element set active=1
-        where elementId=f_getElementId(vElement,vExhibit);
+        where elementId=vElementId;
         select 0 into vSuccess;
 	elseif vExists = 0 then 
 		select -3 into vSuccess;
 	else
 		select -1 into vSuccess;
+	end if;
+    
+    if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
 	end if;
 END ;;
 DELIMITER ;
@@ -1160,41 +1278,36 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `update_element`(
-	in vElement varchar(255),
-    in vExhibit varchar(255),
+	in vElementId integer,
     in vField varchar(255),
     in vValue varchar(255),
     out vSuccess integer
 )
 BEGIN
 	declare vExists integer default 0;
-    declare vId integer;
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
         SELECT -1 into vSuccess;
     
+    start transaction;
+    
     select count(*) into vExists from element
-    where elementId=f_getElementId(vElement,vExhibit);
+    where elementId=vElementId;
     
     if vExists = 1 then
-		select f_getElementId(vElement,vExhibit) into vId;
-        if vField='artist' then 
-			select 'artistId' into vField;
-            select f_getArtistId(vValue) into vValue;
-            update element set artist=vValue where elementId=vId;
-		elseif vField='exhibit' then
-			select 'exhibitId' into vField;
-            select f_getExhibitId(vValue) into vValue;
-            update element set exhibitId=vValue where elementId=vId;
+        if vField='artistId' then 
+            update element set artistId=vValue where elementId=vElementId;
+		elseif vField='exhibitId' then
+            update element set exhibitId=vValue where elementId=vElementId;
 		elseif vField='description' then
-			update element set description=vValue where elementId=vId;
+			update element set description=vValue where elementId=vElementId;
         elseif vField='active' then
-			update element set active=vValue where elementId=vId;
+			update element set active=vValue where elementId=vElementId;
         elseif vField='title' then
-			update element set title=vValue where elementId=vId;
+			update element set title=vValue where elementId=vElementId;
         elseif vField='paintYear' then
-			update element set paintYear=vValue where elementId=vId;
+			update element set paintYear=vValue where elementId=vElementId;
         elseif vField='imageLink' then
-			update element set imageLink=vValue where elementId=vId;
+			update element set imageLink=vValue where elementId=vElementId;
         end if;
         
         select 0 into vSuccess;
@@ -1203,6 +1316,12 @@ BEGIN
 		select -3 into vSuccess;
 	else
 		select -1 into vSuccess;
+	end if;
+    
+    if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
 	end if;
 END ;;
 DELIMITER ;
@@ -1322,7 +1441,7 @@ USE `muse_dev`;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_elements` AS select `e`.`elementId` AS `id`,(case `e`.`active` when 1 then 'Active' when 0 then 'Inactive' end) AS `active`,`m`.`museumName` AS `museum`,`x`.`exhibitName` AS `exhibit`,`e`.`title` AS `element`,`c`.`code` AS `code`,`a`.`artist` AS `artist`,`e`.`paintYear` AS `year`,`e`.`description` AS `description`,`e`.`imageLink` AS `imageLink`,(select count(0) from `elementtagmapping` `tm` where (`tm`.`elementId` = `e`.`elementId`)) AS `numTags` from ((((`element` `e` left join `exhibit` `x` on((`e`.`exhibitId` = `x`.`exhibitId`))) left join `museum` `m` on((`x`.`museumId` = `m`.`museumId`))) left join `elementcode` `c` on((`e`.`elementId` = `c`.`elementId`))) left join `artist` `a` on((`e`.`artistId` = `a`.`artistId`))) */;
+/*!50001 VIEW `v_elements` AS select `m`.`museumId` AS `museumId`,`x`.`exhibitId` AS `exhibitId`,`e`.`elementId` AS `elementId`,(case `e`.`active` when 1 then 'Active' when 0 then 'Inactive' end) AS `active`,`m`.`museumName` AS `museum`,`x`.`exhibitName` AS `exhibit`,`e`.`title` AS `element`,`c`.`code` AS `code`,`a`.`artist` AS `artist`,`e`.`paintYear` AS `year`,`e`.`description` AS `description`,`e`.`imageLink` AS `imageLink`,(select count(0) from `elementtagmapping` `tm` where (`tm`.`elementId` = `e`.`elementId`)) AS `numTags` from ((((`element` `e` left join `exhibit` `x` on((`e`.`exhibitId` = `x`.`exhibitId`))) left join `museum` `m` on((`x`.`museumId` = `m`.`museumId`))) left join `elementcode` `c` on((`e`.`elementId` = `c`.`elementId`))) left join `artist` `a` on((`e`.`artistId` = `a`.`artistId`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1358,7 +1477,7 @@ USE `muse_dev`;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_tags` AS select `m`.`elementId` AS `id`,(case `m`.`active` when 1 then 'Active' when 0 then 'Inactive' end) AS `active`,`e`.`title` AS `element`,`tt`.`elementTagType` AS `type`,`t`.`elementTag` AS `tag` from (((`elementtagmapping` `m` left join `element` `e` on((`m`.`elementId` = `e`.`elementId`))) left join `elementtag` `t` on((`m`.`elementTagId` = `t`.`elementTagId`))) left join `elementtagtype` `tt` on((`t`.`elementTagTypeId` = `tt`.`elementTagTypeId`))) */;
+/*!50001 VIEW `v_tags` AS select `m`.`elementId` AS `elementId`,(case `m`.`active` when 1 then 'Active' when 0 then 'Inactive' end) AS `active`,`e`.`title` AS `element`,`tt`.`elementTagType` AS `type`,`t`.`elementTag` AS `tag` from (((`elementtagmapping` `m` left join `element` `e` on((`m`.`elementId` = `e`.`elementId`))) left join `elementtag` `t` on((`m`.`elementTagId` = `t`.`elementTagId`))) left join `elementtagtype` `tt` on((`t`.`elementTagTypeId` = `tt`.`elementTagTypeId`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1390,4 +1509,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-07 13:34:51
+-- Dump completed on 2016-03-07 16:45:25
