@@ -58,8 +58,5 @@ $(document).ready(function() {
 		$(this).parent('#splashscreen').fadeOut(500);
 	})
 
-	$('enter_signup').click(function () {
-
-	})
 
 });

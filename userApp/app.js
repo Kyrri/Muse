@@ -122,6 +122,9 @@ var prevID = null;
       app.get('/beginTour', function(req, res){
         res.render('beginTour', { title: 'Begin Tour'});
       });
+      app.get('/favourites', function(req, res){
+        res.render('favourites', { title: 'Favourites'});
+      })
 
       //  DURING VISIT //
       app.get('/checkIn', function(req, res){

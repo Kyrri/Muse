@@ -1,9 +1,10 @@
 extends layout
 block headScripts
 	script(src='/javascripts/checkIn.js')
+
 block mainContainer
 	.checkInContainer
-		h2(class='welcome') Enter 4-digit Code:
+		h2(class='welcome') Enter 4-digit code:
 		form(id='checkIn')
 			input(type='text', maxlength="1")
 			input(type='text', maxlength="1")
