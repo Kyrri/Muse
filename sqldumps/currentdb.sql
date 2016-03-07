@@ -125,7 +125,7 @@ CREATE TABLE `elementCode` (
 
 LOCK TABLES `elementCode` WRITE;
 /*!40000 ALTER TABLE `elementCode` DISABLE KEYS */;
-INSERT INTO `elementCode` VALUES (1,1325),(2,5728),(3,7793),(4,1234),(13,1122);
+INSERT INTO `elementCode` VALUES (1,1325),(2,5728),(3,7793),(4,1234),(13,1122),(5,6778);
 /*!40000 ALTER TABLE `elementCode` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +202,7 @@ CREATE TABLE `elementTagMapping` (
 
 LOCK TABLES `elementTagMapping` WRITE;
 /*!40000 ALTER TABLE `elementTagMapping` DISABLE KEYS */;
-INSERT INTO `elementTagMapping` VALUES (1,1,1),(1,2,1),(1,3,1),(3,4,1),(3,5,1),(4,4,1),(8,1,1),(8,2,1),(9,1,1),(9,5,1),(10,1,1),(10,4,1),(21,4,1);
+INSERT INTO `elementTagMapping` VALUES (1,1,1),(1,2,1),(1,3,1),(3,4,1),(3,5,0),(4,4,1),(8,1,1),(8,2,1),(8,4,1),(9,1,1),(9,5,1),(10,1,1),(10,4,0),(21,4,0);
 /*!40000 ALTER TABLE `elementTagMapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -516,6 +516,7 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_tags` AS SELECT 
  1 AS `elementId`,
+ 1 AS `elementTagId`,
  1 AS `active`,
  1 AS `element`,
  1 AS `type`,
@@ -759,6 +760,52 @@ BEGIN
     if vExists = 1 then
 		update element set active=0
         where elementId=vElementId;
+        select 0 into vSuccess;
+	elseif vExists = 0 then 
+		select -3 into vSuccess;
+	else
+		select -1 into vSuccess;
+	end if;
+    
+    if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
+	end if;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `delete_elementTagMapping` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_elementTagMapping`(
+	in vElementId integer,
+    in vElementTagId integer,
+    out vSuccess integer
+)
+BEGIN
+	declare vExists integer default 0;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
+        
+	start transaction;
+    
+    select count(*) into vExists from elementTagMapping
+    where elementId=vElementId and elementTagId=vElementTagId;
+    
+    if vExists = 1 then
+		update elementTagMapping set active=0
+        where elementId=vElementId and elementTagId=vElementTagId;
         select 0 into vSuccess;
 	elseif vExists = 0 then 
 		select -3 into vSuccess;
@@ -1267,6 +1314,52 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `restore_elementTagMapping` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `restore_elementTagMapping`(
+	in vElementId integer,
+    in vElementTagId integer,
+    out vSuccess integer
+)
+BEGIN
+	declare vExists integer default 0;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
+        
+	start transaction;
+    
+    select count(*) into vExists from elementTagMapping
+    where elementId=vElementId and elementTagId=vElementTagId;
+    
+    if vExists = 1 then
+		update elementTagMapping set active=1
+        where elementId=vElementId and elementTagId=vElementTagId;
+        select 0 into vSuccess;
+	elseif vExists = 0 then 
+		select -3 into vSuccess;
+	else
+		select -1 into vSuccess;
+	end if;
+    
+    if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
+	end if;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `update_element` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1477,7 +1570,7 @@ USE `muse_dev`;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_tags` AS select `m`.`elementId` AS `elementId`,(case `m`.`active` when 1 then 'Active' when 0 then 'Inactive' end) AS `active`,`e`.`title` AS `element`,`tt`.`elementTagType` AS `type`,`t`.`elementTag` AS `tag` from (((`elementtagmapping` `m` left join `element` `e` on((`m`.`elementId` = `e`.`elementId`))) left join `elementtag` `t` on((`m`.`elementTagId` = `t`.`elementTagId`))) left join `elementtagtype` `tt` on((`t`.`elementTagTypeId` = `tt`.`elementTagTypeId`))) */;
+/*!50001 VIEW `v_tags` AS select `m`.`elementId` AS `elementId`,`t`.`elementTagId` AS `elementTagId`,(case `m`.`active` when 1 then 'Active' when 0 then 'Inactive' end) AS `active`,`e`.`title` AS `element`,`tt`.`elementTagType` AS `type`,`t`.`elementTag` AS `tag` from (((`elementtagmapping` `m` left join `element` `e` on((`m`.`elementId` = `e`.`elementId`))) left join `elementtag` `t` on((`m`.`elementTagId` = `t`.`elementTagId`))) left join `elementtagtype` `tt` on((`t`.`elementTagTypeId` = `tt`.`elementTagTypeId`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1509,4 +1602,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-07 16:45:25
+-- Dump completed on 2016-03-07 18:19:36

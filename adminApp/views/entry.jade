@@ -16,12 +16,6 @@ block mainContainer
 		div(id='addElementWindow')
 			form(id='addElementForm')
 				fieldset
-					//div(id="addElementForm-museumBox")
-						label(for='museum') Select Museum:
-						select(type='text',name='museum',id='addElementForm-museum',class="text ui-widget-content ui-corner-all")
-					//div(id="addElementForm-exhibitBox")
-						label(for='exbibit') Select Exhibit:
-						select(type='text',name='exhibit',id='addElementForm-exhibit',class="text ui-widget-content ui-corner-all")
 					div(id="addElementForm-elementBox")
 						label(for='element') Enter Element Name:
 						input(type='text',name='element',id='addElementForm-element',class="text ui-widget-content ui-corner-all")
@@ -136,6 +130,21 @@ block mainContainer
 						lable(for='tag') Select Tag:
 						select(type='text',name='tag',id='tagElementForm-tag',class="text ui-widget-content ui-corner-all")
 					input(type='submit',style='position:absolute; top:-1000px')
+		button(id='deleteElementTagButton', class='clickLink') DELETE ELEMENT TAG
+		div(id='deleteElementTagWindow')
+			form(id='deleteElementTagForm')
+				fieldset
+					label(for='tag') Select Tag Type:
+					select(type='text',name='tag',id='deleteElementTagForm-tag',class="text ui-widget-content ui-corner-all")
+					input(type='submit',style='position:absolute; top:-1000px')
+		button(id='restoreElementTagButton', class='clickLink') RESTORE ELEMENT TAG
+		div(id='restoreElementTagWindow')
+			form(id='restoreElementTagForm')
+				fieldset
+					label(for='tag') Select Tag Type:
+					select(type='text',name='tag',id='restoreElementTagForm-tag',class="text ui-widget-content ui-corner-all")
+					input(type='submit',style='position:absolute; top:-1000px')
+
 	
 	h3 Table Filters
 	div 

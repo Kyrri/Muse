@@ -16,6 +16,8 @@ $(document).ready(function(){
 		$('#editElementWindow').hide();
 		$('#hidden-exhibitList').hide();
 		$('#addArtistWindow').hide();
+		$('#deleteElementTagWindow').hide();
+		$('#restoreElementTagWindow').hide();
 
 		// Disable buttons on start until requisite fields are filled 
 		$('#addElementButton').prop('disabled', true);
@@ -23,6 +25,8 @@ $(document).ready(function(){
 		$('#restoreElementButton').prop('disabled', true);
 		$('#editElementButton').prop('disabled', true);
 		$('#codeElementButton').prop('disabled', true);
+		$('#deleteElementTagButton').prop('disabled', true);
+		$('#restoreElementTagButton').prop('disabled', true);
 
 		$('#tagElementButton').prop('disabled', true);
 
@@ -124,6 +128,27 @@ $(document).ready(function(){
 			}
 		});
 		getLists(parameters,'elementTag','elementTagId',ids);
+	}
+
+	function getElementTagMappingList(elementId,ids,inactive) {
+		if (!inactive){
+			var parameters = JSON.stringify({
+				'table' : 'v_tags',
+				'clauses' : {
+					'elementId' : elementId,
+					'active' : "'Active'"
+				}
+			});
+		} else {
+			var parameters = JSON.stringify({
+				'table' : 'v_tags',
+				'clauses' : {
+					'elementId' : elementId,
+					'active' : "'Inactive'"
+				}
+			});
+		}
+		getLists(parameters,'tag','elementTagId',ids);
 	}
 
 	function getExhibitList(museum,ids) {
@@ -347,6 +372,8 @@ $(document).ready(function(){
 			$('#vTagsTable-activeSelector').val()
 		);
 		$('#tagElementButton').prop('disabled', false);
+		$('#deleteElementTagButton').prop('disabled', false);
+		$('#restoreElementTagButton').prop('disabled', false);
 	});
 	$('#vTagsTable-activeSelector').change(function(){
 		loadvTagsTable(
@@ -1098,8 +1125,95 @@ $(document).ready(function(){
 
 	});
 
-	
+	$('#deleteElementTagButton').click(function(){
+		var dialog, form;
+		var elementId = $('#vTagsTable-elementSelector');
+		var elementTagId = $('#deleteElementTagForm-tag');;
 
+		function submitForm(){
+			var params = JSON.stringify({
+				'sp' : 'delete_elementTagMapping',
+				'input_params' : {
+					'elementTag' : elementId.val(),
+					'elementTagId' : elementTagId.val()
+				},
+				'output_params' : 1
+			});
+
+			$.ajax('exec_sp',{
+				type: "POST",
+				contentType: "application/json",
+		 		dataType: 'JSON',
+				data: params,
+				success: function (results){
+					var err = results[1][0]['@o1'];
+					if (err == 0) {dialog.dialog('close');} else {alert(sqlErrCheck(err));}
+					loadvTagsTable($('#vTagsTable-elementSelector').val(),$('#vTagsTable-activeSelector').val());
+				}
+			});
+		}
+
+		getElementTagMappingList(elementId.val(),['#deleteElementTagForm-tag'])
+
+		dialog = $("#deleteElementTagWindow").dialog({
+			autoOpen: false, 
+			modal: true,
+			title: 'Delete tags for - ' + $('#vTagsTable-elementSelector option:selected').text(),
+			buttons: {
+				"Delete ElementTag" : submitForm,
+				Cancel: function() {dialog.dialog('close');}
+			},
+			close: function(){form[0].reset();}
+		});
+		form = dialog.find("form").on("submit",function(event){event.preventDefault();submitForm();});
+      	dialog.dialog("open");
+
+	});
+
+	$('#restoreElementTagButton').click(function(){
+		var dialog, form;
+		var elementId = $('#vTagsTable-elementSelector');
+		var elementTagId = $('#restoreElementTagForm-tag');;
+
+		function submitForm(){
+			var params = JSON.stringify({
+				'sp' : 'restore_elementTagMapping',
+				'input_params' : {
+					'elementTag' : elementId.val(),
+					'elementTagId' : elementTagId.val()
+				},
+				'output_params' : 1
+			});
+
+			$.ajax('exec_sp',{
+				type: "POST",
+				contentType: "application/json",
+		 		dataType: 'JSON',
+				data: params,
+				success: function (results){
+					var err = results[1][0]['@o1'];
+					if (err == 0) {dialog.dialog('close');} else {alert(sqlErrCheck(err));}
+					loadvTagsTable($('#vTagsTable-elementSelector').val(),$('#vTagsTable-activeSelector').val());
+				}
+			});
+		}
+
+		getElementTagMappingList(elementId.val(),['#restoreElementTagForm-tag'],true)
+
+		dialog = $("#restoreElementTagWindow").dialog({
+			autoOpen: false, 
+			modal: true,
+			title: 'Restore tags for - ' + $('#vTagsTable-elementSelector option:selected').text(),
+			buttons: {
+				"Restore ElementTag" : submitForm,
+				Cancel: function() {dialog.dialog('close');}
+			},
+			close: function(){form[0].reset();}
+		});
+		form = dialog.find("form").on("submit",function(event){event.preventDefault();submitForm();});
+      	dialog.dialog("open");
+
+	});
 
 	// testButton
 	$('#testButton').click(function(){
