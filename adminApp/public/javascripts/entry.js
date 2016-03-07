@@ -70,7 +70,8 @@ $(document).ready(function(){
 		var parameters = JSON.stringify({
 			'table' : 'exhibit',
 			'clauses' : {
-				'museumId' : "f_getMuseumId('" + museum + "')" 
+				'museumId' : "f_getMuseumId('" + museum + "')",
+				'active' : 1
 			}
 		});
 		getLists(parameters,'exhibitName',ids);
@@ -86,6 +87,98 @@ $(document).ready(function(){
 		getLists(parameters,'title',ids);
 	}
 
+	function getArtistList(ids) {
+		var parameters = JSON.stringify({
+			'table' : 'artist'
+		});
+		getLists(parameters,'artist',ids);
+	}
+
+	function sqlErrCheck(errCode) {
+			var errMsg;
+			switch(errCode){
+				case -1:
+					errMsg = 'Unexpect SQL Error.';
+					break;
+				case -2:
+					errMsg = 'Insert Failed. Record already exists.';
+					break;	
+				case 0:
+					errMsg = 'Success.';
+					break;
+			}
+			return errMsg;
+		}
+
+	// DYNATABLES
+	function loadvElementsTable() {
+		var dbParams = JSON.stringify({
+			'table' : 'v_elements'
+		});
+		$.ajax('exec_qry',{
+			type : 'POST',
+			contentType : 'application/json',
+			dataType : 'JSON',
+			data : dbParams,
+			success : function(results){
+				$('#vElementsTable').dynatable({
+					dataset : {
+						records : results
+					}
+				});
+			}
+		});
+	}
+
+	function loadvTagsTable() {
+		var dbParams = JSON.stringify({
+			'table' : 'v_tags'
+		});
+		$.ajax('exec_qry',{
+			type : 'POST',
+			contentType : 'application/json',
+			dataType : 'JSON',
+			data : dbParams,
+			success : function(results){
+				$('#vTagsTable').dynatable({
+					dataset : {
+						records : results
+					}
+				});
+			}
+		});
+	}
+
+	function loadvExhibitsTable(museum) {
+		var dbParams = JSON.stringify({
+			'table' : 'v_exhibits',
+			'clauses' : {
+				'museum' : "'" + museum + "'"
+			}
+		});
+		$.ajax('exec_qry',{
+			type : 'POST',
+			contentType : 'application/json',
+			dataType : 'JSON',
+			data : dbParams,
+			success : function(results){
+				$('#vExhibitsTable').dynatable({
+					features : {
+						paginate : false,
+						search : false,
+						recordCount : false
+					},
+					dataset : {
+						records : results
+					}
+				});
+			}
+		});
+	}
+
+	loadvElementsTable();
+	loadvTagsTable();
+
 	// debugging stuff 
 	//getElementTagList('Industry');
 	/*$(document).ajaxComplete(function(){
@@ -95,23 +188,28 @@ $(document).ready(function(){
   	// hide the addElementTag form
 	$('#addTagWindow').hide();
 	$('#tagElementWindow').hide();
+	$('#addExhibitWindow').hide();
+	$('#addElementWindow').hide();
+	$('#hidden-exhibitList').hide();
 
 	// CLICK ACTIONS
-	// get tagTypeList
-	$('#tagTypeList').click(function(){
-		getElementTagTypeList([
-			'#tagTypeList-results'
-		]);
-		$(this).hide();
-	});
+	/* Deprecated
+		// get tagTypeList
+		$('#tagTypeList').click(function(){
+			getElementTagTypeList([
+				'#tagTypeList-results'
+			]);
+			$(this).hide();
+		});
 
-	// keep track of tag type varialbe 
-	$('#tagTypeList-results').on('click','option',function(){
-		$('option').removeAttr('id');
-		$(this).attr('id','selectedTagType');
-		selectedTagType = $(this).text();
-		//console.log(selectedTagType);
-	});
+		// keep track of tag type varialbe 
+		$('#tagTypeList-results').on('click','option',function(){
+			$('option').removeAttr('id');
+			$(this).attr('id','selectedTagType');
+			selectedTagType = $(this).text();
+			//console.log(selectedTagType);
+		});
+	*/
 
 	// FORMS
 	// add element tag form 
@@ -236,6 +334,7 @@ $(document).ready(function(){
 					} else {
 						dialog.dialog('close');
 					}
+					loadvTagsTable();
 				}
 			});
 		}	
@@ -245,36 +344,22 @@ $(document).ready(function(){
 		exhibitBox.hide();
 		elementBox.hide();
 
-		getMuseumList([
-			'#tagElementForm-museum'
-		]);
-
-		getElementTagTypeList([
-			'#tagElementForm-tagType'
-		]);
-
+		getMuseumList(['#tagElementForm-museum']);
+		getElementTagTypeList(['#tagElementForm-tagType']);
 		museum.change(function(){
 			// update exhibit list when museum selected
-			getExhibitList(museum.val(),[
-				'#tagElementForm-exhibit'
-			]);
+			getExhibitList(museum.val(),['#tagElementForm-exhibit']);
 			museumBox.hide();
 			exhibitBox.show();
 		});
-
 		exhibit.change(function(){
 			// update element list when exhibit selected
-			getElementList(exhibit.val(),[
-				'#tagElementForm-element'
-			]);
+			getElementList(exhibit.val(),['#tagElementForm-element']);
 			exhibitBox.hide();
 			elementBox.show();
 		});
-
 		tagType.change(function(){
-			getElementTagList(tagType.val(),[
-				'#tagElementForm-tag'
-			])
+			getElementTagList(tagType.val(),['#tagElementForm-tag'])
 		});
 
 		dialog = $("#tagElementWindow").dialog({
@@ -298,6 +383,194 @@ $(document).ready(function(){
 
       	dialog.dialog( "open" );
     });
+
+	//  ADD EXHIBIT FORM  //
+	$('#addExhibitButton').click(function(){
+
+		var dialog, form;
+      	var museum = $('#addExhibitForm-museum');
+      	var exhibit = $('#addExhibitForm-exhibit');
+      	var museumBox = $('#addExhibitForm-museumBox');
+      	var exhibitBox = $('#addExhibitForm-exhibitBox');
+
+		function submitForm() {
+
+			var params = JSON.stringify({
+				'sp' : 'insert_exhibit',
+				'input_params' : {
+					'museum' : museum.val(),
+					'exhibit' :  exhibit.val()
+				},
+				'output_params' : 1
+			});
+
+			$.ajax('exec_sp',{
+				type: "POST",
+				contentType: "application/json",
+		 		dataType: 'JSON',
+				data: params,
+				success: function (results){
+					//console.log(results[1][0].success);
+					err = results[1][0]['@o1'];
+					//console.log(errCheck(err));
+					if (err == 0) {
+						dialog.dialog('close');
+					} else {
+						alert(sqlErrCheck(err));
+					}
+				}
+			});
+		}	
+
+		// list dependencies
+		getMuseumList([
+			'#addExhibitForm-museum'
+		]);
+
+		dialog = $("#addExhibitWindow").dialog({
+			autoOpen: false, 
+			modal: true,
+			buttons: {
+				"Add Tag" : submitForm,
+				Cancel: function() {
+					dialog.dialog('close');
+				}
+			},
+			close: function() {
+		        form[ 0 ].reset();
+	    	}
+		});
+
+		form = dialog.find( "form" ).on( "submit", function( event ) {
+	      	event.preventDefault();
+	      	submitForm();
+	    });
+
+      	dialog.dialog( "open" );
+
+	});
+
+	//  SHOW EXHIBITS BUTTON  //
+	$('#showExhibitsButton').click(function(){
+		var dialog, form;
+		var museum = $('#vExhibitsTableFilter-museum');
+
+		$('#vExhibitsTableFilter').show();
+		$('#vExhibitsTable').hide();
+		getMuseumList([
+			'#vExhibitsTableFilter-museum'
+		]);
+
+		$('#vExhibitsTableFilter-museum').change(function(){
+			$('#vExhibitsTableFilter').hide();
+			loadvExhibitsTable(museum.val());
+			$('#vExhibitsTable').show();
+		});
+
+		dialog = $("#hidden-exhibitList").dialog({
+			autoOpen: false, 
+			modal: true,
+			buttons: {
+				Cancel: function() {
+					dialog.dialog('close');
+				}
+			},
+			close: function() {
+		        form[ 0 ].reset();
+	    	}
+		});
+
+		form = dialog.find( "form" ).on( "submit", function( event ) {
+	      	event.preventDefault();
+	    });
+
+      	dialog.dialog( "open" );
+	});
+
+	//  ADD ELEMENT BUTTON  //
+	$('#addElementButton').click(function(){
+		var dialog, form;
+		var museum = $('#addElementForm-museum');
+		var exhibit = $('#addElementForm-exhibit');
+		var element = $('#addElementForm-element');
+		var artist = $('#addElementForm-aritst');
+		var year = $('#addElementForm-year');
+		var desc = $('#addElementForm-description');
+		var link = $('#addElementForm-imageLink');
+
+		var museumBox = $('#addElementForm-museumBox');
+		var exhibitBox = $('#addElementForm-exhibitBox');
+
+		// hide show control 
+		museumBox.show();
+		exhibitBox.hide();
+
+		// populate lists
+		getMuseumList(['#addElementForm-museum']);
+		getArtistList(['#addElementForm-aritst']);
+		museum.change(function(){
+			// update exhibit list when museum selected
+			getExhibitList(museum.val(),['#addElementForm-exhibit']);
+			museumBox.hide();
+			exhibitBox.show();
+		});
+
+		function submitForm() {
+			var params = JSON.stringify({
+				'sp' : 'insert_element',
+				'input_params' : {
+					'exhibit' : exhibit.val(),
+					'title' :  element.val(),
+					'artist' : artist.val(),
+					'year' : year.val(),
+					'description' : desc.val(),
+					'imgLink' : link.val()
+				},
+				'output_params' : 1
+			});
+
+			console.log(params);
+
+			$.ajax('exec_sp',{
+				type: "POST",
+				contentType: "application/json",
+		 		dataType: 'JSON',
+				data: params,
+				success: function (results){
+					//console.log(results[1][0].success);
+					err = results[1][0]['@o1'];
+					//console.log(errCheck(err));
+					if (err == 0) {
+						dialog.dialog('close');
+					} else {
+						alert(sqlErrCheck(err));
+					}
+					loadvElementsTable();
+				}
+			});
+		}
+
+		dialog = $("#addElementWindow").dialog({
+			autoOpen: false, 
+			modal: true,
+			buttons: {
+				"Add Tag" : submitForm,
+				Cancel: function() {
+					dialog.dialog('close');
+				}
+			},
+			close: function() {
+		        form[0].reset();
+	    	}
+		});
+
+		form = dialog.find("form").on("submit", function( event ) {
+	      	event.preventDefault();
+	      	submitForm();
+	    });
+
+      	dialog.dialog("open");
+	});
     
 	
 

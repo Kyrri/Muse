@@ -51,6 +51,30 @@ INSERT INTO `ageRange` VALUES (1,'18-20'),(2,'20-25'),(3,'25-30'),(4,'30-40'),(5
 UNLOCK TABLES;
 
 --
+-- Table structure for table `artist`
+--
+
+DROP TABLE IF EXISTS `artist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `artist` (
+  `artistId` int(11) NOT NULL AUTO_INCREMENT,
+  `artist` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`artistId`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `artist`
+--
+
+LOCK TABLES `artist` WRITE;
+/*!40000 ALTER TABLE `artist` DISABLE KEYS */;
+INSERT INTO `artist` VALUES (1,'Pierre-Auguste Renoir'),(2,'Wassily Kandinsky'),(3,'Vincent van Gogh'),(4,'Interwebs');
+/*!40000 ALTER TABLE `artist` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `element`
 --
 
@@ -61,13 +85,13 @@ CREATE TABLE `element` (
   `elementId` int(11) NOT NULL AUTO_INCREMENT,
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `title` varchar(255) NOT NULL,
-  `artist` varchar(255) DEFAULT NULL,
+  `artistId` int(11) DEFAULT NULL,
   `paintYear` int(11) DEFAULT NULL,
   `description` varchar(500) DEFAULT NULL,
   `imageLink` varchar(255) DEFAULT NULL,
   `exhibitId` int(11) NOT NULL,
   PRIMARY KEY (`elementId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,7 +100,7 @@ CREATE TABLE `element` (
 
 LOCK TABLES `element` WRITE;
 /*!40000 ALTER TABLE `element` DISABLE KEYS */;
-INSERT INTO `element` VALUES (1,1,'Luncheon of the Boating Party','Pierre-Auguste Renoir',1881,'',NULL,1),(2,1,'Composition VIII','Wassily Kandinsky',1923,'',NULL,1),(3,1,'Café Terrace at Night','Vincent van Gogh',1888,'',NULL,1),(4,1,'Maeby','Interwebs',2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2),(5,1,'Baby Cat','Interwebs',2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2);
+INSERT INTO `element` VALUES (1,1,'Luncheon of the Boating Party',1,1881,'',NULL,1),(2,1,'Composition VIII',2,1923,'',NULL,1),(3,1,'Café Terrace at Night',3,1888,'',NULL,1),(4,1,'Maeby',4,2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2),(5,1,'Baby Cat',4,2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2),(6,1,'test1',1,1993,'test','testtest',1),(7,1,'test2',1,1993,'test','testtest',1),(8,1,'test3',1,1993,'test','testtest',1),(9,1,'Demo Project 1',2,1993,'This is a description','',1);
 /*!40000 ALTER TABLE `element` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,8 +241,9 @@ CREATE TABLE `exhibit` (
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `exhibitName` varchar(255) DEFAULT NULL,
   `museumId` int(11) NOT NULL,
-  PRIMARY KEY (`exhibitId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`exhibitId`),
+  UNIQUE KEY `exhibitName` (`exhibitName`,`museumId`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,7 +252,7 @@ CREATE TABLE `exhibit` (
 
 LOCK TABLES `exhibit` WRITE;
 /*!40000 ALTER TABLE `exhibit` DISABLE KEYS */;
-INSERT INTO `exhibit` VALUES (1,1,'Muse Sample 1',1),(2,1,'Internet Cats',1);
+INSERT INTO `exhibit` VALUES (1,1,'Muse Sample 1',1),(2,1,'Internet Cats',1),(3,0,'Test1',1),(6,0,'Test2',1),(7,0,'Test3',1);
 /*!40000 ALTER TABLE `exhibit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -454,7 +479,25 @@ SET character_set_client = utf8;
  1 AS `museum`,
  1 AS `exhibit`,
  1 AS `element`,
- 1 AS `code`*/;
+ 1 AS `code`,
+ 1 AS `artist`,
+ 1 AS `year`,
+ 1 AS `description`,
+ 1 AS `imageLink`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `v_exhibits`
+--
+
+DROP TABLE IF EXISTS `v_exhibits`;
+/*!50001 DROP VIEW IF EXISTS `v_exhibits`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_exhibits` AS SELECT 
+ 1 AS `museum`,
+ 1 AS `exhibit`,
+ 1 AS `active`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -544,6 +587,29 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'muse_dev'
 --
+/*!50003 DROP FUNCTION IF EXISTS `f_getArtistId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `f_getArtistId`(textName VARCHAR(255)) RETURNS int(11)
+BEGIN
+	declare id integer;
+	select artistId into id
+	from artist where artist=textName;
+
+	RETURN id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP FUNCTION IF EXISTS `f_getElementId` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -702,6 +768,60 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insert_element` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_element`(
+	in vExhibit varchar(255), 
+    in vTitle varchar(255),
+    in vArtist varchar(255),
+    in vYear integer,
+    in vDesc varchar(500), 
+    in vImageLink varchar(255),
+    out vSuccess integer
+)
+BEGIN
+	declare vExists integer default 0;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
+        
+	select count(*) into vExists from element
+    where exhibitId=f_getExhibitId(vExhibit) and title=vTitle;
+    
+    if vExists=0 then 
+		insert into element (
+			title,
+            artistId,
+            paintYear,
+            description, 
+            imageLink,
+            exhibitId
+        ) values (
+			vTitle, 
+            f_getArtistId(vArtist),
+            vYear,
+            vDesc,
+            vImageLink,
+            f_getExhibitId(vExhibit)
+        );
+        select 0 into vSuccess;
+    else
+		select -2 into vSuccess;
+	end if;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `insert_elementTag` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -782,6 +902,46 @@ BEGIN
 		f_getElementTagId(vElementTag), f_getElementId(vElement,vExhibit)
 	);
 	select 1 into vSuccess;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insert_exhibit` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_exhibit`(
+	in vMuseum varchar(255),
+    in vExhibitName varchar(255),
+    out vSuccess integer
+)
+BEGIN
+	declare vExists integer default 0;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
+
+    select count(*) into vExists
+    from exhibit
+    where exhibitName=vExhibitName and museumId=f_getMuseumId(vMuseum);
+
+	if vExists=0 then 
+		insert into exhibit (
+			exhibitName, museumId
+		) values (
+			vExhibitName, f_getMuseumId(vMuseum)
+		);
+		select 0 into vSuccess;
+	else 
+		select -2 into vSuccess;
+	end if;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1013,7 +1173,25 @@ USE `muse_dev`;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_elements` AS select `e`.`elementId` AS `id`,`m`.`museumName` AS `museum`,`x`.`exhibitName` AS `exhibit`,`e`.`title` AS `element`,`c`.`code` AS `code` from (((`element` `e` left join `exhibit` `x` on((`e`.`exhibitId` = `x`.`exhibitId`))) left join `museum` `m` on((`x`.`museumId` = `m`.`museumId`))) left join `elementcode` `c` on((`e`.`elementId` = `c`.`elementId`))) */;
+/*!50001 VIEW `v_elements` AS select `e`.`elementId` AS `id`,`m`.`museumName` AS `museum`,`x`.`exhibitName` AS `exhibit`,`e`.`title` AS `element`,`c`.`code` AS `code`,`a`.`artist` AS `artist`,`e`.`paintYear` AS `year`,`e`.`description` AS `description`,`e`.`imageLink` AS `imageLink` from ((((`element` `e` left join `exhibit` `x` on((`e`.`exhibitId` = `x`.`exhibitId`))) left join `museum` `m` on((`x`.`museumId` = `m`.`museumId`))) left join `elementcode` `c` on((`e`.`elementId` = `c`.`elementId`))) left join `artist` `a` on((`e`.`artistId` = `a`.`artistId`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_exhibits`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_exhibits`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_exhibits` AS select `m`.`museumName` AS `museum`,`e`.`exhibitName` AS `exhibit`,`e`.`active` AS `active` from (`exhibit` `e` left join `museum` `m` on((`e`.`museumId` = `m`.`museumId`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1063,4 +1241,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-06 17:49:21
+-- Dump completed on 2016-03-06 21:58:57

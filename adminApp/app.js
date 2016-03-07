@@ -26,6 +26,7 @@ var exports = module.exports = {};
 exports.loggedIn = false;
 
 // SQL Types
+/* DEPRECATED
 function genSqlString(queryType, queryVal){
   var sqlStr = '';
   switch(queryType) {
@@ -41,7 +42,7 @@ function genSqlString(queryType, queryVal){
   }
 
   return sqlStr
-}
+}*/
 
 // Routes
    
@@ -67,8 +68,12 @@ function genSqlString(queryType, queryVal){
 
     //  ENTRY PAGE //
     app.get('/entry', function(req, res){
-      
+      res.render('entry', { 
+        title: 'Muse Admin'
+      });
+
       //return list of elements 
+      /* DEPRECATED
       var sqlStr = 'SELECT * FROM v_elements; SELECT * FROM v_tags;';
       conn.query(sqlStr,function(err,results){
         if (err){
@@ -80,11 +85,12 @@ function genSqlString(queryType, queryVal){
             data: results
           });
         }
-      });
+      });*/
 
     });
 
-    app.post('/entry',function(req, res){
+    /* DEPRECATED
+      app.post('/entry',function(req, res){
       var queryType = req.body.queryType;
       var queryTable = req.body.queryVal;
 
@@ -100,7 +106,7 @@ function genSqlString(queryType, queryVal){
         }
       });
 
-    });
+    });*/
 
     app.post('/exec_sp',function(req,res){
       // this is a general call that will execute any sp with parameters in the form:
@@ -174,9 +180,9 @@ function genSqlString(queryType, queryVal){
       if (clauses != null) {
         sqlStr += " WHERE ";
         for (x in clauses) {
-          sqlStr += x + "=" + clauses[x] + ",";
+          sqlStr += x + "=" + clauses[x] + " AND ";
         }
-        sqlStr = sqlStr.substring(0, sqlStr.length - 1);
+        sqlStr = sqlStr.substring(0, sqlStr.length - 5);
       }
       sqlStr += ";";
       

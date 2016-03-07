@@ -22,6 +22,11 @@ table, th, td {
 
 td {
   padding: 2px;
+  text-align: left;
+}
+th {
+  padding: 5px;
+  background-color: #8beabf;
 }
 
 .clickLink {

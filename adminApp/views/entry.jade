@@ -1,71 +1,122 @@
 extends layout
 block headScripts
 	script(src='/javascripts/entry.js')
-	script(src='//code.jquery.com/ui/1.11.4/jquery-ui.js')
-	scrtip(src='/javascripts/jquery.dynatable.js')
-	link(rel='stylesheet' href='//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css')
-	link(rel='stylesheet', href='/stylesheets/jquery.dynatable.js')
-block mainContainer
-	h1 Museum Elements
 	
-	// general structure to get data from a query
-	table(id='elementList')
-		tr
-			each val, index in data[0][0]
-				th=index
-		each rows in data[0]
-			tr
-				each val, index in rows
-					td=val
+block mainContainer
+	h1 Museum Elements	
+	table(id='vElementsTable')
+		thead
+			th Museum
+			th Exhibit
+			th Element
+			th Code
+			th Artist
+			th Year
+			th Description
+			th Image Link
+		tbody
 
 
 	h1 Element Tags
-	table
-		tr
-			each val, index in data[1][0]
-				th=index
-		each rows in data[1]
-			tr
-				each val, index in rows
-					td=val
+	table(id='vTagsTable')
+		thead
+			th Element
+			th Type
+			th Tag
+		tbody
 
-	h1 List of Tag Types
-	div(id='tagTypeList', class='clickLink') Click here
-	div(id='tagTypeList-results')
+
+	//h1 List of Tag Types
+	//div(id='tagTypeList', class='clickLink') Click here
+	//div(id='tagTypeList-results')
 
 	h1 Windows
-	div(id='addTagButton', class='clickLink') Click to add tag
+	div(id='addTagButton', class='clickLink') ADD TAG
 		div(id='addTagWindow', title="Add Tag")
 			form(id='addTagForm')
 				fieldset
-					label(for='elementTag') Tag Name
-					input(type='text',name='elementTag',id='addTagForm-elementTag',class="text ui-widget-content ui-corner-all", value='Enter tag name')
-					label(for='elementTagType') Tag Type
+					label(for='elementTagType') Select Tag Type:
 					select(type='text',name='elementTagType',id='addTagForm-elementTagType',class="text ui-widget-content ui-corner-all")
+					label(for='elementTag') Enter Tag Name:
+					input(type='text',name='elementTag',id='addTagForm-elementTag',class="text ui-widget-content ui-corner-all")
 					input(type='submit',style='position:absolute; top:-1000px')
 
-	div(id='tagElementButton', class='clickLink') Click to tag element
+	div(id='tagElementButton', class='clickLink') TAG ELEMENT
 		div(id='tagElementWindow', title="Tag Element")
 			form(id='tagElementForm')
 				fieldset
 					div(id="tagElementForm-museumBox")
-						label(for='museum') Select Museum
+						label(for='museum') Select Museum:
 						select(type='text',name='museum',id='tagElementForm-museum',class="text ui-widget-content ui-corner-all")
 					div(id="tagElementForm-exhibitBox")
-						label(for='exbibit') Select Exhibit
+						label(for='exbibit') Select Exhibit:
 						select(type='text',name='exhibit',id='tagElementForm-exhibit',class="text ui-widget-content ui-corner-all")
 					div(id="tagElementForm-elementBox")
-						label(for='element') Select Element
+						label(for='element') Select Element:
 						select(type='text',name='element',id='tagElementForm-element',class="text ui-widget-content ui-corner-all")
 					div(id="tagElementForm-tagTypeBox")
-						lable(for='tagType') Select Tag Type
+						lable(for='tagType') Select Tag Type:
 						select(type='text',name='tagType',id='tagElementForm-tagType',class="text ui-widget-content ui-corner-all")
 					div(id='tagElementForm-tagBox')
-						lable(for='tag') Select Tag
+						lable(for='tag') Select Tag:
 						select(type='text',name='tag',id='tagElementForm-tag',class="text ui-widget-content ui-corner-all")
+					input(type='submit',style='position:absolute; top:-1000px')
+
+	div(id='addExhibitButton', class='clickLink') ADD EXHIBIT
+		div(id='addExhibitWindow', title="Add Exhibit")
+			form(id='addExhibitForm')
+				fieldset
+					div(id='addExhibitForm-museumBox')
+						label(for='museum') Select Museum:
+						select(type='text',name='museum',id='addExhibitForm-museum',class="text ui-widget-content ui-corner-all")
+					div(id='addExhibitForm-exhibitBox')
+						lable(for='exhibit') Enter Exhibit Name:
+						input(type='text',name='exhibit',id='addExhibitForm-exhibit',class="text ui-widget-content ui-corner-all")
+					input(type='submit',style='position:absolute; top:-1000px')
+
+	div(id='addElementButton', class='clickLink') ADD ELEMENT
+		div(id='addElementWindow', title="Add Element")
+			form(id='addElementForm')
+				fieldset
+					div(id="addElementForm-museumBox")
+						label(for='museum') Select Museum:
+						select(type='text',name='museum',id='addElementForm-museum',class="text ui-widget-content ui-corner-all")
+					div(id="addElementForm-exhibitBox")
+						label(for='exbibit') Select Exhibit:
+						select(type='text',name='exhibit',id='addElementForm-exhibit',class="text ui-widget-content ui-corner-all")
+					div(id="addElementForm-elementBox")
+						label(for='element') Enter Element Name:
+						input(type='text',name='element',id='addElementForm-element',class="text ui-widget-content ui-corner-all")
+					div(id="addElementForm-artistBox")
+						label(for='aritst') Select Artist:
+						select(type='text',name='aritst',id='addElementForm-aritst',class="text ui-widget-content ui-corner-all")
+					div(id="addElementForm-yearBox")
+						label(for='year') Enter Year:
+						input(type='number',name='year',id='addElementForm-year',class="text ui-widget-content ui-corner-all")
+					div(id="addElementForm-descriptionBox")
+						label(for='description') Enter Description (max 500 characters):
+						input(type='text',name='description',id='addElementForm-description',class="text ui-widget-content ui-corner-all")
+					div(id="addElementForm-imageLinkBox")
+						label(for='imageLink') Enter Link to Image:
+						input(type='text',name='imageLink',id='addElementForm-imageLink',class="text ui-widget-content ui-corner-all")
+					input(type='submit',style='position:absolute; top:-1000px')
+
+	// A window that opens and shows you all exhibits 
+	div(id='hidden-exhibitList', title="Exhibits")
+		form(id='vExhibitsTableFilter')
+			fieldset
+				label(for='museum') Select Museum:
+				select(type='text',name='museum',id='vExhibitsTableFilter-museum',class="text ui-widget-content ui-corner-all")
+		table(id='vExhibitsTable')
+			thead
+				th Exhibit
+				th Active
+			tbody
+
 
 
 					
 
-	div(id='testButton', class='clickLink') Button
+	div(id='testButton', class='clickLink') Test Button
+	div(id='showExhibitsButton', class='clickLink') Show Exhibits 
 
