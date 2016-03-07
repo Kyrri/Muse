@@ -100,7 +100,7 @@ CREATE TABLE `element` (
 
 LOCK TABLES `element` WRITE;
 /*!40000 ALTER TABLE `element` DISABLE KEYS */;
-INSERT INTO `element` VALUES (1,1,'Luncheon of the Boating Party',1,1881,'',NULL,1),(2,1,'Composition VIII',2,1923,'',NULL,1),(3,1,'Café Terrace at Night',3,1888,'',NULL,1),(4,1,'Maeby',4,2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2),(5,1,'Baby Cat',4,2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2),(6,0,'test1',1,1993,'test','testtest',1),(7,0,'test2',1,1993,'test','testtest',1),(8,0,'test3',1,1993,'test','testtest',1),(9,1,'Demo Project 1',2,1993,'This is a description','',1);
+INSERT INTO `element` VALUES (1,1,'Luncheon of the Boating Party',1,1881,'Test description',NULL,1),(2,1,'Composition VIII',2,1923,'',NULL,1),(3,1,'Café Terrace at Night',3,1888,'',NULL,1),(4,1,'Maeby',4,2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2),(5,1,'Baby Cat',4,2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2),(6,0,'test1',1,1993,'test','testtest',1),(7,0,'test2',1,1993,'test','testtest',1),(8,0,'test3',1,1993,'test','testtest',1),(9,0,'Demo Project 1',2,1993,'This is a description','',1);
 /*!40000 ALTER TABLE `element` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -728,6 +728,44 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `delete_element` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_element`(
+	in vElement varchar(255), 
+    in vExhibit varchar(255),
+    out vSuccess integer
+)
+BEGIN
+	declare vExists integer default 0;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
+    
+    select count(*) into vExists from element
+    where elementId=f_getElementId(vElement,vExhibit);
+    
+    if vExists = 1 then
+		update element set active=0
+        where elementId=f_getElementId(vElement,vExhibit);
+        select 0 into vSuccess;
+	elseif vExists = 0 then 
+		select -3 into vSuccess;
+	else
+		select -1 into vSuccess;
+	end if;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `getElementDataFromCode` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1073,6 +1111,105 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `restore_element` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `restore_element`(
+	in vElement varchar(255), 
+    in vExhibit varchar(255),
+    out vSuccess integer
+)
+BEGIN
+	declare vExists integer default 0;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
+    
+    select count(*) into vExists from element
+    where elementId=f_getElementId(vElement,vExhibit);
+    
+    if vExists = 1 then
+		update element set active=1
+        where elementId=f_getElementId(vElement,vExhibit);
+        select 0 into vSuccess;
+	elseif vExists = 0 then 
+		select -3 into vSuccess;
+	else
+		select -1 into vSuccess;
+	end if;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_element` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_element`(
+	in vElement varchar(255),
+    in vExhibit varchar(255),
+    in vField varchar(255),
+    in vValue varchar(255),
+    out vSuccess integer
+)
+BEGIN
+	declare vExists integer default 0;
+    declare vId integer;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
+    
+    select count(*) into vExists from element
+    where elementId=f_getElementId(vElement,vExhibit);
+    
+    if vExists = 1 then
+		select f_getElementId(vElement,vExhibit) into vId;
+        if vField='artist' then 
+			select 'artistId' into vField;
+            select f_getArtistId(vValue) into vValue;
+            update element set artist=vValue where elementId=vId;
+		elseif vField='exhibit' then
+			select 'exhibitId' into vField;
+            select f_getExhibitId(vValue) into vValue;
+            update element set exhibitId=vValue where elementId=vId;
+		elseif vField='description' then
+			update element set description=vValue where elementId=vId;
+        elseif vField='active' then
+			update element set active=vValue where elementId=vId;
+        elseif vField='title' then
+			update element set title=vValue where elementId=vId;
+        elseif vField='paintYear' then
+			update element set paintYear=vValue where elementId=vId;
+        elseif vField='imageLink' then
+			update element set imageLink=vValue where elementId=vId;
+        end if;
+        
+        select 0 into vSuccess;
+	
+    elseif vExists = 0 then 
+		select -3 into vSuccess;
+	else
+		select -1 into vSuccess;
+	end if;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `userCreate` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1253,4 +1390,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-07  0:51:59
+-- Dump completed on 2016-03-07 13:34:51

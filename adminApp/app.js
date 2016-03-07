@@ -198,6 +198,20 @@ function genSqlString(queryType, queryVal){
 
     });
 
+    app.post('/exec_qryFields',function(req,res){
+      var table = req.body.table;
+      var sqlStr = "SHOW COLuMNS FROM " + table + ";";
+      console.log(sqlStr);
+      conn.query(sqlStr,function(err,results){
+        if(err){
+          console.log(err);
+          res.send(err);
+        } else {
+          res.send(results);
+        }
+      });
+    });
+
 // Run Server
 app.listen(3333, function(){
   console.log("Listening on 3333");

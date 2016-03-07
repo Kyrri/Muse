@@ -9,25 +9,92 @@ block mainContainer
 		select(type='text',name='museum',id='museumSelector',class="text ui-widget-content ui-corner-all")
 		label(for='exhibit') Select Exhibit:
 		select(type='text',name='museum',id='exhibitSelector',class="text ui-widget-content ui-corner-all")
-			option Select museum first
+			option(disabled) Select museum first
 	h1 Museum Elements	
+	div
+		button(id='addElementButton', class='clickLink') ADD ELEMENT
+		div(id='addElementWindow')
+			form(id='addElementForm')
+				fieldset
+					//div(id="addElementForm-museumBox")
+						label(for='museum') Select Museum:
+						select(type='text',name='museum',id='addElementForm-museum',class="text ui-widget-content ui-corner-all")
+					//div(id="addElementForm-exhibitBox")
+						label(for='exbibit') Select Exhibit:
+						select(type='text',name='exhibit',id='addElementForm-exhibit',class="text ui-widget-content ui-corner-all")
+					div(id="addElementForm-elementBox")
+						label(for='element') Enter Element Name:
+						input(type='text',name='element',id='addElementForm-element',class="text ui-widget-content ui-corner-all")
+					div(id="addElementForm-artistBox")
+						label(for='aritst') Select Artist:
+						select(type='text',name='aritst',id='addElementForm-aritst',class="text ui-widget-content ui-corner-all")
+					div(id="addElementForm-yearBox")
+						label(for='year') Enter Year:
+						input(type='number',name='year',id='addElementForm-year',class="text ui-widget-content ui-corner-all")
+					div(id="addElementForm-descriptionBox")
+						label(for='description') Enter Description (max 500 characters):
+						input(type='text',name='description',id='addElementForm-description',class="text ui-widget-content ui-corner-all")
+					div(id="addElementForm-imageLinkBox")
+						label(for='imageLink') Enter Link to Image:
+						input(type='text',name='imageLink',id='addElementForm-imageLink',class="text ui-widget-content ui-corner-all")
+					input(type='submit',style='position:absolute; top:-1000px')
+
+		button(id='editElementButton', class='clickLink') EDIT ELEMENT
+		div(id='editElementWindow')
+			form(id='editElementForm')
+				fieldset
+					div
+						label(for='element') Select Element:
+						select(type='text',name='element',id='editElementForm-element',class="text ui-widget-content ui-corner-all")
+					div
+						label(for='field') Select Field:
+						select(type='text',name='field',id='editElementForm-field',class="text ui-widget-content ui-corner-all")
+							option(selected='selected' disabled) Select field
+							option Exhibit
+							option Element Name
+							option Artist
+							option Year
+							option Description
+							option Image Link
+					div(id='editElementForm-valueBox')
+						
+					input(type='submit',style='position:absolute; top:-1000px')
+
+		button(id='deleteElementButton', class='clickLink') DELETE ELEMENT
+		div(id='deleteElementWindow')
+			form(id='deleteElementForm')
+				fieldset
+					label(for='element') Select Element:
+					select(type='text',name='element',id='deleteElementForm-element',class="text ui-widget-content ui-corner-all")
+					input(type='submit',style='position:absolute; top:-1000px')
+		
+		button(id='restoreElementButton', class='clickLink') RESTORE ELEMENT
+		div(id='restoreElementWindow')
+			form(id='restoreElementForm')
+				fieldset
+					label(for='element') Select Element:
+					select(type='text',name='element',id='restoreElementForm-element',class="text ui-widget-content ui-corner-all")
+					input(type='submit',style='position:absolute; top:-1000px')
+	
+	h3 Table Filters
 	div
 		label(for='active') Active:
 		select(type='text',name='active',id='vElementsTable-activeSelector',class="text ui-widget-content ui-corner-all")
 			option(selected='selected') Active
 			option Inactive
 			option All
+
 	table(id='vElementsTable')
 		thead
 			th Active
 			th Exhibit
 			th Element
-			th Code
 			th Artist
 			th Year
 			th Description
 			th Image Link
 			th Num Tags
+			th Code
 		tbody
 
 
@@ -36,11 +103,8 @@ block mainContainer
 		label(for='element') Select Element:
 		select(type='text',name='active',id='vTagsTable-elementSelector',class="text ui-widget-content ui-corner-all")
 			option Select exhibit first
-		label(for='active') Active:
-		select(type='text',name='active',id='vTagsTable-activeSelector',class="text ui-widget-content ui-corner-all")
-			option(selected='selected') Active
-			option Inactive
-			option All
+
+	
 	div
 		button(id='tagElementButton', class='clickLink') TAG ELEMENT
 		div(id='tagElementWindow')
@@ -62,6 +126,14 @@ block mainContainer
 						lable(for='tag') Select Tag:
 						select(type='text',name='tag',id='tagElementForm-tag',class="text ui-widget-content ui-corner-all")
 					input(type='submit',style='position:absolute; top:-1000px')
+	
+	h3 Table Filters
+	div 
+		label(for='active') Active:
+		select(type='text',name='active',id='vTagsTable-activeSelector',class="text ui-widget-content ui-corner-all")
+			option(selected='selected') Active
+			option Inactive
+			option All
 	table(id='vTagsTable')
 		thead
 			th Active
@@ -76,6 +148,7 @@ block mainContainer
 	//div(id='tagTypeList-results')
 
 	h1 Buttons
+	h2 Meta Data
 	div
 		button(id='addTagButton', class='clickLink') ADD TAG
 		div(id='addTagWindow', title="Add Tag")
@@ -99,34 +172,7 @@ block mainContainer
 						lable(for='exhibit') Enter Exhibit Name:
 						input(type='text',name='exhibit',id='addExhibitForm-exhibit',class="text ui-widget-content ui-corner-all")
 					input(type='submit',style='position:absolute; top:-1000px')
-
-	div
-		button(id='addElementButton', class='clickLink') ADD ELEMENT
-		div(id='addElementWindow', title="Add Element")
-			form(id='addElementForm')
-				fieldset
-					div(id="addElementForm-museumBox")
-						label(for='museum') Select Museum:
-						select(type='text',name='museum',id='addElementForm-museum',class="text ui-widget-content ui-corner-all")
-					div(id="addElementForm-exhibitBox")
-						label(for='exbibit') Select Exhibit:
-						select(type='text',name='exhibit',id='addElementForm-exhibit',class="text ui-widget-content ui-corner-all")
-					div(id="addElementForm-elementBox")
-						label(for='element') Enter Element Name:
-						input(type='text',name='element',id='addElementForm-element',class="text ui-widget-content ui-corner-all")
-					div(id="addElementForm-artistBox")
-						label(for='aritst') Select Artist:
-						select(type='text',name='aritst',id='addElementForm-aritst',class="text ui-widget-content ui-corner-all")
-					div(id="addElementForm-yearBox")
-						label(for='year') Enter Year:
-						input(type='number',name='year',id='addElementForm-year',class="text ui-widget-content ui-corner-all")
-					div(id="addElementForm-descriptionBox")
-						label(for='description') Enter Description (max 500 characters):
-						input(type='text',name='description',id='addElementForm-description',class="text ui-widget-content ui-corner-all")
-					div(id="addElementForm-imageLinkBox")
-						label(for='imageLink') Enter Link to Image:
-						input(type='text',name='imageLink',id='addElementForm-imageLink',class="text ui-widget-content ui-corner-all")
-					input(type='submit',style='position:absolute; top:-1000px')
+	h2 Other
 
 	// A window that opens and shows you all exhibits 
 	div
