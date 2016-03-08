@@ -1,32 +1,40 @@
 extends layout
+
 block headScripts
-  script(src='/javascripts/info.js')
 
 block mainContainer
-    .header
-        div(id='header', class='artifact')
-          //h4{title}
-          //h4 Artist: #{data.artist} 
-          //h4 Created: #{data.year}
-    .infobutton
-        div(id='infobutton')
-            img(id='likebtn',src='../images/like.png' align='left' width='10%')
-            img(id='favbtn', src='../images/fav.png' align='right' width='10%')
-            br       
-            hr
+  .indexContainer
+    //h1#page-title= title
+    h2(class='welcome') Favorites
+
+  .fav
+    h3 Museum #1
+      .boxFav
+        .favtext Title 
+          img(id='favbtn', src='../images/fav.png' align='right' width='8%')
+          p Artist:
+          p Created:
+
+      .boxFav
+        .favtext Title
+          img(id='favbtn', src='../images/fav.png' align='right' width='8%')
+          p Artist:
+          p Created:
+
+    h3 Museum #2
+      .boxFav
+        .favtext Title 
+          img(id='favbtn', src='../images/fav.png' align='right' width='8%')
+          p Artist:
+          p Created:
+
+      .boxFav
+        .favtext Title
+          img(id='favbtn', src='../images/fav.png' align='right' width='8%')
+          p Artist:
+          p Created:
 
 
-        .upcoming
-            #signupbox
-                .additionalinfo
-                    h5.accordion-toggle Additional Information
+/*List sorted by museums*/
+/*fav button should default checked, can click to remove from fav*/
 
-                    .accordion-content.default
-                       //p   {data.description}
-
-        div(id='footer')
-            a.button(href='checkin') Next Check-In
-
-        div(id='footer')
-            a.button(href='index') End Tour
-  

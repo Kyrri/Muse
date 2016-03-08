@@ -474,7 +474,7 @@ form#checkIn {
   margin-bottom: 10px;
   margin-left:auto;
   margin-right:auto;
-  width:100%;
+  width: 100%;
 }
 
 .planVisit a.button {
@@ -482,8 +482,10 @@ form#checkIn {
   font-size: 7vw;
   padding-left: 13px;
   padding-right: 13px;
-  margin-top: 20px;
-  
+  margin-top: 15px;
+  margin-left:auto;
+  margin-right:auto;
+  width: 80%;
 }
 
 
@@ -519,11 +521,26 @@ form#checkIn {
   height: 200px;
 }
 
-.footer{
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
- /*position: fixed;
-  bottom: 10px;*/
+.fav {
+  text-align: left;
+  margin-top: 25px;
+  margin-bottom: 20px;
+  font-size: 6vw;
 }
 
+.favtext{
+  font-size:6vw;
+  text-align: center;
+  padding-top:5px;
+}
+
+.boxFav{
+  border: 2px solid #FFFFFF;
+  border-radius: 5px;
+  overflow:hidden;
+  background-color: #E6E6E6;
+  margin-bottom: 10px;
+  color: #6d6f71;
+  padding-right:3px;
+
+}

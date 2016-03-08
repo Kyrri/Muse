@@ -1,4 +1,40 @@
 extends layout
 
+block headScripts
+
 block mainContainer
-	
+  .indexContainer
+    //h1#page-title= title
+    h2(class='welcome') Favorites
+
+  .fav
+    h3 Museum #1
+      .boxFav
+        .favtext Title 
+          img(id='favbtn', src='../images/fav.png' align='right' width='8%')
+          p Artist:
+          p Created:
+
+      .boxFav
+        .favtext Title
+          img(id='favbtn', src='../images/fav.png' align='right' width='8%')
+          p Artist:
+          p Created:
+
+    h3 Museum #2
+      .boxFav
+        .favtext Title 
+          img(id='favbtn', src='../images/fav.png' align='right' width='8%')
+          p Artist:
+          p Created:
+
+      .boxFav
+        .favtext Title
+          img(id='favbtn', src='../images/fav.png' align='right' width='8%')
+          p Artist:
+          p Created:
+
+
+/*List sorted by museums*/
+/*fav button should default checked, can click to remove from fav*/
+
