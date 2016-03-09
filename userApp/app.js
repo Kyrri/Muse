@@ -112,6 +112,7 @@ var visitId = null;
     app.get('/signup', function(req, res){
       res.render('signup_default', { title: 'Sign Up'});
     });
+
     app.post('/signup', function(req,res){
       console.log("trying");
        password(req.body.password).hash(function(error, hash) {
@@ -246,6 +247,13 @@ var visitId = null;
               prevID = req.params.id;
               //console.log(results[0]);
               res.render('info', { title : results[0].elementName, data : results[0] });
+              // checkins interaction 
+              var checkinParams = {"elementCode":req.query.id, "interactionTypeId":1, "timestamp":null};
+              conn.query( factory.sqlGen(3,checkinParams).sqlStr, function (err,results) {
+                if (err) {
+                  console.log(err);   
+                }
+              });
             }
           }
         });
@@ -355,6 +363,10 @@ function Factory () {
         break;
       case 2 : 
         sqlStr = new sqlGetvElementDetailsByCode(params);
+        break;
+      case 3 :
+        sqlStr = new sqlinsertInteraction(params);
+        break;
     }
     //console.log(params);
     console.log('Generated Query : ' + sqlStr.sqlStr);
@@ -372,9 +384,9 @@ var sqlGetMuseums = function () {
 }
 
 var sqlInsertVisit = function (params) {
-  var str = "CALL insert_Visit(CURDATE()," // default to the current date
+  var str = "CALL insert_visit(CURDATE(),"; // default to the current date
       str += userId + ",";
-      str += params.museumId + ",@o1,@o2); SELECT @o1 AS 'success', @o2 AS 'visitId';"
+      str += params.museumId + ",@o1,@o2); SELECT @o1 AS 'success', @o2 AS 'visitId';";
   this.sqlStr = str;
 }
 
@@ -386,9 +398,23 @@ var sqlGetvElementDetailsByCode = function (params) {
 
 }
 
+var sqlinsertInteraction = function (params) {
+  var str = "CALL insert_interaction(";
+      str += params.interactionTypeId + ",";
+      str += userId + ",";
+      str += params.elementCode + ",";
+      str += visitId + ",";
+      str += params.timestamp + ",@o1); SELECT @o1 AS 'success';";
+  this.sqlStr = str;
+}
+
 function testRun () {
-  var params = {'elementCode':7793};
-  conn.query(factory.sqlGen(2,params).sqlStr, function (err, results) {
+  userId = 33;
+  visitId = 4;
+  var params = {'interactionTypeId':1,'elementId':2,'timestamp':null};
+  //console.log(params);
+  //console.log(factory.sqlGen(3,params).sqlStr)
+  conn.query(factory.sqlGen(3,params).sqlStr, function (err, results) {
     console.log(results);
   });
 }
