@@ -264,7 +264,7 @@ img#home {
 }
 
 .boxVisits p {
-  padding-left: 8px;s
+  padding-left: 8px;
 }
 
 .selectMuseumContainer {
@@ -359,7 +359,7 @@ button.selected {
 .signupContainer label,
 .login_defaultContainer label {
   font-size: 5vw;
-  margin-bottom:;
+  /*margin-bottom:;*/
   font-family: MuseoSans, Museo Sans;
   text-transform: uppercase;
 }
