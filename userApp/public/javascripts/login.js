@@ -12,32 +12,32 @@ $(document).ready(function() {
 			updateValidity("#email");
 		}
 	});
-		$('#login_form').on('submit',function(e){
-			e.preventDefault();
-			var login_data = $('#login_form').serialize().split("&");
-			var email = login_data[0].replace("email=", "");
-			var password = login_data[1].replace("password=","");
-			var parameters = JSON.stringify({
-				"email": email,
-				"password": password
-			});
-			$.ajax('login',{
-		 		type: "POST",
-		 		contentType: "application/json",
-		 		dataType: 'JSON',
-	            data: parameters,								
-	            success: function(result) {
-	            	//if user exists
-	            	if(result.Success){
-	            		window.location.replace(index_url);
-	            	}
-	            	else{
-	            		updateFeedback(result.ErrType, result.Message);
-	            	} 
-            	}
-       		 }); 
-
+	$('#login_form').on('submit',function(e){
+		e.preventDefault();
+		var login_data = $('#login_form').serialize().split("&");
+		var email = login_data[0].replace("email=", "");
+		var password = login_data[1].replace("password=","");
+		var parameters = JSON.stringify({
+			"email": email,
+			"password": password
 		});
+		$.ajax('login',{
+	 		type: "POST",
+	 		contentType: "application/json",
+	 		dataType: 'JSON',
+            data: parameters,								
+            success: function(result) {
+            	//if user exists
+            	if(result.Success){
+            		window.location.replace(index_url);
+            	}
+            	else{
+            		updateFeedback(result.ErrType, result.Message);
+            	} 
+        	}
+   		 }); 
+
+	});
 	function updateFeedback(element, newText){
 		$("#FB_"+element).text(newText);
 		$("#"+element).fadeIn("slow", function(){

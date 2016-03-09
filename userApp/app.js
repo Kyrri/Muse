@@ -39,38 +39,69 @@ var prevID = null;
     app.get('/:var(|login)?', function(req, res){
       res.render('login_default', { title: 'Log In'});
     });
+
     app.post('/login', function(req,res){
-     // test query - to sanity check it connects to the right db
-      conn.query('CALL loginPasswordReturn("'+req.body.email+'",'+1+',@o1, @o2, @o3); SELECT @o1, @o2, @o3', function(err, results) {
-        if (err){
-          console.log(err);
-        }
-        else{
-          if(results[1][0]['@o1']==-1){
+      // parameters sent from the page
+      var email = req.body.email;
+      var passEnter = req.body.password;
+      var loginType = 1; // hardcoded because we currently use only one type - email login
+      
+      // SQL query
+      // loginPasswordReturn(in vLogin, vLoginType, vSuccess, vPass, vUserId);
+      var sqlStr = "CALL loginPasswordReturn(";
+      sqlStr += "'" + email + "',";
+      sqlStr += loginType + ",";
+      sqlStr += "@o1, @o2, @o3); SELECT @o1, @o2, @o3;";
 
-            res.send(JSON.stringify({"Success": false, "ErrType": "email", "Message": "User does not exist"}));
-            //User Doesn't Exist
-          }
-          else{
-            password(req.body.password).verifyAgainst(results[1][0]['@o2'], function(error, verified){
-              if(error){
-                console.log("error in password verification");
-              }
-              else if(!verified){
-                console.log("password is incorrect");
-                res.send(JSON.stringify({"Success": false, "ErrType": "password", "Message": "Incorrect Password"}));
-              }
-              else{
-                loggedIn = true;
-                res.send(JSON.stringify({"Success": true, "ErrType": null, "Message": "Login Successful"}));
-              }
-
-            });
-          }
+      console.log(sqlStr);
+      conn.query(sqlStr, function(err, results) {
+        if (err) {
+            console.log(err);
+        } else {
+            var success = results[1][0]['@o1'];
+            if (success < 0) {
+                // SQL Error
+                res.send(JSON.stringify({
+                    "Success": false, 
+                    "ErrType": "email", 
+                    "Message": "User does not exist"
+                }));
+            } else {
+                var passCheck = results[1][0]['@o2'];
+                var userId = results[1][0]['@o3'];
+                if (passCheck.length == 270) {
+                  // hash value is valid
+                  password(passEnter).verifyAgainst(passCheck, function(error, verified) {
+                      if (error) {
+                          //console.log("error in password verification");
+                      } else if (!verified) {
+                          //console.log("password is incorrect");
+                          res.send(JSON.stringify({
+                              "Success": false, 
+                              "ErrType": "password", 
+                              "Message": "Incorrect Password"
+                          }));
+                      } else {
+                          loggedIn = true;
+                          res.send(JSON.stringify({
+                              "Success": true, 
+                              "ErrType": null, 
+                              "Message": "Login Successful"
+                          }));
+                      }
+                  });
+                } else {
+                  res.send(JSON.stringify({
+                    "Success": false, 
+                    "ErrType": "password", 
+                    "Message": "Invalid password hash in database"
+                  }));
+                }
+            }
         }
       });
-
     });
+
     app.get('/signup', function(req, res){
       res.render('signup_default', { title: 'Sign Up'});
     });
