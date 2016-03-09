@@ -544,3 +544,11 @@ form#checkIn {
   padding-right:3px;
 
 }
+
+.infoImage {
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 10px;
+  display: block;
+}

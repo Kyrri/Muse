@@ -321,11 +321,14 @@ var visitId = null;
           if (err) {
             console.log(err);
           } else {
+            //console.log(results);
             switch (req.body.qry) {
               case 1 :
+                visitId = results[1][0]['visitId'];
+                //console.log(visitId);
                 break;
               default :
-                res.send(results);
+                res.send(results[1]);
                 break;
             }
           }
