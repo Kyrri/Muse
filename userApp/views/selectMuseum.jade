@@ -1,5 +1,8 @@
 extends layout
 
+block headScripts
+	script(src="/javascripts/selectMuseum.js")
+
 block mainContainer
 	.selectMuseumContainer
 		h2(class='welcome') Select Museum : 
@@ -9,4 +12,5 @@ block mainContainer
 				button.select(value='#{val.museumId}') #{val.museumName}
 
 		.next
-			a.button(href='checkIn') Next
+			a.button(id='startVisitButton',href='checkIn') Start Visit
+			div(id='FB_startVisitButton', class='feedback')

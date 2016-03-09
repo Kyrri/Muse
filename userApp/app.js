@@ -35,6 +35,7 @@ var prevID = null;
 
 // Variables - Lindsay turn into cookies
 var userId = null;
+var visitId = null;
   
   //  FACEBOOK LOGIN  //
     // app.get('/:var(|login)?', function(req, res){
@@ -152,6 +153,7 @@ var userId = null;
   //  PRE VISIT  //
       app.get('/selectMuseum', function(req, res){
         conn.query(factory.sqlGen(0).sqlStr, function (err, results) {
+          //console.log(results);
           if (err) {
             console.log(err)
           } else {
@@ -198,7 +200,8 @@ var userId = null;
       app.get('/tap', function(req, res){
         res.render('tap', { title: 'tap'});
       });
-      app.get('/info/:id', function(req, res){
+
+      app.get('/info/:id', function (req, res){
         conn.query('CALL getElementDataFromCode('+req.params.id+',@o1, @o2, @o3,@o4,@o5,@o6,@o7); SELECT @o1, @o2, @o3,@o4,@o5,@o6,@o7', function(err, results) {
           if (err){
             console.log(err);
@@ -261,6 +264,22 @@ var userId = null;
       //   console.log(req.body.name);
       // });
 
+      app.post('/exec_query', function (req, res) {
+        conn.query(factory.sqlGen(req.body.qry, req.body.params).sqlStr, function (err, results) {
+          if (err) {
+            console.log(err);
+          } else {
+            switch (req.body.qry) {
+              case 1 :
+                break;
+              default :
+                res.send(results);
+                break;
+            }
+          }
+        });
+      });
+
 
 // Run Server
 app.listen(3000, function(){
@@ -275,16 +294,30 @@ function Factory () {
     switch (queryNum) {
       case 0 : 
         sqlStr = new sqlGetMuseums();
+        break;
+      case 1 :
+        sqlStr = new sqlInsertVisit(params);
+        break;
     }
+    console.log('Querying DB: - ' + sqlStr.sqlStr);
     return sqlStr;
   }
+
 }
+
 var factory = new Factory;
 
 var sqlGetMuseums = function () {
   this.sqlStr = squel.select()
                         .from("museum")
                         .toString();
+}
+
+var sqlInsertVisit = function (params) {
+  var str = "CALL insert_Visit(CURDATE()," // default to the current date
+      str += userId + ",";
+      str += params.museumId + ",@o1,@o2); SELECT @o1 AS 'success', @o2 AS 'visitId';"
+  this.sqlStr = str;
 }
 
 function testRun () {

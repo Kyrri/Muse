@@ -401,7 +401,7 @@ CREATE TABLE `museum` (
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `museumName` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`museumId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -410,7 +410,7 @@ CREATE TABLE `museum` (
 
 LOCK TABLES `museum` WRITE;
 /*!40000 ALTER TABLE `museum` DISABLE KEYS */;
-INSERT INTO `museum` VALUES (1,1,'Muse Sample');
+INSERT INTO `museum` VALUES (1,1,'Muse Sample'),(2,1,'Test1'),(3,1,'Test2');
 /*!40000 ALTER TABLE `museum` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -549,13 +549,12 @@ DROP TABLE IF EXISTS `visit`;
 CREATE TABLE `visit` (
   `visitId` int(11) NOT NULL AUTO_INCREMENT,
   `tstamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `active` tinyint(4) NOT NULL DEFAULT '1',
   `visitDate` date NOT NULL,
   `userId` int(11) NOT NULL,
   `museumId` int(11) NOT NULL,
-  `visitTypeId` int(11) NOT NULL,
-  PRIMARY KEY (`visitId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`visitId`),
+  UNIQUE KEY `uq_visit` (`visitDate`,`userId`,`museumId`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -564,32 +563,8 @@ CREATE TABLE `visit` (
 
 LOCK TABLES `visit` WRITE;
 /*!40000 ALTER TABLE `visit` DISABLE KEYS */;
+INSERT INTO `visit` VALUES (1,'2016-03-09 06:51:25','2016-03-09',1,1),(2,'2016-03-09 06:53:15','2016-03-09',33,1),(3,'2016-03-09 06:53:43','2016-03-08',33,1);
 /*!40000 ALTER TABLE `visit` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `visitType`
---
-
-DROP TABLE IF EXISTS `visitType`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `visitType` (
-  `visitTypeId` int(11) NOT NULL AUTO_INCREMENT,
-  `visitType` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`visitTypeId`),
-  UNIQUE KEY `visitType` (`visitType`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `visitType`
---
-
-LOCK TABLES `visitType` WRITE;
-/*!40000 ALTER TABLE `visitType` DISABLE KEYS */;
-INSERT INTO `visitType` VALUES (1,'Free Roam'),(2,'Museum Curated');
-/*!40000 ALTER TABLE `visitType` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1207,20 +1182,42 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_visit`(
 	IN vVisitDate date, 
     IN vUserId integer, 
     IN vMuseumId integer, 
-    IN vVisitTypeId integer
+    OUT vSuccess integer, 
+    out vVisitId integer
 )
 BEGIN
-	INSERT INTO visit (
-		visitDate,
-        userId,
-        museumId,
-        visitTypeId
-    ) VALUES (
-		vVisitDate,
-        vUserId,
-        vMuseumId,
-        vVisitTypeId
-    );
+    declare vExists integer default 0;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
+    
+    select count(*) into vExists from visit
+    where visitDate=vVisitDate and userId=vUserId and museumId=vMuseumId;
+    
+    if vExists = 1 then 
+		select visitId into vVisitId from visit
+        where visitDate=vVisitDate and userId=vUserId and museumId=vMuseumId;
+        select 0 into vSuccess;
+	elseif vExists > 1 then 
+		select -1 into vSuccess;
+	else
+		INSERT INTO visit (
+			visitDate,
+			userId,
+			museumId
+		) VALUES (
+			vVisitDate,
+			vUserId,
+			vMuseumId
+		);
+        select last_insert_id() into vVisitId;
+		select 0 into vSuccess;
+	end if;
+	
+    if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
+	end if;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1606,4 +1603,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-08 22:21:57
+-- Dump completed on 2016-03-09  3:09:21
