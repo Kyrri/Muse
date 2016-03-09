@@ -294,7 +294,7 @@ DROP TABLE IF EXISTS `interaction`;
 CREATE TABLE `interaction` (
   `interactionId` int(11) NOT NULL AUTO_INCREMENT,
   `tstamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `interactionType` int(11) NOT NULL,
+  `interactionTypeId` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
   `elementId` int(11) NOT NULL,
   `visitId` int(11) NOT NULL,
@@ -324,7 +324,7 @@ CREATE TABLE `interactionType` (
   `interactionTypeDesc` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`interactionType`),
   UNIQUE KEY `interactionTypeDesc` (`interactionTypeDesc`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -333,7 +333,7 @@ CREATE TABLE `interactionType` (
 
 LOCK TABLES `interactionType` WRITE;
 /*!40000 ALTER TABLE `interactionType` DISABLE KEYS */;
-INSERT INTO `interactionType` VALUES (1,'checkin'),(4,'checkout'),(3,'favourite'),(2,'like');
+INSERT INTO `interactionType` VALUES (1,'checkIn'),(4,'checkout'),(3,'favourite'),(2,'like'),(6,'visitEnd'),(5,'visitStart');
 /*!40000 ALTER TABLE `interactionType` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1166,9 +1166,19 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_interaction`(
     IN vUserId INTEGER, 
     IN vElementId INTEGER,
     IN vVisitId INTEGER,
-    IN vTstamp TIMESTAMP
+    IN vTstamp TIMESTAMP,
+    out vSuccess integer
 )
 BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
+    
+    start transaction;
+    
+    if vTstamp is null then 
+		select now() into vSuccess;
+	end if;
+    
     INSERT INTO interaction (
 		interactionType, 
         userId,
@@ -1182,6 +1192,14 @@ BEGIN
         vVisitId,
         vTstamp
     );
+    
+    select 0 into vSuccess;
+    
+    if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
+	end if;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1209,6 +1227,8 @@ BEGIN
     declare vExists integer default 0;
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
         SELECT -1 into vSuccess;
+        
+	start transaction;
     
     select count(*) into vExists from visit
     where visitDate=vVisitDate and userId=vUserId and museumId=vMuseumId;
@@ -1266,7 +1286,9 @@ BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
         SELECT -1 into vSuccess;
     
-	SELECT COUNT(*) INTO vvalidLogin
+	start transaction;
+    
+    SELECT COUNT(*) INTO vvalidLogin
     FROM login
 	WHERE login=vLogin AND loginType=vLoginType;
     
@@ -1641,4 +1663,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-09 14:01:34
+-- Dump completed on 2016-03-09 17:44:13
