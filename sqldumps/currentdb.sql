@@ -115,6 +115,7 @@ DROP TABLE IF EXISTS `elementCode`;
 CREATE TABLE `elementCode` (
   `elementId` int(11) DEFAULT NULL,
   `code` int(11) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
   UNIQUE KEY `elementId` (`elementId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -125,7 +126,7 @@ CREATE TABLE `elementCode` (
 
 LOCK TABLES `elementCode` WRITE;
 /*!40000 ALTER TABLE `elementCode` DISABLE KEYS */;
-INSERT INTO `elementCode` VALUES (1,1325),(2,5728),(3,7793),(4,1234),(13,1122),(5,6778);
+INSERT INTO `elementCode` VALUES (1,1325,NULL),(2,5728,NULL),(3,7793,NULL),(4,1234,NULL),(13,1122,NULL),(5,6778,NULL);
 /*!40000 ALTER TABLE `elementCode` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -467,6 +468,25 @@ LOCK TABLES `userType` WRITE;
 INSERT INTO `userType` VALUES (2,'admin'),(1,'visitor');
 /*!40000 ALTER TABLE `userType` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `v_elementdetails`
+--
+
+DROP TABLE IF EXISTS `v_elementdetails`;
+/*!50001 DROP VIEW IF EXISTS `v_elementdetails`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_elementdetails` AS SELECT 
+ 1 AS `elementCode`,
+ 1 AS `elementId`,
+ 1 AS `active`,
+ 1 AS `elementName`,
+ 1 AS `artist`,
+ 1 AS `year`,
+ 1 AS `description`,
+ 1 AS `imageLink`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Temporary view structure for view `v_elements`
@@ -1523,6 +1543,24 @@ DELIMITER ;
 USE `muse_dev`;
 
 --
+-- Final view structure for view `v_elementdetails`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_elementdetails`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_elementdetails` AS select `c`.`code` AS `elementCode`,`c`.`elementId` AS `elementId`,`e`.`active` AS `active`,`e`.`title` AS `elementName`,`a`.`artist` AS `artist`,`e`.`paintYear` AS `year`,`e`.`description` AS `description`,`e`.`imageLink` AS `imageLink` from ((`elementcode` `c` left join `element` `e` on((`c`.`elementId` = `e`.`elementId`))) left join `artist` `a` on((`e`.`artistId` = `a`.`artistId`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `v_elements`
 --
 
@@ -1603,4 +1641,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-09  3:09:21
+-- Dump completed on 2016-03-09 13:18:20

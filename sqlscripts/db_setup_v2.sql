@@ -88,3 +88,17 @@ create table elementTagType (
     elementTagTypeDesc varchar(255) unique,
     primary key(elementTagTypeId)
 );
+
+CREATE VIEW v_elementDetails AS
+    select
+        c.code as 'elementCode',
+        c.elementId as 'elementId',
+        e.active as 'active',
+        e.title as 'elementId',
+        a.artist as 'artist',
+        e.paintYear as 'year',
+        e.description as 'description',
+        e.imageLink as 'imageLink'
+    from elementCode c
+    left join element e on c.elementId=e.elementId
+    left join artist a on e.artistId=a.artistId

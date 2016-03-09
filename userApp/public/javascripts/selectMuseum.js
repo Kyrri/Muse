@@ -11,7 +11,7 @@ $(document).ready( function () {
 	});
 
 	$('#startVisitButton').bind('click', function (e) {
-		e.preventDefault();
+		//e.preventDefault();
 		var museumId = $('.museumList button.selected');
 		var sqlParams = JSON.stringify({
 			'qry' : 1,
