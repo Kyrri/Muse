@@ -10,8 +10,9 @@ $(document).ready( function () {
 		$('#FB_startVisitButton').empty();
 	});
 
-	$('#startVisitButton').bind('click', function (e) {
-		e.preventDefault();
+	//Prevent Default Removed Temporarily, needs page-id routing
+	$('#startVisitButton').on('click', function (e) {
+		//e.preventDefault();
 		var museumId = $('.museumList button.selected');
 		var sqlParams = JSON.stringify({
 			'qry' : 1,

@@ -24,8 +24,9 @@ $(document).ready(function() {
 		 		type: "POST",
 		 		contentType: "application/json",
 		 		//dataType: boolean,
-		        data: parameters,								
+				data: parameters,								
 		        success: function(result) {
+		        	alert(result);
 		        	//if user exists
 		        	if(result){
 		        		//Route to specific artpiecece

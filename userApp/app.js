@@ -181,7 +181,7 @@ var visitId = null;
       app.post('/checkIn', function(req, res){
         req.body.code;
 
-        conn.query('CALL getElementDataFromCode('+req.body.code+',@o1, @o2, @o3,@o4,@o5,@o6,@o7); SELECT @o1, @o2, @o3,@o4,@o5,@o6,@o7', function(err, results) {
+        conn.query('CALL getElementDataFromCode('+req.body.code+',@o1, @o2, @o3,@o4,@o5,@o6); SELECT @o1, @o2, @o3,@o4,@o5,@o6', function(err, results) {
           if (err){
             console.log(err);
             //error occured connecting to DB

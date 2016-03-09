@@ -9,7 +9,7 @@ block mainContainer
 
 		.museumList
 			each val in data
-				button.select(value='#{val.museumId}') #{val.museumName}
+				button.select(value=val.museumId) #{val.museumName}
 
 		.next
 			a.button(id='startVisitButton',href='checkIn') Start Visit
