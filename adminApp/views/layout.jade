@@ -4,6 +4,7 @@ html
 		title= title
 
 		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+		link(rel='stylesheet', href='/stylesheets/jquery.dynatable.css')
 		link(rel='stylesheet', href='/stylesheets/style.css')
 
 		script(src='/javascripts/jquery-1.11.3.min.js')
@@ -14,14 +15,17 @@ html
 		script(src='//code.jquery.com/ui/1.11.4/jquery-ui.js')
 		script(src='/javascripts/jquery.dynatable.js')
 		link(rel='stylesheet' href='//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css')
-		link(rel='stylesheet', href='/stylesheets/jquery.dynatable.css')
 		
 		block headScripts
 
 		body
 		.container
 			.menubar
-				h1 Muse
+				h1(id='header1') Muse
+				h2(id='header2') Analytics Dashboard
+
+			.sidebar
+				img#pencil(src="images/Pencil.svg")
 
 			.mainContainer
 				block mainContainer
