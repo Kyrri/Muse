@@ -2,12 +2,11 @@ extends layout
 
 block mainContainer
 	.selectMuseumContainer
-		h2(class='welcome') Select Museum :
+		h2(class='welcome') Select Museum : 
 
 		.museumList
-			button.select E5 6004
-
-			button.select Museum 1
+			each val in data
+				button.select(value='#{val.museumId}') #{val.museumName}
 
 		.next
 			a.button(href='checkIn') Next

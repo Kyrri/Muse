@@ -4,6 +4,8 @@ var routes = require('./routes');
 var bodyParser = require('body-parser')
 var password = require('password-hash-and-salt');
 var moment = require('moment');
+var squelModule = require('squel');
+var squel = squelModule.useFlavour('mysql');
 
 // MySQL connection
 var mysql = require('mysql');
@@ -30,6 +32,9 @@ exports.loggedIn = false;
 
 // Routes
 var prevID = null;
+
+// Variables - Lindsay turn into cookies
+var userId = null;
   
   //  FACEBOOK LOGIN  //
     // app.get('/:var(|login)?', function(req, res){
@@ -68,7 +73,7 @@ var prevID = null;
                 }));
             } else {
                 var passCheck = results[1][0]['@o2'];
-                var userId = results[1][0]['@o3'];
+                userId = results[1][0]['@o3'];
                 if (passCheck.length == 270) {
                   // hash value is valid
                   password(passEnter).verifyAgainst(passCheck, function(error, verified) {
@@ -86,7 +91,8 @@ var prevID = null;
                           res.send(JSON.stringify({
                               "Success": true, 
                               "ErrType": null, 
-                              "Message": "Login Successful"
+                              "Message": "Login Successful",
+                              "userId": userId
                           }));
                       }
                   });
@@ -145,7 +151,16 @@ var prevID = null;
 
   //  PRE VISIT  //
       app.get('/selectMuseum', function(req, res){
-        res.render('selectMuseum', { title: 'Select Museum'});
+        conn.query(factory.sqlGen(0).sqlStr, function (err, results) {
+          if (err) {
+            console.log(err)
+          } else {
+            res.render('selectMuseum', { 
+              title: 'Select Museum',
+              data: results
+            });
+          }
+        });
       });
       app.get('/selectPlanType', function(req, res){
         res.render('selectPlanType', { title: 'Select Plan Type'});
@@ -251,3 +266,33 @@ var prevID = null;
 app.listen(3000, function(){
   console.log("Listening on 3000");
 });
+
+
+//  SQL Builder Functions  //
+function Factory () {
+  this.sqlGen = function (queryNum,params) {
+    var sqlStr;
+    switch (queryNum) {
+      case 0 : 
+        sqlStr = new sqlGetMuseums();
+    }
+    return sqlStr;
+  }
+}
+var factory = new Factory;
+
+var sqlGetMuseums = function () {
+  this.sqlStr = squel.select()
+                        .from("museum")
+                        .toString();
+}
+
+function testRun () {
+  conn.query(factory.sqlGen(0).sqlStr, function (err, results) {
+    console.log(results);
+  });
+}
+
+//testRun();
+
+
