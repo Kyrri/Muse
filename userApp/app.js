@@ -36,6 +36,7 @@ var prevID = null;
 // Variables - Lindsay turn into cookies
 var userId = null;
 var visitId = null;
+var elementCode = null;
   
   //  FACEBOOK LOGIN  //
     // app.get('/:var(|login)?', function(req, res){
@@ -112,6 +113,7 @@ var visitId = null;
     app.get('/signup', function(req, res){
       res.render('signup_default', { title: 'Sign Up'});
     });
+
     app.post('/signup', function(req,res){
       console.log("trying");
        password(req.body.password).hash(function(error, hash) {
@@ -144,7 +146,14 @@ var visitId = null;
 
   //  STARTING PAGE  //
     app.get('/index', function(req, res){
-      res.render('index', { title: 'Muse'});
+      var sqlParams = {'userId' : userId};
+      conn.query(factory.sqlGen(4).sqlStr, function (err, results) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.render('index', { title: 'Muse', data : results });
+        }
+      });      
     });
     // app.get('/artInfo', function(req, res){
     //    res.render('artInfo', { title: 'Art Info'});
@@ -164,12 +173,7 @@ var visitId = null;
           }
         });
       });
-      app.get('/selectPlanType', function(req, res){
-        res.render('selectPlanType', { title: 'Select Plan Type'});
-      });
-      app.get('/beginTour', function(req, res){
-        res.render('beginTour', { title: 'Begin Tour'});
-      });
+
       app.get('/favourites', function(req, res){
         res.render('favourites', { title: 'Favourites'});
       })
@@ -223,7 +227,8 @@ var visitId = null;
 
       app.get('/info/', function (req, res) {
         // needed to replace wuth a url paramter, because the javascripts were not loading
-        var sqlParams = {"elementCode":req.query.id};
+        elementCode = req.query.id;
+        var sqlParams = {"elementCode":elementCode};
         conn.query(factory.sqlGen(2,sqlParams).sqlStr, function (err,results) {
           if (err) {
             console.log(err);
@@ -244,9 +249,16 @@ var visitId = null;
                 //update previous checkin with new timestamp
               }
               //new checkin
-              prevID = req.params.id;
+              prevID = elementCode;
               //console.log(results[0]);
               res.render('info', { title : results[0].elementName, data : results[0] });
+              // checkins interaction 
+              var checkinParams = {"interactionTypeId":1, "timestamp":null};
+              conn.query( factory.sqlGen(3,checkinParams).sqlStr, function (err,results) {
+                if (err) {
+                  console.log(err);   
+                }
+              });
             }
           }
         });
@@ -326,7 +338,7 @@ var visitId = null;
             switch (req.body.qry) {
               case 1 :
                 visitId = results[1][0]['visitId'];
-                //console.log(visitId);
+                res.send(true);
                 break;
               default :
                 res.send(results[1]);
@@ -356,6 +368,13 @@ function Factory () {
         break;
       case 2 : 
         sqlStr = new sqlGetvElementDetailsByCode(params);
+        break;
+      case 3 :
+        sqlStr = new sqlInsertInteraction(params);
+        break;
+      case 4 :
+        sqlStr = new sqlGetRecentVisits();
+        break;
     }
     //console.log(params);
     console.log('Generated Query : ' + sqlStr.sqlStr);
@@ -373,9 +392,9 @@ var sqlGetMuseums = function () {
 }
 
 var sqlInsertVisit = function (params) {
-  var str = "CALL insert_Visit(CURDATE()," // default to the current date
+  var str = "CALL insert_visit(CURDATE(),"; // default to the current date
       str += userId + ",";
-      str += params.museumId + ",@o1,@o2); SELECT @o1 AS 'success', @o2 AS 'visitId';"
+      str += params.museumId + ",@o1,@o2); SELECT @o1 AS 'success', @o2 AS 'visitId';";
   this.sqlStr = str;
 }
 
@@ -387,9 +406,39 @@ var sqlGetvElementDetailsByCode = function (params) {
 
 }
 
+var sqlInsertInteraction = function (params) {
+  // grabs a bunch of data elements from the global variables
+  // will fail if global variables are null because pages were skipped
+  var thisElementCode = elementCode
+  // remove the elementCode for visitStart and visitEnd interactions
+  if ( params.interactionTypeId == 5 || params.interactionTypeId == 6 ) {
+    thisElementCode = null;
+  }
+  var str = "CALL insert_interaction(";
+      str += params.interactionTypeId + ",";
+      str += userId + ",";
+      str += thisElementCode + ",";
+      str += visitId + ",";
+      str += params.timestamp + ",@o1); SELECT @o1 AS 'success';";
+  this.sqlStr = str;
+}
+
+var sqlGetRecentVisits = function (params) {
+  this.sqlStr = squel.select()
+                        .from('visit')
+                        .where('userId='+userId)
+                        .order('visitDate',false)
+                        .limit(3)
+                        .toString();
+}
+
 function testRun () {
-  var params = {'elementCode':7793};
-  conn.query(factory.sqlGen(2,params).sqlStr, function (err, results) {
+  userId = 33;
+  visitId = 4;
+  var params = {'userId':userId};
+  //console.log(params);
+  //console.log(factory.sqlGen(3,params).sqlStr)
+  conn.query(factory.sqlGen(4).sqlStr, function (err, results) {
     console.log(results);
   });
 }

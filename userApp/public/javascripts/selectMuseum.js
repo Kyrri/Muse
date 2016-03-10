@@ -1,7 +1,5 @@
 $(document).ready( function () {
 
-	$('#startVisitButton').hide();
-
 	// make sure only one button can be selected at a time
 	$('.museumList button').click( function() {
 		$('.museumList button').removeClass('selected');
@@ -10,8 +8,12 @@ $(document).ready( function () {
 		$('#startVisitButton').show();
 	});
 
+	$('#startVisitButton').on('submit', function () {
+		console.log('clicked');
+	});
+
 	$('#startVisitButton').bind('click', function (e) {
-		//e.preventDefault(); // for debugging
+		e.preventDefault(); // for debugging
 		var museumId = $('.museumList button.selected');
 		var sqlParams = JSON.stringify({
 			'qry' : 1,
@@ -24,8 +26,26 @@ $(document).ready( function () {
 	 		dataType: 'JSON',
             data: sqlParams,								
             success: function(results) {
-            	console.log(results);
+            	if (results) {
+            		window.location.replace("/checkIn");
+            	} 
+            	//console.log(results);
         	}
    		 });
+		// insert a visitStart event
+		var sqlParams2 = JSON.stringify({
+			'qry' : 3,
+			'params' : { 'interactionTypeId' : 5,
+				'timestamp' : null
+			}
+		});
+		$.ajax('/exec_query', {
+	 		type: "POST",
+	 		contentType: "application/json",
+	        data: sqlParams2,								
+	        success: function(result) {
+	        	window.location.replace('/index');
+	    	}
+		});
 	});
 });

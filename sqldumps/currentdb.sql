@@ -76,6 +76,32 @@ INSERT INTO `artist` VALUES (1,'Pierre-Auguste Renoir',1),(2,'Wassily Kandinsky'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `checkInDuration`
+--
+
+DROP TABLE IF EXISTS `checkInDuration`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `checkInDuration` (
+  `visitId` int(11) DEFAULT NULL,
+  `elementId` int(11) DEFAULT NULL,
+  `startTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `endTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `duration` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `checkInDuration`
+--
+
+LOCK TABLES `checkInDuration` WRITE;
+/*!40000 ALTER TABLE `checkInDuration` DISABLE KEYS */;
+INSERT INTO `checkInDuration` VALUES (5,4,'2016-03-10 05:02:16','2016-03-10 04:58:26',4);
+/*!40000 ALTER TABLE `checkInDuration` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `element`
 --
 
@@ -296,10 +322,10 @@ CREATE TABLE `interaction` (
   `tstamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `interactionTypeId` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
-  `elementId` int(11) NOT NULL,
+  `elementId` int(11) DEFAULT '-1',
   `visitId` int(11) NOT NULL,
   PRIMARY KEY (`interactionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -308,9 +334,60 @@ CREATE TABLE `interaction` (
 
 LOCK TABLES `interaction` WRITE;
 /*!40000 ALTER TABLE `interaction` DISABLE KEYS */;
-INSERT INTO `interaction` VALUES (1,'2016-02-23 18:21:43',1,2,1325,0),(2,'0000-00-00 00:00:00',1,1,1,1),(3,'2016-03-02 19:42:39',1,1,1,1),(4,'0000-00-00 00:00:00',1,1,1,1),(5,'0000-00-00 00:00:00',1,1,1,1),(6,'0000-00-00 00:00:00',1,1,1,1),(7,'0000-00-00 00:00:00',1,1,1,1),(8,'2016-02-03 05:00:00',1,1,1,1),(9,'2016-03-02 19:46:47',1,1,1,1),(10,'2016-03-02 19:47:09',1,1,1,1);
+INSERT INTO `interaction` VALUES (1,'2016-02-23 18:21:43',1,2,1325,0),(2,'0000-00-00 00:00:00',1,1,1,1),(3,'2016-03-02 19:42:39',1,1,1,1),(4,'0000-00-00 00:00:00',1,1,1,1),(5,'0000-00-00 00:00:00',1,1,1,1),(6,'0000-00-00 00:00:00',1,1,1,1),(7,'0000-00-00 00:00:00',1,1,1,1),(8,'2016-02-03 05:00:00',1,1,1,1),(9,'2016-03-02 19:46:47',1,1,1,1),(10,'2016-03-02 19:47:09',1,1,1,1),(11,'2016-03-09 22:51:32',1,33,2,4),(12,'2016-03-09 22:51:48',1,33,2,4),(13,'2016-03-09 22:55:05',1,33,2,4),(14,'2016-03-09 23:20:05',1,33,4,2),(15,'2016-03-09 23:25:39',1,33,5,2),(16,'2016-03-10 01:56:06',1,33,4,4),(17,'2016-03-10 02:23:20',1,33,4,4),(18,'2016-03-10 02:49:55',1,33,4,2),(19,'2016-03-10 02:53:37',1,33,4,2),(20,'2016-03-10 02:53:44',1,33,4,2),(21,'2016-03-10 02:53:54',1,33,4,2),(22,'2016-03-10 02:54:36',1,33,4,2),(23,'2016-03-10 02:57:47',1,33,4,2),(24,'2016-03-10 02:59:15',1,33,4,2),(25,'2016-03-10 03:00:26',1,33,4,2),(26,'2016-03-10 03:01:47',1,33,4,2),(27,'2016-03-10 03:01:57',1,33,4,2),(28,'2016-03-10 03:02:09',1,33,4,2),(29,'2016-03-10 03:03:25',1,33,4,2),(30,'2016-03-10 03:06:00',1,33,4,2),(31,'2016-03-10 03:06:24',1,33,4,2),(32,'2016-03-10 03:06:26',4,33,4,2),(33,'2016-03-10 03:08:23',4,33,4,2),(34,'2016-03-10 03:08:30',1,33,4,2),(35,'2016-03-10 03:08:32',4,33,4,2),(36,'2016-03-10 03:10:39',1,33,4,2),(37,'2016-03-10 03:22:21',1,33,4,4),(38,'2016-03-10 03:22:23',4,33,4,4),(39,'2016-03-10 03:22:23',6,33,NULL,4),(40,'2016-03-10 03:22:26',1,33,4,4),(41,'2016-03-10 03:23:11',1,33,4,4),(42,'2016-03-10 03:24:13',1,33,4,4),(43,'2016-03-10 03:24:19',4,33,4,4),(44,'2016-03-10 03:24:24',1,33,4,4),(45,'2016-03-10 03:24:37',6,33,NULL,4),(46,'2016-03-10 03:30:37',6,33,NULL,4),(47,'2016-03-10 03:31:10',5,33,NULL,5),(48,'2016-03-10 03:55:41',1,33,4,2),(49,'2016-03-10 03:55:44',6,33,NULL,2),(50,'2016-03-10 04:02:27',6,33,NULL,5),(51,'2016-03-10 04:05:59',6,33,NULL,5),(52,'2016-03-10 04:14:03',6,33,NULL,2),(57,'2016-03-10 04:22:22',6,33,NULL,2),(58,'2016-03-10 04:23:23',6,33,NULL,5),(60,'2016-03-10 04:40:27',6,33,NULL,5),(61,'2016-03-10 04:42:07',6,33,NULL,5),(62,'2016-03-10 04:42:51',6,33,NULL,5),(63,'2016-03-10 04:44:59',6,33,NULL,5),(64,'2016-03-10 04:47:02',6,33,NULL,5),(65,'2016-03-10 04:48:37',6,33,NULL,3),(66,'2016-03-10 04:49:55',6,33,NULL,3),(67,'2016-03-10 04:58:18',5,33,NULL,2),(68,'2016-03-10 04:58:22',1,33,4,5),(69,'2016-03-10 04:58:26',4,33,4,5);
 /*!40000 ALTER TABLE `interaction` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger calc_interactionDuration after insert on interaction
+for each row
+begin 
+	if new.interactionTypeId = 6 then 
+		delete from visitDuration where visitId=new.visitId;
+        insert into visitDuration (
+			visitId,
+            startTime,
+            endTime
+        ) values (
+			new.visitId,
+            (select tstamp from interaction 
+				where interactionTypeId=5
+				and visitId=new.visitId
+                order by tstamp desc 
+                limit 1),
+			new.tstamp
+        );
+	elseif new.interactionTypeId = 4 then
+		delete from checkInDuration where elementId=new.elementId and visitId=new.visitId;
+        insert into checkInDuration (
+			visitId,
+            elementId,
+            startTime,
+            endTime
+        ) values (
+			new.visitId,
+            new.elementId,
+            (select tstamp from interaction 
+				where interactionTypeId=1
+				and visitId=new.visitId and elementId=new.elementId
+                order by tstamp desc 
+                limit 1),
+			new.tstamp
+        );
+    end if;
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `interactionType`
@@ -585,6 +662,31 @@ LOCK TABLES `visit` WRITE;
 /*!40000 ALTER TABLE `visit` DISABLE KEYS */;
 INSERT INTO `visit` VALUES (1,'2016-03-09 06:51:25','2016-03-09',1,1),(2,'2016-03-09 06:53:15','2016-03-09',33,1),(3,'2016-03-09 06:53:43','2016-03-08',33,1),(4,'2016-03-09 18:50:32','2016-03-09',33,2),(5,'2016-03-09 18:53:41','2016-03-09',33,3);
 /*!40000 ALTER TABLE `visit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `visitDuration`
+--
+
+DROP TABLE IF EXISTS `visitDuration`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `visitDuration` (
+  `visitId` int(11) NOT NULL,
+  `startTime` timestamp NULL DEFAULT NULL,
+  `endTime` timestamp NULL DEFAULT NULL,
+  `duration` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `visitDuration`
+--
+
+LOCK TABLES `visitDuration` WRITE;
+/*!40000 ALTER TABLE `visitDuration` DISABLE KEYS */;
+INSERT INTO `visitDuration` VALUES (5,'2016-03-10 03:31:10','2016-03-10 04:47:02',4552);
+/*!40000 ALTER TABLE `visitDuration` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1164,14 +1266,14 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_interaction`(
 	IN vInteractionType INTEGER,
     IN vUserId INTEGER, 
-    IN vElementId INTEGER,
+    IN vElementCode INTEGER,
     IN vVisitId INTEGER,
     IN vTstamp TIMESTAMP,
     out vSuccess integer
 )
 BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-        SELECT -1 into vSuccess;
+    /*DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;*/
     
     start transaction;
     
@@ -1180,7 +1282,7 @@ BEGIN
 	end if;
     
     INSERT INTO interaction (
-		interactionType, 
+		interactionTypeId, 
         userId,
         elementId,
         visitId, 
@@ -1188,7 +1290,7 @@ BEGIN
     ) VALUES (
 		vInteractionType, 
         vUserId, 
-        vElementId,
+        (select elementId from elementCode where code=vElementCode),
         vVisitId,
         vTstamp
     );
@@ -1403,6 +1505,26 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_checkInDuration` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_checkInDuration`()
+BEGIN
+	update checkInDuration set duration = timestampdiff(second,startTime,endTime);
+    delete from checkInDuration where duration <= 0 OR startTime is null or endtime is null;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `update_element` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1459,6 +1581,26 @@ BEGIN
 	else 
 		rollback;
 	end if;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_visitDuration` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_visitDuration`()
+BEGIN
+    update visitDuration set duration = timestampdiff(second,startTime,endTime);
+    delete from visitDuration where duration <= 0 OR startTime is null or endtime is null;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1663,4 +1805,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-09 17:44:13
+-- Dump completed on 2016-03-10  0:09:24

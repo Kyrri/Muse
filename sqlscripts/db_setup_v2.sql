@@ -102,3 +102,32 @@ CREATE VIEW v_elementDetails AS
     from elementCode c
     left join element e on c.elementId=e.elementId
     left join artist a on e.artistId=a.artistId
+
+
+
+
+delimiter //
+
+create trigger calc_interactionDuration after insert on interaction
+for each row
+begin 
+    if new.interactionIdType = 6 then 
+        insert into visitDuration (
+            visitId,
+            startTime,
+            endTime
+        ) values (
+            new.visitId,
+            new.tstamp,
+            (select tstamp from interaction 
+                where interactionTypeId=5
+                and visitId=new.visitId
+                order by tstamp desc 
+                limit 1)
+        );
+    end if;
+
+end;
+
+//
+delimiter ;
