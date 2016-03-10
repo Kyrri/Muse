@@ -62,7 +62,7 @@ CREATE TABLE `artist` (
   `artist` varchar(255) DEFAULT NULL,
   `active` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`artistId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,8 +71,34 @@ CREATE TABLE `artist` (
 
 LOCK TABLES `artist` WRITE;
 /*!40000 ALTER TABLE `artist` DISABLE KEYS */;
-INSERT INTO `artist` VALUES (1,'Pierre-Auguste Renoir',1),(2,'Wassily Kandinsky',1),(3,'Vincent van Gogh',1),(4,'Interwebs',1),(5,'test1',1);
+INSERT INTO `artist` VALUES (1,'Pierre-Auguste Renoir',1),(2,'Wassily Kandinsky',1),(3,'Vincent van Gogh',1),(4,'Interwebs',1),(5,'test1',1),(6,'hello\'s',1);
 /*!40000 ALTER TABLE `artist` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `checkInDuration`
+--
+
+DROP TABLE IF EXISTS `checkInDuration`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `checkInDuration` (
+  `visitId` int(11) DEFAULT NULL,
+  `elementId` int(11) DEFAULT NULL,
+  `startTime` timestamp NULL DEFAULT NULL,
+  `endTime` timestamp NULL DEFAULT NULL,
+  `duration` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `checkInDuration`
+--
+
+LOCK TABLES `checkInDuration` WRITE;
+/*!40000 ALTER TABLE `checkInDuration` DISABLE KEYS */;
+INSERT INTO `checkInDuration` VALUES (5,4,'2016-03-10 04:58:22','2016-03-10 18:30:35',48733);
+/*!40000 ALTER TABLE `checkInDuration` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -92,7 +118,7 @@ CREATE TABLE `element` (
   `imageLink` varchar(255) DEFAULT NULL,
   `exhibitId` int(11) NOT NULL,
   PRIMARY KEY (`elementId`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +127,7 @@ CREATE TABLE `element` (
 
 LOCK TABLES `element` WRITE;
 /*!40000 ALTER TABLE `element` DISABLE KEYS */;
-INSERT INTO `element` VALUES (1,0,'Luncheon of the Boating Party',1,1881,'Test description',NULL,1),(2,0,'Composition VIII',2,1923,'',NULL,1),(3,1,'Café Terrace at Night',3,1888,'',NULL,1),(4,1,'Maeby',4,2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2),(5,1,'Baby Cat',4,2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2),(6,0,'test1',1,1993,'test','testtest',1),(7,0,'test2',1,1993,'test','testtest',1),(8,0,'test3',1,1993,'test','testtest',1),(9,0,'Demo Project 1',2,1993,'This is a description','',1),(10,0,'Andrews Test',4,1456,'The form works','testtest',1),(11,0,'Another Test',1,1234,'1234','1234',1),(12,0,'Another Test1',1,0,'','',1),(13,1,'At1',1,1333,'adfadsfad','adfasdfadsfad',1);
+INSERT INTO `element` VALUES (1,0,'Luncheon of the Boating Party',1,1881,'Test description',NULL,1),(2,0,'Composition VIII',2,1923,'',NULL,1),(3,1,'Café Terrace at Night',3,1888,'',NULL,1),(4,1,'Maeby',4,2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2),(5,1,'Baby Cat',4,2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2),(6,0,'test1',1,1993,'test','testtest',1),(7,0,'test2',1,1993,'test','testtest',1),(8,0,'test3',1,1993,'test','testtest',1),(9,0,'Demo Project 1',2,1993,'This is a description','',1),(10,0,'Andrews Test',4,1456,'The form works','testtest',1),(11,0,'Another Test',1,1234,'1234','1234',1),(12,0,'Another Test1',1,0,'','',1),(13,1,'At1',1,1333,'adfadsfad','adfasdfadsfad',1),(14,1,'New Element',4,1234,'adfadfad','adfasdfasdfads',2);
 /*!40000 ALTER TABLE `element` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,6 +141,7 @@ DROP TABLE IF EXISTS `elementCode`;
 CREATE TABLE `elementCode` (
   `elementId` int(11) DEFAULT NULL,
   `code` int(11) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
   UNIQUE KEY `elementId` (`elementId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -125,7 +152,7 @@ CREATE TABLE `elementCode` (
 
 LOCK TABLES `elementCode` WRITE;
 /*!40000 ALTER TABLE `elementCode` DISABLE KEYS */;
-INSERT INTO `elementCode` VALUES (1,1325),(2,5728),(3,7793),(4,1234),(13,1122),(5,6778);
+INSERT INTO `elementCode` VALUES (1,1325,NULL),(2,5728,NULL),(3,7793,NULL),(4,1234,NULL),(13,1122,NULL),(5,6778,NULL);
 /*!40000 ALTER TABLE `elementCode` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +229,7 @@ CREATE TABLE `elementTagMapping` (
 
 LOCK TABLES `elementTagMapping` WRITE;
 /*!40000 ALTER TABLE `elementTagMapping` DISABLE KEYS */;
-INSERT INTO `elementTagMapping` VALUES (1,1,1),(1,2,1),(1,3,1),(3,4,1),(3,5,0),(4,4,1),(8,1,1),(8,2,1),(8,4,1),(9,1,1),(9,5,1),(10,1,1),(10,4,0),(21,4,0);
+INSERT INTO `elementTagMapping` VALUES (1,1,1),(1,2,1),(1,3,1),(3,4,1),(3,5,0),(4,4,1),(8,1,1),(8,2,1),(8,4,0),(9,1,1),(9,5,1),(10,1,1),(10,4,0),(20,4,1),(21,4,1);
 /*!40000 ALTER TABLE `elementTagMapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -293,12 +320,12 @@ DROP TABLE IF EXISTS `interaction`;
 CREATE TABLE `interaction` (
   `interactionId` int(11) NOT NULL AUTO_INCREMENT,
   `tstamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `interactionType` int(11) NOT NULL,
+  `interactionTypeId` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
-  `elementId` int(11) NOT NULL,
+  `elementId` int(11) DEFAULT '-1',
   `visitId` int(11) NOT NULL,
   PRIMARY KEY (`interactionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -307,9 +334,60 @@ CREATE TABLE `interaction` (
 
 LOCK TABLES `interaction` WRITE;
 /*!40000 ALTER TABLE `interaction` DISABLE KEYS */;
-INSERT INTO `interaction` VALUES (1,'2016-02-23 18:21:43',1,2,1325,0),(2,'0000-00-00 00:00:00',1,1,1,1),(3,'2016-03-02 19:42:39',1,1,1,1),(4,'0000-00-00 00:00:00',1,1,1,1),(5,'0000-00-00 00:00:00',1,1,1,1),(6,'0000-00-00 00:00:00',1,1,1,1),(7,'0000-00-00 00:00:00',1,1,1,1),(8,'2016-02-03 05:00:00',1,1,1,1),(9,'2016-03-02 19:46:47',1,1,1,1),(10,'2016-03-02 19:47:09',1,1,1,1);
+INSERT INTO `interaction` VALUES (1,'2016-02-23 18:21:43',1,2,1325,0),(2,'0000-00-00 00:00:00',1,1,1,1),(3,'2016-03-02 19:42:39',1,1,1,1),(4,'0000-00-00 00:00:00',1,1,1,1),(5,'0000-00-00 00:00:00',1,1,1,1),(6,'0000-00-00 00:00:00',1,1,1,1),(7,'0000-00-00 00:00:00',1,1,1,1),(8,'2016-02-03 05:00:00',1,1,1,1),(9,'2016-03-02 19:46:47',1,1,1,1),(10,'2016-03-02 19:47:09',1,1,1,1),(11,'2016-03-09 22:51:32',1,33,2,4),(12,'2016-03-09 22:51:48',1,33,2,4),(13,'2016-03-09 22:55:05',1,33,2,4),(14,'2016-03-09 23:20:05',1,33,4,2),(15,'2016-03-09 23:25:39',1,33,5,2),(16,'2016-03-10 01:56:06',1,33,4,4),(17,'2016-03-10 02:23:20',1,33,4,4),(18,'2016-03-10 02:49:55',1,33,4,2),(19,'2016-03-10 02:53:37',1,33,4,2),(20,'2016-03-10 02:53:44',1,33,4,2),(21,'2016-03-10 02:53:54',1,33,4,2),(22,'2016-03-10 02:54:36',1,33,4,2),(23,'2016-03-10 02:57:47',1,33,4,2),(24,'2016-03-10 02:59:15',1,33,4,2),(25,'2016-03-10 03:00:26',1,33,4,2),(26,'2016-03-10 03:01:47',1,33,4,2),(27,'2016-03-10 03:01:57',1,33,4,2),(28,'2016-03-10 03:02:09',1,33,4,2),(29,'2016-03-10 03:03:25',1,33,4,2),(30,'2016-03-10 03:06:00',1,33,4,2),(31,'2016-03-10 03:06:24',1,33,4,2),(32,'2016-03-10 03:06:26',4,33,4,2),(33,'2016-03-10 03:08:23',4,33,4,2),(34,'2016-03-10 03:08:30',1,33,4,2),(35,'2016-03-10 03:08:32',4,33,4,2),(36,'2016-03-10 03:10:39',1,33,4,2),(37,'2016-03-10 03:22:21',1,33,4,4),(38,'2016-03-10 03:22:23',4,33,4,4),(39,'2016-03-10 03:22:23',6,33,NULL,4),(40,'2016-03-10 03:22:26',1,33,4,4),(41,'2016-03-10 03:23:11',1,33,4,4),(42,'2016-03-10 03:24:13',1,33,4,4),(43,'2016-03-10 03:24:19',4,33,4,4),(44,'2016-03-10 03:24:24',1,33,4,4),(45,'2016-03-10 03:24:37',6,33,NULL,4),(46,'2016-03-10 03:30:37',6,33,NULL,4),(47,'2016-03-10 03:31:10',5,33,NULL,5),(48,'2016-03-10 03:55:41',1,33,4,2),(49,'2016-03-10 03:55:44',6,33,NULL,2),(50,'2016-03-10 04:02:27',6,33,NULL,5),(51,'2016-03-10 04:05:59',6,33,NULL,5),(52,'2016-03-10 04:14:03',6,33,NULL,2),(57,'2016-03-10 04:22:22',6,33,NULL,2),(58,'2016-03-10 04:23:23',6,33,NULL,5),(60,'2016-03-10 04:40:27',6,33,NULL,5),(61,'2016-03-10 04:42:07',6,33,NULL,5),(62,'2016-03-10 04:42:51',6,33,NULL,5),(63,'2016-03-10 04:44:59',6,33,NULL,5),(64,'2016-03-10 04:47:02',6,33,NULL,5),(65,'2016-03-10 04:48:37',6,33,NULL,3),(66,'2016-03-10 04:49:55',6,33,NULL,3),(67,'2016-03-10 04:58:18',5,33,NULL,2),(68,'2016-03-10 04:58:22',1,33,4,5),(69,'2016-03-10 04:58:26',4,33,4,5),(70,'2016-03-10 05:16:01',5,33,NULL,5),(71,'2016-03-10 05:16:06',1,33,4,6),(72,'2016-03-10 05:16:12',6,33,NULL,6),(73,'2016-03-10 05:23:16',5,33,NULL,6),(74,'2016-03-10 05:23:19',1,33,4,6),(75,'2016-03-10 05:23:21',6,33,NULL,6),(76,'2016-03-10 05:24:19',5,33,NULL,6),(77,'2016-03-10 05:24:21',1,33,4,6),(78,'2016-03-10 05:24:25',4,33,4,6),(79,'2016-03-10 05:27:27',1,33,4,6),(80,'2016-03-10 05:27:33',6,33,NULL,6),(81,'2016-03-10 05:27:34',4,33,4,6),(83,'2016-03-10 18:26:55',4,33,4,5),(84,'2016-03-10 18:28:54',4,33,4,5),(85,'2016-03-10 18:29:12',4,33,4,5),(86,'2016-03-10 18:30:35',4,33,4,5);
 /*!40000 ALTER TABLE `interaction` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger calc_interactionDuration after insert on interaction
+for each row
+begin 
+	if new.interactionTypeId = 6 then 
+		delete from visitDuration where visitId=new.visitId;
+        insert into visitDuration (
+			visitId,
+            startTime,
+            endTime
+        ) values (
+			new.visitId,
+            (select tstamp from interaction 
+				where interactionTypeId=5
+				and visitId=new.visitId
+                order by tstamp desc 
+                limit 1),
+			new.tstamp
+        );
+	elseif new.interactionTypeId = 4 then
+		delete from checkInDuration where elementId=new.elementId and visitId=new.visitId;
+        insert into checkInDuration (
+			visitId,
+            elementId,
+            startTime,
+            endTime
+        ) values (
+			new.visitId,
+            new.elementId,
+            (select tstamp from interaction 
+				where interactionTypeId=1
+				and visitId=new.visitId and elementId=new.elementId
+                order by tstamp desc 
+                limit 1),
+			new.tstamp
+        );
+    end if;
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `interactionType`
@@ -323,7 +401,7 @@ CREATE TABLE `interactionType` (
   `interactionTypeDesc` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`interactionType`),
   UNIQUE KEY `interactionTypeDesc` (`interactionTypeDesc`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -332,7 +410,7 @@ CREATE TABLE `interactionType` (
 
 LOCK TABLES `interactionType` WRITE;
 /*!40000 ALTER TABLE `interactionType` DISABLE KEYS */;
-INSERT INTO `interactionType` VALUES (1,'checkin'),(4,'checkout'),(3,'favourite'),(2,'like');
+INSERT INTO `interactionType` VALUES (1,'checkIn'),(4,'checkout'),(3,'favourite'),(2,'like'),(6,'visitEnd'),(5,'visitStart');
 /*!40000 ALTER TABLE `interactionType` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,7 +429,7 @@ CREATE TABLE `login` (
   `pass` varchar(720) NOT NULL,
   `userId` int(11) NOT NULL,
   PRIMARY KEY (`loginId`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -360,7 +438,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (3,1,1,'test1@test.com','test123',7),(4,1,1,'test2@test.com','test123',8),(5,1,1,'test3@test.com','test123',9),(6,1,1,'afadfsad%40sfsdfsd.com','sfadfadsfasd',10),(7,1,1,'Testingemail%40test.com','banana',11),(8,1,1,'Testing%40test.com','banana',12),(9,1,1,'123%40what.com','apple',13),(10,1,1,'yim.nathan%40gmail.com','musepassword',14),(11,1,1,'Chrrria%40gmail.ca','aaaaa',15),(12,1,1,'mtheng%40uwaterloo.ca','syde461demo',16),(13,1,1,'iangeasterbrook%40gmail.com','gg9911c3',17),(14,1,1,'chelsea.haemel%40hotmail.ca','chelsea',18),(15,1,1,'theojchan%40hotmail.com','Fire!blast5',19),(16,1,1,'Fjdosi%40isoos.odos','test123',20),(17,1,1,'nfjds%40uhfis.cds','test123',21),(18,1,1,'Shshsh%40dhdhdh.com','dhehrheh',22),(19,1,1,'Dhehrh%40djdhdh.dhdhd','djdhdhd',23),(20,1,1,'Tester%40walkthrough.com','dhdhdhdh',24),(21,1,1,'Isoshdk%40hsops.oso','sospskdo',25),(22,1,1,'Jsododi%40jspsp.pso','jdpsoss',26),(23,1,1,'Melissa.a.lynett%40gmail.com','AndrewIsWearingGrey',27),(24,1,1,'Shshsh%40shdhdh.djdjdj','sjshsjd',28),(25,1,1,'Dhdhdh%40djdhdh.djdhd','shehdhdhdhdh',29);
+INSERT INTO `login` VALUES (3,1,1,'test1@test.com','test123',7),(4,1,1,'test2@test.com','test123',8),(5,1,1,'test3@test.com','test123',9),(6,1,1,'afadfsad%40sfsdfsd.com','sfadfadsfasd',10),(7,1,1,'Testingemail%40test.com','banana',11),(8,1,1,'Testing%40test.com','banana',12),(9,1,1,'123%40what.com','apple',13),(10,1,1,'yim.nathan%40gmail.com','musepassword',14),(11,1,1,'Chrrria%40gmail.ca','aaaaa',15),(12,1,1,'mtheng%40uwaterloo.ca','syde461demo',16),(13,1,1,'iangeasterbrook%40gmail.com','gg9911c3',17),(14,1,1,'chelsea.haemel%40hotmail.ca','chelsea',18),(15,1,1,'theojchan%40hotmail.com','Fire!blast5',19),(16,1,1,'Fjdosi%40isoos.odos','test123',20),(17,1,1,'nfjds%40uhfis.cds','test123',21),(18,1,1,'Shshsh%40dhdhdh.com','dhehrheh',22),(19,1,1,'Dhehrh%40djdhdh.dhdhd','djdhdhd',23),(20,1,1,'Tester%40walkthrough.com','dhdhdhdh',24),(21,1,1,'Isoshdk%40hsops.oso','sospskdo',25),(22,1,1,'Jsododi%40jspsp.pso','jdpsoss',26),(23,1,1,'Melissa.a.lynett%40gmail.com','AndrewIsWearingGrey',27),(24,1,1,'Shshsh%40shdhdh.djdjdj','sjshsjd',28),(25,1,1,'Dhdhdh%40djdhdh.djdhd','shehdhdhdhdh',29),(26,1,1,'andrewtest%40test.com','pbkdf2$10000$41b577b7a744f907e037db86b82d8ea1c2e7c7a38b25df882b18ca0bc9e619892acfb84eed0861715f104762708e996154d5307f8be1deb978a58f5e186b8bad$e536dd46822cbf694e0b7cc6601b0b3b51069879fda1e4b89c77cd67783b80b0b5aa0f4e855585b6be0b67290ff02d86569b416fd223ba55e',30),(27,1,1,'a1%40test.com','pbkdf2$10000$42489d2826869b5c3df8aefa83168a0c56b5311ce36ce920b76d6a2d9dcee43de7d85a0b964725b00ed98ee0c7a96a53565380385e5f68e4f5c68264f76fc7ba$50ee40ec8d28c03664140044c4ee6ec4086098e25e2f260cea8757ae9ff3af036a4499d0c5a562b9f47be9ca0e6f650a8c67cefdb8cd0b320',31),(28,1,1,'a2%40test.com','pbkdf2$10000$22c9920564f01d8a3eef6bdc3575ab3f8c451399b0cd8df77c2a7a752606dfafd386ef4e731ee9b57fe445f4c578ec59e92d338e5efe4e7f48279cfee64e55e6$185c0786e48e0a6a46a1df0969f26fba466ea0d469d275a2b9c8d8f154d5237774aef8ddfe2aaafc6ee466be244fd91a0b7aea5d4d7fdde4d',32),(29,1,1,'a3%40test.com','pbkdf2$10000$c3014a9ee5f9c8261208666cdb0c424e676afd05c44f550318afa35a0b7c4a153c5302947dae22833cfa25898f7794cd1495aa9d42a261d05d9e5eb6c3e196ca$1480f783fa14d2ca9c112452f35a95800496cb2c92b5655f408097e482533abf02084efd412b6e4f613bc7cca30654c0a754ed5d36b764f1e519878468c3186a',33);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -401,7 +479,7 @@ CREATE TABLE `museum` (
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `museumName` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`museumId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -410,7 +488,7 @@ CREATE TABLE `museum` (
 
 LOCK TABLES `museum` WRITE;
 /*!40000 ALTER TABLE `museum` DISABLE KEYS */;
-INSERT INTO `museum` VALUES (1,1,'Muse Sample');
+INSERT INTO `museum` VALUES (1,1,'Muse Sample'),(2,1,'Test1'),(3,1,'Test2');
 /*!40000 ALTER TABLE `museum` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -430,7 +508,7 @@ CREATE TABLE `user` (
   `ageRange` int(11) DEFAULT NULL,
   `userTypeId` int(11) NOT NULL,
   PRIMARY KEY (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -439,7 +517,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (7,1,'test1','test11',1,1,1),(8,1,'test2','',1,1,1),(9,1,'test2','lastnametest',1,1,1),(10,1,'adfadfadsf','afasdfad',1,1,1),(11,1,'Gloria','McPlot',1,1,1),(12,1,'','',1,1,1),(13,1,'Potato','Tomato',1,1,1),(14,1,'Nathan','Yim',1,1,1),(15,1,'A','A',1,1,1),(16,1,'m','bristow',1,1,1),(17,1,'Ian','Easterbrook',1,1,1),(18,1,'Chelsea','Haemel',1,1,1),(19,1,'Theo','Chan',1,1,1),(20,1,'','',1,1,1),(21,1,'','',1,1,1),(22,1,'Djdhrh','',1,1,1),(23,1,'Dhdhdhd','Dhdhdhd',1,1,1),(24,1,'Bob','Smith',1,1,1),(25,1,'','',1,1,1),(26,1,'','',1,1,1),(27,1,'Melissa','Lynett',1,1,1),(28,1,'','',1,1,1),(29,1,'Dhdhdhdh','',1,1,1);
+INSERT INTO `user` VALUES (7,1,'test1','test11',1,1,1),(8,1,'test2','',1,1,1),(9,1,'test2','lastnametest',1,1,1),(10,1,'adfadfadsf','afasdfad',1,1,1),(11,1,'Gloria','McPlot',1,1,1),(12,1,'','',1,1,1),(13,1,'Potato','Tomato',1,1,1),(14,1,'Nathan','Yim',1,1,1),(15,1,'A','A',1,1,1),(16,1,'m','bristow',1,1,1),(17,1,'Ian','Easterbrook',1,1,1),(18,1,'Chelsea','Haemel',1,1,1),(19,1,'Theo','Chan',1,1,1),(20,1,'','',1,1,1),(21,1,'','',1,1,1),(22,1,'Djdhrh','',1,1,1),(23,1,'Dhdhdhd','Dhdhdhd',1,1,1),(24,1,'Bob','Smith',1,1,1),(25,1,'','',1,1,1),(26,1,'','',1,1,1),(27,1,'Melissa','Lynett',1,1,1),(28,1,'','',1,1,1),(29,1,'Dhdhdhdh','',1,1,1),(30,1,'Andrew','I',1,1,1),(31,1,'','',1,1,1),(32,1,'','',1,1,1),(33,1,'','',1,1,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -467,6 +545,25 @@ LOCK TABLES `userType` WRITE;
 INSERT INTO `userType` VALUES (2,'admin'),(1,'visitor');
 /*!40000 ALTER TABLE `userType` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `v_elementdetails`
+--
+
+DROP TABLE IF EXISTS `v_elementdetails`;
+/*!50001 DROP VIEW IF EXISTS `v_elementdetails`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_elementdetails` AS SELECT 
+ 1 AS `elementCode`,
+ 1 AS `elementId`,
+ 1 AS `active`,
+ 1 AS `elementName`,
+ 1 AS `artist`,
+ 1 AS `year`,
+ 1 AS `description`,
+ 1 AS `imageLink`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Temporary view structure for view `v_elements`
@@ -540,6 +637,21 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary view structure for view `v_visits`
+--
+
+DROP TABLE IF EXISTS `v_visits`;
+/*!50001 DROP VIEW IF EXISTS `v_visits`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_visits` AS SELECT 
+ 1 AS `visitId`,
+ 1 AS `userId`,
+ 1 AS `museum`,
+ 1 AS `visitDate`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `visit`
 --
 
@@ -549,13 +661,12 @@ DROP TABLE IF EXISTS `visit`;
 CREATE TABLE `visit` (
   `visitId` int(11) NOT NULL AUTO_INCREMENT,
   `tstamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `active` tinyint(4) NOT NULL DEFAULT '1',
   `visitDate` date NOT NULL,
   `userId` int(11) NOT NULL,
   `museumId` int(11) NOT NULL,
-  `visitTypeId` int(11) NOT NULL,
-  PRIMARY KEY (`visitId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`visitId`),
+  UNIQUE KEY `uq_visit` (`visitDate`,`userId`,`museumId`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -564,32 +675,33 @@ CREATE TABLE `visit` (
 
 LOCK TABLES `visit` WRITE;
 /*!40000 ALTER TABLE `visit` DISABLE KEYS */;
+INSERT INTO `visit` VALUES (1,'2016-03-09 06:51:25','2016-03-09',1,1),(2,'2016-03-09 06:53:15','2016-03-09',33,1),(3,'2016-03-09 06:53:43','2016-03-08',33,1),(4,'2016-03-09 18:50:32','2016-03-09',33,2),(5,'2016-03-09 18:53:41','2016-03-09',33,3),(6,'2016-03-10 05:16:00','2016-03-10',33,3);
 /*!40000 ALTER TABLE `visit` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `visitType`
+-- Table structure for table `visitDuration`
 --
 
-DROP TABLE IF EXISTS `visitType`;
+DROP TABLE IF EXISTS `visitDuration`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `visitType` (
-  `visitTypeId` int(11) NOT NULL AUTO_INCREMENT,
-  `visitType` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`visitTypeId`),
-  UNIQUE KEY `visitType` (`visitType`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+CREATE TABLE `visitDuration` (
+  `visitId` int(11) NOT NULL,
+  `startTime` timestamp NULL DEFAULT NULL,
+  `endTime` timestamp NULL DEFAULT NULL,
+  `duration` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `visitType`
+-- Dumping data for table `visitDuration`
 --
 
-LOCK TABLES `visitType` WRITE;
-/*!40000 ALTER TABLE `visitType` DISABLE KEYS */;
-INSERT INTO `visitType` VALUES (1,'Free Roam'),(2,'Museum Curated');
-/*!40000 ALTER TABLE `visitType` ENABLE KEYS */;
+LOCK TABLES `visitDuration` WRITE;
+/*!40000 ALTER TABLE `visitDuration` DISABLE KEYS */;
+INSERT INTO `visitDuration` VALUES (5,'2016-03-10 03:31:10','2016-03-10 04:47:02',4552),(6,'2016-03-10 05:24:19','2016-03-10 05:27:33',194);
+/*!40000 ALTER TABLE `visitDuration` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1169,13 +1281,23 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_interaction`(
 	IN vInteractionType INTEGER,
     IN vUserId INTEGER, 
-    IN vElementId INTEGER,
+    IN vElementCode INTEGER,
     IN vVisitId INTEGER,
-    IN vTstamp TIMESTAMP
+    IN vTstamp TIMESTAMP,
+    out vSuccess integer
 )
 BEGIN
+    /*DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;*/
+    
+    start transaction;
+    
+    if vTstamp is null then 
+		select now() into vSuccess;
+	end if;
+    
     INSERT INTO interaction (
-		interactionType, 
+		interactionTypeId, 
         userId,
         elementId,
         visitId, 
@@ -1183,10 +1305,18 @@ BEGIN
     ) VALUES (
 		vInteractionType, 
         vUserId, 
-        vElementId,
+        (select elementId from elementCode where code=vElementCode),
         vVisitId,
         vTstamp
     );
+    
+    select 0 into vSuccess;
+    
+    if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
+	end if;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1207,20 +1337,44 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_visit`(
 	IN vVisitDate date, 
     IN vUserId integer, 
     IN vMuseumId integer, 
-    IN vVisitTypeId integer
+    OUT vSuccess integer, 
+    out vVisitId integer
 )
 BEGIN
-	INSERT INTO visit (
-		visitDate,
-        userId,
-        museumId,
-        visitTypeId
-    ) VALUES (
-		vVisitDate,
-        vUserId,
-        vMuseumId,
-        vVisitTypeId
-    );
+    declare vExists integer default 0;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
+        
+	start transaction;
+    
+    select count(*) into vExists from visit
+    where visitDate=vVisitDate and userId=vUserId and museumId=vMuseumId;
+    
+    if vExists = 1 then 
+		select visitId into vVisitId from visit
+        where visitDate=vVisitDate and userId=vUserId and museumId=vMuseumId;
+        select 0 into vSuccess;
+	elseif vExists > 1 then 
+		select -1 into vSuccess;
+	else
+		INSERT INTO visit (
+			visitDate,
+			userId,
+			museumId
+		) VALUES (
+			vVisitDate,
+			vUserId,
+			vMuseumId
+		);
+        select last_insert_id() into vVisitId;
+		select 0 into vSuccess;
+	end if;
+	
+    if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
+	end if;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1246,23 +1400,29 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `loginPasswordReturn`(
 )
 BEGIN
 	DECLARE vvalidLogin TINYINT DEFAULT 0;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
     
-	SELECT COUNT(*) INTO vvalidLogin
+	start transaction;
+    
+    SELECT COUNT(*) INTO vvalidLogin
     FROM login
 	WHERE login=vLogin AND loginType=vLoginType;
     
     IF vvalidLogin = 0 THEN
-		SELECT -1 INTO vSuccess;
-        SELECT -1 INTO vPass;
-        SELECT -1 INTO vUserId;
+		SELECT -1,-1,-1 INTO vSuccess,vPass,vUserId;
 	ELSE
-		SELECT pass, userId
-        INTO vPass, vUserId
-		FROM login
+		SELECT pass, userId INTO vPass, vUserId FROM login
 		WHERE login=vLogin AND loginType=vLoginType;
         
-        SELECT 1 INTO vSuccess;
+        SELECT 0 INTO vSuccess;
     END IF;
+    
+	if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
+	end if;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1360,6 +1520,26 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_checkInDuration` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_checkInDuration`()
+BEGIN
+	update checkInDuration set duration = timestampdiff(second,startTime,endTime);
+    delete from checkInDuration where duration <= 0 OR startTime is null or endtime is null;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `update_element` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1422,6 +1602,26 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_visitDuration` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_visitDuration`()
+BEGIN
+    update visitDuration set duration = timestampdiff(second,startTime,endTime);
+    delete from visitDuration where duration <= 0 OR startTime is null or endtime is null;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `userCreate` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1434,7 +1634,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `userCreate`(
 	IN vlogin VARCHAR(255), 
-    IN vpass VARCHAR(255),
+    IN vpass VARCHAR(720),
     IN vloginType INTEGER, 
     IN vuserType INTEGER,
     IN vfirstName VARCHAR(255),
@@ -1485,7 +1685,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `userLogin`(
 	IN vlogin VARCHAR(255),
-    IN vpass VARCHAR(255),
+    IN vpass VARCHAR(720),
     IN vloginType INTEGER,
     
     OUT vuserId INTEGER,
@@ -1520,6 +1720,24 @@ DELIMITER ;
 --
 
 USE `muse_dev`;
+
+--
+-- Final view structure for view `v_elementdetails`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_elementdetails`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_elementdetails` AS select `c`.`code` AS `elementCode`,`c`.`elementId` AS `elementId`,`e`.`active` AS `active`,`e`.`title` AS `elementName`,`a`.`artist` AS `artist`,`e`.`paintYear` AS `year`,`e`.`description` AS `description`,`e`.`imageLink` AS `imageLink` from ((`elementcode` `c` left join `element` `e` on((`c`.`elementId` = `e`.`elementId`))) left join `artist` `a` on((`e`.`artistId` = `a`.`artistId`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
 -- Final view structure for view `v_elements`
@@ -1592,6 +1810,24 @@ USE `muse_dev`;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_visits`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_visits`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_visits` AS select `v`.`visitId` AS `visitId`,`v`.`userId` AS `userId`,`m`.`museumName` AS `museum`,`v`.`visitDate` AS `visitDate` from (`visit` `v` left join `museum` `m` on((`v`.`museumId` = `m`.`museumId`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1602,4 +1838,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-07 18:19:36
+-- Dump completed on 2016-03-10 13:32:44
