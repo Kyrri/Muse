@@ -167,10 +167,6 @@ var elementCode = null;
         });
       });
 
-      app.get('/selectPlanType', function(req, res){
-        res.render('selectPlanType', { title: 'Select Plan Type'});
-      });
-
       app.get('/favourites', function(req, res){
         res.render('favourites', { title: 'Favourites'});
       })
