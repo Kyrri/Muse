@@ -1,5 +1,6 @@
 extends layout
-
+block headScripts
+	script(src='/javascripts/index.js')
 block mainContainer
 	.indexContainer
 		//h1#page-title= title
@@ -29,8 +30,13 @@ block mainContainer
 						p Text
 						p More text
 				.boxVisits
-					h4.accordion-toggle Recent Visit 2
-					.accordion-content
+					h4.accordion-toggle Recent Visit 1
+					.accordion-content.default
+						p Text
+						p More text
+				.boxVisits
+					h4.accordion-toggle Recent Visit 1
+					.accordion-content.default
 						p Text
 						p More text
 

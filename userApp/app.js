@@ -146,14 +146,7 @@ var elementCode = null;
 
   //  STARTING PAGE  //
     app.get('/index', function(req, res){
-      var sqlParams = {'userId' : userId};
-      conn.query(factory.sqlGen(4).sqlStr, function (err, results) {
-        if (err) {
-          console.log(err);
-        } else {
-          res.render('index', { title: 'Muse', data : results });
-        }
-      });      
+      res.render('index', { title: 'Muse' });     
     });
     // app.get('/artInfo', function(req, res){
     //    res.render('artInfo', { title: 'Art Info'});
@@ -340,7 +333,7 @@ var elementCode = null;
                 res.send(true);
                 break;
               default :
-                res.send(results[1]);
+                res.send(results);
                 break;
             }
           }
@@ -424,7 +417,7 @@ var sqlInsertInteraction = function (params) {
 
 var sqlGetRecentVisits = function (params) {
   this.sqlStr = squel.select()
-                        .from('visit')
+                        .from('v_visits')
                         .where('userId='+userId)
                         .order('visitDate',false)
                         .limit(3)
