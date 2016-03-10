@@ -26,7 +26,7 @@ $(document).ready(function() {
 		 		//dataType: boolean,
 				data: parameters,								
 		        success: function(result) {
-		        	alert(result);
+		        	//alert(result);
 		        	//if user exists
 		        	if(result){
 		        		//Route to specific artpiecece
