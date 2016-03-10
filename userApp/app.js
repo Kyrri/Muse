@@ -176,6 +176,7 @@ var elementCode = null;
         res.render('checkIn', {title:'Check In'});
       });
       app.post('/checkIn', function(req, res){
+
         var sqlParams = {"elementCode":req.body.code};
         conn.query(factory.sqlGen(2,sqlParams).sqlStr, function (err,results) {
           if (err) {
