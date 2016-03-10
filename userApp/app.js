@@ -36,6 +36,7 @@ var prevID = null;
 // Variables - Lindsay turn into cookies
 var userId = null;
 var visitId = null;
+var elementCode = null;
   
   //  FACEBOOK LOGIN  //
     // app.get('/:var(|login)?', function(req, res){
@@ -165,12 +166,15 @@ var visitId = null;
           }
         });
       });
+
       app.get('/selectPlanType', function(req, res){
         res.render('selectPlanType', { title: 'Select Plan Type'});
       });
+
       app.get('/beginTour', function(req, res){
         res.render('beginTour', { title: 'Begin Tour'});
       });
+
       app.get('/favourites', function(req, res){
         res.render('favourites', { title: 'Favourites'});
       })
@@ -223,7 +227,8 @@ var visitId = null;
 
       app.get('/info/', function (req, res) {
         // needed to replace wuth a url paramter, because the javascripts were not loading
-        var sqlParams = {"elementCode":req.query.id};
+        elementCode = req.query.id;
+        var sqlParams = {"elementCode":elementCode};
         conn.query(factory.sqlGen(2,sqlParams).sqlStr, function (err,results) {
           if (err) {
             console.log(err);
@@ -244,11 +249,11 @@ var visitId = null;
                 //update previous checkin with new timestamp
               }
               //new checkin
-              prevID = req.params.id;
+              prevID = elementCode;
               //console.log(results[0]);
               res.render('info', { title : results[0].elementName, data : results[0] });
               // checkins interaction 
-              var checkinParams = {"elementCode":req.query.id, "interactionTypeId":1, "timestamp":null};
+              var checkinParams = {"interactionTypeId":1, "timestamp":null};
               conn.query( factory.sqlGen(3,checkinParams).sqlStr, function (err,results) {
                 if (err) {
                   console.log(err);   
@@ -402,7 +407,7 @@ var sqlinsertInteraction = function (params) {
   var str = "CALL insert_interaction(";
       str += params.interactionTypeId + ",";
       str += userId + ",";
-      str += params.elementCode + ",";
+      str += elementCode + ",";
       str += visitId + ",";
       str += params.timestamp + ",@o1); SELECT @o1 AS 'success';";
   this.sqlStr = str;

@@ -8,4 +8,23 @@ $(document).ready(function() {
     	this.src    = isLiked  ? this.src.replace('/images/fav.png', '/images/fav_select.png') : this.src.replace('/images/fav_select.png','/images/fav.png');
 	});
 
+	$('#nextCheckInButton').on('click', function (e) {
+		// go to the next page and log checkout
+		e.preventDefault();
+		var sqlParams = JSON.stringify({
+			'qry' : 3,
+			'params' : { 'interactionTypeId' : 4,
+				'timestamp' : null
+			}
+		});
+		$.ajax('/exec_query', {
+		 		type: "POST",
+		 		contentType: "application/json",
+		        data: sqlParams,								
+		        success: function(result) {
+		        	window.location.replace('/checkIn');
+		    	}
+			});
+	});
+
 });

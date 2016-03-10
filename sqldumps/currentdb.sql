@@ -299,7 +299,7 @@ CREATE TABLE `interaction` (
   `elementId` int(11) NOT NULL,
   `visitId` int(11) NOT NULL,
   PRIMARY KEY (`interactionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -308,7 +308,7 @@ CREATE TABLE `interaction` (
 
 LOCK TABLES `interaction` WRITE;
 /*!40000 ALTER TABLE `interaction` DISABLE KEYS */;
-INSERT INTO `interaction` VALUES (1,'2016-02-23 18:21:43',1,2,1325,0),(2,'0000-00-00 00:00:00',1,1,1,1),(3,'2016-03-02 19:42:39',1,1,1,1),(4,'0000-00-00 00:00:00',1,1,1,1),(5,'0000-00-00 00:00:00',1,1,1,1),(6,'0000-00-00 00:00:00',1,1,1,1),(7,'0000-00-00 00:00:00',1,1,1,1),(8,'2016-02-03 05:00:00',1,1,1,1),(9,'2016-03-02 19:46:47',1,1,1,1),(10,'2016-03-02 19:47:09',1,1,1,1);
+INSERT INTO `interaction` VALUES (1,'2016-02-23 18:21:43',1,2,1325,0),(2,'0000-00-00 00:00:00',1,1,1,1),(3,'2016-03-02 19:42:39',1,1,1,1),(4,'0000-00-00 00:00:00',1,1,1,1),(5,'0000-00-00 00:00:00',1,1,1,1),(6,'0000-00-00 00:00:00',1,1,1,1),(7,'0000-00-00 00:00:00',1,1,1,1),(8,'2016-02-03 05:00:00',1,1,1,1),(9,'2016-03-02 19:46:47',1,1,1,1),(10,'2016-03-02 19:47:09',1,1,1,1),(11,'2016-03-09 22:51:32',1,33,2,4),(12,'2016-03-09 22:51:48',1,33,2,4),(13,'2016-03-09 22:55:05',1,33,2,4),(14,'2016-03-09 23:20:05',1,33,4,2),(15,'2016-03-09 23:25:39',1,33,5,2),(16,'2016-03-10 01:56:06',1,33,4,4),(17,'2016-03-10 02:23:20',1,33,4,4),(18,'2016-03-10 02:49:55',1,33,4,2),(19,'2016-03-10 02:53:37',1,33,4,2),(20,'2016-03-10 02:53:44',1,33,4,2),(21,'2016-03-10 02:53:54',1,33,4,2),(22,'2016-03-10 02:54:36',1,33,4,2),(23,'2016-03-10 02:57:47',1,33,4,2),(24,'2016-03-10 02:59:15',1,33,4,2),(25,'2016-03-10 03:00:26',1,33,4,2),(26,'2016-03-10 03:01:47',1,33,4,2),(27,'2016-03-10 03:01:57',1,33,4,2),(28,'2016-03-10 03:02:09',1,33,4,2),(29,'2016-03-10 03:03:25',1,33,4,2),(30,'2016-03-10 03:06:00',1,33,4,2),(31,'2016-03-10 03:06:24',1,33,4,2),(32,'2016-03-10 03:06:26',4,33,4,2),(33,'2016-03-10 03:08:23',4,33,4,2),(34,'2016-03-10 03:08:30',1,33,4,2),(35,'2016-03-10 03:08:32',4,33,4,2);
 /*!40000 ALTER TABLE `interaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1164,7 +1164,7 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_interaction`(
 	IN vInteractionType INTEGER,
     IN vUserId INTEGER, 
-    IN vElementId INTEGER,
+    IN vElementCode INTEGER,
     IN vVisitId INTEGER,
     IN vTstamp TIMESTAMP,
     out vSuccess integer
@@ -1180,7 +1180,7 @@ BEGIN
 	end if;
     
     INSERT INTO interaction (
-		interactionType, 
+		interactionTypeId, 
         userId,
         elementId,
         visitId, 
@@ -1188,7 +1188,7 @@ BEGIN
     ) VALUES (
 		vInteractionType, 
         vUserId, 
-        vElementId,
+        (select elementId from elementCode where code=vElementCode),
         vVisitId,
         vTstamp
     );
@@ -1663,4 +1663,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-09 17:44:13
+-- Dump completed on 2016-03-09 22:09:09
