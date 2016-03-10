@@ -44,6 +44,21 @@ $(document).ready(function() {
 	        	window.location.replace('/index');
 	    	}
 		});
+		// logs a checkout interactoin
+		var sqlParams2 = JSON.stringify({
+			'qry' : 3,
+			'params' : { 'interactionTypeId' : 4,
+				'timestamp' : null
+			}
+		});
+		$.ajax('/exec_query', {
+	 		type: "POST",
+	 		contentType: "application/json",
+	        data: sqlParams2,								
+	        success: function(result) {
+	        	window.location.replace('/checkIn');
+	    	}
+		});
 	});
 
 });
