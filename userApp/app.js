@@ -333,7 +333,7 @@ var visitId = null;
             switch (req.body.qry) {
               case 1 :
                 visitId = results[1][0]['visitId'];
-                //console.log(visitId);
+                res.send(true);
                 break;
               default :
                 res.send(results[1]);
