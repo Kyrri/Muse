@@ -4,6 +4,7 @@ html
 		title= title
 
 		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+		link(rel='stylesheet', href='/stylesheets/jquery.dynatable.css')
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		link(rel='stylesheet', href='/stylesheets/dynatable.css')
 		link(rel='stylesheet', href='/stylesheets/jquery-ui.min.css')
@@ -13,12 +14,21 @@ html
 		script(src='/javascripts/bootstrap.min.js')
 		script(src='/javascripts/jquery.dynatable.js')
 		script(src='https://www.gstatic.com/charts/loader.js')
+
+		script(src='//code.jquery.com/ui/1.11.4/jquery-ui.js')
+		script(src='/javascripts/jquery.dynatable.js')
+		link(rel='stylesheet' href='//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css')
+		
 		block headScripts
 
 		body
 		.container
 			.menubar
-				h1 Muse Admin
+				h1(id='header1') Muse
+				h2(id='header2') Analytics Dashboard
+
+			.sidebar
+				img#pencil(src="images/Pencil.svg")
 
 			.mainContainer
 				block mainContainer

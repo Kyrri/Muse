@@ -9,10 +9,17 @@
  * Date: Tue Jan 02 2014
  */
 th a {
+<<<<<<< HEAD
   color: #fff;
 }
 th a:hover {
   color: #fff;
+=======
+  color: black;
+}
+th a:hover {
+  color: black;
+>>>>>>> andrew
   text-decoration: underline;
 }
 
