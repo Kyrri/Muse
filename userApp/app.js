@@ -146,7 +146,14 @@ var elementCode = null;
 
   //  STARTING PAGE  //
     app.get('/index', function(req, res){
-      res.render('index', { title: 'Muse'});
+      var sqlParams = {'userId' : userId};
+      conn.query(factory.sqlGen(4).sqlStr, function (err, results) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.render('index', { title: 'Muse', data : results });
+        }
+      });      
     });
     // app.get('/artInfo', function(req, res){
     //    res.render('artInfo', { title: 'Art Info'});
@@ -362,7 +369,10 @@ function Factory () {
         sqlStr = new sqlGetvElementDetailsByCode(params);
         break;
       case 3 :
-        sqlStr = new sqlinsertInteraction(params);
+        sqlStr = new sqlInsertInteraction(params);
+        break;
+      case 4 :
+        sqlStr = new sqlGetRecentVisits();
         break;
     }
     //console.log(params);
@@ -395,7 +405,7 @@ var sqlGetvElementDetailsByCode = function (params) {
 
 }
 
-var sqlinsertInteraction = function (params) {
+var sqlInsertInteraction = function (params) {
   // grabs a bunch of data elements from the global variables
   // will fail if global variables are null because pages were skipped
   var thisElementCode = elementCode
@@ -412,13 +422,22 @@ var sqlinsertInteraction = function (params) {
   this.sqlStr = str;
 }
 
+var sqlGetRecentVisits = function (params) {
+  this.sqlStr = squel.select()
+                        .from('visit')
+                        .where('userId='+userId)
+                        .order('visitDate',false)
+                        .limit(3)
+                        .toString();
+}
+
 function testRun () {
   userId = 33;
   visitId = 4;
-  var params = {'interactionTypeId':1,'elementId':2,'timestamp':null};
+  var params = {'userId':userId};
   //console.log(params);
   //console.log(factory.sqlGen(3,params).sqlStr)
-  conn.query(factory.sqlGen(3,params).sqlStr, function (err, results) {
+  conn.query(factory.sqlGen(4).sqlStr, function (err, results) {
     console.log(results);
   });
 }
