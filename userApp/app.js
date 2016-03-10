@@ -171,10 +171,6 @@ var elementCode = null;
         res.render('selectPlanType', { title: 'Select Plan Type'});
       });
 
-      app.get('/beginTour', function(req, res){
-        res.render('beginTour', { title: 'Begin Tour'});
-      });
-
       app.get('/favourites', function(req, res){
         res.render('favourites', { title: 'Favourites'});
       })
