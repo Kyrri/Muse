@@ -179,9 +179,24 @@ var visitId = null;
         res.render('checkIn', {title:'Check In'});
       });
       app.post('/checkIn', function(req, res){
-        req.body.code;
 
-        conn.query('CALL getElementDataFromCode('+req.body.code+',@o1, @o2, @o3,@o4,@o5,@o6); SELECT @o1, @o2, @o3,@o4,@o5,@o6', function(err, results) {
+        var sqlParams = {"elementCode":req.body.code};
+        conn.query(factory.sqlGen(2,sqlParams).sqlStr, function (err,results) {
+          if (err) {
+            console.log(err);
+          } else {
+            //console.log(results);
+            if (results.length == 0) {
+              // Artword does not exist
+              console.log("Invalid Code");
+            } else {
+              res.send(true);
+            }
+          }
+        });
+        
+        /* Lindsay's Old Code
+        conn.query('CALL getElementDataFromCode('+req.body.code+',@o1, @o2, @o3,@o4,@o5,@o6,@o7); SELECT @o1, @o2, @o3,@o4,@o5,@o6,@o7', function(err, results) {
           if (err){
             console.log(err);
             //error occured connecting to DB
@@ -196,12 +211,47 @@ var visitId = null;
             }
           }
         });
+        */
       });
+
+
       app.get('/tap', function(req, res){
         res.render('tap', { title: 'tap'});
       });
 
-      app.get('/info/:id', function (req, res){
+
+
+      app.get('/info/', function (req, res) {
+        // needed to replace wuth a url paramter, because the javascripts were not loading
+        var sqlParams = {"elementCode":req.query.id};
+        conn.query(factory.sqlGen(2,sqlParams).sqlStr, function (err,results) {
+          if (err) {
+            console.log(err);
+          } else {
+            //console.log(results);
+            if (results.length == 0) {
+              console.log("Invalid Code");
+              res.render('info', { title : 'Artwork not found', data : {
+                elementName : 'Artwork not found',
+                artist : null,
+                year : null,
+                description : null, 
+                imageLink : null}
+              });
+            } else {
+              var now = moment.utc();
+              if(prevID!==null){
+                //update previous checkin with new timestamp
+              }
+              //new checkin
+              prevID = req.params.id;
+              //console.log(results[0]);
+              res.render('info', { title : results[0].elementName, data : results[0] });
+            }
+          }
+        });
+        
+        /* Lindsay's Old Code
         conn.query('CALL getElementDataFromCode('+req.params.id+',@o1, @o2, @o3,@o4,@o5,@o6,@o7); SELECT @o1, @o2, @o3,@o4,@o5,@o6,@o7', function(err, results) {
           if (err){
             console.log(err);
@@ -232,7 +282,10 @@ var visitId = null;
             }
           }
         });
+        */
       });
+
+
       app.post('/likefav', function(req, res){
         //update likes/favourites on page change
       });
@@ -269,11 +322,14 @@ var visitId = null;
           if (err) {
             console.log(err);
           } else {
+            //console.log(results);
             switch (req.body.qry) {
               case 1 :
+                visitId = results[1][0]['visitId'];
+                //console.log(visitId);
                 break;
               default :
-                res.send(results);
+                res.send(results[1]);
                 break;
             }
           }
@@ -298,8 +354,11 @@ function Factory () {
       case 1 :
         sqlStr = new sqlInsertVisit(params);
         break;
+      case 2 : 
+        sqlStr = new sqlGetvElementDetailsByCode(params);
     }
-    console.log('Querying DB: - ' + sqlStr.sqlStr);
+    //console.log(params);
+    console.log('Generated Query : ' + sqlStr.sqlStr);
     return sqlStr;
   }
 
@@ -320,8 +379,17 @@ var sqlInsertVisit = function (params) {
   this.sqlStr = str;
 }
 
+var sqlGetvElementDetailsByCode = function (params) {
+  this.sqlStr = squel.select()
+                        .from("v_elementDetails")
+                        .where(squel.expr().and("elementCode=" + params.elementCode).and("active=1"))
+                        .toString();
+
+}
+
 function testRun () {
-  conn.query(factory.sqlGen(0).sqlStr, function (err, results) {
+  var params = {'elementCode':7793};
+  conn.query(factory.sqlGen(2,params).sqlStr, function (err, results) {
     console.log(results);
   });
 }

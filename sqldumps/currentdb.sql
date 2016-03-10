@@ -115,6 +115,7 @@ DROP TABLE IF EXISTS `elementCode`;
 CREATE TABLE `elementCode` (
   `elementId` int(11) DEFAULT NULL,
   `code` int(11) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
   UNIQUE KEY `elementId` (`elementId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -125,7 +126,7 @@ CREATE TABLE `elementCode` (
 
 LOCK TABLES `elementCode` WRITE;
 /*!40000 ALTER TABLE `elementCode` DISABLE KEYS */;
-INSERT INTO `elementCode` VALUES (1,1325),(2,5728),(3,7793),(4,1234),(13,1122),(5,6778);
+INSERT INTO `elementCode` VALUES (1,1325,NULL),(2,5728,NULL),(3,7793,NULL),(4,1234,NULL),(13,1122,NULL),(5,6778,NULL);
 /*!40000 ALTER TABLE `elementCode` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -293,7 +294,7 @@ DROP TABLE IF EXISTS `interaction`;
 CREATE TABLE `interaction` (
   `interactionId` int(11) NOT NULL AUTO_INCREMENT,
   `tstamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `interactionType` int(11) NOT NULL,
+  `interactionTypeId` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
   `elementId` int(11) NOT NULL,
   `visitId` int(11) NOT NULL,
@@ -323,7 +324,7 @@ CREATE TABLE `interactionType` (
   `interactionTypeDesc` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`interactionType`),
   UNIQUE KEY `interactionTypeDesc` (`interactionTypeDesc`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -332,7 +333,7 @@ CREATE TABLE `interactionType` (
 
 LOCK TABLES `interactionType` WRITE;
 /*!40000 ALTER TABLE `interactionType` DISABLE KEYS */;
-INSERT INTO `interactionType` VALUES (1,'checkin'),(4,'checkout'),(3,'favourite'),(2,'like');
+INSERT INTO `interactionType` VALUES (1,'checkIn'),(4,'checkout'),(3,'favourite'),(2,'like'),(6,'visitEnd'),(5,'visitStart');
 /*!40000 ALTER TABLE `interactionType` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -469,6 +470,25 @@ INSERT INTO `userType` VALUES (2,'admin'),(1,'visitor');
 UNLOCK TABLES;
 
 --
+-- Temporary view structure for view `v_elementdetails`
+--
+
+DROP TABLE IF EXISTS `v_elementdetails`;
+/*!50001 DROP VIEW IF EXISTS `v_elementdetails`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_elementdetails` AS SELECT 
+ 1 AS `elementCode`,
+ 1 AS `elementId`,
+ 1 AS `active`,
+ 1 AS `elementName`,
+ 1 AS `artist`,
+ 1 AS `year`,
+ 1 AS `description`,
+ 1 AS `imageLink`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary view structure for view `v_elements`
 --
 
@@ -554,7 +574,7 @@ CREATE TABLE `visit` (
   `museumId` int(11) NOT NULL,
   PRIMARY KEY (`visitId`),
   UNIQUE KEY `uq_visit` (`visitDate`,`userId`,`museumId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -563,7 +583,7 @@ CREATE TABLE `visit` (
 
 LOCK TABLES `visit` WRITE;
 /*!40000 ALTER TABLE `visit` DISABLE KEYS */;
-INSERT INTO `visit` VALUES (1,'2016-03-09 06:51:25','2016-03-09',1,1),(2,'2016-03-09 06:53:15','2016-03-09',33,1),(3,'2016-03-09 06:53:43','2016-03-08',33,1);
+INSERT INTO `visit` VALUES (1,'2016-03-09 06:51:25','2016-03-09',1,1),(2,'2016-03-09 06:53:15','2016-03-09',33,1),(3,'2016-03-09 06:53:43','2016-03-08',33,1),(4,'2016-03-09 18:50:32','2016-03-09',33,2),(5,'2016-03-09 18:53:41','2016-03-09',33,3);
 /*!40000 ALTER TABLE `visit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1146,9 +1166,19 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_interaction`(
     IN vUserId INTEGER, 
     IN vElementId INTEGER,
     IN vVisitId INTEGER,
-    IN vTstamp TIMESTAMP
+    IN vTstamp TIMESTAMP,
+    out vSuccess integer
 )
 BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
+    
+    start transaction;
+    
+    if vTstamp is null then 
+		select now() into vSuccess;
+	end if;
+    
     INSERT INTO interaction (
 		interactionType, 
         userId,
@@ -1162,6 +1192,14 @@ BEGIN
         vVisitId,
         vTstamp
     );
+    
+    select 0 into vSuccess;
+    
+    if vSuccess >= 0 then 
+		commit;
+	else 
+		rollback;
+	end if;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1189,6 +1227,8 @@ BEGIN
     declare vExists integer default 0;
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
         SELECT -1 into vSuccess;
+        
+	start transaction;
     
     select count(*) into vExists from visit
     where visitDate=vVisitDate and userId=vUserId and museumId=vMuseumId;
@@ -1246,7 +1286,9 @@ BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
         SELECT -1 into vSuccess;
     
-	SELECT COUNT(*) INTO vvalidLogin
+	start transaction;
+    
+    SELECT COUNT(*) INTO vvalidLogin
     FROM login
 	WHERE login=vLogin AND loginType=vLoginType;
     
@@ -1523,6 +1565,24 @@ DELIMITER ;
 USE `muse_dev`;
 
 --
+-- Final view structure for view `v_elementdetails`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_elementdetails`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_elementdetails` AS select `c`.`code` AS `elementCode`,`c`.`elementId` AS `elementId`,`e`.`active` AS `active`,`e`.`title` AS `elementName`,`a`.`artist` AS `artist`,`e`.`paintYear` AS `year`,`e`.`description` AS `description`,`e`.`imageLink` AS `imageLink` from ((`elementcode` `c` left join `element` `e` on((`c`.`elementId` = `e`.`elementId`))) left join `artist` `a` on((`e`.`artistId` = `a`.`artistId`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `v_elements`
 --
 
@@ -1603,4 +1663,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-09  3:09:21
+-- Dump completed on 2016-03-09 17:44:13

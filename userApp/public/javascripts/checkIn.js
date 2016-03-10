@@ -30,7 +30,7 @@ $(document).ready(function() {
 		        	//if user exists
 		        	if(result){
 		        		//Route to specific artpiecece
-		        		window.location.replace("/info/"+code);
+		        		window.location.replace("/info?id="+code);
 		        	}
 		        	else{
 		        		//wrong code, try again
