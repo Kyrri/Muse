@@ -9,7 +9,7 @@ $(document).ready(function() {
 	});
 
 	$('#nextCheckInButton').on('click', function (e) {
-		// go to the next page and log checkout
+		// logs a checkOut interaction
 		e.preventDefault();
 		var sqlParams = JSON.stringify({
 			'qry' : 3,
@@ -18,13 +18,32 @@ $(document).ready(function() {
 			}
 		});
 		$.ajax('/exec_query', {
-		 		type: "POST",
-		 		contentType: "application/json",
-		        data: sqlParams,								
-		        success: function(result) {
-		        	window.location.replace('/checkIn');
-		    	}
-			});
+	 		type: "POST",
+	 		contentType: "application/json",
+	        data: sqlParams,								
+	        success: function(result) {
+	        	window.location.replace('/checkIn');
+	    	}
+		});
+	});
+
+	$('#endTourButton').on('click', function (e) {
+		// logs a visitEnd interaction
+		e.preventDefault();
+		var sqlParams = JSON.stringify({
+			'qry' : 3,
+			'params' : { 'interactionTypeId' : 6,
+				'timestamp' : null
+			}
+		});
+		$.ajax('/exec_query', {
+	 		type: "POST",
+	 		contentType: "application/json",
+	        data: sqlParams,								
+	        success: function(result) {
+	        	window.location.replace('/index');
+	    	}
+		});
 	});
 
 });

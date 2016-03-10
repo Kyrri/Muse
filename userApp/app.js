@@ -404,10 +404,17 @@ var sqlGetvElementDetailsByCode = function (params) {
 }
 
 var sqlinsertInteraction = function (params) {
+  // grabs a bunch of data elements from the global variables
+  // will fail if global variables are null because pages were skipped
+  var thisElementCode = elementCode
+  // remove the elementCode for visitStart and visitEnd interactions
+  if ( params.interactionTypeId == 5 || params.interactionTypeId == 6 ) {
+    thisElementCode = null;
+  }
   var str = "CALL insert_interaction(";
       str += params.interactionTypeId + ",";
       str += userId + ",";
-      str += elementCode + ",";
+      str += thisElementCode + ",";
       str += visitId + ",";
       str += params.timestamp + ",@o1); SELECT @o1 AS 'success';";
   this.sqlStr = str;

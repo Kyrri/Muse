@@ -32,5 +32,20 @@ $(document).ready( function () {
             	//console.log(results);
         	}
    		 });
+		// insert a visitStart event
+		var sqlParams2 = JSON.stringify({
+			'qry' : 3,
+			'params' : { 'interactionTypeId' : 5,
+				'timestamp' : null
+			}
+		});
+		$.ajax('/exec_query', {
+	 		type: "POST",
+	 		contentType: "application/json",
+	        data: sqlParams2,								
+	        success: function(result) {
+	        	window.location.replace('/index');
+	    	}
+		});
 	});
 });
