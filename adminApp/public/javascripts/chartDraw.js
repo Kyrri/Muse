@@ -18,9 +18,10 @@ function drawChart(column){
 
    //Set options for chart (styling, column names, title, etc.)
     var options = {
-      title: columnName +' for Elements',
+      title: 'Element ' + columnName,
       curveType: 'function',
-      legend: { position: 'bottom' }
+      legend: { position: 'bottom' },
+      colors: ['#6baf8f']
     }
     //Draw the chart
       var chart = new google.visualization.BarChart(document.getElementById('myPieChart'));

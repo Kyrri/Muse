@@ -6,7 +6,7 @@ html
 		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
 		link(rel='stylesheet', href='/stylesheets/jquery.dynatable.css')
 		link(rel='stylesheet', href='/stylesheets/style.css')
-		link(rel='stylesheet', href='/stylesheets/dynatable.css')
+		link(rel='stylesheet', href='/stylesheets/jquery.dynatable.css')
 		link(rel='stylesheet', href='/stylesheets/jquery-ui.min.css')
 		link(rel='stylesheet' href='//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css')
 
@@ -25,7 +25,7 @@ html
 			.menubar
 				h1(id='header1') Muse
 				h2(id='header2') Analytics Dashboard
-				ul(class='nav nav-tabs')
+				//ul(class='nav nav-tabs')
 					li(role='presentation')
 						a(href='#') Home
 					li(role='presentation', class='active')
@@ -34,7 +34,13 @@ html
 						a(href='#') Update Exhibits
 
 			.sidebar
-				img#pencil(src="images/Pencil.svg")
+				.iconLinks
+					a
+						img#stopwatch(src="images/stopwatch.svg")
+					a
+						img#location(src="images/Location.svg")
+					a
+						img#pencil(src="images/Pencil.svg")
 
 			.mainContainer
 				block mainContainer
