@@ -3,75 +3,11 @@ block headScripts
 	script(src='/javascripts/chartDraw.js')
 
 block mainContainer 
-	ol.breadcrumb
+	ol.breadcrumb(id='drillTrack')
 		li
-			a(href='#') Exhibit
-	input(type='text', class='datePicker', id='date_1')
-	input(type='text', class='datePicker', id='date_2')
-	div(class='input-group')
-		div(class='input-group-btn', role='group', aria-label='...')
-			.dropdown
-				button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='time') Time
-				ul(class='dropdown-menu time')
-					li
-						a(href='#') Days of the Week
-					li
-						a(href='#') Months
-			.dropdown
-				button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='gender') Gender
-				ul(class='dropdown-menu gender')
-					li
-						a(href='#') Female
-					li
-						a(href='#') Male
-					li
-						a(href='#') Declined Answer
-			.dropdown
-				button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='age') Age Range
-				ul(class='dropdown-menu age')
-					li
-						a(href='#') <18
-					li
-						a(href='#') 18-20
-					li
-						a(href='#') 20-25
-					li
-						a(href='#') 25-30
-					li
-						a(href='#') 30-40
-					li
-						a(href='#') 40-50
-					li
-						a(href='#') 50-60
-					li
-						a(href='#') 60-70
-					li
-						a(href='#') >70
+			a(href='#', id='museum_crumb') Museum
 
-	input(id='exhibitName', placeholder='Search here')
-	div#myPieChart
-
-	table(id='mytable')
-		thead
-			tr
-				td Exhibit Name
-				td(class='metrics') Views
-				td(class='metrics') Holding Power
-		tbody
-			tr
-				td Bananas in a Bowl
-				td 40
-				td 36
-			tr
-				td Piece of Corn
-				td 50
-				td 25
-			tr
-				td What is this Even
-				td 32
-				td 13
-			tr
-				td Stahp Pls
-				td 45
-				td 25
-
+	div(class='list-group', id='museums')
+		button(class='list-group-item museum', type="button") Earth Sciences Museum
+		button(class='list-group-item museum', type="button") UW Art Gallery
+	div(id='exhibitContainer')
