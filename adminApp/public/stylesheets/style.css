@@ -1,12 +1,12 @@
 /* Custom Fonts */
 
 @font-face{
-  font-family: MuseoSans;
+  font-family: MuseoSansFive;
   src: 'MuseoSans_500-webfont.ttf';
 }
 
 @font-face{
-  font-family: Museo;
+  font-family: MuseoFive;
   src: 'Museo500-Regular-webfont.ttf';
 }
 
@@ -40,11 +40,11 @@
 }
 
 #header1 {
-  font-family: Museo, Museo;
+  font-family: MuseoFive, Museo;
   text-transform: uppercase;
   color: #333333;
   font-size: 40px;
-  margin-top: 20px;
+  margin-top: 15px;
   margin-bottom: 0px;
 }
 
@@ -54,6 +54,7 @@
   font-size: 25px;
   font-weight: lighter;
   text-transform: lowercase;
+  margin-top: 0px;
   /*line-height: 1vw !important;*/
 }
 
@@ -72,8 +73,28 @@
   opacity: 0.75;
 }
 
+.iconLinks {
+  margin-top: 120px;
+}
+
+.iconLinks a {
+  margin-bottom: 40px;
+}
+
+#stopwatch {
+  margin-bottom: 40px;
+  width: 70%;
+  height: 60px;
+}
+
+#location {
+  margin-bottom: 40px;
+  width: 70%;
+  height: 60px;
+}
+
 #pencil {
-  margin-top: 400px;
+  margin-bottom: 40px;
   width: 70%;
   height: 60px;
 }

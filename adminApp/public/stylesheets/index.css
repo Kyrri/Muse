@@ -1,0 +1,97 @@
+/* Museum Level */
+
+#drillTrack {
+	width: 70%;
+	font-size: 15px;
+}
+
+#museums {
+	width: 70%;
+	font-family: MuseoSansFive, Museo Sans;
+	font-size: 20px;
+	font-weight: normal;
+}
+
+/* Exhibit Level */
+
+#exhibitContainer {
+	font-family: MuseoSansFive, Museo Sans;
+}
+
+.filters {
+	border: 2px solid #d1d1d1;
+	padding: 10px;
+	padding-top: 5px;
+	width: 30%;
+	border-radius: 10px;
+}
+
+.filters h3 {
+	color: #333333;
+	font-size: 16px;
+}
+
+.dateRange {
+	margin-bottom: 15px;
+}
+
+.dateRange p {
+	display: inline;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#date_1 {
+	width: 100px;
+	display: inline;
+}
+
+#date_2 {
+	width: 100px;
+}
+
+.btn-group #time {
+	margin-right: 10px;
+}
+
+.btn-group #gender {
+	margin-right: 10px;
+}
+
+.btn-group #age {
+	margin-right: 10px;
+}
+
+.exhibitTable {
+	width: 70%;
+}
+
+.exhibitTable table {
+	margin-top: 10px;
+}
+
+.exhibitTable thead {
+	font-size: 16px;
+	color: #8beabf;
+}
+
+.exhibitTable tbody tr:hover {
+	background-color: #d1d1d1;
+	cursor: pointer;
+}
+
+.dynatable-head a {
+	color: #6baf8f;
+}
+
+.dynatable-active-page {
+	background: #6baf8f;
+}
+.exhibitTable td {
+	padding: 5px;
+}
+
+#searchBar {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}

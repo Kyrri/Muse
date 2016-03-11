@@ -14,9 +14,10 @@ function drawChart(column){
     });
    data.addRows(totalrows);
     var options = {
-      title: columnName +' for Elements',
+      title: 'Element ' + columnName,
       curveType: 'function',
-      legend: { position: 'bottom' }
+      legend: { position: 'bottom' },
+      colors: ['#6baf8f']
     }
 
       var chart = new google.visualization.BarChart(document.getElementById('myPieChart'));
