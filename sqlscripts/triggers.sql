@@ -1,39 +1,41 @@
 delimiter //
-create trigger calc_interactionDuration after insert on interaction
+create trigger calc_interactionDurationUpdate after update on interaction
 for each row
 begin 
-	if new.interactionTypeId = 6 then 
-		delete from visitDuration where visitId=new.visitId;
+    if new.interactionTypeId = 6 then 
+        delete from visitDuration where visitId=new.visitId;
         insert into visitDuration (
-			visitId,
+            visitId,
             startTime,
             endTime
         ) values (
-			new.visitId,
+            new.visitId,
             (select tstamp from interaction 
-				where interactionTypeId=5
-				and visitId=new.visitId
+                where interactionTypeId=5
+                and visitId=new.visitId
                 order by tstamp desc 
                 limit 1),
-			new.tstamp
+            new.tstamp
         );
-	elseif new.interactionTypeId = 4 then
-		delete from checkInDuration where elementId=new.elementId and visitId=new.visitId;
+        CALL `muse_dev`.`update_visitDuration`();
+    elseif new.interactionTypeId = 4 then
+        delete from checkInDuration where elementId=new.elementId and visitId=new.visitId;
         insert into checkInDuration (
-			visitId,
+            visitId,
             elementId,
             startTime,
             endTime
         ) values (
-			new.visitId,
+            new.visitId,
             new.elementId,
             (select tstamp from interaction 
-				where interactionTypeId=1
-				and visitId=new.visitId and elementId=new.elementId
+                where interactionTypeId=1
+                and visitId=new.visitId and elementId=new.elementId
                 order by tstamp desc 
                 limit 1),
-			new.tstamp
+            new.tstamp
         );
+        CALL `muse_dev`.`update_checkInDuration`();
     end if;
 end;
 //

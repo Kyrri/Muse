@@ -97,7 +97,7 @@ CREATE TABLE `checkInDuration` (
 
 LOCK TABLES `checkInDuration` WRITE;
 /*!40000 ALTER TABLE `checkInDuration` DISABLE KEYS */;
-INSERT INTO `checkInDuration` VALUES (5,4,'2016-03-10 04:58:22','2016-03-10 18:30:35',48733),(7,4,'2016-03-10 18:48:39','2016-03-10 18:48:40',1),(8,4,'2016-03-14 21:28:44','2016-03-14 21:29:43',59),(13,4,'2016-03-14 22:55:06','2016-03-14 22:55:10',NULL);
+INSERT INTO `checkInDuration` VALUES (5,4,'2016-03-10 04:58:22','2016-03-10 18:30:35',48733),(7,4,'2016-03-10 18:48:39','2016-03-10 18:48:40',1),(8,4,'2016-03-14 21:28:44','2016-03-14 21:29:43',59),(13,4,'2016-03-14 23:24:28','2016-03-14 23:37:10',762);
 /*!40000 ALTER TABLE `checkInDuration` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,7 +325,7 @@ CREATE TABLE `interaction` (
   `elementId` int(11) DEFAULT '-1',
   `visitId` int(11) NOT NULL,
   PRIMARY KEY (`interactionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -334,7 +334,7 @@ CREATE TABLE `interaction` (
 
 LOCK TABLES `interaction` WRITE;
 /*!40000 ALTER TABLE `interaction` DISABLE KEYS */;
-INSERT INTO `interaction` VALUES (1,'2016-03-14 23:14:15',3,34,4,13);
+INSERT INTO `interaction` VALUES (1,'2016-03-14 23:14:15',3,34,4,13),(2,'2016-03-14 23:24:28',1,34,4,13),(3,'2016-03-14 23:37:10',4,34,4,13);
 /*!40000 ALTER TABLE `interaction` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -364,6 +364,7 @@ begin
                 limit 1),
 			new.tstamp
         );
+        CALL `muse_dev`.`update_visitDuration`();
 	elseif new.interactionTypeId = 4 then
 		delete from checkInDuration where elementId=new.elementId and visitId=new.visitId;
         insert into checkInDuration (
@@ -381,6 +382,60 @@ begin
                 limit 1),
 			new.tstamp
         );
+        CALL `muse_dev`.`update_checkInDuration`();
+    end if;
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger calc_interactionDurationUpdate after update on interaction
+for each row
+begin 
+	if new.interactionTypeId = 6 then 
+		delete from visitDuration where visitId=new.visitId;
+        insert into visitDuration (
+			visitId,
+            startTime,
+            endTime
+        ) values (
+			new.visitId,
+            (select tstamp from interaction 
+				where interactionTypeId=5
+				and visitId=new.visitId
+                order by tstamp desc 
+                limit 1),
+			new.tstamp
+        );
+        CALL `muse_dev`.`update_visitDuration`();
+	elseif new.interactionTypeId = 4 then
+		delete from checkInDuration where elementId=new.elementId and visitId=new.visitId;
+        insert into checkInDuration (
+			visitId,
+            elementId,
+            startTime,
+            endTime
+        ) values (
+			new.visitId,
+            new.elementId,
+            (select tstamp from interaction 
+				where interactionTypeId=1
+				and visitId=new.visitId and elementId=new.elementId
+                order by tstamp desc 
+                limit 1),
+			new.tstamp
+        );
+        CALL `muse_dev`.`update_checkInDuration`();
     end if;
 end */;;
 DELIMITER ;
@@ -1287,8 +1342,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_interaction`(
     out vSuccess integer
 )
 BEGIN
-    /*DECLARE EXIT HANDLER FOR SQLEXCEPTION
-        SELECT -1 into vSuccess;*/
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;
     select -1 into vSuccess;
     start transaction;
     
@@ -1860,4 +1915,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-14 19:17:56
+-- Dump completed on 2016-03-14 19:37:45
