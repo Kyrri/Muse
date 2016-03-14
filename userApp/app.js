@@ -122,7 +122,7 @@ var elementCode = null;
           //PW hash failed
         }
         else{
-          conn.query('CALL userCreate("'+req.body.email+'","'+hash+'",'+1+','+1+',"'+req.body.fName+'","'+req.body.lName+'",'+1+','+1+', @o1, @o2); SELECT @o1, @o2', function(err, results) {
+          conn.query('CALL userCreate("'+req.body.email+'","'+hash+'",'+1+','+1+',"'+req.body.fName+'","'+req.body.lName+'",'+1+','+1+', @o1, @o2, @o3); SELECT @o1, @o2, @o3', function(err, results) {
             if (err){
               console.log(err);
               //error occured connecting to DB
@@ -135,6 +135,7 @@ var elementCode = null;
               }
               else{
               loggedIn = true;
+              userId = results[1][0]['@o3'];
               res.send(JSON.stringify({"Success": true, "ErrType": null, "Message": "Create User Successful"}));
               }
             }
