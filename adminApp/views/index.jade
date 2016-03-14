@@ -7,8 +7,10 @@ block mainContainer
 	ol.breadcrumb(id='drillTrack')
 		li(id='museumCrumb')
 			a(href='#') Museum
-
-	div(class='list-group', id='museums')
-		button(class='list-group-item museum', type="button") Earth Sciences Museum
-		button(class='list-group-item museum', type="button") UW Art Gallery
+	#museums
+		.titleHead
+			h4 Museums
+		div(class='list-group')
+			button(class='list-group-item museum', type="button") Earth Sciences Museum
+			button(class='list-group-item museum', type="button") UW Art Gallery
 	div(id='exhibitContainer')
