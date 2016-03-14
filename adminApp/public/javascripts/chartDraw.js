@@ -29,7 +29,6 @@ function drawChart(column){
       chart.draw(data, options);
   }
 
-
 $(document).ready(function(){
   //Inject Exhibit Page
     $('.museum').on('click', function(){
@@ -70,6 +69,7 @@ $(document).ready(function(){
         queries: $('#exhibitName')
       }
     }).data('dynatable');
+    drawChart(1);
 
     //Draw chart when a table column with metrics is clicked
     $(tableName+' td.metrics').on('click', function(){
