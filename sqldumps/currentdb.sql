@@ -97,7 +97,7 @@ CREATE TABLE `checkInDuration` (
 
 LOCK TABLES `checkInDuration` WRITE;
 /*!40000 ALTER TABLE `checkInDuration` DISABLE KEYS */;
-INSERT INTO `checkInDuration` VALUES (5,4,'2016-03-10 04:58:22','2016-03-10 18:30:35',48733),(7,4,'2016-03-10 18:48:39','2016-03-10 18:48:40',1),(8,4,'2016-03-14 21:28:44','2016-03-14 21:29:43',59);
+INSERT INTO `checkInDuration` VALUES (5,4,'2016-03-10 04:58:22','2016-03-10 18:30:35',48733),(7,4,'2016-03-10 18:48:39','2016-03-10 18:48:40',1),(8,4,'2016-03-14 21:28:44','2016-03-14 21:29:43',59),(13,4,'2016-03-14 22:55:06','2016-03-14 22:55:10',NULL);
 /*!40000 ALTER TABLE `checkInDuration` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,7 +325,7 @@ CREATE TABLE `interaction` (
   `elementId` int(11) DEFAULT '-1',
   `visitId` int(11) NOT NULL,
   PRIMARY KEY (`interactionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -334,7 +334,7 @@ CREATE TABLE `interaction` (
 
 LOCK TABLES `interaction` WRITE;
 /*!40000 ALTER TABLE `interaction` DISABLE KEYS */;
-INSERT INTO `interaction` VALUES (1,'2016-02-23 18:21:43',1,2,1325,0),(2,'0000-00-00 00:00:00',1,1,1,1),(3,'2016-03-02 19:42:39',1,1,1,1),(4,'0000-00-00 00:00:00',1,1,1,1),(5,'0000-00-00 00:00:00',1,1,1,1),(6,'0000-00-00 00:00:00',1,1,1,1),(7,'0000-00-00 00:00:00',1,1,1,1),(8,'2016-02-03 05:00:00',1,1,1,1),(9,'2016-03-02 19:46:47',1,1,1,1),(10,'2016-03-02 19:47:09',1,1,1,1),(11,'2016-03-09 22:51:32',1,33,2,4),(12,'2016-03-09 22:51:48',1,33,2,4),(13,'2016-03-09 22:55:05',1,33,2,4),(14,'2016-03-09 23:20:05',1,33,4,2),(15,'2016-03-09 23:25:39',1,33,5,2),(16,'2016-03-10 01:56:06',1,33,4,4),(17,'2016-03-10 02:23:20',1,33,4,4),(18,'2016-03-10 02:49:55',1,33,4,2),(19,'2016-03-10 02:53:37',1,33,4,2),(20,'2016-03-10 02:53:44',1,33,4,2),(21,'2016-03-10 02:53:54',1,33,4,2),(22,'2016-03-10 02:54:36',1,33,4,2),(23,'2016-03-10 02:57:47',1,33,4,2),(24,'2016-03-10 02:59:15',1,33,4,2),(25,'2016-03-10 03:00:26',1,33,4,2),(26,'2016-03-10 03:01:47',1,33,4,2),(27,'2016-03-10 03:01:57',1,33,4,2),(28,'2016-03-10 03:02:09',1,33,4,2),(29,'2016-03-10 03:03:25',1,33,4,2),(30,'2016-03-10 03:06:00',1,33,4,2),(31,'2016-03-10 03:06:24',1,33,4,2),(32,'2016-03-10 03:06:26',4,33,4,2),(33,'2016-03-10 03:08:23',4,33,4,2),(34,'2016-03-10 03:08:30',1,33,4,2),(35,'2016-03-10 03:08:32',4,33,4,2),(36,'2016-03-10 03:10:39',1,33,4,2),(37,'2016-03-10 03:22:21',1,33,4,4),(38,'2016-03-10 03:22:23',4,33,4,4),(39,'2016-03-10 03:22:23',6,33,NULL,4),(40,'2016-03-10 03:22:26',1,33,4,4),(41,'2016-03-10 03:23:11',1,33,4,4),(42,'2016-03-10 03:24:13',1,33,4,4),(43,'2016-03-10 03:24:19',4,33,4,4),(44,'2016-03-10 03:24:24',1,33,4,4),(45,'2016-03-10 03:24:37',6,33,NULL,4),(46,'2016-03-10 03:30:37',6,33,NULL,4),(47,'2016-03-10 03:31:10',5,33,NULL,5),(48,'2016-03-10 03:55:41',1,33,4,2),(49,'2016-03-10 03:55:44',6,33,NULL,2),(50,'2016-03-10 04:02:27',6,33,NULL,5),(51,'2016-03-10 04:05:59',6,33,NULL,5),(52,'2016-03-10 04:14:03',6,33,NULL,2),(57,'2016-03-10 04:22:22',6,33,NULL,2),(58,'2016-03-10 04:23:23',6,33,NULL,5),(60,'2016-03-10 04:40:27',6,33,NULL,5),(61,'2016-03-10 04:42:07',6,33,NULL,5),(62,'2016-03-10 04:42:51',6,33,NULL,5),(63,'2016-03-10 04:44:59',6,33,NULL,5),(64,'2016-03-10 04:47:02',6,33,NULL,5),(65,'2016-03-10 04:48:37',6,33,NULL,3),(66,'2016-03-10 04:49:55',6,33,NULL,3),(67,'2016-03-10 04:58:18',5,33,NULL,2),(68,'2016-03-10 04:58:22',1,33,4,5),(69,'2016-03-10 04:58:26',4,33,4,5),(70,'2016-03-10 05:16:01',5,33,NULL,5),(71,'2016-03-10 05:16:06',1,33,4,6),(72,'2016-03-10 05:16:12',6,33,NULL,6),(73,'2016-03-10 05:23:16',5,33,NULL,6),(74,'2016-03-10 05:23:19',1,33,4,6),(75,'2016-03-10 05:23:21',6,33,NULL,6),(76,'2016-03-10 05:24:19',5,33,NULL,6),(77,'2016-03-10 05:24:21',1,33,4,6),(78,'2016-03-10 05:24:25',4,33,4,6),(79,'2016-03-10 05:27:27',1,33,4,6),(80,'2016-03-10 05:27:33',6,33,NULL,6),(81,'2016-03-10 05:27:34',4,33,4,6),(83,'2016-03-10 18:26:55',4,33,4,5),(84,'2016-03-10 18:28:54',4,33,4,5),(85,'2016-03-10 18:29:12',4,33,4,5),(86,'2016-03-10 18:30:35',4,33,4,5),(87,'2016-03-10 18:48:04',1,33,4,7),(88,'2016-03-10 18:48:30',4,33,4,7),(89,'2016-03-10 18:48:33',1,33,4,7),(90,'2016-03-10 18:48:37',4,33,4,7),(91,'2016-03-10 18:48:39',1,33,4,7),(92,'2016-03-10 18:48:40',6,33,NULL,7),(93,'2016-03-10 18:48:40',4,33,4,7),(94,'2016-03-14 21:28:44',1,33,4,8),(95,'2016-03-14 21:29:43',4,33,4,8),(96,'2016-03-14 21:31:28',5,33,NULL,8),(97,'2016-03-14 21:36:42',5,33,NULL,8),(98,'2016-03-14 21:47:11',5,37,NULL,9),(99,'2016-03-14 21:53:00',5,37,NULL,11),(100,'2016-03-14 21:56:48',5,37,NULL,11),(101,'2016-03-14 21:57:02',5,37,NULL,11);
+INSERT INTO `interaction` VALUES (1,'2016-03-14 23:14:15',3,34,4,13);
 /*!40000 ALTER TABLE `interaction` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -666,7 +666,7 @@ CREATE TABLE `visit` (
   `museumId` int(11) NOT NULL,
   PRIMARY KEY (`visitId`),
   UNIQUE KEY `uq_visit` (`visitDate`,`userId`,`museumId`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -675,7 +675,7 @@ CREATE TABLE `visit` (
 
 LOCK TABLES `visit` WRITE;
 /*!40000 ALTER TABLE `visit` DISABLE KEYS */;
-INSERT INTO `visit` VALUES (1,'2016-03-09 06:51:25','2016-03-09',1,1),(2,'2016-03-09 06:53:15','2016-03-09',33,1),(3,'2016-03-09 06:53:43','2016-03-08',33,1),(4,'2016-03-09 18:50:32','2016-03-09',33,2),(5,'2016-03-09 18:53:41','2016-03-09',33,3),(6,'2016-03-10 05:16:00','2016-03-10',33,3),(7,'2016-03-10 18:47:56','2016-03-10',33,2),(8,'2016-03-14 21:28:35','2016-03-14',33,1),(9,'2016-03-14 21:44:53','2016-03-14',31,1),(10,'2016-03-14 21:47:11','2016-03-14',37,1),(11,'2016-03-14 21:53:00','2016-03-14',37,2);
+INSERT INTO `visit` VALUES (1,'2016-03-09 06:51:25','2016-03-09',1,1),(2,'2016-03-09 06:53:15','2016-03-09',33,1),(3,'2016-03-09 06:53:43','2016-03-08',33,1),(4,'2016-03-09 18:50:32','2016-03-09',33,2),(5,'2016-03-09 18:53:41','2016-03-09',33,3),(6,'2016-03-10 05:16:00','2016-03-10',33,3),(7,'2016-03-10 18:47:56','2016-03-10',33,2),(8,'2016-03-14 21:28:35','2016-03-14',33,1),(9,'2016-03-14 21:44:53','2016-03-14',31,1),(10,'2016-03-14 21:47:11','2016-03-14',37,1),(11,'2016-03-14 21:53:00','2016-03-14',37,2),(12,'2016-03-14 22:35:25','2016-03-14',36,1),(13,'2016-03-14 22:45:11','2016-03-14',34,1);
 /*!40000 ALTER TABLE `visit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1279,7 +1279,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_interaction`(
-	IN vInteractionType INTEGER,
+	IN vInteractionTypeId INTEGER,
     IN vUserId INTEGER, 
     IN vElementCode INTEGER,
     IN vVisitId INTEGER,
@@ -1289,28 +1289,46 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_interaction`(
 BEGIN
     /*DECLARE EXIT HANDLER FOR SQLEXCEPTION
         SELECT -1 into vSuccess;*/
-    
+    select -1 into vSuccess;
     start transaction;
     
-    if vTstamp is null then 
-		select now() into vSuccess;
+	if vTstamp is null then 
+		select now() into vTstamp;
 	end if;
     
-    INSERT INTO interaction (
-		interactionTypeId, 
-        userId,
-        elementId,
-        visitId, 
-        tstamp
-    ) VALUES (
-		vInteractionType, 
-        vUserId, 
-        (select elementId from elementCode where code=vElementCode),
-        vVisitId,
-        vTstamp
-    );
+    select count(*) into @exists from interaction 
+    where interactionTypeId=vInteractionTypeId and userId=vUserId 
+			and visitId=vVisitId 
+            and elementId=(select elementId from elementcode where code=vElementCode);
+            
+	if @exists > 0 then 
+		
+        update interaction set tstamp=vTstamp
+        where interactionTypeId=vInteractionTypeId and userId=vUserId 
+			and visitId=vVisitId 
+            and elementId=(select elementId from elementcode where code=vElementCode); 
+		
+        select 0 into vSuccess;
     
-    select 0 into vSuccess;
+    else 
+		
+        INSERT INTO interaction (
+			interactionTypeId, 
+			userId,
+			elementId,
+			visitId, 
+			tstamp
+		) VALUES (
+			vInteractionTypeId, 
+			vUserId, 
+			(select elementId from elementCode where code=vElementCode),
+			vVisitId,
+			vTstamp
+		);
+		
+		select 0 into vSuccess;
+    
+    end if;
     
     if vSuccess >= 0 then 
 		commit;
@@ -1842,4 +1860,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-14 18:20:59
+-- Dump completed on 2016-03-14 19:17:56
