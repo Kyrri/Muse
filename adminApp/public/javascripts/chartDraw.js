@@ -1,14 +1,15 @@
 google.charts.load('current', {packages: ['corechart']});
+var tableName = '#dynamicElementsTable';
 
 //Draw the analytics chart
 function drawChart(column){
   //Read dynatable, use as chart data
-  var columnName = $('#mytable').find('thead tr td:nth-child('+(column+1)+')').text().slice(0,-2);
+  var columnName = $(tableName).find('thead tr td:nth-child('+(column+1)+')').text().slice(0,-2);
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Title');
     data.addColumn('number', columnName);
     var totalrows = [];
-    $('tbody', '#mytable').find('tr').each(function(){
+    $('tbody', tableName).find('tr').each(function(){
       var row = [];
       row.push($(this).find('td:nth-child(1)').text());
       row.push(parseFloat($(this).find('td:nth-child('+(column+1)+')').text()));
@@ -18,7 +19,7 @@ function drawChart(column){
 
    //Set options for chart (styling, column names, title, etc.)
     var options = {
-      title: 'Element ' + columnName,
+      title: columnName,
       curveType: 'function',
       legend: { position: 'bottom' },
       colors: ['#6baf8f']
@@ -32,22 +33,8 @@ function drawChart(column){
 $(document).ready(function(){
   //Inject Exhibit Page
     $('.museum').on('click', function(){
-        $.ajax('/exhibits',{
-          type: "POST",
-          dataType: 'html',             
-              success: function(result) {
-                if(result){
-                 $('#exhibitContainer').html(result);
-                 updateExhibitList();
-                 drillDown();
-                 $('#museums').hide();
-                }
-                else{
-                  //wrong code, try again
-                } 
-            }
-        });
-
+      updateTable('exhibit', true);
+      $('#museums').hide();
     });
 
 //upddtes DOM elements to incorperate injected page
@@ -70,7 +57,7 @@ $(document).ready(function(){
     });
 
     //Initalize dynatable
-    $('#mytable').bind('dynatable:init', function(e, dynatable){
+    $(tableName).bind('dynatable:init', function(e, dynatable){
       dynatable.queries.functions['exhibitName'] = function(record, queryValue) {
         return (record.exhibitName.toUpperCase().indexOf(queryValue.toUpperCase()) > -1);
       };
@@ -85,7 +72,7 @@ $(document).ready(function(){
     }).data('dynatable');
 
     //Draw chart when a table column with metrics is clicked
-    $('#mytable td.metrics').on('click', function(){
+    $(tableName+' td.metrics').on('click', function(){
       drawChart($(this).index());
     });
 
@@ -96,41 +83,79 @@ $(document).ready(function(){
     });
 
     //Inject Element list page in place of Exhibit list page
-      $('#mytable tbody tr').on('click', function(){
-        $.ajax('/pieces',{
-          type: "POST",
-          dataType: 'html',             
-              success: function(result) {
-                if(result){
-                 $('#exhibitContainer').html(result);
-                 updateExhibitList();
-                 drillDown();
-                }
-                else{
-                  //wrong code, try again
-                } 
-            }
-        });
+      $(tableName+' tbody tr').on('click', function(){
+        updateTable('element', true);
+    });
+  }
+  //Creates/uploads the analytics table
+  function updateTable(table, drilldown){
+    var params = JSON.stringify({
+      'table' : table,
+      'clauses' : {
+        'musuemId' : "'f_getMuseumId(' + museum + ')'" // make sure to send strings with quotes - ''
+      }
+    });
 
+    $.ajax('/index_partial',{
+      type: "POST",
+      data: params,
+      dataType: 'html',
+        success: function(result) {
+          if(result){
+           $('#exhibitContainer').html(result);
+           updateExhibitList();  
+          
+           if(drilldown){
+              drillDown();
+           }           
+          }
+          else{
+            //wrong code, try again
+          } 
+      }
     });
   }
 
   //Drills down the breadcrumbs
   function drillDown(){
     var children = $('#drillTrack li').length;
+    var nextDrill;
+    var idName;
       switch(children){
         case 1:
           nextDrill = 'Exhibit';
+          idName = 'exhibitCrumb';
           break;
         case 2:
           nextDrill = 'Art Elements'
+          idName = 'elementCrumb';
           break;
         default:
           return;
           break;
       }
-
-      $('#drillTrack').append('<li class="drill" id="'+nextDrill+'crumb"><a href="#">'+nextDrill+'</a></li>');    
+      $('#drillTrack').append('<li class="drill" id="'+idName+'"><a href="#">'+nextDrill+'</a></li>');   
+      wrapCrumbs(); 
+  }
+  //Updates DOM with event handlers for breadCrumbs
+  function wrapCrumbs(){
+   //Drill Up Breadcrumbs
+  $('#drillTrack li').on('click', function(){
+      var children = $('#drillTrack li').length;
+      var i;
+      if($(this).attr("id")==='museumCrumb'){
+        i=1;
+         $('#exhibitContainer').html("");
+        $('#museums').show();
+      }
+      else if($(this).attr("id")==='exhibitCrumb'){
+        i=2;
+        updateTable('exhibit', false);
+      }
+      for(i; i<children; i++){
+        $('#drillTrack li').remove(':last-child');
+      }
+    });
   }
   //Function for datepicker to get previous week from today
   function getLastWeek(){
