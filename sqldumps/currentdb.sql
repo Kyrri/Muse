@@ -132,31 +132,6 @@ INSERT INTO `element` VALUES (1,0,'Luncheon of the Boating Party',1,1881,'Test d
 UNLOCK TABLES;
 
 --
--- Table structure for table `elementCode`
---
-
-DROP TABLE IF EXISTS `elementCode`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `elementCode` (
-  `elementId` int(11) DEFAULT NULL,
-  `code` int(11) DEFAULT NULL,
-  `location` varchar(255) DEFAULT NULL,
-  UNIQUE KEY `elementId` (`elementId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `elementCode`
---
-
-LOCK TABLES `elementCode` WRITE;
-/*!40000 ALTER TABLE `elementCode` DISABLE KEYS */;
-INSERT INTO `elementCode` VALUES (1,1325,NULL),(2,5728,NULL),(3,7793,NULL),(4,1234,NULL),(13,1122,NULL),(5,6778,NULL);
-/*!40000 ALTER TABLE `elementCode` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `elementFacts`
 --
 
@@ -256,6 +231,31 @@ LOCK TABLES `elementTagType` WRITE;
 /*!40000 ALTER TABLE `elementTagType` DISABLE KEYS */;
 INSERT INTO `elementTagType` VALUES (2,'Genre'),(4,'Industry'),(1,'Medium'),(3,'Style');
 /*!40000 ALTER TABLE `elementTagType` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `elementcode`
+--
+
+DROP TABLE IF EXISTS `elementcode`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `elementcode` (
+  `elementId` int(11) DEFAULT NULL,
+  `code` int(11) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  UNIQUE KEY `elementId` (`elementId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `elementcode`
+--
+
+LOCK TABLES `elementcode` WRITE;
+/*!40000 ALTER TABLE `elementcode` DISABLE KEYS */;
+INSERT INTO `elementcode` VALUES (1,1325,NULL),(2,5728,NULL),(3,7793,NULL),(4,1234,NULL),(13,1122,NULL),(5,6778,NULL);
+/*!40000 ALTER TABLE `elementcode` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1842,4 +1842,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-14 18:14:48
+-- Dump completed on 2016-03-14 18:20:59
