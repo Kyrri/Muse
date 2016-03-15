@@ -6,11 +6,19 @@ $(document).ready( function () {
  		contentType: "application/json",
         data: sqlParams,								
         success: function(results) {
-        	var i = 0;
-        	$('#visits_accordion_recent h4').each( function () {	
-        		$(this).text(results[i].museum + ' on ' + procDate(results[i].visitDate));
-        		i++;
-        	});
+        	var length = results.length;
+        	if(length<1){
+        		$('#visits_accordion_recent').append("<p>You have no recent Visits. Start your first one today!</p>");
+        	}
+        	else{
+        		for(var i=0; i<length; i++){
+	        		$('#visits_accordion_recent').append("<div class='boxVisits'><div class='recentVisit'><h4>"
+						+results[i].museum +
+						" - </h4></div><div class='recentVisit'><p>"
+						+ procDate(results[i].visitDate) +
+						"</p></div></div>");
+        		} 
+        	}
     	}
 	});
 
