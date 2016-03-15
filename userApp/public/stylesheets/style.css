@@ -228,6 +228,8 @@ img#home {
 }
 
 .boxVisits {
+  background-color: #6d6f71;
+  color: #ffffff;
   border: 2px solid #6d6f71;
   border-radius: 10px;
   overflow: hidden;
@@ -235,6 +237,12 @@ img#home {
   margin-left: auto;
   margin-right: auto;
   width: 95%;
+  text-align: center;
+}
+.recentVisit{
+  display: inline-block;
+  vertical-align:middle;
+  text-align:center;
 }
 
 .boxSignup {
@@ -244,14 +252,14 @@ img#home {
   margin-top: 20px;
   margin-bottom: 40px;
 }
-
-
 .boxVisits h4 {
-  background-color: #6d6f71;
-  color: #ffffff;
   padding-left: 8px;
   padding-bottom: 4px;
-  font-size: 6vw;
+  font-size: 5vw;
+}
+.boxVisits p {
+  padding-top: 3px;
+  font-size: 3vw;
 }
 
 .boxSignup h5 {
