@@ -41,16 +41,6 @@ CREATE TABLE `ageRange` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ageRange`
---
-
-LOCK TABLES `ageRange` WRITE;
-/*!40000 ALTER TABLE `ageRange` DISABLE KEYS */;
-INSERT INTO `ageRange` VALUES (1,'18-20'),(2,'20-25'),(3,'25-30'),(4,'30-40'),(5,'40-50'),(6,'50-60'),(7,'60-70'),(8,'70+'),(9,'N/A');
-/*!40000 ALTER TABLE `ageRange` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `artist`
 --
 
@@ -64,16 +54,6 @@ CREATE TABLE `artist` (
   PRIMARY KEY (`artistId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `artist`
---
-
-LOCK TABLES `artist` WRITE;
-/*!40000 ALTER TABLE `artist` DISABLE KEYS */;
-INSERT INTO `artist` VALUES (1,'Pierre-Auguste Renoir',1),(2,'Wassily Kandinsky',1),(3,'Vincent van Gogh',1),(4,'Interwebs',1),(5,'test1',1),(6,'hello\'s',1);
-/*!40000 ALTER TABLE `artist` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `checkInDuration`
@@ -90,16 +70,6 @@ CREATE TABLE `checkInDuration` (
   `duration` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `checkInDuration`
---
-
-LOCK TABLES `checkInDuration` WRITE;
-/*!40000 ALTER TABLE `checkInDuration` DISABLE KEYS */;
-INSERT INTO `checkInDuration` VALUES (5,4,'2016-03-10 04:58:22','2016-03-10 18:30:35',48733),(7,4,'2016-03-10 18:48:39','2016-03-10 18:48:40',1),(8,4,'2016-03-14 21:28:44','2016-03-14 21:29:43',59),(13,4,'2016-03-14 23:24:28','2016-03-14 23:37:10',762),(14,15,'2016-03-15 02:26:14','2016-03-15 02:26:24',10),(14,4,'2016-03-15 02:27:19','2016-03-15 02:27:23',4);
-/*!40000 ALTER TABLE `checkInDuration` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `element`
@@ -123,16 +93,6 @@ CREATE TABLE `element` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `element`
---
-
-LOCK TABLES `element` WRITE;
-/*!40000 ALTER TABLE `element` DISABLE KEYS */;
-INSERT INTO `element` VALUES (1,0,'Luncheon of the Boating Party',1,1881,'Test description',NULL,1,NULL),(2,0,'Composition VIII',2,1923,'',NULL,1,NULL),(3,1,'Café Terrace at Night',3,1888,'',NULL,1,NULL),(4,1,'Maeby',4,2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2,NULL),(5,1,'Baby Cat',4,2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2,NULL),(6,0,'test1',1,1993,'test','testtest',1,NULL),(7,0,'test2',1,1993,'test','testtest',1,NULL),(8,0,'test3',1,1993,'test','testtest',1,NULL),(9,0,'Demo Project 1',2,1993,'This is a description','',1,NULL),(10,0,'Andrews Test',4,1456,'The form works','testtest',1,NULL),(11,0,'Another Test',1,1234,'1234','1234',1,NULL),(12,0,'Another Test1',1,0,'','',1,NULL),(13,1,'At1',1,1333,'adfadsfad','adfasdfadsfad',1,NULL),(14,1,'New Element',4,1234,'adfadfad','adfasdfasdfads',2,NULL),(15,1,'Dug the Dog',4,2016,'It\'s Dug\'s 1st Birthday','http://i.imgur.com/kQa1ri6.jpg',10,NULL);
-/*!40000 ALTER TABLE `element` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `elementFacts`
 --
 
@@ -148,15 +108,6 @@ CREATE TABLE `elementFacts` (
   PRIMARY KEY (`elementFactId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `elementFacts`
---
-
-LOCK TABLES `elementFacts` WRITE;
-/*!40000 ALTER TABLE `elementFacts` DISABLE KEYS */;
-/*!40000 ALTER TABLE `elementFacts` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `elementTag`
@@ -175,16 +126,6 @@ CREATE TABLE `elementTag` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `elementTag`
---
-
-LOCK TABLES `elementTag` WRITE;
-/*!40000 ALTER TABLE `elementTag` DISABLE KEYS */;
-INSERT INTO `elementTag` VALUES (1,'Oil on Canvas',1,1),(2,'Aerospace',4,1),(3,'Automotive',4,1),(4,'Watercolour',1,1),(5,'Charcoal',1,1),(6,'pencil',1,1),(7,'ink',1,1),(8,'test',2,1),(9,'Enter tag name',2,1),(10,'test1',2,1),(15,'test5',1,1),(20,'test',4,1),(21,'itest1',4,1);
-/*!40000 ALTER TABLE `elementTag` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `elementTagMapping`
 --
 
@@ -198,16 +139,6 @@ CREATE TABLE `elementTagMapping` (
   PRIMARY KEY (`elementTagId`,`elementId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `elementTagMapping`
---
-
-LOCK TABLES `elementTagMapping` WRITE;
-/*!40000 ALTER TABLE `elementTagMapping` DISABLE KEYS */;
-INSERT INTO `elementTagMapping` VALUES (1,1,1),(1,2,1),(1,3,1),(3,4,1),(3,5,0),(4,4,1),(8,1,1),(8,2,1),(8,4,0),(9,1,1),(9,5,1),(10,1,1),(10,4,0),(20,4,1),(21,4,1);
-/*!40000 ALTER TABLE `elementTagMapping` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `elementTagType`
@@ -225,16 +156,6 @@ CREATE TABLE `elementTagType` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `elementTagType`
---
-
-LOCK TABLES `elementTagType` WRITE;
-/*!40000 ALTER TABLE `elementTagType` DISABLE KEYS */;
-INSERT INTO `elementTagType` VALUES (2,'Genre'),(4,'Industry'),(1,'Medium'),(3,'Style');
-/*!40000 ALTER TABLE `elementTagType` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `elementcode`
 --
 
@@ -248,16 +169,6 @@ CREATE TABLE `elementcode` (
   UNIQUE KEY `elementId` (`elementId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `elementcode`
---
-
-LOCK TABLES `elementcode` WRITE;
-/*!40000 ALTER TABLE `elementcode` DISABLE KEYS */;
-INSERT INTO `elementcode` VALUES (1,1325,NULL),(2,5728,NULL),(3,7793,NULL),(4,1234,NULL),(13,1122,NULL),(5,6778,NULL),(15,4321,NULL);
-/*!40000 ALTER TABLE `elementcode` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `exhibit`
@@ -277,16 +188,6 @@ CREATE TABLE `exhibit` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `exhibit`
---
-
-LOCK TABLES `exhibit` WRITE;
-/*!40000 ALTER TABLE `exhibit` DISABLE KEYS */;
-INSERT INTO `exhibit` VALUES (1,1,'Muse Sample 1',1),(2,1,'Internet Cats',1),(3,0,'Test1',1),(6,0,'Test2',1),(7,0,'Test3',1),(8,1,'test4',1),(9,1,'Cats',4),(10,1,'Dogs',4);
-/*!40000 ALTER TABLE `exhibit` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `gender`
 --
 
@@ -300,16 +201,6 @@ CREATE TABLE `gender` (
   UNIQUE KEY `genderDesc` (`genderDesc`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `gender`
---
-
-LOCK TABLES `gender` WRITE;
-/*!40000 ALTER TABLE `gender` DISABLE KEYS */;
-INSERT INTO `gender` VALUES (2,'female'),(1,'male'),(3,'N/A');
-/*!40000 ALTER TABLE `gender` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `interaction`
@@ -328,16 +219,6 @@ CREATE TABLE `interaction` (
   PRIMARY KEY (`interactionId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `interaction`
---
-
-LOCK TABLES `interaction` WRITE;
-/*!40000 ALTER TABLE `interaction` DISABLE KEYS */;
-INSERT INTO `interaction` VALUES (1,'2016-03-14 23:14:15',3,34,4,13),(2,'2016-03-14 23:24:28',1,34,4,13),(3,'2016-03-14 23:37:10',4,34,4,13),(4,'2016-03-15 02:25:40',5,35,NULL,14),(5,'2016-03-15 02:26:14',1,35,15,14),(6,'2016-03-15 02:26:24',4,35,15,14),(7,'2016-03-15 02:27:19',1,35,4,14),(8,'2016-03-15 02:27:23',6,35,NULL,14),(9,'2016-03-15 02:27:23',4,35,4,14);
-/*!40000 ALTER TABLE `interaction` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -463,16 +344,6 @@ CREATE TABLE `interactionType` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `interactionType`
---
-
-LOCK TABLES `interactionType` WRITE;
-/*!40000 ALTER TABLE `interactionType` DISABLE KEYS */;
-INSERT INTO `interactionType` VALUES (1,'checkIn'),(4,'checkout'),(3,'favourite'),(2,'like'),(6,'visitEnd'),(5,'visitStart');
-/*!40000 ALTER TABLE `interactionType` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `login`
 --
 
@@ -491,16 +362,6 @@ CREATE TABLE `login` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `login`
---
-
-LOCK TABLES `login` WRITE;
-/*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (3,1,1,'test1@test.com','test123',7),(4,1,1,'test2@test.com','test123',8),(5,1,1,'test3@test.com','test123',9),(6,1,1,'afadfsad%40sfsdfsd.com','sfadfadsfasd',10),(7,1,1,'Testingemail%40test.com','banana',11),(8,1,1,'Testing%40test.com','banana',12),(9,1,1,'123%40what.com','apple',13),(10,1,1,'yim.nathan%40gmail.com','musepassword',14),(11,1,1,'Chrrria%40gmail.ca','aaaaa',15),(12,1,1,'mtheng%40uwaterloo.ca','syde461demo',16),(13,1,1,'iangeasterbrook%40gmail.com','gg9911c3',17),(14,1,1,'chelsea.haemel%40hotmail.ca','chelsea',18),(15,1,1,'theojchan%40hotmail.com','Fire!blast5',19),(16,1,1,'Fjdosi%40isoos.odos','test123',20),(17,1,1,'nfjds%40uhfis.cds','test123',21),(18,1,1,'Shshsh%40dhdhdh.com','dhehrheh',22),(19,1,1,'Dhehrh%40djdhdh.dhdhd','djdhdhd',23),(20,1,1,'Tester%40walkthrough.com','dhdhdhdh',24),(21,1,1,'Isoshdk%40hsops.oso','sospskdo',25),(22,1,1,'Jsododi%40jspsp.pso','jdpsoss',26),(23,1,1,'Melissa.a.lynett%40gmail.com','AndrewIsWearingGrey',27),(24,1,1,'Shshsh%40shdhdh.djdjdj','sjshsjd',28),(25,1,1,'Dhdhdh%40djdhdh.djdhd','shehdhdhdhdh',29),(26,1,1,'andrewtest%40test.com','pbkdf2$10000$41b577b7a744f907e037db86b82d8ea1c2e7c7a38b25df882b18ca0bc9e619892acfb84eed0861715f104762708e996154d5307f8be1deb978a58f5e186b8bad$e536dd46822cbf694e0b7cc6601b0b3b51069879fda1e4b89c77cd67783b80b0b5aa0f4e855585b6be0b67290ff02d86569b416fd223ba55e',30),(27,1,1,'a1%40test.com','pbkdf2$10000$42489d2826869b5c3df8aefa83168a0c56b5311ce36ce920b76d6a2d9dcee43de7d85a0b964725b00ed98ee0c7a96a53565380385e5f68e4f5c68264f76fc7ba$50ee40ec8d28c03664140044c4ee6ec4086098e25e2f260cea8757ae9ff3af036a4499d0c5a562b9f47be9ca0e6f650a8c67cefdb8cd0b320',31),(28,1,1,'a2%40test.com','pbkdf2$10000$22c9920564f01d8a3eef6bdc3575ab3f8c451399b0cd8df77c2a7a752606dfafd386ef4e731ee9b57fe445f4c578ec59e92d338e5efe4e7f48279cfee64e55e6$185c0786e48e0a6a46a1df0969f26fba466ea0d469d275a2b9c8d8f154d5237774aef8ddfe2aaafc6ee466be244fd91a0b7aea5d4d7fdde4d',32),(29,1,1,'a3%40test.com','pbkdf2$10000$c3014a9ee5f9c8261208666cdb0c424e676afd05c44f550318afa35a0b7c4a153c5302947dae22833cfa25898f7794cd1495aa9d42a261d05d9e5eb6c3e196ca$1480f783fa14d2ca9c112452f35a95800496cb2c92b5655f408097e482533abf02084efd412b6e4f613bc7cca30654c0a754ed5d36b764f1e519878468c3186a',33),(30,1,1,'a4%40test.com','pbkdf2$10000$dc5f6dc4561caed629af9f6367cbb8b81dce3764f7a7d480267ac803a4e69252bee37b1f8a0ad68baf7efe175d7f78692f8688aa7bfcb0984a306056a088cb34$d04711540ab09cafa0f6e8b02af24fa43a794e3bdaad0fc14a792b6192cc54a7c17bbf7844509bf6a3cdf502de10b88c878fad8d5d53e5161b26c978a6825be2',34),(31,1,1,'a5%40test.com','pbkdf2$10000$96c01d3d084c577e99629effeb000abcad856a9f8e4ee299989de805b146e975ad0bc4f6ab7f5f6cf7fc5b6deaacdd5316a917d44143547557c9ace2f711de45$97e8ab4b1a7dd17841c3022c97641aa924092c0ff77e79d0de0ae1f65f3637c68fb418b736db73d536f454387d52529b12a016590b64b925e07bc4ab4cf5435b',35),(32,1,1,'a6%40test.com','pbkdf2$10000$71ed62777f1d75c6b1d8b03b3067607b45dadd18c9fadb0042d93292814bb78b078e3459da1ffc68807f7b140f89d622270b52a9dafeee46f8a3a7633f34404d$dcf0c67f528e2a2329fd6ffcea56185f627f0a657ca960e4bab19eaa1b119722b924c37a817d584283470fded8c585418d38803b81e5218d8216237cb445edfa',36),(33,1,1,'a7%40test.com','pbkdf2$10000$8235f68ec4259ab069055a60e3e1658c7e374f0b32ff640804e7db78e2ef50014efc97505538eac2a2657e1683aacaa64c821cde69a03593fb333623e2ffb258$3203491860096dd7c83674f74dc4e512d11ee9e729e4733c3abf3bc1e3392f81ba11ea4c44fd5002ff6ab98a2cf17cb01e7f08f07e40ced0c56948f28b9be15b',37);
-/*!40000 ALTER TABLE `login` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `loginType`
 --
 
@@ -516,16 +377,6 @@ CREATE TABLE `loginType` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `loginType`
---
-
-LOCK TABLES `loginType` WRITE;
-/*!40000 ALTER TABLE `loginType` DISABLE KEYS */;
-INSERT INTO `loginType` VALUES (1,'email');
-/*!40000 ALTER TABLE `loginType` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `museum`
 --
 
@@ -539,16 +390,6 @@ CREATE TABLE `museum` (
   PRIMARY KEY (`museumId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `museum`
---
-
-LOCK TABLES `museum` WRITE;
-/*!40000 ALTER TABLE `museum` DISABLE KEYS */;
-INSERT INTO `museum` VALUES (1,1,'Muse Sample'),(2,1,'The Met'),(3,1,'MoMA'),(4,1,'Interwebs');
-/*!40000 ALTER TABLE `museum` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
@@ -570,16 +411,6 @@ CREATE TABLE `user` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (7,1,'test1','test11',1,1,1),(8,1,'test2','',1,1,1),(9,1,'test2','lastnametest',1,1,1),(10,1,'adfadfadsf','afasdfad',1,1,1),(11,1,'Gloria','McPlot',1,1,1),(12,1,'','',1,1,1),(13,1,'Potato','Tomato',1,1,1),(14,1,'Nathan','Yim',1,1,1),(15,1,'A','A',1,1,1),(16,1,'m','bristow',1,1,1),(17,1,'Ian','Easterbrook',1,1,1),(18,1,'Chelsea','Haemel',1,1,1),(19,1,'Theo','Chan',1,1,1),(20,1,'','',1,1,1),(21,1,'','',1,1,1),(22,1,'Djdhrh','',1,1,1),(23,1,'Dhdhdhd','Dhdhdhd',1,1,1),(24,1,'Bob','Smith',1,1,1),(25,1,'','',1,1,1),(26,1,'','',1,1,1),(27,1,'Melissa','Lynett',1,1,1),(28,1,'','',1,1,1),(29,1,'Dhdhdhdh','',1,1,1),(30,1,'Andrew','I',1,1,1),(31,1,'','',1,1,1),(32,1,'','',1,1,1),(33,1,'','',1,1,1),(34,1,'Tester','',1,1,1),(35,1,'','',1,1,1),(36,1,'','',1,1,1),(37,1,'','',1,1,1);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `userType`
 --
 
@@ -593,16 +424,6 @@ CREATE TABLE `userType` (
   UNIQUE KEY `userTypeDesc` (`userType`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `userType`
---
-
-LOCK TABLES `userType` WRITE;
-/*!40000 ALTER TABLE `userType` DISABLE KEYS */;
-INSERT INTO `userType` VALUES (2,'admin'),(1,'visitor');
-/*!40000 ALTER TABLE `userType` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Temporary view structure for view `v_elementdetails`
@@ -742,16 +563,6 @@ CREATE TABLE `visit` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `visit`
---
-
-LOCK TABLES `visit` WRITE;
-/*!40000 ALTER TABLE `visit` DISABLE KEYS */;
-INSERT INTO `visit` VALUES (1,'2016-03-09 06:51:25','2016-03-09',1,1),(2,'2016-03-09 06:53:15','2016-03-09',33,1),(3,'2016-03-09 06:53:43','2016-03-08',33,1),(4,'2016-03-09 18:50:32','2016-03-09',33,2),(5,'2016-03-09 18:53:41','2016-03-09',33,3),(6,'2016-03-10 05:16:00','2016-03-10',33,3),(7,'2016-03-10 18:47:56','2016-03-10',33,2),(8,'2016-03-14 21:28:35','2016-03-14',33,1),(9,'2016-03-14 21:44:53','2016-03-14',31,1),(10,'2016-03-14 21:47:11','2016-03-14',37,1),(11,'2016-03-14 21:53:00','2016-03-14',37,2),(12,'2016-03-14 22:35:25','2016-03-14',36,1),(13,'2016-03-14 22:45:11','2016-03-14',34,1),(14,'2016-03-15 02:25:40','2016-03-14',35,4);
-/*!40000 ALTER TABLE `visit` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `visitDuration`
 --
 
@@ -765,16 +576,6 @@ CREATE TABLE `visitDuration` (
   `duration` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `visitDuration`
---
-
-LOCK TABLES `visitDuration` WRITE;
-/*!40000 ALTER TABLE `visitDuration` DISABLE KEYS */;
-INSERT INTO `visitDuration` VALUES (5,'2016-03-10 03:31:10','2016-03-10 04:47:02',4552),(6,'2016-03-10 05:24:19','2016-03-10 05:27:33',194),(14,'2016-03-15 02:25:40','2016-03-15 02:27:23',103);
-/*!40000 ALTER TABLE `visitDuration` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Dumping routines for database 'muse_dev'
@@ -1950,4 +1751,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-15  0:51:02
+-- Dump completed on 2016-03-15  0:51:04

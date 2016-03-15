@@ -110,12 +110,10 @@ function genSqlString(queryType, queryVal){
       });
 
     });*/
-  app.post('/exhibits', function(req, res){
+  app.post('/index_partial', function(req, res){
       res.render('index_partial');
     });
-  app.post('/pieces', function(req, res){
-      res.render('pieces');
-    });
+
     app.post('/exec_sp',function(req,res){
       // this is a general call that will execute any sp with parameters in the form:
       /*  

@@ -27,8 +27,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Important Exports
-var exports = module.exports = {};
-exports.loggedIn = false;
+var loggedIn = false;
 
 // Routes
 var prevID = null;
@@ -44,7 +43,12 @@ var elementCode = null;
     // });
   //  INSECURE LOGIN/SIGNUP  //
     app.get('/:var(|login)?', function(req, res){
-      res.render('login_default', { title: 'Log In'});
+      if(loggedIn){
+        res.redirect('/index');
+      }
+      else{
+         res.render('login_default', { title: 'Log In'});
+      }
     });
 
     app.post('/login', function(req,res){
@@ -111,7 +115,12 @@ var elementCode = null;
     });
 
     app.get('/signup', function(req, res){
-      res.render('signup_default', { title: 'Sign Up'});
+         if(loggedIn){
+            res.redirect('/index');
+          }
+          else{
+            res.render('signup_default', { title: 'Sign Up'});
+         }
     });
 
     app.post('/signup', function(req,res){
@@ -122,7 +131,7 @@ var elementCode = null;
           //PW hash failed
         }
         else{
-          conn.query('CALL userCreate("'+req.body.email+'","'+hash+'",'+1+','+1+',"'+req.body.fName+'","'+req.body.lName+'",'+1+','+1+', @o1, @o2); SELECT @o1, @o2', function(err, results) {
+          conn.query('CALL userCreate("'+req.body.email+'","'+hash+'",'+1+','+1+',"'+req.body.fName+'","'+req.body.lName+'",'+1+','+1+', @o1, @o2, @o3); SELECT @o1, @o2, @o3', function(err, results) {
             if (err){
               console.log(err);
               //error occured connecting to DB
@@ -135,6 +144,7 @@ var elementCode = null;
               }
               else{
               loggedIn = true;
+              userId = results[1][0]['@o3'];
               res.send(JSON.stringify({"Success": true, "ErrType": null, "Message": "Create User Successful"}));
               }
             }
@@ -146,34 +156,50 @@ var elementCode = null;
 
   //  STARTING PAGE  //
     app.get('/index', function(req, res){
-      res.render('index', { title: 'Muse' });     
+      if(!loggedIn){
+        res.redirect('/login');
+      }
+      else{
+         res.render('index', { title: 'Muse' });     
+      }
     });
-    // app.get('/artInfo', function(req, res){
-    //    res.render('artInfo', { title: 'Art Info'});
-    // });
-
   //  PRE VISIT  //
       app.get('/selectMuseum', function(req, res){
-        conn.query(factory.sqlGen(0).sqlStr, function (err, results) {
-          //console.log(results);
-          if (err) {
-            console.log(err)
-          } else {
-            res.render('selectMuseum', { 
-              title: 'Select Museum',
-              data: results
-            });
-          }
-        });
+        if(!loggedIn){
+          res.redirect('/login');
+        }
+        else{
+          conn.query(factory.sqlGen(0).sqlStr, function (err, results) {
+            //console.log(results);
+            if (err) {
+              console.log(err)
+            } else {
+              res.render('selectMuseum', { 
+                title: 'Select Museum',
+                data: results
+              });
+            }
+          });
+        }
       });
 
       app.get('/favourites', function(req, res){
+        if(!loggedIn){
+        res.redirect('/login');
+        }
+        else{
         res.render('favourites', { title: 'Favourites'});
-      })
+        }
+      });
 
       //  DURING VISIT //
       app.get('/checkIn', function(req, res){
+        if(!loggedIn){
+          res.redirect('/login');
+        }
+        else{
         res.render('checkIn', {title:'Check In'});
+        }
       });
       app.post('/checkIn', function(req, res){
 
@@ -191,136 +217,68 @@ var elementCode = null;
             }
           }
         });
-        
-        /* Lindsay's Old Code
-        conn.query('CALL getElementDataFromCode('+req.body.code+',@o1, @o2, @o3,@o4,@o5,@o6,@o7); SELECT @o1, @o2, @o3,@o4,@o5,@o6,@o7', function(err, results) {
-          if (err){
-            console.log(err);
-            //error occured connecting to DB
-          }
-          else{
-            if(results[1][0]['@o1']==-1){
-              console.log("Invalid Code");
-              //Artwork doesn't exist
-            }
-            else{
-              res.send(true);
-            }
-          }
-        });
-        */
       });
 
 
       app.get('/tap', function(req, res){
+        if(!loggedIn){
+          res.redirect('/login');
+        }
+        else{
         res.render('tap', { title: 'tap'});
+        }
       });
 
 
 
       app.get('/info/', function (req, res) {
         // needed to replace wuth a url paramter, because the javascripts were not loading
-        elementCode = req.query.id;
-        var sqlParams = {"elementCode":elementCode};
-        conn.query(factory.sqlGen(2,sqlParams).sqlStr, function (err,results) {
-          if (err) {
-            console.log(err);
-          } else {
-            //console.log(results);
-            if (results.length == 0) {
-              console.log("Invalid Code");
-              res.render('info', { title : 'Artwork not found', data : {
-                elementName : 'Artwork not found',
-                artist : null,
-                year : null,
-                description : null, 
-                imageLink : null}
-              });
+        if(!loggedIn){
+          res.redirect('/login');
+        }
+        else{
+          elementCode = req.query.id;
+          var sqlParams = {"elementCode":elementCode};
+          conn.query(factory.sqlGen(2,sqlParams).sqlStr, function (err,results) {
+            if (err) {
+              console.log(err);
             } else {
-              var now = moment.utc();
-              if(prevID!==null){
-                //update previous checkin with new timestamp
-              }
-              //new checkin
-              prevID = elementCode;
-              //console.log(results[0]);
-              res.render('info', { title : results[0].elementName, data : results[0] });
-              // checkins interaction 
-              var checkinParams = {"interactionTypeId":1, "timestamp":null};
-              conn.query( factory.sqlGen(3,checkinParams).sqlStr, function (err,results) {
-                if (err) {
-                  console.log(err);   
+              //console.log(results);
+              if (results.length == 0) {
+                console.log("Invalid Code");
+                res.render('info', { title : 'Artwork not found', data : {
+                  elementName : 'Artwork not found',
+                  artist : null,
+                  year : null,
+                  description : null, 
+                  imageLink : null}
+                });
+              } else {
+                var now = moment.utc();
+                if(prevID!==null){
+                  //update previous checkin with new timestamp
                 }
-              });
-            }
-          }
-        });
-        
-        /* Lindsay's Old Code
-        conn.query('CALL getElementDataFromCode('+req.params.id+',@o1, @o2, @o3,@o4,@o5,@o6,@o7); SELECT @o1, @o2, @o3,@o4,@o5,@o6,@o7', function(err, results) {
-          if (err){
-            console.log(err);
-            //error occured connecting to DB
-          }
-          else{
-            if(results[1][0]['@o1']==-1){
-              console.log("Invalid Code");
-              //Artwork doesn't exist
-            }
-            else{
-              var now = moment.utc();
-              if(prevID!==null){
-                //update previous checkin with new timestamp
+                //new checkin
+                prevID = elementCode;
+                //console.log(results[0]);
+                res.render('info', { title : results[0].elementName, data : results[0] });
+                // checkins interaction 
+                var checkinParams = {"interactionTypeId":1, "timestamp":null};
+                conn.query( factory.sqlGen(3,checkinParams).sqlStr, function (err,results) {
+                  if (err) {
+                    console.log(err);   
+                  }
+                });
               }
-               //new checkin
-
-              prevID = req.params.id;
-
-              res.render('info', { title: results[1][0]['@o2'], data: {
-                "artist": results[1][0]['@o3'],
-                "year": results[1][0]['@o4'],
-                "description": results[1][0]['@o5'], //Empty, unknown cause
-                "type": results[1][0]['@o6'],
-                "imgRef": results[1][0]['@o7']
-                }
-              });
             }
-          }
-        });
-        */
+          });
+        }
       });
 
 
       app.post('/likefav', function(req, res){
         //update likes/favourites on page change
       });
-
-
-      //app.get('/artInfo/:id', function(req, res){
-        //res.render('artInfo', {title: 'Art Info', data: data, imgref: imgref });
-      //});
-    // app.post('/partial_artInfo0', function(req, res){
-    //   //console.log(req.body.test);
-    //   // test query - to sanity check it connects to the right db
-    //   conn.query('SELECT ? FROM users LIMIT 1', [req.body.test], function(err, results) {
-    //     if (err){
-    //       res.send("<html><body><p>Error Occured - Please Try Again</p></body></html>")
-    //     }
-    //     else{
-    //       console.log(results[0]);
-    //       res.render('partial_artInfo0', { title: 'Art Info', imgref: '/images/cat1.jpg', data: results });
-    //     }
-    //   });
-
-    //   // res.render('partial_artInfo0', { title: 'Art Info', imgref: '/images/cat1.jpg' });
-    //   });
-
-    //  FB POST  //
-      // app.post('/updateFB', function(req, res){
-      //   //SQL -check if user already exists, if not, add user
-      //   //req.body.name/gender/birthday
-      //   console.log(req.body.name);
-      // });
 
       app.post('/exec_query', function (req, res) {
         conn.query(factory.sqlGen(req.body.qry, req.body.params).sqlStr, function (err, results) {
@@ -340,13 +298,6 @@ var elementCode = null;
           }
         });
       });
-
-
-// Run Server
-app.listen(3000, function(){
-  console.log("Listening on 3000");
-});
-
 
 //  SQL Builder Functions  //
 function Factory () {
@@ -436,6 +387,9 @@ function testRun () {
   });
 }
 
-//testRun();
+// Run Server
+app.listen(3000, function(){
+  console.log("Listening on 3000");
+});
 
 
