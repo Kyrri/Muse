@@ -14,7 +14,7 @@ function drawChart(column){
     });
    data.addRows(totalrows);
     var options = {
-      title: 'Element ' + columnName,
+      title: columnName,
       curveType: 'function',
       legend: { position: 'bottom' },
       colors: ['#6baf8f']
@@ -107,7 +107,7 @@ $(document).ready(function(){
           nextDrill = 'Exhibit';
           break;
         case 2:
-          nextDrill = 'Art Elements'
+          nextDrill = 'Elements';
           break;
         default:
           return;
