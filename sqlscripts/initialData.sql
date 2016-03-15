@@ -1,3 +1,20 @@
+/* Data initialization scripting to do list
+	- need to figure out how to script / dump constant data (i.e., interactionType, loginType, gender, ageRange)
+
+Static data:
+	- 1 Museum
+		- 3-5 Exhibits
+			- 7-10 Elements per exhbit
+				- 1 code per element
+				- 3-5 tags per element
+
+	- 7-10 Different artists 
+	- 2-3 Differnt Tag Types
+		- 7-10 Different Tags
+
+	- 3-5 Samples Users
+*/
+
 /* Add museums firts */
 INSERT INTO `muse_dev`.`museum` (`museumName`) VALUES ('Interwebs');
 
