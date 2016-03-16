@@ -41,7 +41,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `gender` WRITE;
 /*!40000 ALTER TABLE `gender` DISABLE KEYS */;
-INSERT INTO `gender` VALUES (2,'female'),(1,'male'),(3,'N/A');
+INSERT INTO `gender` VALUES (2,'Female'),(1,'Male'),(3,'N/A');
 /*!40000 ALTER TABLE `gender` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -5,61 +5,70 @@
 		input(type='text', class='datePicker', id='date_1')
 		p to
 		input(type='text', class='datePicker', id='date_2')
-
-	div(class='btn-group')
-		div(class='dropdown btn-group')
-			button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='time') Time
-			ul(class='dropdown-menu time')
-				li
-					a(href='#') Days of the Week
-				li
-					a(href='#') Months
-		div(class='dropdown btn-group')
-			button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='gender') Gender
-			ul(class='dropdown-menu gender')
-				li
-					a(href='#') Female
-				li
-					a(href='#') Male
-				li
-					a(href='#') Declined Answer
-		div(class='dropdown btn-group')
-			button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='age') Age Range
-			ul(class='dropdown-menu age')
-				li
-					a(href='#') <18
-				li
-					a(href='#') 18-20
-				li
-					a(href='#') 20-25
-				li
-					a(href='#') 25-30
-				li
-					a(href='#') 30-40
-				li
-					a(href='#') 40-50
-				li
-					a(href='#') 50-60
-				li
-					a(href='#') 60-70
-				li
-					a(href='#') >70
-
-.searchBar
-	input(id='searchBar', placeholder='Search here')
-
-.exhibitTable
-	table(id='dynamicElementsTable')
-		thead
-			tr
-				td Exhibit Name
-				td(class='metrics') Views
-				td(class='metrics') Holding Power
-		tbody
-			each exhibit in exhibits
-				tr
-					td(id='exhibitTitle') #{exhibit.exhibit}
-					td 40
-					td 36
-
-div#myPieChart
+	.alignBarRight
+		.searchBar
+			input(id='searchBar', placeholder='Search Exhibits')
+.alignFilters
+	.horizAlign
+		.left-align
+			.titleHead
+				h4 Filters
+			.filters
+				div(class='.btn-group-vertical')
+					div(class='dropdown .btn-group-verticalp')
+						button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='time') Time
+						ul(class='dropdown-menu time')
+							li
+								a(href='#') Days of the Week
+							li
+								a(href='#') Months
+					div(class='dropdown .btn-group-vertical')
+						button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='gender') Gender
+						ul(class='dropdown-menu gender')
+							li
+								a(href='#') Female
+							li
+								a(href='#') Male
+							li
+								a(href='#') Declined Answer
+					div(class='dropdown .btn-group-vertical')
+						button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='age') Age Range
+						ul(class='dropdown-menu age')
+							li
+								a(href='#') <18
+							li
+								a(href='#') 18-20
+							li
+								a(href='#') 20-25
+							li
+								a(href='#') 25-30
+							li
+								a(href='#') 30-40
+							li
+								a(href='#') 40-50
+							li
+								a(href='#') 50-60
+							li
+								a(href='#') 60-70
+							li
+								a(href='#') >70
+	.rightAlign
+		.titleHead
+			h4 Exhibit Metrics
+		.exhibitTable
+			table(id='dynamicElementsTable')
+				thead
+					tr
+						td Exhibit Name
+						td(class='metrics') Views
+						td(class='metrics') Holding Power
+				tbody
+					each exhibit in exhibits
+						tr
+							td(id='exhibitTitle') #{exhibit.exhibit}
+							td 40
+							td 36
+.chartContainer
+	.titleHead
+		h4 Exhibit Metrics
+	div#myPieChart

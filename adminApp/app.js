@@ -66,10 +66,16 @@ var museumId = null;
         res.status(412);
       } else {
         var getExhibitsStr = squel.select().from("v_exhibits")
-                                  .where("museumId="+museumId).where("active=1").toString() + ";";
+                                  .where("museumId="+museumId).where("active=1").toString() + "; ";
         console.log('Generate QueryStr: ' + getExhibitsStr);
+
+        var getAgeRangeStr = squel.select().from("ageRange").toString() + "; ";
+        console.log('Generate QueryStr: ' + getAgeRangeStr);
+
+        var getGenderStr = squel.select().from("gender").toString() + "; ";
+        console.log('Generate QueryStr: ' + getGenderStr);
         
-        var sqlStr = getExhibitsStr;
+        var sqlStr = getExhibitsStr + getAgeRangeStr + getGenderStr;
         
         conn.query(sqlStr, function (err, results) {
           if (err) {
@@ -78,7 +84,9 @@ var museumId = null;
           } else {
             console.log('Success: ' + sqlStr);
             res.render('index_partial', {
-              exhibits : results
+              exhibits : results[0], 
+              ageRange : results[1],
+              gender : results[2]
             });
           }
         });
