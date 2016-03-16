@@ -99,6 +99,8 @@ var museumId = null;
       // stuff that will need to be sent for all data types
       var getAgeRangeStr = squel.select().from("ageRange").toString() + "; ";
       var getGenderStr = squel.select().from("gender").toString() + "; ";
+      var fromDate = '2016-03-01'; // hard code for now, will need to be passed as a parameter
+      var toDate = '2016-04-01'; // hard code for now, will need to be passed as a parameter
 
       if (dataType == "exhibit") {
         console.log("Processing exhibit analytics ...");
@@ -106,9 +108,6 @@ var museumId = null;
         if ( req.body.museumId != undefined ) {
           museumId = req.body.museumId;
         } 
-
-        var fromDate = '2016-03-01'; // hard code for now, will need to be passed as a parameter
-        var toDate = '2016-04-01'; // hard code for now, will need to be passed as a parameter
        
         var views = squel.select().from("v_activeelements", "e")
                                               .field("e.exhibitId")
@@ -116,6 +115,7 @@ var museumId = null;
                                               .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=1")
                                               .where("i.tstamp>='"+fromDate+"'")
                                               .where("i.tstamp<='"+toDate+"'")
+                                              .where("museumId="+museumId)
                                               .group("e.exhibitId")
                                               .toString();
 
@@ -125,6 +125,7 @@ var museumId = null;
                                               .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=2")
                                               .where("i.tstamp>='"+fromDate+"'")
                                               .where("i.tstamp<='"+toDate+"'")
+                                              .where("museumId="+museumId)
                                               .group("e.exhibitId")
                                               .toString();
 
@@ -134,6 +135,7 @@ var museumId = null;
                                               .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=3")
                                               .where("i.tstamp>='"+fromDate+"'")
                                               .where("i.tstamp<='"+toDate+"'")
+                                              .where("museumId="+museumId)
                                               .group("e.exhibitId")
                                               .toString();
 
@@ -147,19 +149,13 @@ var museumId = null;
                                       .left_join("("+views+")","v","v.exhibitId=x.exhibitId")
                                       .left_join("("+likes+")","l","l.exhibitId=x.exhibitId")
                                       .left_join("("+favs+")","f","f.exhibitId=x.exhibitId")
+                                      .where("museumId="+museumId)
                                       .group("x.museumId")
                                       .group ("x.exhibitId")
                                       .group("x.exhibitName")
-                                      .toString();
-
-        var getExhibitsStr = squel.select().from("v_activeexhibits")
-                                            .field("museumId")
-                                            .field("exhibitId")
-                                            .field("exhibitName")
-                                            .distinct()
-                                    .where("museumId="+museumId).toString() + ";";
+                                      .toString() + ";";
         
-        console.log('Generate QueryStr: ' + aggViews);
+        //console.log('Generate QueryStr: ' + aggViews);
         //console.log('Generate QueryStr: ' + getExhibitsStr);
 
         var sqlStr = getAgeRangeStr + getGenderStr + aggViews;
@@ -169,7 +165,7 @@ var museumId = null;
             console.log('Tried: ' + sqlStr);
             console.log(err);
           } else {
-            console.log('Success: ' + sqlStr);
+            //console.log('Success: ' + sqlStr);
             res.render('index_partial', {
               dataType : dataType,
               ageRange : results[0],
@@ -184,18 +180,74 @@ var museumId = null;
 
         var exhibitId = req.body.exhibitId;
 
-        var getElementStr = squel.select().from("v_elementviews").where("exhibitId="+exhibitId).toString() + ";";
-        console.log('Generate QueryStr: ' + getElementStr);
+        var views = squel.select().from("v_activeelements", "e")
+                                              .field("e.elementId")
+                                              .field("COUNT(i.interactionId)", "views")
+                                              .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=1")
+                                              .where("i.tstamp>='"+fromDate+"'")
+                                              .where("i.tstamp<='"+toDate+"'")
+                                              .where("e.exhibitId="+exhibitId)
+                                              .group("e.elementId")
+                                              .toString();
 
+        var likes = squel.select().from("v_activeelements", "e")
+                                              .field("e.elementId")
+                                              .field("COUNT(i.interactionId)", "likes")
+                                              .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=2")
+                                              .where("i.tstamp>='"+fromDate+"'")
+                                              .where("i.tstamp<='"+toDate+"'")
+                                              .where("e.exhibitId="+exhibitId)
+                                              .group("e.elementId")
+                                              .toString();
 
-        var sqlStr = getAgeRangeStr + getGenderStr + getElementStr;
+        var favs = squel.select().from("v_activeelements", "e")
+                                              .field("e.elementId")
+                                              .field("COUNT(i.interactionId)", "favs")
+                                              .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=3")
+                                              .where("i.tstamp>='"+fromDate+"'")
+                                              .where("i.tstamp<='"+toDate+"'")
+                                              .where("e.exhibitId="+exhibitId)
+                                              .group("e.elementId")
+                                              .toString();
+
+        var dur = squel.select().from("v_activeelements", "e")
+                                              .field("e.elementId")
+                                              .field("AVG(i.duration)", "dur")
+                                              .left_join("checkInDuration", "i", "i.elementId=e.elementId")
+                                              .where("i.endTime>='"+fromDate+"'")
+                                              .where("i.endTime<='"+toDate+"'")
+                                              .where("e.exhibitId="+exhibitId)
+                                              .group("e.elementId")
+                                              .toString();
+
+        var aggMetrics = squel.select().from("v_activeelements", "e")
+                                      .field("e.exhibitId")
+                                      .field("e.elementId")
+                                      .field("e.elementName")
+                                      .field("v.views", "views")
+                                      .field("l.likes", "likes")
+                                      .field("f.favs", "favourites")
+                                      .field("d.dur/e.utilTime", "holdingPwr")
+                                      .left_join("("+views+")","v","v.elementId=e.elementId")
+                                      .left_join("("+likes+")","l","l.elementId=e.elementId")
+                                      .left_join("("+favs+")","f","f.elementId=e.elementId")
+                                      .left_join("("+dur+")","d","d.elementId=e.elementId")
+                                      .where("e.exhibitId="+exhibitId)
+                                      .group("e.exhibitId")
+                                      .group ("e.elementId")
+                                      .group("e.elementName")
+                                      .toString() + ";";
+
+        //console.log('Generate QueryStr: ' + aggMetrics);
+
+        var sqlStr = getAgeRangeStr + getGenderStr + aggMetrics;
 
         conn.query(sqlStr, function (err, results) {
           if (err) {
             console.log('Tried: ' + sqlStr);
             console.log(err);
           } else {
-            console.log('Success: ' + sqlStr);
+            //console.log('Success: ' + sqlStr);
             res.render('index_partial', {
               dataType : dataType,
               ageRange : results[0],

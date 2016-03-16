@@ -707,7 +707,8 @@ SET character_set_client = utf8;
  1 AS `exhibitId`,
  1 AS `exhibitName`,
  1 AS `elementId`,
- 1 AS `elementName`*/;
+ 1 AS `elementName`,
+ 1 AS `utilTime`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1980,7 +1981,7 @@ USE `muse_dev`;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_activeelements` AS select `x`.`museumId` AS `museumId`,`m`.`museumName` AS `museumName`,`e`.`exhibitId` AS `exhibitId`,`x`.`exhibitName` AS `exhibitName`,`e`.`elementId` AS `elementId`,`e`.`title` AS `elementName` from ((`element` `e` left join `exhibit` `x` on(((`x`.`exhibitId` = `e`.`exhibitId`) and (`x`.`active` = 1)))) left join `museum` `m` on(((`m`.`museumId` = `x`.`museumId`) and (`m`.`active` = 1)))) where (`e`.`active` = 1) */;
+/*!50001 VIEW `v_activeelements` AS select `x`.`museumId` AS `museumId`,`m`.`museumName` AS `museumName`,`e`.`exhibitId` AS `exhibitId`,`x`.`exhibitName` AS `exhibitName`,`e`.`elementId` AS `elementId`,`e`.`title` AS `elementName`,`e`.`utilTime` AS `utilTime` from ((`element` `e` left join `exhibit` `x` on(((`x`.`exhibitId` = `e`.`exhibitId`) and (`x`.`active` = 1)))) left join `museum` `m` on(((`m`.`museumId` = `x`.`museumId`) and (`m`.`active` = 1)))) where (`e`.`active` = 1) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -2156,4 +2157,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-16 17:13:36
+-- Dump completed on 2016-03-16 18:30:57

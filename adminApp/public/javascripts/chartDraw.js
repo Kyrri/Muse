@@ -109,7 +109,7 @@ $(document).ready(function(){
       break;
     }
 
-    console.log(params);
+    //console.log(params);
     $.ajax('/index_partial',{
       type: "POST",
       contentType : 'application/json',

@@ -60,13 +60,18 @@
 						tr
 							td Exhibit Name
 							td(class='metrics') Views
-							td(class='metrics') Holding Power
+							td(class='metrics') Likes
+							td(class='metrics') Favourites
+							td(class='metrics') Holding Power Index
+
 					tbody
 						each element in elements
 							tr
 								td(id='exhibitTitle') #{element.elementName}
-								td 23
-								td 45
+								td #{element.views}
+								td #{element.likes}
+								td #{element.favourites}
+								td #{element.holdingPwr}
 
 .chartContainer
 	.titleHead
