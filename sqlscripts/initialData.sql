@@ -30,20 +30,27 @@ INSERT INTO `muse_dev`.`museum` (`museumId`, `active`, `museumName`) VALUES ('1'
 
 /* Add exhibits next */
 INSERT INTO `muse_dev`.`exhibit` (`exhibitId`, `active`, `exhibitName`, `museumId`) VALUES ('1', '1', 'Vincent van Gogh', '1');
-INSERT INTO `muse_dev`.`exhibit` (`exhibitId`, `active`, `exhibitName`, `museumId`) VALUES ('2', '1', 'Traditional Dress Around The World', '1');
-INSERT INTO `muse_dev`.`exhibit` (`exhibitId`, `active`, `exhibitName`, `museumId`) VALUES ('3', '1', 'Wildlife', '1');
-INSERT INTO `muse_dev`.`exhibit` (`exhibitId`, `active`, `exhibitName`, `museumId`) VALUES ('4', '1', 'Food from Around the World', '1');
+INSERT INTO `muse_dev`.`exhibit` (`exhibitId`, `active`, `exhibitName`, `museumId`) VALUES ('2', '1', 'Wassily Kandinsky', '1');
+INSERT INTO `muse_dev`.`exhibit` (`exhibitId`, `active`, `exhibitName`, `museumId`) VALUES ('3', '1', 'Portraits', '1');
+INSERT INTO `muse_dev`.`exhibit` (`exhibitId`, `active`, `exhibitName`, `museumId`) VALUES ('4', '1', 'Landscapes', '1');
 
 /* Add artists next */
-INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('1', 'Japan', '1');
-INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('2', 'Italy', '1');
-INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('3', 'India', '1');
-INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('4', 'Korea', '1');
-INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('5', 'France', '1');
-INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('6', 'China', '1');
-INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('7', 'Sweden', '1');
+INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('1', 'Wassily Kandinsky', '1');
+INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('2', 'Leonardo da Vinci', '1');
+INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('3', 'James Abbott McNeill Whistler', '1');
+INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('4', 'Rembrandt', '1');
+INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('5', 'Grant Wood', '1');
+INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('6', 'Johannes Vermeer', '1');
+INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('7', 'Jan van Eyck', '1');
 INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('8', 'Vincent van Gogh', '1');
-INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('9', 'Canada', '1');
+INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('9', 'John Singer Sargent', '1');
+INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('10', 'El Greco', '1');
+INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('11', 'Albert Bierstadt', '1');
+INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('12', 'Claude Monet', '1');
+INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('13', 'Carel Fabritius', '1');
+INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('14', 'David Hockney', '1');
+INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('15', 'Claude Lorrain', '1');
+INSERT INTO `muse_dev`.`artist` (`artistId`, `artist`, `active`) VALUES ('16', 'Alfred Sisley', '1');
 
 /* Add an element */
 /*Exhibit 1*/
@@ -59,32 +66,32 @@ INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `p
 INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`, `utilTime`) VALUES ('10', '1', 'The Red Vineyard', '8', '1888', 'The Red Vineyards near Arles is an oil painting by the Dutch painter Vincent van Gogh, executed on a privately primed Toile de 30 piece of burlap in early November 1888.', 'https://upload.wikimedia.org/wikipedia/commons/3/35/Red_vineyards.jpg', '1', '');
 
 /*Exhibit 2*/
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`, `utilTime`) VALUES ('11', '1', 'Kimono', '1', '1850', 'Traditional Japanese clothing.', 'http://img03.deviantart.net/9410/i/2012/033/2/0/japanese_kimono_1_by_nicojay-d4oe0ij.jpg', '2', '');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('12', '1', 'Traditional Dress of Italy', '2', '1720', 'Traditional Italian dress.', 'https://s-media-cache-ak0.pinimg.com/736x/f8/1f/75/f81f754ef6bb1139cd0daa4e7d042972.jpg', '2');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('13', '1', 'Sari', '3', '1900', 'Traditional Indian dress.', 'http://img5a.flixcart.com/image/sari/d/y/c/2440-a-chirag-sarees-400x400-imae4f9rbkzdqy2h.jpeg', '2');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('14', '1', 'Hanbok', '4', '1470', 'Traditional Korean dress.', 'http://www.freeridebikepark.com/wp-content/uploads/2015/08/Korean-Traditional-Dress-fashion.jpg', '2');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('15', '1', 'Traditional French Dress', '5', '1853', 'Traditional French dress.', 'http://images.nationalgeographic.com/wpf/media-live/photos/000/123/cache/fashion-france-dress_12353_600x450.jpg', '2');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('16', '1', 'Hanfu', '6', '1200', 'Traditional Chinese dress.', 'https://upload.wikimedia.org/wikipedia/commons/5/53/TraditionalChineseWeddingDress.jpg', '2');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('17', '1', 'Traditional Swedish Dress', '7', '1675', 'Traditional Swedish dress.', 'http://www.scandinavianstuff.com/shop/11328/art28/h5162/11625162-origpic-db888a.jpg', '2');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('18', '1', 'Traditional Canadian Dress', '9', '1920', 'Traditional Canadian dress.', 'http://artsalive.ca/collections/costumes/images/O/0203-5-1-AP.jpg', '2');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`, `utilTime`) VALUES ('11', '1', 'Composition VII', '1', '1913', 'Commonly cited as the pinnacle of Kandinskys pre-World War I achievement, Composition VII shows the artists rejection of pictorial representation through a swirling hurricane of colors and shapes. ', 'http://www.wassilykandinsky.net/images/works/36.jpg', '2', '');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('12', '1', 'Der Blaue Berg', '1', '1908', 'n this work, the influence of the Fauves on Kandinskys color palette is apparent as he distorted colors and moved away from the natural world. He presented a bright blue mountain, framed by a red and yellow tree on either side.', 'http://annex.guggenheim.org/collections/media/902/41.505_ph_web.jpg', '2');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('13', '1', 'Composition IV', '1', '1911', ' Hidden within the bright swaths of color and the clear black lines of Composition IV, Kandinsky portrayed several Cossacks with lances, as well as boats, reclining figures, and a castle on a hilltop. ', 'http://totallyhistory.com/wp-content/uploads/2012/12/composition-iv-1911.jpg', '2');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('14', '1', 'Composition VIII', '1', '1923', 'The rational, geometric order of Composition VIII is a polar opposite of the operatic composition of Composition VII (1913). Painted while he taught at the Bauhaus, this work illustrates how Kandinsky synthesized elements from Suprematism, Constructivism, and the schools own ethos. ', 'http://annex.guggenheim.org/collections/media/902/37.262_ph_web.jpg', '2');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('15', '1', 'Moscow I', '1', '1908', 'At first the move to Moscow in 1914 initiated a period of depression and Kandinsky hardly even painted at all his first year back. When he picked up his paintbrush again in 1916, he expressed his desire to paint a portrait of Moscow in a letter to his former companion, Munter.', 'http://media.guggenheim.org/content/arts_curriculum/masters/kandinsky_L4_z.jpg', '2');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('16', '1', 'Several Circles ', '1', '1926', ' Kandinsky painted this work in his sixtieth year and it demonstrates his lifelong search for the ideal form of spiritual expression in art. Created as part of his experimentation with a linear style of painting, this work shows his interest in the form of the circle. "The circle," claimed Kandinsky, "is the synthesis of the greatest oppositions. ', 'http://annex.guggenheim.org/collections/media/902/41.283_ph_web.jpg', '2');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('17', '1', 'Composition X', '1', '1939', 'Influenced by the flowing biomorphic forms of Surrealism, Kandinsky later incorporated organic shapes back into his pictorial vocabulary. Executed in France, this monumental painting relies upon a black background to heighten the visual impact of the brightly colored undulating forms in the foreground. ', 'https://upload.wikimedia.org/wikipedia/commons/d/d4/Wassily_Kandinsky,_1939_-_Composition_X.png', '2');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('18', '1', 'Der Blaue Reiter', '1', '1903', ' This breakthrough work is a deceptively simple image - a lone rider racing across a landscape - yet it represented a decisive moment in Kandinskys developing style. In this painting, he demonstrated a clear stylistic link to the work of the Impressionists, like Claude Monet, particularly evident in the contrasts of light and dark on the sun-dappled hillside. ', 'http://www.moma.org/german_expressionism/images/styles/blaue_reiter/thumbnails/01.jpg', '2');
 
 /*Exhibit 3*/
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('19', '1', 'Bear', '1', '2000', 'Bears in the wild.', 'https://ohsinsider.com/wp-content/uploads/2016/03/Wildlife-Photos14.jpg', '3');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('20', '1', 'Lion', '2', '2012', 'Wild lion.', 'http://envirocivil.com/wp-content/uploads/2012/07/asdasd.jpg', '3');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('21', '1', 'Koala', '3', '1995', 'A group of koalas.', 'http://webneel.com/daily/sites/default/files/images/daily/09-2013/19-wildlife-photography.jpg', '3');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('22', '1', 'Fox', '4', '2015', 'Rawr.', 'http://www.petsfoto.com/wp-content/uploads/2010/12/Wildlife-Photos4.jpg', '3');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('23', '1', 'Sloth', '5', '2002', 'Sloths.', 'http://assets.worldwildlife.org/photos/6526/images/hero_small/sloth_%28c%29_Jorge_Salas_International_Expeditions.JPG?1394634201', '3');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('24', '1', 'Coyote', '6', '2000', 'A wild coyote.', 'http://www.worldanimalfoundation.net/i/Coyote1.jpg', '3');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('25', '1', 'Giraffe', '9', '2010', 'A wild giraffe.', 'https://cdn.idevie.com/wp-content/uploads/2013/03/wildlife_animals_wallpaper27.jpg', '3');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('19', '1', 'Mona Lisa', '2', '1503', 'The Mona Lisa is a half-length portrait of a woman by the Italian artist Leonardo da Vinci, which has been acclaimed as "the best known, the most visited, the most written about, the most sung about, the most parodied work of art in the world".', 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg', '3');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('20', '1', 'Whistlers Mother', '3', '1871', 'Arrangement in Grey and Black No.1, best known under its colloquial name Whistlers Mother, is a painting in oils on canvas created by the American-born painter James McNeill Whistler in 1871.', 'http://lh6.ggpht.com/tLRAUHjROVYb0eWrCoTg5-bIu7ATED7z3Uq_6OoR3mF0DlX5MOQEMv6ErgNM=s1200', '3');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('21', '1', 'The Night Watch', '4', '1642', 'Militia Company of District II under the Command of Captain Frans Banninck Cocq, also known as The Shooting Company of Frans Banning Cocq and Willem van Ruytenburch, but commonly referred to as The Night Watch (Dutch: De Nachtwacht), is a 1642 painting by Rembrandt van Rijn. ', 'http://lh3.ggpht.com/kyli_fpElvyJPO-SmYL6NE4h_5meEj_-3Q3gqzc-DJSkNnPLwl6BCuyllV5yWA=s1200', '3');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('22', '1', 'American Gothic', '5', '1930', 'American Gothic is a painting by Grant Wood in the collection of the Art Institute of Chicago. Woods inspiration came from what is now known as the American Gothic House, and his decision to paint the house along with the kind of people I fancied should live in that house." The painting shows a farmer standing beside a woman that has been interpreted to be either his wife or his daughter.', 'http://lh5.ggpht.com/Vw6D1hSkdwPxGarkGGMviDZflLBx7wH6skpde-2KLautW5vZkCEz1TPYXnM=s1200', '3');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('23', '1', 'Girl with a Pearl Earring', '6', '1665', 'Girl with a Pearl Earring is an oil painting by 17th-century Dutch painter Johannes Vermeer. It is a tronie of a girl with a headscarf and a pearl earring. ', 'https://upload.wikimedia.org/wikipedia/commons/d/d7/Meisje_met_de_parel.jpg', '3');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('24', '1', 'Arnolfini Portrait', '7', '1434', 'The Arnolfini Portrait is an oil painting on oak panel dated 1434 by the Early Netherlandish painter Jan van Eyck.', 'https://upload.wikimedia.org/wikipedia/commons/3/33/Van_Eyck_-_Arnolfini_Portrait.jpg', '3');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('25', '1', 'Portrait of Madame X', '9', '1883', 'Madame X or Portrait of Madame X is the informal title of a portrait painting by John Singer Sargent of a young socialite named Virginie Amélie Avegno Gautreau, wife of Pierre Gautreau.', 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Madame_X_%28Madame_Pierre_Gautreau%29%2C_John_Singer_Sargent%2C_1884_%28unfree_frame_crop%29.jpg', '3');
 
 /*Exhibit 4*/
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('26', '1', 'Sushi', '1', '2010', 'Sushi is a food preparation originating in Japan.', 'https://upload.wikimedia.org/wikipedia/commons/9/9c/2007feb-sushi-odaiba-manytypes.jpg', '4');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('27', '1', 'Spaghetti alle vongole', '2', '2016', 'Spaghetti with clams.', 'https://upload.wikimedia.org/wikipedia/commons/a/a1/Spaghetti_alle_vongole%2C_Cafe_a_Taglio%2C_St._Kilda.jpg', '4');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('28', '1', 'Mansha Tarkari', '3', '2010', 'Oriya mutton curry.', 'https://upload.wikimedia.org/wikipedia/commons/f/fe/Odia_Mutton_Curry_%28Mansha_Tarkari%29.jpg', '4');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('29', '1', 'Kongguksu', '4', '2000', 'A cold noodle dish with a broth made from ground soy beans.', 'https://upload.wikimedia.org/wikipedia/commons/b/b9/Korean_noodles-Kongguksu-01.jpg', '4');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('30', '1', 'Foie Gras', '5', '1990', 'Foie gras with mustard seeds and green onions in duck jus.', 'https://upload.wikimedia.org/wikipedia/commons/8/82/Foie_gras_en_cocotte.jpg', '4');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('31', '1', 'Chao fan ', '6', '2013', 'Chinese fried rice.', 'https://upload.wikimedia.org/wikipedia/commons/5/59/Chinese_fried_rice.jpg', '4');
-INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`, `utilTime`) VALUES ('32', '1', 'Pickled Herring', '7', '2011', 'Pickled herring, sour cream and chopped chives, potatoes and an egg half served at midsummer.', 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Midsummer_pickled_herring.jpg', '4', '0');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('26', '1', 'View of Toledo', '10', '1600', 'View of Toledo, is one of the two surviving landscapes painted by El Greco. The other, View and Plan of Toledo lies at Museo Del Greco, Toledo, Spain.', 'http://lh3.ggpht.com/RqXgLVgDATaim60OJJI7-vKnimiu9b2nnCFGiT8AGphvtEZZsbJphYXQdt_H=s1200', '4');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('27', '1', 'A Storm in the Rocky Mountains, Mt. Rosalie', '11', '1866', 'A Storm in the Rocky Mountains, Mt. Rosalie is an 1866 landscape oil painting by German-American painter Albert Bierstadt that was inspired by sketches created on an 1863 expedition.', 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Bierstadt_A_Storm_in_the_Rocky_Mountains,_Mt_Rosalie.jpg', '4');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('28', '1', 'Beach in Pouville', '12', '1882', 'Beach in Pourville is a painting by French artist Claude Monet. It was painted in 1882, one of a series of oil-on-canvas works made by Monet that year in the small seaside resort of Pourville-sur-Mer, near Dieppe in northern France.', 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Beach_at_Pourville.jpg', '4');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('29', '1', 'A View of Delft', '13', '1652', 'A View of Delft, with a Musical Instrument Sellers Stall is a 1652 painting by Carel Fabritius. It is an oil painting on canvas of 20.9 by 35.7 cm of a cityscape of Delft.', 'http://www.essentialvermeer.com/catalogue/images/intractv/voesmar_delft.jpg', '4');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('30', '1', 'Waterloo Bridge, Sunlight Effect', '14', '1903', 'Claude Monet, regarded as the leader of the Impressionist movement, was the most original and influential painter of the nineteenth century. He produced a variety of landscapes and outdoor scenes that explore the transitory effects of light and clear color under varying atmospheric conditions. This magnificent painting belongs to Monets later career, when he focused increasingly on a series of canvases devoted to a single motif. ', 'http://www.artic.edu/aic/collections/citi/images/standard/WebLarge/WebImg_000267/182302_3188052.jpg', '4');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('31', '1', 'A Bigger Grand Canyon ', '15', '1998', 'In 1982 David Hockney took a series of photographs of the Grand Canyon that he placed together to form a collage. Hockney returned to the Grand Canyon theme in 1986, producing a large-scale photo-collage of sixty photographs; and again in 1997, when he painted A composition for a bigger Grand Canyon.', 'http://nga.gov.au/hockney/big.jpg', '4');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`, `utilTime`) VALUES ('32', '1', 'Ascanius Shooting the Stag of Sylvia', '16', '1682', 'Landscape with Ascanius Shooting the Stag of Sylvia is an 1682 oil on canvas painting by Claude Lorrain, a painter of the style of Classicism. ', 'https://upload.wikimedia.org/wikipedia/commons/e/ee/Ascanius_Shooting_the_Stag_of_Sylvia_1682_Claude_Lorrain.jpg', '4', '0');
 
 /* Code Elements */
 INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(1,1000,null);
@@ -134,3 +141,60 @@ INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTy
 INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('12', 'Mining', '1', '1');
 INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('13', 'Clothing', '1', '1');
 INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('14', 'Service', '1', '1');
+
+/* Tagging Elements */
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('2', '11', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('2', '12', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('2', '13', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('2', '14', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('2', '15', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('2', '16', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('2', '17', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('2', '18', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '11', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '12', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '13', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '14', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '15', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '16', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '17', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '18', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '1', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '2', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '3', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '4', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '5', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '6', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '7', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '8', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('6', '1', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('6', '4', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('6', '6', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('7', '19', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('7', '20', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('7', '21', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('7', '22', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('7', '23', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('7', '24', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('7', '25', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '19', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '20', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('3', '21', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '22', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('1', '23', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '24', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '25', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '9', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '10', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('6', '26', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('6', '27', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('6', '28', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('6', '29', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('6', '30', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('6', '31', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '26', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '27', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '28', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '29', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '30', '1');
+INSERT INTO `muse_dev`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '31', '1');
