@@ -1,0 +1,17 @@
+extends layout
+	
+block headScripts
+	script(src='/javascripts/heatcanvas.js')
+	script(src='/javascripts/path.js')
+	link(rel='stylesheet', href='/stylesheets/index.css')
+	link(rel='stylesheet', href='/stylesheets/path.css')
+
+block mainContainer
+	div(class='mapContainer')
+		div(class='titleHeader')
+			h4 Holding Power Heatmap
+		img(id='hpMap', src="images/hpMap.png", class='heatMap')
+
+	div(class='mapContainer')
+		div(class='titleHeader')
+			h4 User Path Heatmap

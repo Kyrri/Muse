@@ -2,6 +2,9 @@ var express = require('express');
 var app = require("express")();
 //var routes = require('./routes');
 var bodyParser = require('body-parser')
+var heatmap = require('heatmap');
+var fs = require('fs');
+var canvas = require('canvas');
 // MySQL connection
 var mysql = require('mysql');
 var conn = mysql.createConnection({
@@ -65,8 +68,34 @@ function genSqlString(queryType, queryVal){
       //   });
       res.render('index', { title: 'Muse Admin'});
     });
-    app.get('/tableTest', function(req, res){
-      res.render('tableTest', {title:'Table Test'});
+    app.get('/path', function(req, res){
+      var heat = heatmap(500, 500, { radius : 20 });
+      for (var i = 0; i < 200; i++) {
+
+          var x = 400;
+          var y = 20
+
+          heat.addPoint(x, y);
+      }
+        for (var i = 0; i < 10; i++) {
+
+          var x = 200;
+          var y = 20
+
+          heat.addPoint(x, y);
+      }
+        for (var i = 0; i < 5; i++) {
+
+          var x = 215;
+          var y = 20
+
+          heat.addPoint(x, y);
+      }
+      heat.draw();
+      fs.writeFileSync('public/images/hpMap.png', heat.canvas.toBuffer());
+      res.render('path', {
+        title:'Path Analytics'
+      });
     });
 
     //  ENTRY PAGE //
