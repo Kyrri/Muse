@@ -16,6 +16,7 @@
         "password-hash-and-salt": ">= 0.0.1",
         "heatmap": ">= 0.0.1",
         "fs": ">= 0.0.1",
-        "canvas": ">= 0.0.1"
+        "canvas": ">= 0.0.1",
+        "squel" : "*"
   }
 }

@@ -14,6 +14,7 @@ var conn = mysql.createConnection({
   database: 'muse_dev',
   multipleStatements: true
 });
+var squel = require('squel');
 
 // Configuration
 app.set('views', __dirname + '/views');
@@ -28,45 +29,31 @@ app.use(bodyParser.urlencoded({
 var exports = module.exports = {};
 exports.loggedIn = false;
 
-// SQL Types
-/* DEPRECATED
-function genSqlString(queryType, queryVal){
-  var sqlStr = '';
-  switch(queryType) {
-    case 0:
-      sqlStr = "SELECT * FROM elementTag WHERE elementTagTypeId=f_getElementTagTypeId('" + queryVal + "');"; 
-      break;
-    case 1:
-      sqlStr = "SELECT * FROM exhibit WHERE museumId=f_getMuseumId('" + queryVal + "');"; 
-      break;
-    default:
-      sqlStr = 'SELECT * FROM ' + queryVal + ';';
-      break;
-  }
-
-  return sqlStr
-}*/
+// Global varibales 
+var userId = 1; // hardcoded for now, this is the userId of the admin user
 
 // Routes
    
   //  STARTING PAGE  //
     app.get('/:var(|index)?', function(req, res){
-    	 // conn.query('CALL getElementDataFromCode('+req.body.code+',@o1, @o2, @o3,@o4,@o5,@o6,@o7); SELECT @o1, @o2, @o3,@o4,@o5,@o6,@o7', function(err, results) {
-      //     if (err){
-      //       console.log(err);
-      //       //error occured connecting to DB
-      //     }
-      //     else{
-      //       if(results[1][0]['@o1']==-1){
-      //         console.log("Invalid Code");
-      //         //Artwork doesn't exist
-      //       }
-      //       else{
-      //         res.send(true);
-      //       }
-      //     }
-      //   });
-      res.render('index', { title: 'Muse Admin'});
+       var getValidMuseumsStr = squel.select().from("v_museumadminpermissions")
+                                      .where("userId="+userId).toString() + ";";
+        console.log('Generate QueryStr: ' + getValidMuseumsStr);
+
+        var sqlStr = getValidMuseumsStr
+
+        conn.query(sqlStr, function (err, results) {
+          if (err) {
+            console.log('Tried: ' + sqlStr);
+            console.log(err);
+          } else {
+            console.log('Success: ' + sqlStr);
+            res.render('index', { 
+              title: 'Muse Admin',
+              museums : results
+            });
+          }
+        });
     });
     app.get('/path', function(req, res){
       var heat = heatmap(500, 500, { radius : 20 });
@@ -100,46 +87,10 @@ function genSqlString(queryType, queryVal){
 
     //  ENTRY PAGE //
     app.get('/entry', function(req, res){
-      res.render('entry', { 
-        title: 'Muse Admin'
+      res.render('entry', { title: 'Muse Admin' });
     });
 
-      //return list of elements 
-      /* DEPRECATED
-      var sqlStr = 'SELECT * FROM v_elements; SELECT * FROM v_tags;';
-      conn.query(sqlStr,function(err,results){
-        if (err){
-          console.log(err);
-        } else {
-          //console.log(results);
-          res.render('entry', { 
-            title: 'Muse Admin', 
-            data: results
-          });
-        }
-      });*/
-
-    });
-
-    /* DEPRECATED
-      app.post('/entry',function(req, res){
-      var queryType = req.body.queryType;
-      var queryTable = req.body.queryVal;
-
-      // returns the element tag types, in a 1xn array
-      var sqlStr = genSqlString(queryType,queryTable);
-      //console.log(sqlStr);
-      
-      conn.query(sqlStr,function(err,results){
-        if(err){
-          console.log(err);
-        } else {
-          res.send(results);
-        }
-      });
-
-    });*/
-  app.post('/index_partial', function(req, res){
+    app.post('/index_partial', function(req, res){
       res.render('index_partial');
     });
 
