@@ -106,12 +106,63 @@ var museumId = null;
         if ( req.body.museumId != undefined ) {
           museumId = req.body.museumId;
         } 
+
+        var fromDate = '2016-03-01'; // hard code for now, will need to be passed as a parameter
+        var toDate = '2016-04-01'; // hard code for now, will need to be passed as a parameter
        
-        var getExhibitsStr = squel.select().from("v_exhibits")
-                                  .where("museumId="+museumId).where("active=1").toString() + "; ";
+        var views = squel.select().from("v_activeelements", "e")
+                                              .field("e.exhibitId")
+                                              .field("COUNT(i.interactionId)", "views")
+                                              .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=1")
+                                              .where("i.tstamp>='"+fromDate+"'")
+                                              .where("i.tstamp<='"+toDate+"'")
+                                              .group("e.exhibitId")
+                                              .toString();
+
+        var likes = squel.select().from("v_activeelements", "e")
+                                              .field("e.exhibitId")
+                                              .field("COUNT(i.interactionId)", "likes")
+                                              .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=2")
+                                              .where("i.tstamp>='"+fromDate+"'")
+                                              .where("i.tstamp<='"+toDate+"'")
+                                              .group("e.exhibitId")
+                                              .toString();
+
+        var favs = squel.select().from("v_activeelements", "e")
+                                              .field("e.exhibitId")
+                                              .field("COUNT(i.interactionId)", "favs")
+                                              .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=3")
+                                              .where("i.tstamp>='"+fromDate+"'")
+                                              .where("i.tstamp<='"+toDate+"'")
+                                              .group("e.exhibitId")
+                                              .toString();
+
+        var aggViews = squel.select().from("v_activeexhibits", "x")
+                                      .field("x.museumId")
+                                      .field("x.exhibitId")
+                                      .field("x.exhibitName")
+                                      .field("SUM(v.views)", "views")
+                                      .field("SUM(l.likes)", "likes")
+                                      .field("SUM(f.favs)", "favourites")
+                                      .left_join("("+views+")","v","v.exhibitId=x.exhibitId")
+                                      .left_join("("+likes+")","l","l.exhibitId=x.exhibitId")
+                                      .left_join("("+favs+")","f","f.exhibitId=x.exhibitId")
+                                      .group("x.museumId")
+                                      .group ("x.exhibitId")
+                                      .group("x.exhibitName")
+                                      .toString();
+
+        var getExhibitsStr = squel.select().from("v_activeexhibits")
+                                            .field("museumId")
+                                            .field("exhibitId")
+                                            .field("exhibitName")
+                                            .distinct()
+                                    .where("museumId="+museumId).toString() + ";";
+        
+        console.log('Generate QueryStr: ' + aggViews);
         //console.log('Generate QueryStr: ' + getExhibitsStr);
 
-        var sqlStr = getAgeRangeStr + getGenderStr + getExhibitsStr;
+        var sqlStr = getAgeRangeStr + getGenderStr + aggViews;
 
         conn.query(sqlStr, function (err, results) {
           if (err) {
@@ -135,6 +186,7 @@ var museumId = null;
 
         var getElementStr = squel.select().from("v_elementviews").where("exhibitId="+exhibitId).toString() + ";";
         console.log('Generate QueryStr: ' + getElementStr);
+
 
         var sqlStr = getAgeRangeStr + getGenderStr + getElementStr;
 

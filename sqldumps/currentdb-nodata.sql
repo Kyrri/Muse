@@ -91,7 +91,7 @@ CREATE TABLE `element` (
   `description` varchar(500) DEFAULT NULL,
   `imageLink` varchar(255) DEFAULT NULL,
   `exhibitId` int(11) NOT NULL,
-  `utilTime` int(11) DEFAULT NULL,
+  `utilTime` int(11) NOT NULL DEFAULT '45',
   PRIMARY KEY (`elementId`),
   KEY `fk_element_artistId_idx` (`artistId`),
   KEY `fk_element_exhibitId_idx` (`exhibitId`),
@@ -242,7 +242,7 @@ CREATE TABLE `interaction` (
   CONSTRAINT `fk_interaction_interactionTypeId` FOREIGN KEY (`interactionTypeId`) REFERENCES `interactionType` (`interactionType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_interaction_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_interaction_visitId` FOREIGN KEY (`visitId`) REFERENCES `visit` (`visitId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -404,7 +404,7 @@ CREATE TABLE `login` (
   KEY `fk_login_userId_idx` (`userId`),
   CONSTRAINT `fk_login_loginType` FOREIGN KEY (`loginType`) REFERENCES `loginType` (`loginType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_login_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -477,7 +477,7 @@ CREATE TABLE `user` (
   CONSTRAINT `fk_user_ageRange` FOREIGN KEY (`ageRange`) REFERENCES `ageRange` (`ageRange`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_gender` FOREIGN KEY (`gender`) REFERENCES `gender` (`gender`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_userTypeId` FOREIGN KEY (`userTypeId`) REFERENCES `userType` (`userTypeId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -494,6 +494,38 @@ CREATE TABLE `userType` (
   UNIQUE KEY `userTypeDesc` (`userType`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary view structure for view `v_activeelements`
+--
+
+DROP TABLE IF EXISTS `v_activeelements`;
+/*!50001 DROP VIEW IF EXISTS `v_activeelements`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_activeelements` AS SELECT 
+ 1 AS `museumId`,
+ 1 AS `museumName`,
+ 1 AS `exhibitId`,
+ 1 AS `exhibitName`,
+ 1 AS `elementId`,
+ 1 AS `elementName`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `v_activeexhibits`
+--
+
+DROP TABLE IF EXISTS `v_activeexhibits`;
+/*!50001 DROP VIEW IF EXISTS `v_activeexhibits`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_activeexhibits` AS SELECT 
+ 1 AS `museumId`,
+ 1 AS `museumName`,
+ 1 AS `exhibitId`,
+ 1 AS `exhibitName`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Temporary view structure for view `v_elementdetails`
@@ -1718,6 +1750,42 @@ DELIMITER ;
 USE `muse_dev`;
 
 --
+-- Final view structure for view `v_activeelements`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_activeelements`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_activeelements` AS select `x`.`museumId` AS `museumId`,`m`.`museumName` AS `museumName`,`e`.`exhibitId` AS `exhibitId`,`x`.`exhibitName` AS `exhibitName`,`e`.`elementId` AS `elementId`,`e`.`title` AS `elementName` from ((`element` `e` left join `exhibit` `x` on(((`x`.`exhibitId` = `e`.`exhibitId`) and (`x`.`active` = 1)))) left join `museum` `m` on(((`m`.`museumId` = `x`.`museumId`) and (`m`.`active` = 1)))) where (`e`.`active` = 1) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_activeexhibits`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_activeexhibits`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_activeexhibits` AS select `x`.`museumId` AS `museumId`,`m`.`museumName` AS `museumName`,`x`.`exhibitId` AS `exhibitId`,`x`.`exhibitName` AS `exhibitName` from (`exhibit` `x` left join `museum` `m` on(((`m`.`museumId` = `x`.`museumId`) and (`m`.`active` = 1)))) where (`x`.`active` = 1) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `v_elementdetails`
 --
 
@@ -1870,4 +1938,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-16  3:16:42
+-- Dump completed on 2016-03-16 17:13:38
