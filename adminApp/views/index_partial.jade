@@ -25,33 +25,16 @@
 					div(class='dropdown .btn-group-vertical')
 						button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='gender') Gender
 						ul(class='dropdown-menu gender')
-							li
-								a(href='#') Female
-							li
-								a(href='#') Male
-							li
-								a(href='#') Declined Answer
+							each gen in gender
+								li
+									a(href='#') #{gen.genderDesc}
 					div(class='dropdown .btn-group-vertical')
 						button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='age') Age Range
 						ul(class='dropdown-menu age')
-							li
-								a(href='#') <18
-							li
-								a(href='#') 18-20
-							li
-								a(href='#') 20-25
-							li
-								a(href='#') 25-30
-							li
-								a(href='#') 30-40
-							li
-								a(href='#') 40-50
-							li
-								a(href='#') 50-60
-							li
-								a(href='#') 60-70
-							li
-								a(href='#') >70
+							each age in ageRange
+								li
+									a(href='#') #{age.ageRangeDesc}
+
 	.rightAlign
 		.titleHead
 			h4 Exhibit Metrics
