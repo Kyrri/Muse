@@ -84,8 +84,8 @@ $(document).ready(function(){
     });
 
     //Inject Element list page in place of Exhibit list page
-      $(tableName+' tbody tr').on('click', function(){
-        updateTable('element', true);
+    $(tableName+' tbody tr').on('click', function(){
+      updateTable('element', true);
     });
   }
   //Creates/uploads the analytics table
