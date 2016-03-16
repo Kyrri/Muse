@@ -15,6 +15,11 @@ Static data:
 	- 3-5 Samples Users
 */
 
+/* User */
+/* The admin user */
+INSERT INTO `muse_dev`.`user` (`userId`, `active`, `firstName`, `lastName`, `userTypeId`) VALUES ('1', '1', 'admin', 'admin', '2');
+INSERT INTO `muse_dev`.`login` (`loginId`, `active`, `loginType`, `login`, `userId`) VALUES ('1', '1', '1', 'admin%40muse.com', '1');
+
 /* Add museums firts */
 INSERT INTO `muse_dev`.`museum` (`museumName`) VALUES ('Interwebs');
 

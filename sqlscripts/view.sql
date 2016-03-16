@@ -27,5 +27,21 @@ VIEW `v_elementviews` AS
         museumId, museumName, exhibitId, exhibitName, elementId, elementCode, elementName, 
         artist, tstamp;
 
+
+
+
+
+
+USE `muse_dev`;
+CREATE  OR REPLACE VIEW v_museumAdminPermissions AS
+select u.userId, 
+    concat(u.firstName,' ', u.lastName) as 'user',
+    p.museumId, 
+    m.museumName
+
+from user u 
+left join museumPermission p on u.userId=p.UserId
+left join museum m on p.museumId=m.museumId
+where u.userTypeId=2 and m.active=1;
     
     

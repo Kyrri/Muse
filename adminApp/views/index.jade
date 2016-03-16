@@ -9,6 +9,6 @@ block mainContainer
 			a(href='#') Museum
 
 	div(class='list-group', id='museums')
-		button(class='list-group-item museum', type="button") Earth Sciences Museum
-		button(class='list-group-item museum', type="button") UW Art Gallery
+		each museum in museums
+			button(class='list-group-item museum', type="button") #{museum.museumName}
 	div(id='exhibitContainer')
