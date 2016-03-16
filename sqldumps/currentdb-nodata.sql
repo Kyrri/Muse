@@ -67,7 +67,11 @@ CREATE TABLE `checkInDuration` (
   `elementId` int(11) NOT NULL,
   `startTime` timestamp NULL DEFAULT NULL,
   `endTime` timestamp NULL DEFAULT NULL,
-  `duration` int(11) DEFAULT NULL
+  `duration` int(11) DEFAULT NULL,
+  KEY `fk_checkInDuration_elementId_idx` (`elementId`),
+  KEY `fk_checkInDuration_visitId_idx` (`visitId`),
+  CONSTRAINT `fk_checkInDuration_elementId` FOREIGN KEY (`elementId`) REFERENCES `element` (`elementId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_checkInDuration_visitId` FOREIGN KEY (`visitId`) REFERENCES `visit` (`visitId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -88,7 +92,11 @@ CREATE TABLE `element` (
   `imageLink` varchar(255) DEFAULT NULL,
   `exhibitId` int(11) NOT NULL,
   `utilTime` int(11) DEFAULT NULL,
-  PRIMARY KEY (`elementId`)
+  PRIMARY KEY (`elementId`),
+  KEY `fk_element_artistId_idx` (`artistId`),
+  KEY `fk_element_exhibitId_idx` (`exhibitId`),
+  CONSTRAINT `fk_element_artistId` FOREIGN KEY (`artistId`) REFERENCES `artist` (`artistId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_element_exhibitId` FOREIGN KEY (`exhibitId`) REFERENCES `exhibit` (`exhibitId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -121,7 +129,9 @@ CREATE TABLE `elementTag` (
   `elementTag` varchar(255) DEFAULT NULL,
   `elementTagTypeId` int(11) DEFAULT NULL,
   `active` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`elementTagId`)
+  PRIMARY KEY (`elementTagId`),
+  KEY `fk_elementTag_elementTagTypeId_idx` (`elementTagTypeId`),
+  CONSTRAINT `fk_elementTag_elementTagTypeId` FOREIGN KEY (`elementTagTypeId`) REFERENCES `elementTagType` (`elementTagTypeId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -136,7 +146,10 @@ CREATE TABLE `elementTagMapping` (
   `elementTagId` int(11) NOT NULL DEFAULT '0',
   `elementId` int(11) NOT NULL DEFAULT '0',
   `active` tinyint(4) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`elementTagId`,`elementId`)
+  PRIMARY KEY (`elementTagId`,`elementId`),
+  KEY `fk_elementTagMapping_elementId_idx` (`elementId`),
+  CONSTRAINT `fk_elementTagMapping_elementId` FOREIGN KEY (`elementId`) REFERENCES `element` (`elementId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_elementTagMapping_elementTagId` FOREIGN KEY (`elementTagId`) REFERENCES `elementTag` (`elementTagId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -165,8 +178,11 @@ DROP TABLE IF EXISTS `elementcode`;
 CREATE TABLE `elementcode` (
   `elementId` int(11) DEFAULT NULL,
   `code` int(11) DEFAULT NULL,
-  `location` varchar(255) DEFAULT NULL,
-  UNIQUE KEY `elementId` (`elementId`)
+  `locationId` int(11) DEFAULT NULL,
+  UNIQUE KEY `elementId` (`elementId`,`code`),
+  KEY `fk_elementcode_locationId_idx` (`locationId`),
+  CONSTRAINT `fk_elementcode_elementId` FOREIGN KEY (`elementId`) REFERENCES `element` (`elementId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_elementcode_locationId` FOREIGN KEY (`locationId`) REFERENCES `location` (`locationId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -183,7 +199,9 @@ CREATE TABLE `exhibit` (
   `exhibitName` varchar(255) DEFAULT NULL,
   `museumId` int(11) NOT NULL,
   PRIMARY KEY (`exhibitId`),
-  UNIQUE KEY `exhibitName` (`exhibitName`,`museumId`)
+  UNIQUE KEY `exhibitName` (`exhibitName`,`museumId`),
+  KEY `fk_exhibit_museumId_idx` (`museumId`),
+  CONSTRAINT `fk_exhibit_museumId` FOREIGN KEY (`museumId`) REFERENCES `museum` (`museumId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -216,7 +234,14 @@ CREATE TABLE `interaction` (
   `userId` int(11) NOT NULL,
   `elementId` int(11) DEFAULT '-1',
   `visitId` int(11) NOT NULL,
-  PRIMARY KEY (`interactionId`)
+  PRIMARY KEY (`interactionId`),
+  KEY `fk_interaction_interactionTypeId_idx` (`interactionTypeId`),
+  KEY `fk_interaction_userId_idx` (`userId`),
+  KEY `fk_interaction_elementId_idx` (`elementId`),
+  KEY `fk_interaction_visitId_idx` (`visitId`),
+  CONSTRAINT `fk_interaction_interactionTypeId` FOREIGN KEY (`interactionTypeId`) REFERENCES `interactionType` (`interactionType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_interaction_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_interaction_visitId` FOREIGN KEY (`visitId`) REFERENCES `visit` (`visitId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -344,6 +369,23 @@ CREATE TABLE `interactionType` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `location`
+--
+
+DROP TABLE IF EXISTS `location`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `location` (
+  `locationId` int(11) NOT NULL AUTO_INCREMENT,
+  `exhibitId` int(11) NOT NULL,
+  `locationDesc` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`locationId`),
+  KEY `fk_location_exhibitId_idx` (`exhibitId`),
+  CONSTRAINT `fk_location_exhibitId` FOREIGN KEY (`exhibitId`) REFERENCES `exhibit` (`exhibitId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `login`
 --
 
@@ -357,7 +399,11 @@ CREATE TABLE `login` (
   `login` varchar(255) NOT NULL,
   `pass` varchar(720) NOT NULL,
   `userId` int(11) NOT NULL,
-  PRIMARY KEY (`loginId`)
+  PRIMARY KEY (`loginId`),
+  KEY `fk_login_loginType_idx` (`loginType`),
+  KEY `fk_login_userId_idx` (`userId`),
+  CONSTRAINT `fk_login_loginType` FOREIGN KEY (`loginType`) REFERENCES `loginType` (`loginType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_login_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -392,6 +438,24 @@ CREATE TABLE `museum` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `museumPermission`
+--
+
+DROP TABLE IF EXISTS `museumPermission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `museumPermission` (
+  `userId` int(11) NOT NULL DEFAULT '0',
+  `museumId` int(11) NOT NULL DEFAULT '0',
+  `active` int(11) DEFAULT '1',
+  PRIMARY KEY (`userId`,`museumId`),
+  KEY `fk_museumPermission_museumId_idx` (`museumId`),
+  CONSTRAINT `fk_museumPermission_museumId` FOREIGN KEY (`museumId`) REFERENCES `museum` (`museumId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_museumPermission_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `user`
 --
 
@@ -406,7 +470,13 @@ CREATE TABLE `user` (
   `gender` int(11) DEFAULT NULL,
   `ageRange` int(11) DEFAULT NULL,
   `userTypeId` int(11) NOT NULL,
-  PRIMARY KEY (`userId`)
+  PRIMARY KEY (`userId`),
+  KEY `fk_user_gender_idx` (`gender`),
+  KEY `fk_user_ageRange_idx` (`ageRange`),
+  KEY `fk_user_userTypeId_idx` (`userTypeId`),
+  CONSTRAINT `fk_user_ageRange` FOREIGN KEY (`ageRange`) REFERENCES `ageRange` (`ageRange`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_gender` FOREIGN KEY (`gender`) REFERENCES `gender` (`gender`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_userTypeId` FOREIGN KEY (`userTypeId`) REFERENCES `userType` (`userTypeId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -477,9 +547,16 @@ DROP TABLE IF EXISTS `v_elementviews`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_elementviews` AS SELECT 
+ 1 AS `museumId`,
+ 1 AS `museumName`,
  1 AS `exhibitId`,
  1 AS `exhibitName`,
- 1 AS `elementId`*/;
+ 1 AS `elementId`,
+ 1 AS `elementCode`,
+ 1 AS `elementName`,
+ 1 AS `artist`,
+ 1 AS `views`,
+ 1 AS `tstamp`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -494,6 +571,21 @@ SET character_set_client = utf8;
  1 AS `museum`,
  1 AS `exhibit`,
  1 AS `active`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `v_museumadminpermissions`
+--
+
+DROP TABLE IF EXISTS `v_museumadminpermissions`;
+/*!50001 DROP VIEW IF EXISTS `v_museumadminpermissions`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_museumadminpermissions` AS SELECT 
+ 1 AS `userId`,
+ 1 AS `user`,
+ 1 AS `museumId`,
+ 1 AS `museumName`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -558,7 +650,11 @@ CREATE TABLE `visit` (
   `userId` int(11) NOT NULL,
   `museumId` int(11) NOT NULL,
   PRIMARY KEY (`visitId`),
-  UNIQUE KEY `uq_visit` (`visitDate`,`userId`,`museumId`)
+  UNIQUE KEY `uq_visit` (`visitDate`,`userId`,`museumId`),
+  KEY `fk_visit_userId_idx` (`userId`),
+  KEY `fk_visit_museumId_idx` (`museumId`),
+  CONSTRAINT `fk_visit_museumId` FOREIGN KEY (`museumId`) REFERENCES `museum` (`museumId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_visit_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -573,7 +669,9 @@ CREATE TABLE `visitDuration` (
   `visitId` int(11) NOT NULL,
   `startTime` timestamp NULL DEFAULT NULL,
   `endTime` timestamp NULL DEFAULT NULL,
-  `duration` int(11) DEFAULT NULL
+  `duration` int(11) DEFAULT NULL,
+  KEY `fk_visitDuration_visitId_idx` (`visitId`),
+  CONSTRAINT `fk_visitDuration_visitId` FOREIGN KEY (`visitId`) REFERENCES `visit` (`visitId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1665,7 +1763,7 @@ USE `muse_dev`;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_elementviews` AS select `e`.`exhibitId` AS `exhibitId`,`x`.`exhibitName` AS `exhibitName`,`i`.`elementId` AS `elementId` from ((`interaction` `i` left join `element` `e` on((`i`.`elementId` = `e`.`elementId`))) left join `exhibit` `x` on((`e`.`exhibitId` = `x`.`exhibitId`))) where (`i`.`interactionTypeId` = 1) */;
+/*!50001 VIEW `v_elementviews` AS select `x`.`museumId` AS `museumId`,`m`.`museumName` AS `museumName`,`e`.`exhibitId` AS `exhibitId`,`x`.`exhibitName` AS `exhibitName`,`i`.`elementId` AS `elementId`,`c`.`code` AS `elementCode`,`e`.`title` AS `elementName`,`a`.`artist` AS `artist`,count(`i`.`interactionId`) AS `views`,`i`.`tstamp` AS `tstamp` from (((((`interaction` `i` left join `element` `e` on((`i`.`elementId` = `e`.`elementId`))) left join `exhibit` `x` on((`e`.`exhibitId` = `x`.`exhibitId`))) left join `museum` `m` on((`x`.`museumId` = `m`.`museumId`))) left join `elementcode` `c` on((`i`.`elementId` = `c`.`elementId`))) left join `artist` `a` on((`e`.`artistId` = `a`.`artistId`))) where (`i`.`interactionTypeId` = 1) group by `x`.`museumId`,`m`.`museumName`,`e`.`exhibitId`,`x`.`exhibitName`,`i`.`elementId`,`elementCode`,`elementName`,`a`.`artist`,`i`.`tstamp` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1684,6 +1782,24 @@ USE `muse_dev`;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_exhibits` AS select `m`.`museumName` AS `museum`,`e`.`exhibitName` AS `exhibit`,`e`.`active` AS `active` from (`exhibit` `e` left join `museum` `m` on((`e`.`museumId` = `m`.`museumId`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_museumadminpermissions`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_museumadminpermissions`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_museumadminpermissions` AS select `u`.`userId` AS `userId`,concat(`u`.`firstName`,' ',`u`.`lastName`) AS `user`,`p`.`museumId` AS `museumId`,`m`.`museumName` AS `museumName` from ((`user` `u` left join `museumpermission` `p` on((`u`.`userId` = `p`.`userId`))) left join `museum` `m` on((`p`.`museumId` = `m`.`museumId`))) where ((`u`.`userTypeId` = 2) and (`m`.`active` = 1)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1751,4 +1867,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-15  0:51:04
+-- Dump completed on 2016-03-16  0:04:03
