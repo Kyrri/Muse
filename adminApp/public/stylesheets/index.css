@@ -3,10 +3,32 @@
 #drillTrack {
 	width: 70%;
 	font-size: 15px;
+	position: fixed;
+	z-index:3;
+	top:60px;
+	left:100px;
+	margin:0;
+}
+.chartContainer{
+	width: 78%;
+}
+.titleHead{
+	background-color: #666666;
+ 	color: #FFFFFF;
+ 	width: 100%;
+ 	height: 30px;
+ 	vertical-align: center;
+ 	font-family: MuseoFive, Museo;
+	font-size: 20px;
+	border: 2px solid #a6a6a6;
+}
+.titleHead h4{
+	margin: 4px;
+	margin-left: 10px;
 }
 
 #museums {
-	width: 70%;
+	width: 45vw;
 	font-family: MuseoSansFive, Museo Sans;
 	font-size: 20px;
 	font-weight: normal;
@@ -17,22 +39,53 @@
 #exhibitContainer {
 	font-family: MuseoSansFive, Museo Sans;
 }
-
+.alignFilters{
+	display: table;
+	width: 78%;
+}
+.horizAlign{
+	display: table-cell;
+	vertical-align: center;
+}
+.left-align{
+	width:140px;
+}
+.right-align{
+	width: 100%;
+}
 .filters {
 	border: 2px solid #d1d1d1;
-	padding: 10px;
+	border-top: none;
+	padding: 8px;
 	padding-top: 5px;
-	width: 30%;
-	border-radius: 10px;
+	width: 140px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
 }
 
-.filters h3 {
+.filters button{
 	color: #333333;
-	font-size: 16px;
+	font-size: 12px;
+}
+.btn
+{
+	width: 120px;
+	padding: 3px;
+	margin: 0;
 }
 
+.alignSearch{
+	display: table;
+	padding: 10px;
+	width: 78%;
+}
 .dateRange {
-	margin-bottom: 15px;
+	display: table-cell;
+	text-align: left;
+}
+.datePicker{
+	text-align: center;
+	width: 100px;
 }
 
 .dateRange p {
@@ -40,26 +93,13 @@
 	margin-left: 10px;
 	margin-right: 10px;
 }
-
-#date_1 {
-	width: 100px;
-	display: inline;
+.alignBarRight{
+	width: 100%;
+	text-align: right;
 }
-
-#date_2 {
-	width: 100px;
-}
-
-.btn-group #time {
-	margin-right: 10px;
-}
-
-.btn-group #gender {
-	margin-right: 10px;
-}
-
-.btn-group #age {
-	margin-right: 10px;
+#searchBar {
+	width: 200px;
+	display: table-cell;
 }
 
 .exhibitTable, .elementTable{
@@ -91,7 +131,3 @@
 	padding: 5px;
 }
 
-#searchBar {
-	margin-top: 15px;
-	margin-bottom: 15px;
-}
