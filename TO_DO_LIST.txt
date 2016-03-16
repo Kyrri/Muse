@@ -1,3 +1,10 @@
+// Andrew //
+ - User App
+ 	- restrict checkins to only current museum
+ - Admin Add
+ 	- entry page
+ 		- add functinaly to add location, and location to code
+
 // Lindsay ToDo //
 
 // Taylor  //

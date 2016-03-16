@@ -5,14 +5,27 @@ CREATE
     SQL SECURITY DEFINER
 VIEW `v_elementviews` AS
     SELECT 
-        `i`.`interactionId` AS `interactionId`,
-        `i`.`tstamp` AS `tstamp`,
-        `i`.`interactionTypeId` AS `interactionTypeId`,
-        `i`.`userId` AS `userId`,
-        `i`.`elementId` AS `elementId`,
-        `i`.`visitId` AS `visitId`,
-        `e`.`exhibitId` AS `exhibitId`
+        x.museumId,
+        m.museumName,
+        e.exhibitId,
+        x.exhibitName,
+        i.elementId,
+        c.code AS 'elementCode',
+        e.title AS 'elementName',
+        a.artist,
+        count(i.interactionId) AS 'views',
+        i.tstamp AS 'tstamp'
     FROM interaction i
-    LEFT JOIN element e on i.elementId=e.elementId
+        left JOIN `element` `e` ON `i`.`elementId` = `e`.`elementId`
+        left JOIN `exhibit` `x` ON `e`.`exhibitId` = `x`.`exhibitId`
+        left join museum m on x.museumId=m.museumId
+        left join elementcode c on i.elementId=c.elementId
+        left join artist a on e.artistId=a.artistId
     WHERE
-        i.interactionTypeId=2
+        `i`.`interactionTypeId` = 1
+    group by
+        museumId, museumName, exhibitId, exhibitName, elementId, elementCode, elementName, 
+        artist, tstamp;
+
+    
+    
