@@ -1,11 +1,15 @@
 // Andrew //
  - User App
  	- restrict checkins to only current museum
+ 	- for sign up
+ 		- change age range and gender to pull values from db - DONE
+ 		- push values for age range and gender - DONE
  - Admin Add
  	- entry page
  		- add functinaly to add location, and location to code
 
 // Lindsay ToDo //
+ - add error handling to sign up to made agerange and gender mandatory
 
 // Taylor  //
  - User App

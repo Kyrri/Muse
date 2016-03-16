@@ -28,12 +28,12 @@ $(document).ready(function() {
 		        success: function(result) {
 		        	//alert(result);
 		        	//if user exists
-		        	if(result){
+		        	if (result) {
 		        		//Route to specific artpiecece
 		        		window.location.replace("/info?id="+code);
 		        	}
-		        	else{
-		        		//wrong code, try again
+		        	else {
+		        		$('#checkinFeedback').text('Invalid Code. Please enter valid code.')
 		        	} 
 		    	}
 			});

@@ -43,5 +43,26 @@ from user u
 left join museumPermission p on u.userId=p.UserId
 left join museum m on p.museumId=m.museumId
 where u.userTypeId=2 and m.active=1;
+
+
+/* element details */
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `v_elementdetails` AS
+    SELECT 
+        `c`.`code` AS `elementCode`,
+        `c`.`elementId` AS `elementId`,
+        `e`.`active` AS `active`,
+        `e`.`title` AS `elementName`,
+        `a`.`artist` AS `artist`,
+        `e`.`paintYear` AS `year`,
+        `e`.`description` AS `description`,
+        `e`.`imageLink` AS `imageLink`
+    FROM
+        `elementcode` `c`
+        LEFT JOIN `element` `e` ON `c`.`elementId` = `e`.`elementId`
+        LEFT JOIN `artist` `a` ON `e`.`artistId` = `a`.`artistId`
     
     

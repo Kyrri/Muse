@@ -2,6 +2,9 @@ var express = require('express');
 var app = require("express")();
 //var routes = require('./routes');
 var bodyParser = require('body-parser')
+//var heatmap = require('heatmap');
+var fs = require('fs');
+//var canvas = require('canvas');
 // MySQL connection
 var mysql = require('mysql');
 var conn = mysql.createConnection({
@@ -34,25 +37,53 @@ var museumId = null;
    
   //  STARTING PAGE  //
     app.get('/:var(|index)?', function(req, res){
-      var getValidMuseumsStr = squel.select().from("v_museumadminpermissions")
-                                    .where("userId="+userId).toString() + ";";
-      console.log('Generate QueryStr: ' + getValidMuseumsStr);
+       var getValidMuseumsStr = squel.select().from("v_museumadminpermissions")
+                                      .where("userId="+userId).toString() + ";";
+        console.log('Generate QueryStr: ' + getValidMuseumsStr);
 
-      var sqlStr = getValidMuseumsStr
+        var sqlStr = getValidMuseumsStr
 
-      conn.query(sqlStr, function (err, results) {
-        if (err) {
-          console.log('Tried: ' + sqlStr);
-          console.log(err);
-        } else {
-          console.log('Success: ' + sqlStr);
-          res.render('index', { 
-            title: 'Muse Admin',
-            museums : results
-          });
-        }
+        conn.query(sqlStr, function (err, results) {
+          if (err) {
+            console.log('Tried: ' + sqlStr);
+            console.log(err);
+          } else {
+            console.log('Success: ' + sqlStr);
+            res.render('index', { 
+              title: 'Muse Admin',
+              museums : results
+            });
+          }
+        });
+    });
+    app.get('/path', function(req, res){
+      // var heat = heatmap(500, 500, { radius : 20 });
+      // for (var i = 0; i < 200; i++) {
+
+      //     var x = 400;
+      //     var y = 20
+
+      //     heat.addPoint(x, y);
+      // }
+      //   for (var i = 0; i < 10; i++) {
+
+      //     var x = 200;
+      //     var y = 20
+
+      //     heat.addPoint(x, y);
+      // }
+      //   for (var i = 0; i < 5; i++) {
+
+      //     var x = 215;
+      //     var y = 20
+
+      //     heat.addPoint(x, y);
+      // }
+      // heat.draw();
+      // fs.writeFileSync('public/images/hpMap.png', heat.canvas.toBuffer());
+      res.render('path', {
+        title:'Path Analytics'
       });
-
     });
 
     //  ENTRY PAGE //

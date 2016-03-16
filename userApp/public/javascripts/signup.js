@@ -37,7 +37,7 @@ $(document).ready(function() {
 		var fName = login_data[2].replace("fName=","");
 		var lName = login_data[3].replace("lName=","");
 		var gender = login_data[4].replace("gender=","");
-		var age = login_data[5].replace("age=","");
+		var age = login_data[5].replace("ageRange=","");
 		var parameters = JSON.stringify({
 			"email": email,
 			"password": password,
@@ -46,6 +46,7 @@ $(document).ready(function() {
 			"age": age,
 			"gender": gender
 		});
+		console.log(parameters);
 		$.ajax('signup',{
 	 		type: "POST",
 	 		contentType: "application/json",
