@@ -118,3 +118,19 @@ INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(28,
 INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(29,1028,null);
 INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(30,1029,null);
 INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(31,1030,null);
+
+/* Adding Tags */
+INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('1', 'Baroque', '3', '1');
+INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('2', 'Abstract', '3', '1');
+INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('3', 'Classicism', '3', '1');
+INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('4', 'Expressionism', '3', '1');
+INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('5', 'Still Life', '2', '1');
+INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('6', 'Landscape', '2', '1');
+INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('7', 'Portrait', '2', '1');
+INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('8', 'Oil on Canvas', '1', '1');
+INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('9', 'Watercolour', '1', '1');
+INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('10', 'Acrylic', '1', '1');
+INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('11', 'Automotive', '1', '1');
+INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('12', 'Mining', '1', '1');
+INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('13', 'Clothing', '1', '1');
+INSERT INTO `muse_dev`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('14', 'Service', '1', '1');
