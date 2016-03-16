@@ -18,7 +18,12 @@ Static data:
 /* User */
 /* The admin user */
 INSERT INTO `muse_dev`.`user` (`userId`, `active`, `firstName`, `lastName`, `gender`, `ageRange`, `userTypeId`) VALUES ('1', '1', 'Moko', 'Na', '1', '1', '1');
-INSERT INTO `muse_dev`.`login` (`loginId`, `active`, `loginType`, `login`, `pass`, `userId`) VALUES ('1', '1', '1', 'test%40test.com', '12345', '1');
+INSERT INTO `muse_dev`.`login` (`loginId`, `active`, `loginType`, `login`, `pass`, `userId`) VALUES ('1', '1', '1', 'test%40test.com', 'pbkdf2$10000$0e9dcdc6127f44594691365f927eb37ec865b8c5a3fb5dcc6f2d17d368cd96d7550d254edb5e5802aad318226b4d698033223236c4cdb71dbe629ab5582a4021$ed0a6912657d74e849ddf4b54a9d6ee0d7a16d538e8010650fe29d22c65ccbcb5a3e0e4a6175855ed8b62a5d6a74d43e7f142e09b5e7df9b4ddc930ad6effeb1', '1');
+INSERT INTO `muse_dev`.`user` (`userId`, `active`, `firstName`, `lastName`, `gender`, `ageRange`, `userTypeId`) VALUES ('2', '1', 'Potato', 'Tomato', '1', '1', '1');
+INSERT INTO `muse_dev`.`user` (`userId`, `active`, `firstName`, `lastName`, `gender`, `ageRange`, `userTypeId`) VALUES ('3', '1', 'Test', 'John', '1', '1', '1');
+INSERT INTO `muse_dev`.`login` (`loginId`, `active`, `loginType`, `login`, `pass`, `userId`) VALUES ('2', '1', '1', 'test1%40test.com', 'pbkdf2$10000$0e9dcdc6127f44594691365f927eb37ec865b8c5a3fb5dcc6f2d17d368cd96d7550d254edb5e5802aad318226b4d698033223236c4cdb71dbe629ab5582a4021$ed0a6912657d74e849ddf4b54a9d6ee0d7a16d538e8010650fe29d22c65ccbcb5a3e0e4a6175855ed8b62a5d6a74d43e7f142e09b5e7df9b4ddc930ad6effeb1', '2');
+INSERT INTO `muse_dev`.`login` (`loginId`, `active`, `loginType`, `login`, `pass`, `userId`) VALUES ('3', '1', '1', 'test2%40test.com', 'pbkdf2$10000$0e9dcdc6127f44594691365f927eb37ec865b8c5a3fb5dcc6f2d17d368cd96d7550d254edb5e5802aad318226b4d698033223236c4cdb71dbe629ab5582a4021$ed0a6912657d74e849ddf4b54a9d6ee0d7a16d538e8010650fe29d22c65ccbcb5a3e0e4a6175855ed8b62a5d6a74d43e7f142e09b5e7df9b4ddc930ad6effeb1', '3');
+
 
 /* Add museums firts */
 INSERT INTO `muse_dev`.`museum` (`museumId`, `active`, `museumName`) VALUES ('1', '1', 'The UW Museum');
@@ -72,5 +77,44 @@ INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `p
 INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('24', '1', 'Coyote', '6', '2000', 'A wild coyote.', 'http://www.worldanimalfoundation.net/i/Coyote1.jpg', '3');
 INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('25', '1', 'Giraffe', '9', '2010', 'A wild giraffe.', 'https://cdn.idevie.com/wp-content/uploads/2013/03/wildlife_animals_wallpaper27.jpg', '3');
 
+/*Exhibit 4*/
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('26', '1', 'Sushi', '1', '2010', 'Sushi is a food preparation originating in Japan.', 'https://upload.wikimedia.org/wikipedia/commons/9/9c/2007feb-sushi-odaiba-manytypes.jpg', '4');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('27', '1', 'Spaghetti alle vongole', '2', '2016', 'Spaghetti with clams.', 'https://upload.wikimedia.org/wikipedia/commons/a/a1/Spaghetti_alle_vongole%2C_Cafe_a_Taglio%2C_St._Kilda.jpg', '4');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('28', '1', 'Mansha Tarkari', '3', '2010', 'Oriya mutton curry.', 'https://upload.wikimedia.org/wikipedia/commons/f/fe/Odia_Mutton_Curry_%28Mansha_Tarkari%29.jpg', '4');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('29', '1', 'Kongguksu', '4', '2000', 'A cold noodle dish with a broth made from ground soy beans.', 'https://upload.wikimedia.org/wikipedia/commons/b/b9/Korean_noodles-Kongguksu-01.jpg', '4');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('30', '1', 'Foie Gras', '5', '1990', 'Foie gras with mustard seeds and green onions in duck jus.', 'https://upload.wikimedia.org/wikipedia/commons/8/82/Foie_gras_en_cocotte.jpg', '4');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('31', '1', 'Chao fan ', '6', '2013', 'Chinese fried rice.', 'https://upload.wikimedia.org/wikipedia/commons/5/59/Chinese_fried_rice.jpg', '4');
+INSERT INTO `muse_dev`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`, `utilTime`) VALUES ('32', '1', 'Pickled Herring', '7', '2011', 'Pickled herring, sour cream and chopped chives, potatoes and an egg half served at midsummer.', 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Midsummer_pickled_herring.jpg', '4', '0');
+
 /* Code Elements */
-INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`location`) VALUES(15,4321,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(1,1000,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(2,1001,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(3,1002,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(4,1003,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(5,1004,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(6,1005,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(7,1006,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(8,1007,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(9,1008,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(10,1009,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(11,1010,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(12,1011,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(13,1012,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(14,1013,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(15,1014,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(16,1015,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(17,1016,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(18,1017,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(19,1018,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(20,1019,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(21,1020,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(22,1021,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(23,1022,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(24,1023,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(25,1024,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(26,1025,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(27,1026,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(28,1027,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(29,1028,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(30,1029,null);
+INSERT INTO `muse_dev`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(31,1030,null);
