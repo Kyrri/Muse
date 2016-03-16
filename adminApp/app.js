@@ -3,8 +3,9 @@ var app = require("express")();
 //var routes = require('./routes');
 var bodyParser = require('body-parser')
 //var heatmap = require('heatmap');
-var fs = require('fs');
 //var canvas = require('canvas');
+var fs = require('fs');
+
 // MySQL connection
 var mysql = require('mysql');
 var conn = mysql.createConnection({
@@ -41,7 +42,7 @@ var museumId = null;
                                       .where("userId="+userId).toString() + ";";
         console.log('Generate QueryStr: ' + getValidMuseumsStr);
 
-        var sqlStr = getValidMuseumsStr
+        var sqlStr = getValidMuseumsStr;
 
         conn.query(sqlStr, function (err, results) {
           if (err) {
@@ -57,33 +58,13 @@ var museumId = null;
         });
     });
     app.get('/path', function(req, res){
-      // var heat = heatmap(500, 500, { radius : 20 });
-      // for (var i = 0; i < 200; i++) {
-
-      //     var x = 400;
-      //     var y = 20
-
-      //     heat.addPoint(x, y);
-      // }
-      //   for (var i = 0; i < 10; i++) {
-
-      //     var x = 200;
-      //     var y = 20
-
-      //     heat.addPoint(x, y);
-      // }
-      //   for (var i = 0; i < 5; i++) {
-
-      //     var x = 215;
-      //     var y = 20
-
-      //     heat.addPoint(x, y);
-      // }
-      // heat.draw();
-      // fs.writeFileSync('public/images/hpMap.png', heat.canvas.toBuffer());
       res.render('path', {
         title:'Path Analytics'
       });
+    });
+    app.post('/pathHP', function(req, res){
+       var results = [{'x':5, 'y': 1}, {'x':5, 'y': 1}, {'x':5, 'y': 1}, {'x':5, 'y': 2}, {'x':5, 'y': 2}];
+       res.send(results);
     });
 
     //  ENTRY PAGE //
