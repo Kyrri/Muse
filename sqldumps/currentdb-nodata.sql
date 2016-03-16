@@ -242,7 +242,7 @@ CREATE TABLE `interaction` (
   CONSTRAINT `fk_interaction_interactionTypeId` FOREIGN KEY (`interactionTypeId`) REFERENCES `interactionType` (`interactionType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_interaction_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_interaction_visitId` FOREIGN KEY (`visitId`) REFERENCES `visit` (`visitId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -505,6 +505,7 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_elementdetails` AS SELECT 
  1 AS `elementCode`,
+ 1 AS `museumId`,
  1 AS `elementId`,
  1 AS `active`,
  1 AS `elementName`,
@@ -568,7 +569,9 @@ DROP TABLE IF EXISTS `v_exhibits`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_exhibits` AS SELECT 
+ 1 AS `museumId`,
  1 AS `museum`,
+ 1 AS `exhibitId`,
  1 AS `exhibit`,
  1 AS `active`*/;
 SET character_set_client = @saved_cs_client;
@@ -655,7 +658,7 @@ CREATE TABLE `visit` (
   KEY `fk_visit_museumId_idx` (`museumId`),
   CONSTRAINT `fk_visit_museumId` FOREIGN KEY (`museumId`) REFERENCES `museum` (`museumId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_visit_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1727,7 +1730,7 @@ USE `muse_dev`;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_elementdetails` AS select `c`.`code` AS `elementCode`,`c`.`elementId` AS `elementId`,`e`.`active` AS `active`,`e`.`title` AS `elementName`,`a`.`artist` AS `artist`,`e`.`paintYear` AS `year`,`e`.`description` AS `description`,`e`.`imageLink` AS `imageLink` from ((`elementcode` `c` left join `element` `e` on((`c`.`elementId` = `e`.`elementId`))) left join `artist` `a` on((`e`.`artistId` = `a`.`artistId`))) */;
+/*!50001 VIEW `v_elementdetails` AS select `c`.`code` AS `elementCode`,`m`.`museumId` AS `museumId`,`c`.`elementId` AS `elementId`,`e`.`active` AS `active`,`e`.`title` AS `elementName`,`a`.`artist` AS `artist`,`e`.`paintYear` AS `year`,`e`.`description` AS `description`,`e`.`imageLink` AS `imageLink` from ((((`elementcode` `c` left join `element` `e` on((`c`.`elementId` = `e`.`elementId`))) left join `artist` `a` on((`e`.`artistId` = `a`.`artistId`))) left join `exhibit` `x` on((`e`.`exhibitId` = `x`.`exhibitId`))) left join `museum` `m` on((`x`.`museumId` = `m`.`museumId`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1781,7 +1784,7 @@ USE `muse_dev`;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_exhibits` AS select `m`.`museumName` AS `museum`,`e`.`exhibitName` AS `exhibit`,`e`.`active` AS `active` from (`exhibit` `e` left join `museum` `m` on((`e`.`museumId` = `m`.`museumId`))) */;
+/*!50001 VIEW `v_exhibits` AS select `m`.`museumId` AS `museumId`,`m`.`museumName` AS `museum`,`e`.`exhibitId` AS `exhibitId`,`e`.`exhibitName` AS `exhibit`,`e`.`active` AS `active` from (`exhibit` `e` left join `museum` `m` on((`e`.`museumId` = `m`.`museumId`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1867,4 +1870,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-16  0:04:03
+-- Dump completed on 2016-03-16  3:16:42

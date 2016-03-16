@@ -101,7 +101,7 @@ CREATE TABLE `checkInDuration` (
 
 LOCK TABLES `checkInDuration` WRITE;
 /*!40000 ALTER TABLE `checkInDuration` DISABLE KEYS */;
-INSERT INTO `checkInDuration` VALUES (5,4,'2016-03-10 04:58:22','2016-03-10 18:30:35',48733),(7,4,'2016-03-10 18:48:39','2016-03-10 18:48:40',1),(8,4,'2016-03-14 21:28:44','2016-03-14 21:29:43',59),(13,4,'2016-03-14 23:24:28','2016-03-14 23:37:10',762),(14,4,'2016-03-15 02:27:19','2016-03-15 02:27:23',4);
+INSERT INTO `checkInDuration` VALUES (5,4,'2016-03-10 04:58:22','2016-03-10 18:30:35',48733),(7,4,'2016-03-10 18:48:39','2016-03-10 18:48:40',1),(8,4,'2016-03-14 21:28:44','2016-03-14 21:29:43',59),(13,4,'2016-03-14 23:24:28','2016-03-14 23:37:10',762),(14,4,'2016-03-15 02:27:19','2016-03-15 02:27:23',4),(15,4,'2016-03-16 07:00:25','2016-03-16 07:03:56',211);
 /*!40000 ALTER TABLE `checkInDuration` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,7 +136,7 @@ CREATE TABLE `element` (
 
 LOCK TABLES `element` WRITE;
 /*!40000 ALTER TABLE `element` DISABLE KEYS */;
-INSERT INTO `element` VALUES (1,0,'Luncheon of the Boating Party',1,1881,'Test description',NULL,1,NULL),(2,0,'Composition VIII',2,1923,'',NULL,1,NULL),(3,1,'Café Terrace at Night',3,1888,'',NULL,1,NULL),(4,1,'Maeby',4,2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2,NULL),(5,1,'Baby Cat',4,2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2,NULL),(6,0,'test1',1,1993,'test','testtest',1,NULL),(7,0,'test2',1,1993,'test','testtest',1,NULL),(8,0,'test3',1,1993,'test','testtest',1,NULL),(9,0,'Demo Project 1',2,1993,'This is a description','',1,NULL),(10,0,'Andrews Test',4,1456,'The form works','testtest',1,NULL),(11,0,'Another Test',1,1234,'1234','1234',1,NULL),(12,0,'Another Test1',1,0,'','',1,NULL),(13,1,'At1',1,1333,'adfadsfad','adfasdfadsfad',1,NULL),(14,1,'New Element',4,1234,'adfadfad','adfasdfasdfads',2,NULL);
+INSERT INTO `element` VALUES (1,0,'Luncheon of the Boating Party',1,1881,'Test description',NULL,1,NULL),(2,0,'Composition VIII',2,1923,'',NULL,1,NULL),(3,1,'Café Terrace at Night',3,1888,'',NULL,1,NULL),(4,1,'Maeby',4,2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2,NULL),(5,1,'Baby Cat',4,2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2,NULL),(6,0,'test1',1,1993,'test','testtest',3,NULL),(7,0,'test2',1,1993,'test','testtest',1,NULL),(8,0,'test3',1,1993,'test','testtest',1,NULL),(9,0,'Demo Project 1',2,1993,'This is a description','',1,NULL),(10,0,'Andrews Test',4,1456,'The form works','testtest',1,NULL),(11,0,'Another Test',1,1234,'1234','1234',1,NULL),(12,0,'Another Test1',1,0,'','',1,NULL),(13,1,'At1',1,1333,'adfadsfad','adfasdfadsfad',1,NULL),(14,1,'New Element',4,1234,'adfadfad','adfasdfasdfads',2,NULL);
 /*!40000 ALTER TABLE `element` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -271,7 +271,7 @@ CREATE TABLE `elementcode` (
 
 LOCK TABLES `elementcode` WRITE;
 /*!40000 ALTER TABLE `elementcode` DISABLE KEYS */;
-INSERT INTO `elementcode` VALUES (1,1325,NULL),(2,5728,NULL),(3,7793,NULL),(4,1234,NULL),(13,1122,NULL),(5,6778,NULL);
+INSERT INTO `elementcode` VALUES (1,1325,NULL),(2,5728,NULL),(3,7793,NULL),(4,1234,NULL),(13,1122,NULL),(5,6778,NULL),(6,1111,NULL);
 /*!40000 ALTER TABLE `elementcode` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -300,7 +300,7 @@ CREATE TABLE `exhibit` (
 
 LOCK TABLES `exhibit` WRITE;
 /*!40000 ALTER TABLE `exhibit` DISABLE KEYS */;
-INSERT INTO `exhibit` VALUES (1,1,'Muse Sample 1',1),(2,1,'Internet Cats',1),(3,0,'Test1',1),(6,0,'Test2',1),(7,0,'Test3',1),(8,1,'test4',1);
+INSERT INTO `exhibit` VALUES (1,1,'Muse Sample 1',1),(2,1,'Internet Cats',1),(3,0,'Test1',2),(6,0,'Test2',1),(7,0,'Test3',1),(8,1,'test4',1);
 /*!40000 ALTER TABLE `exhibit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,7 +325,7 @@ CREATE TABLE `gender` (
 
 LOCK TABLES `gender` WRITE;
 /*!40000 ALTER TABLE `gender` DISABLE KEYS */;
-INSERT INTO `gender` VALUES (2,'female'),(1,'male'),(3,'N/A');
+INSERT INTO `gender` VALUES (2,'Female'),(1,'Male'),(3,'N/A');
 /*!40000 ALTER TABLE `gender` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,7 +351,7 @@ CREATE TABLE `interaction` (
   CONSTRAINT `fk_interaction_interactionTypeId` FOREIGN KEY (`interactionTypeId`) REFERENCES `interactionType` (`interactionType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_interaction_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_interaction_visitId` FOREIGN KEY (`visitId`) REFERENCES `visit` (`visitId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -360,7 +360,7 @@ CREATE TABLE `interaction` (
 
 LOCK TABLES `interaction` WRITE;
 /*!40000 ALTER TABLE `interaction` DISABLE KEYS */;
-INSERT INTO `interaction` VALUES (1,'2016-03-14 23:14:15',3,34,4,13),(2,'2016-03-14 23:24:28',1,34,4,13),(3,'2016-03-14 23:37:10',4,34,4,13),(4,'2016-03-15 02:25:40',5,35,NULL,14),(5,'2016-03-15 02:26:14',1,35,15,14),(6,'2016-03-15 02:26:24',4,35,15,14),(7,'2016-03-15 02:27:19',1,35,4,14),(8,'2016-03-15 02:27:23',6,35,NULL,14),(9,'2016-03-15 02:27:23',4,35,4,14);
+INSERT INTO `interaction` VALUES (1,'2016-03-14 23:14:15',3,34,4,13),(2,'2016-03-14 23:24:28',1,34,4,13),(3,'2016-03-14 23:37:10',4,34,4,13),(4,'2016-03-15 02:25:40',5,35,NULL,14),(5,'2016-03-15 02:26:14',1,35,15,14),(6,'2016-03-15 02:26:24',4,35,15,14),(7,'2016-03-15 02:27:19',1,35,4,14),(8,'2016-03-15 02:27:23',6,35,NULL,14),(9,'2016-03-15 02:27:23',4,35,4,14),(10,'2016-03-16 06:55:26',5,33,NULL,15),(11,'2016-03-16 07:00:22',5,33,NULL,15),(12,'2016-03-16 07:15:59',1,33,4,15),(13,'2016-03-16 07:03:56',4,33,4,15),(14,'2016-03-16 07:03:56',2,33,4,15),(15,'2016-03-16 07:07:52',5,33,NULL,15),(16,'2016-03-16 07:10:15',5,33,NULL,15),(17,'2016-03-16 07:14:58',5,33,NULL,15),(18,'2016-03-16 07:15:47',5,33,NULL,15);
 /*!40000 ALTER TABLE `interaction` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -703,6 +703,7 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_elementdetails` AS SELECT 
  1 AS `elementCode`,
+ 1 AS `museumId`,
  1 AS `elementId`,
  1 AS `active`,
  1 AS `elementName`,
@@ -766,7 +767,9 @@ DROP TABLE IF EXISTS `v_exhibits`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_exhibits` AS SELECT 
+ 1 AS `museumId`,
  1 AS `museum`,
+ 1 AS `exhibitId`,
  1 AS `exhibit`,
  1 AS `active`*/;
 SET character_set_client = @saved_cs_client;
@@ -853,7 +856,7 @@ CREATE TABLE `visit` (
   KEY `fk_visit_museumId_idx` (`museumId`),
   CONSTRAINT `fk_visit_museumId` FOREIGN KEY (`museumId`) REFERENCES `museum` (`museumId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_visit_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -862,7 +865,7 @@ CREATE TABLE `visit` (
 
 LOCK TABLES `visit` WRITE;
 /*!40000 ALTER TABLE `visit` DISABLE KEYS */;
-INSERT INTO `visit` VALUES (1,'2016-03-09 06:51:25','2016-03-09',1,1),(2,'2016-03-09 06:53:15','2016-03-09',33,1),(3,'2016-03-09 06:53:43','2016-03-08',33,1),(4,'2016-03-09 18:50:32','2016-03-09',33,2),(5,'2016-03-09 18:53:41','2016-03-09',33,3),(6,'2016-03-10 05:16:00','2016-03-10',33,3),(7,'2016-03-10 18:47:56','2016-03-10',33,2),(8,'2016-03-14 21:28:35','2016-03-14',33,1),(9,'2016-03-14 21:44:53','2016-03-14',31,1),(10,'2016-03-14 21:47:11','2016-03-14',37,1),(11,'2016-03-14 21:53:00','2016-03-14',37,2),(12,'2016-03-14 22:35:25','2016-03-14',36,1),(13,'2016-03-14 22:45:11','2016-03-14',34,1),(14,'2016-03-15 02:25:40','2016-03-14',35,3);
+INSERT INTO `visit` VALUES (1,'2016-03-09 06:51:25','2016-03-09',1,1),(2,'2016-03-09 06:53:15','2016-03-09',33,1),(3,'2016-03-09 06:53:43','2016-03-08',33,1),(4,'2016-03-09 18:50:32','2016-03-09',33,2),(5,'2016-03-09 18:53:41','2016-03-09',33,3),(6,'2016-03-10 05:16:00','2016-03-10',33,3),(7,'2016-03-10 18:47:56','2016-03-10',33,2),(8,'2016-03-14 21:28:35','2016-03-14',33,1),(9,'2016-03-14 21:44:53','2016-03-14',31,1),(10,'2016-03-14 21:47:11','2016-03-14',37,1),(11,'2016-03-14 21:53:00','2016-03-14',37,2),(12,'2016-03-14 22:35:25','2016-03-14',36,1),(13,'2016-03-14 22:45:11','2016-03-14',34,1),(14,'2016-03-15 02:25:40','2016-03-14',35,3),(15,'2016-03-16 06:55:26','2016-03-16',33,1);
 /*!40000 ALTER TABLE `visit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1945,7 +1948,7 @@ USE `muse_dev`;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_elementdetails` AS select `c`.`code` AS `elementCode`,`c`.`elementId` AS `elementId`,`e`.`active` AS `active`,`e`.`title` AS `elementName`,`a`.`artist` AS `artist`,`e`.`paintYear` AS `year`,`e`.`description` AS `description`,`e`.`imageLink` AS `imageLink` from ((`elementcode` `c` left join `element` `e` on((`c`.`elementId` = `e`.`elementId`))) left join `artist` `a` on((`e`.`artistId` = `a`.`artistId`))) */;
+/*!50001 VIEW `v_elementdetails` AS select `c`.`code` AS `elementCode`,`m`.`museumId` AS `museumId`,`c`.`elementId` AS `elementId`,`e`.`active` AS `active`,`e`.`title` AS `elementName`,`a`.`artist` AS `artist`,`e`.`paintYear` AS `year`,`e`.`description` AS `description`,`e`.`imageLink` AS `imageLink` from ((((`elementcode` `c` left join `element` `e` on((`c`.`elementId` = `e`.`elementId`))) left join `artist` `a` on((`e`.`artistId` = `a`.`artistId`))) left join `exhibit` `x` on((`e`.`exhibitId` = `x`.`exhibitId`))) left join `museum` `m` on((`x`.`museumId` = `m`.`museumId`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1999,7 +2002,7 @@ USE `muse_dev`;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_exhibits` AS select `m`.`museumName` AS `museum`,`e`.`exhibitName` AS `exhibit`,`e`.`active` AS `active` from (`exhibit` `e` left join `museum` `m` on((`e`.`museumId` = `m`.`museumId`))) */;
+/*!50001 VIEW `v_exhibits` AS select `m`.`museumId` AS `museumId`,`m`.`museumName` AS `museum`,`e`.`exhibitId` AS `exhibitId`,`e`.`exhibitName` AS `exhibit`,`e`.`active` AS `active` from (`exhibit` `e` left join `museum` `m` on((`e`.`museumId` = `m`.`museumId`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -2085,4 +2088,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-16  0:04:01
+-- Dump completed on 2016-03-16  3:16:40

@@ -35,6 +35,7 @@ var prevID = null;
 // Variables - Lindsay turn into cookies
 var userId = null;
 var visitId = null;
+var museumId = null;
 var elementCode = null;
   
   //  FACEBOOK LOGIN  //
@@ -201,6 +202,7 @@ var elementCode = null;
         res.render('checkIn', {title:'Check In'});
         }
       });
+
       app.post('/checkIn', function(req, res){
 
         var sqlParams = {"elementCode":req.body.code};
@@ -212,6 +214,7 @@ var elementCode = null;
             if (results.length == 0) {
               // Artword does not exist
               console.log("Invalid Code");
+              res.send(false);
             } else {
               res.send(true);
             }
@@ -228,8 +231,6 @@ var elementCode = null;
         res.render('tap', { title: 'tap'});
         }
       });
-
-
 
       app.get('/info/', function (req, res) {
         // needed to replace wuth a url paramter, because the javascripts were not loading
@@ -336,16 +337,21 @@ var sqlGetMuseums = function () {
 }
 
 var sqlInsertVisit = function (params) {
+  museumId = params.museumId 
   var str = "CALL insert_visit(CURDATE(),"; // default to the current date
       str += userId + ",";
-      str += params.museumId + ",@o1,@o2); SELECT @o1 AS 'success', @o2 AS 'visitId';";
+      str += museumId + ",@o1,@o2); SELECT @o1 AS 'success', @o2 AS 'visitId';";
   this.sqlStr = str;
 }
 
 var sqlGetvElementDetailsByCode = function (params) {
   this.sqlStr = squel.select()
                         .from("v_elementDetails")
-                        .where(squel.expr().and("elementCode=" + params.elementCode).and("active=1"))
+                        .where(squel.expr()
+                          .and("elementCode=" + params.elementCode)
+                          .and("active=1")
+                          .and("museumId=" + museumId)
+                        )
                         .toString();
 
 }
