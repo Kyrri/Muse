@@ -22,26 +22,16 @@ block mainContainer
 
 			label(for='gender') Gender
 			select(id='gender', name='gender' class='placeholdertext')
-				option(value='null', selected='selected' class='placeholdertext') Please Choose
-				option(value='Male' class='placeholdertext') Male
-				option(value='Female' class='placeholdertext') Female
-				option(value='Other' class='placeholdertext') Other
-				option(value='NA' class='placeholdertext') Prefer not to answer
+				option(value='null', selected='selected' class='placeholdertext' disabled) Please Choose
+				each gen in gender
+					option(value=gen.gender class='placeholdertext') #{gen.genderDesc}
 
 					//- Instead of Select, consider using twitter bootstrap dropdown - it's currently commented out but the script include for bootstrap is in layout.jade if you want it and it's already in the javascripts folder
 
 			label(for='ageRange') Age
 			select(id='ageRange', name='ageRange' class='placeholdertext')
-				option(value='null', selected='selected' class='placeholdertext') Please Choose
-				option(value='<18') <18
-				option(value='18-20') 18-20
-				option(value='20-25') 20-25
-				option(value='25-30') 25-30
-				option(value='30-40') 30-40
-				option(value='40-50') 40-50
-				option(value='50-60') 50-60
-				option(value='60-70') 60-70
-				option(value='70+') 70+
-				option(value='NA' class='placeholdertext') Prefer not to answer
+				option(value='null', selected='selected' class='placeholdertext' disabled) Please Choose
+				each age in ageRange
+					option(value=age.ageRange) #{age.ageRangeDesc}
 
 			input(class='button', type='submit', value='Sign Up') 

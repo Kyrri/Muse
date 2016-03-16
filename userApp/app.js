@@ -116,12 +116,26 @@ var elementCode = null;
     });
 
     app.get('/signup', function(req, res){
-         if(loggedIn){
-            res.redirect('/index');
+      if (loggedIn) {
+        res.redirect('/index');
+      } else {
+        var ageRangeQuery = squel.select().from("ageRange").toString() + ";";
+        var genderQuery = squel.select().from("gender").toString() + ";";
+        var sqlStr = ageRangeQuery + genderQuery;
+        conn.query(sqlStr, function (err, results) {
+          if (err) {
+            console.log(err);
+            res.redirect('/signup');
+          } else {
+            //console.log(results);
+            res.render('signup_default', { 
+              title: 'Sign Up',
+              ageRange : results[0],
+              gender : results[1]
+            });
           }
-          else{
-            res.render('signup_default', { title: 'Sign Up'});
-         }
+        }); 
+      }
     });
 
     app.post('/signup', function(req,res){
