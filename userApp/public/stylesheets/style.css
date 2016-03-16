@@ -3,17 +3,17 @@
 
 @font-face{
   font-family: MuseoSans;
-  src: 'MuseoSans_500-webfont.ttf';
+  src: url('MuseoSans_500-webfont.ttf');
 }
 
 @font-face{
   font-family: Museo;
-  src: 'Museo500-Regular-webfont.ttf';
+  src: url('Museo500-Regular-webfont.ttf');
 }
 
 @font-face{
   font-family: MuseoSansThin;
-  src: 'MuseoSansCyrl.otf';
+  src: url('MuseoSansCyrl.otf');
 }
 
 /* General */
@@ -94,61 +94,6 @@ select
 }
 
 
-/* Menu Bar */
-
-.menubar{
-  width:100%;
-  background-color:#939598;
-  color:#ffffff;
-  margin:0;
-}
-.menubar:after {
-  content: " ";
-  display: block;
-  clear: both;
-}
-
-.menubar img{
-  height: 10vw;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  position: relative;
-}
-
-.menubarItem {
-  float: left;
-  width: 20%
-}
-
-#menuTitle {
-  width: 60%;
-}
-
-#menuTitle h2 {
-  color: #ffffff;
-  font-family: Museo, Museo;
-  font-weight: bold;
-  font-size: 10vw;
-  letter-spacing: 4px;
-  padding-top: 5px;
-}
-
-#menuHomeLink {
-  text-align: left;
-}
-
-#menuHamburger {
-  text-align: right;
-}
-
-img#home {
-  height: 35px;
-  margin-top: 13px;
-  margin-left: 13px;
-} 
-
-
-
 /* Splash Screen */
 
 #splashscreen{
@@ -190,17 +135,9 @@ img#home {
   margin-bottom: 15px;
 }
 
-
-.artifact {
-  font-family: MuseoSans, Museo Sans;
-  font-weight: normal;
-  font-size:4vw;
-  margin:7px;
-  text-align: justify;
-}
-
 .mainContainer {
     padding:15px;
+    margin-top: 11vw;
 }
 
 .indexContainer {
@@ -408,7 +345,6 @@ button.selected {
 .signupContainer .button { 
   margin-top: 30px;
   margin-left: 0px;  
-  width: 95%;
 }
 
 
@@ -517,9 +453,10 @@ form#checkIn {
 .infobutton{
   color: #6d6f71;
   padding: 5px;
+  margin-bottom: 8vw;
 }
 
-.additional_info{
+.additionalInfo {
   font-family:"servus-slab", sans-serif;
   font-weight: normal;
   font-size:2vw;
@@ -558,5 +495,25 @@ form#checkIn {
   margin-right: auto;
   margin-left: auto;
   margin-bottom: 10px;
+  margin-top: ;
   display: block;
+}
+
+.infoControls {
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+
+.infoControls .button {
+  box-sizing: border-box;
+  width: 50%;
+  border-radius: 0;
+  float: left;
+  padding: 15px 5px;
+  font-size: 7vw;
 }

@@ -1,0 +1,55 @@
+/* Menu Bar */
+
+.menubar {
+  width: 100%;
+  background-color: #939598;
+  color: #ffffff;
+  margin: 0;
+  position: fixed;
+  top: 0;
+}
+
+.menubar:after {
+  content: " ";
+  display: block;
+  clear: both;
+}
+
+.menubar img {
+  height: 10vw;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  position: relative;
+}
+
+.menubarItem {
+  float: left;
+  width: 20%
+}
+
+#menuTitle {
+  width: 60%;
+}
+
+#menuTitle h2 {
+  color: #ffffff;
+  font-family: Museo, Museo;
+  font-weight: bold;
+  font-size: 10vw;
+  letter-spacing: 4px;
+  padding-top: 5px;
+}
+
+#menuHomeLink {
+  text-align: left;
+}
+
+#menuHamburger {
+  text-align: right;
+}
+
+img#home {
+  height: 35px;
+  margin-top: 13px;
+  margin-left: 13px;
+} 

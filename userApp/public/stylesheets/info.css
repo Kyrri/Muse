@@ -1,0 +1,72 @@
+.mainInfo {
+	font-family: MuseoSans, Museo Sans;
+	font-weight: normal;
+	font-size:4vw;
+	text-align: center;
+}
+
+.elementImage img {
+	max-height: 50vh;
+}
+
+.mainInfo h3 {
+	text-align: center;
+	font-family: Museo, Museo;
+	font-size: 8vw;
+	margin: 0;
+
+}
+
+.mainInfo h4 {
+	font-size: 5vw;
+	font-family: MuseoSans, Museo Sans;
+}
+
+.metaData {
+	width: 50%;
+	text-align: left;
+	margin: auto;
+}
+
+.likes-favourites {
+	z-index: 3;
+}
+
+#likebtn {
+	font-size: 11vw;
+	margin-left: 4vw;
+	margin-top: 2vh;
+	float: left;
+	color: #d1d3d4;
+}
+
+#likebtn.liked {
+	color: #8beabf;
+}
+
+#favbtn {
+	font-size: 11vw;
+	margin-right: 2vw;
+	margin-top: 2.5vh;
+	float: right;
+	color: #d1d3d4;
+}
+
+#favbtn.liked {
+	color: #8beabf;
+}
+
+.extraInfo {
+	margin-top: 2vh;
+}
+
+.extraInfo p {
+	border-radius: 4px;
+	opacity: 50%;
+	padding: 5px;
+}
+
+.extraInfo h3 {
+	text-align: left;
+	font-family: Museo, Museo;
+}

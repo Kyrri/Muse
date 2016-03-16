@@ -1,32 +1,26 @@
 extends layout
 block headScripts
   script(src='/javascripts/info.js')
+  link(rel='stylesheet', href='stylesheets/info.css')
 
 block mainContainer
-    .header
-        div(id='header', class='artifact')
+    .mainInfo
+        .elementImage
           img(class='infoImage', src=data.imageLink)
-          h4 #{data.elementName} 
-          h4 Artist: #{data.artist} 
-          h4 Created: #{data.year}
-    .infobutton
-        div(id='infobutton')
-            img(id='likebtn',src='../images/like.png' align='left' width='10%')
-            img(id='favbtn', src='../images/fav.png' align='right' width='11%')
-            br  
-            br     
-            hr
+        a#likebtn(href="#" type="button")
+          i(class="fa fa-thumbs-up fa-lg")
+        a#favbtn(href="#" type="button")
+          i(class="fa fa-star fa-lg")
+        h3 #{data.elementName} 
+        .metaData
+          h4 #{data.artist} 
+          h4 #{data.year}
+        
+    .extraInfo
+        h3 About
+        p #{data.description}
 
-
-        .upcoming
-            #signupbox
-                .boxSignup
-                    h5.accordion-toggle Additional Information
-
-                    .accordion-content.default
-                       p   #{data.description}
-
-        .planVisit
-            a.button(id='nextCheckInButton',href='checkin') Next Check-In
+        .infoControls
+            a.button(id='nextCheckInButton',href='checkin') Check-Out
             a.button(id='endTourButton', href='index') End Tour
   
