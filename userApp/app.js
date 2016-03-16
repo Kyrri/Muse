@@ -146,9 +146,12 @@ var elementCode = null;
           //PW hash failed
         }
         else{
-          conn.query('CALL userCreate("'+req.body.email+'","'+hash+'",'+1+','+1+',"'+req.body.fName+'","'+req.body.lName+'",'+1+','+1+', @o1, @o2, @o3); SELECT @o1, @o2, @o3', function(err, results) {
+          var sqlStr = 'CALL userCreate("'+req.body.email+'","'+hash+'",'+1+','+1+',"'+req.body.fName+'","'+req.body.lName+'",'+req.body.gender+','+req.body.age+', @o1, @o2, @o3); SELECT @o1, @o2, @o3;';
+          conn.query(sqlStr, function(err, results) {
             if (err){
+              console.log('Query Failed: '+sqlStr);
               console.log(err);
+              res.send(JSON.stringify({"Success": false, "ErrType": "sql", "Message": "Database could not process request"}));
               //error occured connecting to DB
             }
             else{
