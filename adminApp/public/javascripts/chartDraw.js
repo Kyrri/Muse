@@ -31,11 +31,11 @@ function drawChart(column){
 
 $(document).ready(function(){
   //Inject Exhibit Page
-    $('.museum').on('click', function(){
-      var museumId = $(this).val();
-      updateTable('museum', true, museumId);
-      $('#museums').hide();
-    });
+  $('.museum').on('click', function(){
+    var museumId = $(this).val();
+    updateTable('exhibit', true, museumId);
+    $('#museums').hide();
+  });
 
 //upddtes DOM elements to incorperate injected page
   function updateExhibitList(){
@@ -84,15 +84,31 @@ $(document).ready(function(){
     });
 
     //Inject Element list page in place of Exhibit list page
-    $(tableName+' tbody tr').on('click', function(){
-      updateTable('element', true);
+    $(tableName+' tbody tr button').on('click', function(){
+      var exhibitId = $(this).val();
+      console.log(exhibitId);
+      updateTable('element', true, exhibitId);
     });
   }
+
   //Creates/uploads the analytics table
-  function updateTable(table, drilldown, museumId){
-    var params = JSON.stringify({ 
-      'museumId' : museumId 
-    });
+  function updateTable(dataType, drilldown, id){
+    var params;
+    switch (dataType) {
+      case 'exhibit' :
+        params = JSON.stringify({ 
+          'dataType' : dataType, 
+          'museumId' : id 
+        });
+      break;
+      case 'element' :
+        params = JSON.stringify({ 
+          'dataType' : dataType, 
+          'exhibitId' : id 
+        });
+      break;
+    }
+
     console.log(params);
     $.ajax('/index_partial',{
       type: "POST",

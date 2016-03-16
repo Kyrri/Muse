@@ -61,22 +61,27 @@ var museumId = null;
     });
 
     app.post('/index_partial', function(req, res){
-      museumId = req.body.museumId;
-      if (museumId == null || museumId == undefined) {
-        res.status(412);
-      } else {
+      // get the data type request
+      var dataType = req.body.dataType; 
+      console.log("Requesting analtics for "+dataType+"...");
+
+      // stuff that will need to be sent for all data types
+      var getAgeRangeStr = squel.select().from("ageRange").toString() + "; ";
+      var getGenderStr = squel.select().from("gender").toString() + "; ";
+
+      if (dataType == "exhibit") {
+        console.log("Processing exhibit analytics ...");
+
+        if ( req.body.museumId != undefined ) {
+          museumId = req.body.museumId;
+        } 
+       
         var getExhibitsStr = squel.select().from("v_exhibits")
                                   .where("museumId="+museumId).where("active=1").toString() + "; ";
-        console.log('Generate QueryStr: ' + getExhibitsStr);
+        //console.log('Generate QueryStr: ' + getExhibitsStr);
 
-        var getAgeRangeStr = squel.select().from("ageRange").toString() + "; ";
-        console.log('Generate QueryStr: ' + getAgeRangeStr);
+        var sqlStr = getAgeRangeStr + getGenderStr + getExhibitsStr;
 
-        var getGenderStr = squel.select().from("gender").toString() + "; ";
-        console.log('Generate QueryStr: ' + getGenderStr);
-        
-        var sqlStr = getExhibitsStr + getAgeRangeStr + getGenderStr;
-        
         conn.query(sqlStr, function (err, results) {
           if (err) {
             console.log('Tried: ' + sqlStr);
@@ -84,13 +89,40 @@ var museumId = null;
           } else {
             console.log('Success: ' + sqlStr);
             res.render('index_partial', {
-              exhibits : results[0], 
-              ageRange : results[1],
-              gender : results[2]
+              dataType : dataType,
+              ageRange : results[0],
+              gender : results[1],
+              exhibits : results[2]
             });
           }
         });
-      }  
+
+      } else if (dataType == "element") {
+        console.log("Processing element analytics ...");
+
+        var exhibitId = req.body.exhibitId;
+
+        var getElementStr = squel.select().from("v_elementviews").where("exhibitId="+exhibitId).toString() + ";";
+        console.log('Generate QueryStr: ' + getElementStr);
+
+        var sqlStr = getAgeRangeStr + getGenderStr + getElementStr;
+
+        conn.query(sqlStr, function (err, results) {
+          if (err) {
+            console.log('Tried: ' + sqlStr);
+            console.log(err);
+          } else {
+            console.log('Success: ' + sqlStr);
+            res.render('index_partial', {
+              dataType : dataType,
+              ageRange : results[0],
+              gender : results[1],
+              elements : results[2]
+            });
+          }
+        });
+
+      }
     });
 
     app.post('/exec_sp',function(req,res){
