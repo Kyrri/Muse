@@ -1,3 +1,13 @@
+/* command to run 
+	$ mysql -u root -p database_name < filename
+
+	i.e.
+
+		$ mysql -u root -p muse_dev < constantDataValues.sql
+*/
+
+
+
 -- MySQL dump 10.13  Distrib 5.6.27, for osx10.8 (x86_64)
 --
 -- Host: localhost    Database: muse_dev

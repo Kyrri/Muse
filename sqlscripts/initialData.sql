@@ -21,11 +21,11 @@ INSERT INTO `muse_dev`.`user` (`userId`, `active`, `firstName`, `lastName`, `use
 INSERT INTO `muse_dev`.`login` (`loginId`, `active`, `loginType`, `login`, `userId`) VALUES ('1', '1', '1', 'admin%40muse.com', '1');
 
 /* Add museums firts */
-INSERT INTO `muse_dev`.`museum` (`museumName`) VALUES ('Interwebs');
+INSERT INTO `muse_dev`.`museum` (`museumName`) VALUES ('Muse Demo');
 
 /* Add exhibits next */
-INSERT INTO `muse_dev`.`exhibit` (`exhibitName`, `museumId`) VALUES ('Cats', '4');
-INSERT INTO `muse_dev`.`exhibit` (`exhibitName`, `museumId`) VALUES ('Dogs', '4');
+INSERT INTO `muse_dev`.`exhibit` (`exhibitName`, `museumId`) VALUES ('Cats', '1');
+INSERT INTO `muse_dev`.`exhibit` (`exhibitName`, `museumId`) VALUES ('Dogs', '2');
 
 /* Add an element */
 INSERT INTO `muse_dev`.`element` (`title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('Dug the Dog', '4', '2016', 'It\'s Dug\'s 1st Birthday', 'http://i.imgur.com/kQa1ri6.jpg', '10');
