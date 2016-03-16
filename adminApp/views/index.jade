@@ -10,5 +10,5 @@ block mainContainer
 
 	div(class='list-group', id='museums')
 		each museum in museums
-			button(class='list-group-item museum', type="button") #{museum.museumName}
+			button(class='list-group-item museum', type="button", value=museum.museumId) #{museum.museumName}
 	div(id='exhibitContainer')

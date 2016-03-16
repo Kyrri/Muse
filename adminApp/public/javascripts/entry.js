@@ -301,7 +301,7 @@ $(document).ready(function(){
 
 	function loadvExhibitsTable(museumId) {
 		var dbParams = JSON.stringify({
-			'table' : 'v_exhibits',
+			'table' : 'exhibit',
 			'clauses' : {
 				'museumId' : museumId
 			}

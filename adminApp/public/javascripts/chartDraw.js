@@ -32,7 +32,8 @@ function drawChart(column){
 $(document).ready(function(){
   //Inject Exhibit Page
     $('.museum').on('click', function(){
-      updateTable('exhibit', true);
+      var museumId = $(this).val();
+      updateTable('museum', true, museumId);
       $('#museums').hide();
     });
 
@@ -88,16 +89,14 @@ $(document).ready(function(){
     });
   }
   //Creates/uploads the analytics table
-  function updateTable(table, drilldown){
-    var params = JSON.stringify({
-      'table' : table,
-      'clauses' : {
-        'musuemId' : "'f_getMuseumId(' + museum + ')'" // make sure to send strings with quotes - ''
-      }
+  function updateTable(table, drilldown, museumId){
+    var params = JSON.stringify({ 
+      'museumId' : museumId 
     });
-
+    console.log(params);
     $.ajax('/index_partial',{
       type: "POST",
+      contentType : 'application/json',
       data: params,
       dataType: 'html',
         success: function(result) {

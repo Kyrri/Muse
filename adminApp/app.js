@@ -28,6 +28,7 @@ exports.loggedIn = false;
 
 // Global varibales 
 var userId = 1; // hardcoded for now, this is the userId of the admin user
+var museumId = null;
 
 // Routes
    
@@ -60,7 +61,28 @@ var userId = 1; // hardcoded for now, this is the userId of the admin user
     });
 
     app.post('/index_partial', function(req, res){
-      res.render('index_partial');
+      museumId = req.body.museumId;
+      if (museumId == null || museumId == undefined) {
+        res.status(412);
+      } else {
+        var getExhibitsStr = squel.select().from("v_exhibits")
+                                  .where("museumId="+museumId).where("active=1").toString() + ";";
+        console.log('Generate QueryStr: ' + getExhibitsStr);
+        
+        var sqlStr = getExhibitsStr;
+        
+        conn.query(sqlStr, function (err, results) {
+          if (err) {
+            console.log('Tried: ' + sqlStr);
+            console.log(err);
+          } else {
+            console.log('Success: ' + sqlStr);
+            res.render('index_partial', {
+              exhibits : results
+            });
+          }
+        });
+      }  
     });
 
     app.post('/exec_sp',function(req,res){
