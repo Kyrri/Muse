@@ -1,5 +1,5 @@
 google.charts.load('current', {packages: ['corechart']});
-var tableName = '#dynamicElementsTable';
+var tableContainer = '#exhibitTable';
 //id of current museum
 var musID;
 var exID;
@@ -9,12 +9,12 @@ var reload = true;
 //Draw the analytics chart
 function drawChart(column){
   //Read dynatable, use as chart data
-  var columnName = $(tableName).find('thead tr td:nth-child('+(column+1)+')').text();
+  var columnName = $(tableContainer).find('table thead tr td:nth-child('+(column+1)+')').text();
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Title');
     data.addColumn('number', columnName);
     var totalrows = [];
-    $('tbody', tableName).find('tr').each(function(){
+    $('table tbody', tableContainer).find('tr').each(function(){
       var row = [];
       row.push($(this).find('td:nth-child(1)').text());
       row.push(parseFloat($(this).find('td:nth-child('+(column+1)+')').text()));
@@ -72,15 +72,35 @@ $(document).ready(function(){
   }
 
   function updateExhibitList(){
+     function myRowWriter(rowIndex, record, columns, cellWriter) {
+        var tr = '';
+
+        // grab the record's attribute for each column
+        for (var i = 0, len = columns.length; i < len; i++) {
+          tr += cellWriter(columns[i], record);
+        }
+
+        return '<tr id=' + record.customData + '>' + tr + '</tr>';
+      };
+
+      function myRowReader(rowIndex, rowElement, record) {
+        record.customData = $(rowElement).attr('id');
+      };
 
     //Initalize dynatable
-    $(tableName).bind('dynatable:init', function(e, dynatable){
+    $(tableContainer+ ' table').bind('dynatable:init', function(e, dynatable){
       dynatable.queries.functions['exhibitName'] = function(record, queryValue) {
         return (record.exhibitName.toUpperCase().indexOf(queryValue.toUpperCase()) > -1);
       };
     }).dynatable({
       features:{
         search: false
+      },
+     writers: {
+        _rowWriter: myRowWriter
+      },
+      readers: {
+        _rowReader: myRowReader
       },
       inputs:{
         //Set custom search bar (can be moved wherever we want)
@@ -90,7 +110,7 @@ $(document).ready(function(){
     drawChart(1);
 
     //Draw chart when a table column with metrics is clicked
-    $(tableName+' td.metrics').on('click', function(){
+    $(tableContainer+' table td.metrics').on('click', function(){
       drawChart($(this).index());
     });
 
@@ -101,8 +121,9 @@ $(document).ready(function(){
     });
 
     //Inject Element list page in place of Exhibit list page
-    $(tableName+' tbody tr button').on('click', function(){
-      var exhibitId = $(this).val();
+    $(tableContainer+' table tbody tr').on('click', function(){
+      alert();
+      var exhibitId = $(this).attr('id');
       exID = exhibitId;
       dataType = 'element';
       updateTable(true);
@@ -175,7 +196,7 @@ $(document).ready(function(){
               reload=false;
             }
            else{
-            $(tableName).html(result);
+            $(tableContainer).html(result);
            }
            updateExhibitList();  
           
