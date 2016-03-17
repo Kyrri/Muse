@@ -41,7 +41,7 @@ var museumId = null;
                                       .where("userId="+userId).toString() + ";";
         console.log('Generate QueryStr: ' + getValidMuseumsStr);
 
-        var sqlStr = getValidMuseumsStr
+        var sqlStr = getValidMuseumsStr;
 
         conn.query(sqlStr, function (err, results) {
           if (err) {
@@ -99,8 +99,8 @@ var museumId = null;
       // stuff that will need to be sent for all data types
       var getAgeRangeStr = squel.select().from("ageRange").toString() + "; ";
       var getGenderStr = squel.select().from("gender").toString() + "; ";
-      var fromDate = '2016-03-01'; // hard code for now, will need to be passed as a parameter
-      var toDate = '2016-04-01'; // hard code for now, will need to be passed as a parameter
+      var fromDate = req.body.fromDate; // hard code for now, will need to be passed as a parameter
+      var toDate = req.body.ToDate; // hard code for now, will need to be passed as a parameter
 
       if (dataType == "exhibit") {
         console.log("Processing exhibit analytics ...");
@@ -166,12 +166,22 @@ var museumId = null;
             console.log(err);
           } else {
             //console.log('Success: ' + sqlStr);
-            res.render('index_partial', {
+            if(req.body.reload){
+              res.render('index_partial', {
               dataType : dataType,
               ageRange : results[0],
               gender : results[1],
               exhibits : results[2]
             });
+            }
+            else{
+              res.render('index_partial_exhibit', {
+              dataType : dataType,
+              ageRange : results[0],
+              gender : results[1],
+              exhibits : results[2]
+            });
+            }
           }
         });
 
@@ -248,12 +258,22 @@ var museumId = null;
             console.log(err);
           } else {
             //console.log('Success: ' + sqlStr);
-            res.render('index_partial', {
-              dataType : dataType,
-              ageRange : results[0],
-              gender : results[1],
-              elements : results[2]
-            });
+            if(req.body.reload){
+              res.render('index_partial', {
+                dataType : dataType,
+                ageRange : results[0],
+                gender : results[1],
+                elements : results[2]
+              });
+            }
+            else{
+              res.render('index_partial_exhibit', {
+                dataType : dataType,
+                ageRange : results[0],
+                gender : results[1],
+                elements : results[2]
+              });
+            }
           }
         });
 
