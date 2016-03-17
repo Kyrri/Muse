@@ -1,0 +1,9 @@
+{
+    "name": "data-generation"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+        "mysql": "*",
+        "squel" : "*"
+  }
+}
