@@ -217,7 +217,8 @@ $(document).ready(function(){
       var i;
       if($(this).attr("id")==='museumCrumb'){
         i=1;
-         $('#exhibitContainer').html("");
+        $('#exhibitContainer').html("");
+        reload=true;
         $('#museums').show();
       }
       else if($(this).attr("id")==='exhibitCrumb'){
