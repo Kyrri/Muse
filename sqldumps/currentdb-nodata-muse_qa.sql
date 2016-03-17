@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.6.27, for osx10.8 (x86_64)
 --
--- Host: localhost    Database: muse_dev
+-- Host: localhost    Database: muse_qa
 -- ------------------------------------------------------
 -- Server version	5.6.27-enterprise-commercial-advanced
 
@@ -16,14 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `muse_dev`
+-- Current Database: `muse_qa`
 --
 
-/*!40000 DROP DATABASE IF EXISTS `muse_dev`*/;
+/*!40000 DROP DATABASE IF EXISTS `muse_qa`*/;
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `muse_dev` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `muse_qa` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
-USE `muse_dev`;
+USE `muse_qa`;
 
 --
 -- Table structure for table `ageRange`
@@ -272,7 +272,7 @@ begin
                 limit 1),
 			new.tstamp
         );
-        CALL `muse_dev`.`update_visitDuration`();
+        CALL `muse_qa`.`update_visitDuration`();
 	elseif new.interactionTypeId = 4 then
 		delete from checkInDuration where elementId=new.elementId and visitId=new.visitId;
         insert into checkInDuration (
@@ -290,7 +290,7 @@ begin
                 limit 1),
 			new.tstamp
         );
-        CALL `muse_dev`.`update_checkInDuration`();
+        CALL `muse_qa`.`update_checkInDuration`();
     end if;
 end */;;
 DELIMITER ;
@@ -326,7 +326,7 @@ begin
                 limit 1),
 			new.tstamp
         );
-        CALL `muse_dev`.`update_visitDuration`();
+        CALL `muse_qa`.`update_visitDuration`();
 	elseif new.interactionTypeId = 4 then
 		delete from checkInDuration where elementId=new.elementId and visitId=new.visitId;
         insert into checkInDuration (
@@ -344,7 +344,7 @@ begin
                 limit 1),
 			new.tstamp
         );
-        CALL `muse_dev`.`update_checkInDuration`();
+        CALL `muse_qa`.`update_checkInDuration`();
     end if;
 end */;;
 DELIMITER ;
@@ -712,7 +712,7 @@ CREATE TABLE `visitDuration` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping routines for database 'muse_dev'
+-- Dumping routines for database 'muse_qa'
 --
 /*!50003 DROP FUNCTION IF EXISTS `f_getArtistId` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1745,10 +1745,10 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
--- Current Database: `muse_dev`
+-- Current Database: `muse_qa`
 --
 
-USE `muse_dev`;
+USE `muse_qa`;
 
 --
 -- Final view structure for view `v_activeelements`

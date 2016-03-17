@@ -9,7 +9,7 @@ var reload = true;
 //Draw the analytics chart
 function drawChart(column){
   //Read dynatable, use as chart data
-  var columnName = $(tableName).find('thead tr td:nth-child('+(column+1)+')').text().slice(0,-2);
+  var columnName = $(tableName).find('thead tr td:nth-child('+(column+1)+')').text();
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Title');
     data.addColumn('number', columnName);
@@ -153,7 +153,9 @@ $(document).ready(function(){
       case 'element' :
         params = JSON.stringify({ 
           'dataType' : dataType, 
-          'exhibitId' : id,
+          'exhibitId': id,
+          'toDate'   : toDate,
+          'fromDate' : fromDate,
           'reload'   : reload
         });
       break;
@@ -236,7 +238,7 @@ $(document).ready(function(){
     var today = new Date();
     var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
     return lastWeek ;
-}
+  }
 
 });
 
