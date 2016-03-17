@@ -23,50 +23,57 @@
 					div(class='dropdown .btn-group-vertical')
 						button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='gender') Gender
 						ul(class='dropdown-menu gender')
-							li
-								a(href='#') Female
-							li
-								a(href='#') Male
-							li
-								a(href='#') Declined Answer
+							each gen in gender
+								li
+									a(href='#') #{gen.genderDesc}
 					div(class='dropdown .btn-group-vertical')
 						button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='age') Age Range
 						ul(class='dropdown-menu age')
-							li
-								a(href='#') <18
-							li
-								a(href='#') 18-20
-							li
-								a(href='#') 20-25
-							li
-								a(href='#') 25-30
-							li
-								a(href='#') 30-40
-							li
-								a(href='#') 40-50
-							li
-								a(href='#') 50-60
-							li
-								a(href='#') 60-70
-							li
-								a(href='#') >70
+							each age in ageRange
+								li
+									a(href='#') #{age.ageRangeDesc}
+
 	.rightAlign
 		.titleHead
 			h4 Exhibit Metrics
-		.exhibitTable
+		#exhibitTable
 			table(id='dynamicElementsTable')
-				thead
-					tr
-						td Exhibit Name
-						td(class='metrics') Views
-						td(class='metrics') Holding Power
-				tbody
-					each exhibit in exhibits
+				if dataType == 'exhibit'
+					thead
 						tr
-							td(id='exhibitTitle') #{exhibit.exhibit}
-							td 40
-							td 36
-.chartContainer						
+							td Exhibit Name
+							td(class='metrics') Views
+							td(class='metrics') Likes
+							td(class='metrics') Favourites
+
+					tbody
+						each exhibit in exhibits
+							tr
+								td
+									button(class='list-group-item museum', type="button", value=exhibit.exhibitId) #{exhibit.exhibitName}
+								td #{exhibit.views}
+								td #{exhibit.likes}
+								td #{exhibit.favourites}
+
+				if dataType == 'element'
+					thead
+						tr
+							td Exhibit Name
+							td(class='metrics') Views
+							td(class='metrics') Likes
+							td(class='metrics') Favourites
+							td(class='metrics') Holding Power Index
+
+					tbody
+						each element in elements
+							tr
+								td(id='exhibitTitle') #{element.elementName}
+								td #{element.views}
+								td #{element.likes}
+								td #{element.favourites}
+								td #{element.holdingPwr}
+
+.chartContainer
 	.titleHead
 		h4 Exhibit Metrics
 	div#myPieChart
