@@ -1,3 +1,6 @@
+// Our Environment Variables //
+const environment = 'dev';
+
 var express = require('express');
 var app = require("express")();
 //var routes = require('./routes');
@@ -5,15 +8,32 @@ var bodyParser = require('body-parser')
 //var heatmap = require('heatmap');
 var fs = require('fs');
 //var canvas = require('canvas');
+
 // MySQL connection
 var mysql = require('mysql');
-var conn = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'muse_dev',
-  multipleStatements: true
-});
+var conn;
+switch (environment) {
+  case 'dev' : 
+    conn = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: 'root',
+      database: 'muse_dev',
+      multipleStatements: true
+    });
+  break;
+  case 'qa' : 
+    conn = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: 'root',
+      database: 'muse_qa',
+      multipleStatements: true
+    });
+  break;
+}
+console.log('Connected to '+ environment + ' database ...');
+
 var squel = require('squel');
 
 // Configuration
@@ -386,5 +406,5 @@ var museumId = null;
 
 // Run Server
 app.listen(3333, function(){
-  console.log("Listening on 3333");
+  console.log("Listening on 3333 ...");
 });
