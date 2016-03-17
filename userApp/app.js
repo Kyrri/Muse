@@ -54,7 +54,7 @@ var elementCode = null;
 
     app.post('/login', function(req,res){
       // parameters sent from the page
-      var email = req.body.email;
+      var email = escapeRegExp(req.body.email);
       var passEnter = req.body.password;
       var loginType = 1; // hardcoded because we currently use only one type - email login
       
@@ -146,7 +146,10 @@ var elementCode = null;
           //PW hash failed
         }
         else{
-          var sqlStr = 'CALL userCreate("'+req.body.email+'","'+hash+'",'+1+','+1+',"'+req.body.fName+'","'+req.body.lName+'",'+req.body.gender+','+req.body.age+', @o1, @o2, @o3); SELECT @o1, @o2, @o3;';
+          var email = escapeRegExp(req.body.email);
+          var fName = escapeRegExp(req.body.fName);
+          var lName = escapeRegExp(req.body.lName);
+          var sqlStr = 'CALL userCreate("'+email+'","'+hash+'",'+1+','+1+',"'+fName+'","'+lName+'",'+req.body.gender+','+req.body.age+', @o1, @o2, @o3); SELECT @o1, @o2, @o3;';
           conn.query(sqlStr, function(err, results) {
             if (err){
               console.log('Query Failed: '+sqlStr);
@@ -408,6 +411,30 @@ function testRun () {
   conn.query(factory.sqlGen(4).sqlStr, function (err, results) {
     console.log(results);
   });
+}
+function escapeRegExp(str) {
+  return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
+        switch (char) {
+            case "\0":
+                return "\\0";
+            case "\x08":
+                return "\\b";
+            case "\x09":
+                return "\\t";
+            case "\x1a":
+                return "\\z";
+            case "\n":
+                return "\\n";
+            case "\r":
+                return "\\r";
+            case "\"":
+            case "'":
+            case "\\":
+            case "%":
+                return "\\"+char; // prepends a backslash to backslash, percent,
+                                  // and double/single quotes
+        }
+    });
 }
 
 // Run Server
