@@ -29,6 +29,11 @@ INSERT INTO `muse_qa`.`login` (`loginId`, `active`, `loginType`, `login`, `pass`
 
 /* Add museums firts */
 INSERT INTO `muse_qa`.`museum` (`museumId`, `active`, `museumName`) VALUES ('1', '1', 'Muse Sample');
+INSERT INTO `muse_qa`.`museum` (`museumId`, `active`, `museumName`) VALUES ('2', '1', 'SYDE/Civil Design Symposium');
+
+/* Add museum admin permissions */
+INSERT INTO `muse_qa`.`museumPermission` (`userId`, `museumId`) VALUES ('1', '1');
+INSERT INTO `muse_qa`.`museumPermission` (`userId`, `museumId`) VALUES ('1', '2');
 
 /* Add exhibits next */
 INSERT INTO `muse_qa`.`exhibit` (`exhibitId`, `active`, `exhibitName`, `museumId`) VALUES ('1', '1', 'Vincent van Gogh', '1');
