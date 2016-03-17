@@ -121,7 +121,7 @@ CREATE TABLE `element` (
   `description` varchar(500) DEFAULT NULL,
   `imageLink` varchar(255) DEFAULT NULL,
   `exhibitId` int(11) NOT NULL,
-  `utilTime` int(11) DEFAULT NULL,
+  `utilTime` int(11) NOT NULL DEFAULT '45',
   PRIMARY KEY (`elementId`),
   KEY `fk_element_artistId_idx` (`artistId`),
   KEY `fk_element_exhibitId_idx` (`exhibitId`),
@@ -136,7 +136,7 @@ CREATE TABLE `element` (
 
 LOCK TABLES `element` WRITE;
 /*!40000 ALTER TABLE `element` DISABLE KEYS */;
-INSERT INTO `element` VALUES (1,0,'Luncheon of the Boating Party',1,1881,'Test description',NULL,1,NULL),(2,0,'Composition VIII',2,1923,'',NULL,1,NULL),(3,1,'Café Terrace at Night',3,1888,'',NULL,1,NULL),(4,1,'Maeby',4,2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2,NULL),(5,1,'Baby Cat',4,2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2,NULL),(6,0,'test1',1,1993,'test','testtest',3,NULL),(7,0,'test2',1,1993,'test','testtest',1,NULL),(8,0,'test3',1,1993,'test','testtest',1,NULL),(9,0,'Demo Project 1',2,1993,'This is a description','',1,NULL),(10,0,'Andrews Test',4,1456,'The form works','testtest',1,NULL),(11,0,'Another Test',1,1234,'1234','1234',1,NULL),(12,0,'Another Test1',1,0,'','',1,NULL),(13,1,'At1',1,1333,'adfadsfad','adfasdfadsfad',1,NULL),(14,1,'New Element',4,1234,'adfadfad','adfasdfasdfads',2,NULL);
+INSERT INTO `element` VALUES (1,0,'Luncheon of the Boating Party',1,1881,'Test description',NULL,1,45),(2,0,'Composition VIII',2,1923,'',NULL,1,45),(3,1,'Café Terrace at Night',3,1888,'',NULL,1,45),(4,1,'Maeby',4,2016,'A Cat Called Maeby','http://i.imgur.com/6oTvhPo.jpg',2,45),(5,1,'Baby Cat',4,2016,'A baby cat','http://i.imgur.com/5TTQdjM.jpg',2,45),(6,0,'test1',1,1993,'test','testtest',3,45),(7,0,'test2',1,1993,'test','testtest',1,45),(8,0,'test3',1,1993,'test','testtest',1,45),(9,0,'Demo Project 1',2,1993,'This is a description','',1,45),(10,0,'Andrews Test',4,1456,'The form works','testtest',1,45),(11,0,'Another Test',1,1234,'1234','1234',1,45),(12,0,'Another Test1',1,0,'','',1,45),(13,1,'At1',1,1333,'adfadsfad','adfasdfadsfad',1,45),(14,1,'New Element',4,1234,'adfadfad','adfasdfasdfads',2,45);
 /*!40000 ALTER TABLE `element` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,7 +351,7 @@ CREATE TABLE `interaction` (
   CONSTRAINT `fk_interaction_interactionTypeId` FOREIGN KEY (`interactionTypeId`) REFERENCES `interactionType` (`interactionType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_interaction_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_interaction_visitId` FOREIGN KEY (`visitId`) REFERENCES `visit` (`visitId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -360,7 +360,7 @@ CREATE TABLE `interaction` (
 
 LOCK TABLES `interaction` WRITE;
 /*!40000 ALTER TABLE `interaction` DISABLE KEYS */;
-INSERT INTO `interaction` VALUES (1,'2016-03-14 23:14:15',3,34,4,13),(2,'2016-03-14 23:24:28',1,34,4,13),(3,'2016-03-14 23:37:10',4,34,4,13),(4,'2016-03-15 02:25:40',5,35,NULL,14),(5,'2016-03-15 02:26:14',1,35,15,14),(6,'2016-03-15 02:26:24',4,35,15,14),(7,'2016-03-15 02:27:19',1,35,4,14),(8,'2016-03-15 02:27:23',6,35,NULL,14),(9,'2016-03-15 02:27:23',4,35,4,14),(10,'2016-03-16 06:55:26',5,33,NULL,15),(11,'2016-03-16 07:00:22',5,33,NULL,15),(12,'2016-03-16 07:15:59',1,33,4,15),(13,'2016-03-16 07:03:56',4,33,4,15),(14,'2016-03-16 07:03:56',2,33,4,15),(15,'2016-03-16 07:07:52',5,33,NULL,15),(16,'2016-03-16 07:10:15',5,33,NULL,15),(17,'2016-03-16 07:14:58',5,33,NULL,15),(18,'2016-03-16 07:15:47',5,33,NULL,15);
+INSERT INTO `interaction` VALUES (1,'2016-03-14 23:14:15',3,34,4,13),(2,'2016-03-14 23:24:28',1,34,4,13),(3,'2016-03-14 23:37:10',4,34,4,13),(4,'2016-03-15 02:25:40',5,35,NULL,14),(6,'2016-03-15 02:26:24',4,35,15,14),(7,'2016-03-15 02:27:19',1,35,4,14),(8,'2016-03-15 02:27:23',6,35,NULL,14),(9,'2016-03-15 02:27:23',4,35,4,14),(10,'2016-03-16 06:55:26',5,33,NULL,15),(11,'2016-03-16 07:00:22',5,33,NULL,15),(12,'2016-03-16 07:18:14',1,33,4,15),(13,'2016-03-16 07:03:56',4,33,4,15),(14,'2016-03-16 07:03:56',2,33,4,15),(15,'2016-03-16 07:07:52',5,33,NULL,15),(16,'2016-03-16 07:10:15',5,33,NULL,15),(17,'2016-03-16 07:14:58',5,33,NULL,15),(18,'2016-03-16 07:15:47',5,33,NULL,15);
 /*!40000 ALTER TABLE `interaction` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -542,7 +542,7 @@ CREATE TABLE `login` (
   KEY `fk_login_userId_idx` (`userId`),
   CONSTRAINT `fk_login_loginType` FOREIGN KEY (`loginType`) REFERENCES `loginType` (`loginType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_login_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -551,7 +551,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (1,1,1,'admin%40muse.com','',1),(3,1,1,'test1@test.com','test123',7),(4,1,1,'test2@test.com','test123',8),(5,1,1,'test3@test.com','test123',9),(6,1,1,'afadfsad%40sfsdfsd.com','sfadfadsfasd',10),(7,1,1,'Testingemail%40test.com','banana',11),(8,1,1,'Testing%40test.com','banana',12),(9,1,1,'123%40what.com','apple',13),(10,1,1,'yim.nathan%40gmail.com','musepassword',14),(11,1,1,'Chrrria%40gmail.ca','aaaaa',15),(12,1,1,'mtheng%40uwaterloo.ca','syde461demo',16),(13,1,1,'iangeasterbrook%40gmail.com','gg9911c3',17),(14,1,1,'chelsea.haemel%40hotmail.ca','chelsea',18),(15,1,1,'theojchan%40hotmail.com','Fire!blast5',19),(16,1,1,'Fjdosi%40isoos.odos','test123',20),(17,1,1,'nfjds%40uhfis.cds','test123',21),(18,1,1,'Shshsh%40dhdhdh.com','dhehrheh',22),(19,1,1,'Dhehrh%40djdhdh.dhdhd','djdhdhd',23),(20,1,1,'Tester%40walkthrough.com','dhdhdhdh',24),(21,1,1,'Isoshdk%40hsops.oso','sospskdo',25),(22,1,1,'Jsododi%40jspsp.pso','jdpsoss',26),(23,1,1,'Melissa.a.lynett%40gmail.com','AndrewIsWearingGrey',27),(24,1,1,'Shshsh%40shdhdh.djdjdj','sjshsjd',28),(25,1,1,'Dhdhdh%40djdhdh.djdhd','shehdhdhdhdh',29),(26,1,1,'andrewtest%40test.com','pbkdf2$10000$41b577b7a744f907e037db86b82d8ea1c2e7c7a38b25df882b18ca0bc9e619892acfb84eed0861715f104762708e996154d5307f8be1deb978a58f5e186b8bad$e536dd46822cbf694e0b7cc6601b0b3b51069879fda1e4b89c77cd67783b80b0b5aa0f4e855585b6be0b67290ff02d86569b416fd223ba55e',30),(27,1,1,'a1%40test.com','pbkdf2$10000$42489d2826869b5c3df8aefa83168a0c56b5311ce36ce920b76d6a2d9dcee43de7d85a0b964725b00ed98ee0c7a96a53565380385e5f68e4f5c68264f76fc7ba$50ee40ec8d28c03664140044c4ee6ec4086098e25e2f260cea8757ae9ff3af036a4499d0c5a562b9f47be9ca0e6f650a8c67cefdb8cd0b320',31),(28,1,1,'a2%40test.com','pbkdf2$10000$22c9920564f01d8a3eef6bdc3575ab3f8c451399b0cd8df77c2a7a752606dfafd386ef4e731ee9b57fe445f4c578ec59e92d338e5efe4e7f48279cfee64e55e6$185c0786e48e0a6a46a1df0969f26fba466ea0d469d275a2b9c8d8f154d5237774aef8ddfe2aaafc6ee466be244fd91a0b7aea5d4d7fdde4d',32),(29,1,1,'a3%40test.com','pbkdf2$10000$c3014a9ee5f9c8261208666cdb0c424e676afd05c44f550318afa35a0b7c4a153c5302947dae22833cfa25898f7794cd1495aa9d42a261d05d9e5eb6c3e196ca$1480f783fa14d2ca9c112452f35a95800496cb2c92b5655f408097e482533abf02084efd412b6e4f613bc7cca30654c0a754ed5d36b764f1e519878468c3186a',33),(30,1,1,'a4%40test.com','pbkdf2$10000$dc5f6dc4561caed629af9f6367cbb8b81dce3764f7a7d480267ac803a4e69252bee37b1f8a0ad68baf7efe175d7f78692f8688aa7bfcb0984a306056a088cb34$d04711540ab09cafa0f6e8b02af24fa43a794e3bdaad0fc14a792b6192cc54a7c17bbf7844509bf6a3cdf502de10b88c878fad8d5d53e5161b26c978a6825be2',34),(31,1,1,'a5%40test.com','pbkdf2$10000$96c01d3d084c577e99629effeb000abcad856a9f8e4ee299989de805b146e975ad0bc4f6ab7f5f6cf7fc5b6deaacdd5316a917d44143547557c9ace2f711de45$97e8ab4b1a7dd17841c3022c97641aa924092c0ff77e79d0de0ae1f65f3637c68fb418b736db73d536f454387d52529b12a016590b64b925e07bc4ab4cf5435b',35),(32,1,1,'a6%40test.com','pbkdf2$10000$71ed62777f1d75c6b1d8b03b3067607b45dadd18c9fadb0042d93292814bb78b078e3459da1ffc68807f7b140f89d622270b52a9dafeee46f8a3a7633f34404d$dcf0c67f528e2a2329fd6ffcea56185f627f0a657ca960e4bab19eaa1b119722b924c37a817d584283470fded8c585418d38803b81e5218d8216237cb445edfa',36),(33,1,1,'a7%40test.com','pbkdf2$10000$8235f68ec4259ab069055a60e3e1658c7e374f0b32ff640804e7db78e2ef50014efc97505538eac2a2657e1683aacaa64c821cde69a03593fb333623e2ffb258$3203491860096dd7c83674f74dc4e512d11ee9e729e4733c3abf3bc1e3392f81ba11ea4c44fd5002ff6ab98a2cf17cb01e7f08f07e40ced0c56948f28b9be15b',37);
+INSERT INTO `login` VALUES (1,1,1,'admin%40muse.com','',1),(3,1,1,'test1@test.com','test123',7),(4,1,1,'test2@test.com','test123',8),(5,1,1,'test3@test.com','test123',9),(6,1,1,'afadfsad%40sfsdfsd.com','sfadfadsfasd',10),(7,1,1,'Testingemail%40test.com','banana',11),(8,1,1,'Testing%40test.com','banana',12),(9,1,1,'123%40what.com','apple',13),(10,1,1,'yim.nathan%40gmail.com','musepassword',14),(11,1,1,'Chrrria%40gmail.ca','aaaaa',15),(12,1,1,'mtheng%40uwaterloo.ca','syde461demo',16),(13,1,1,'iangeasterbrook%40gmail.com','gg9911c3',17),(14,1,1,'chelsea.haemel%40hotmail.ca','chelsea',18),(15,1,1,'theojchan%40hotmail.com','Fire!blast5',19),(16,1,1,'Fjdosi%40isoos.odos','test123',20),(17,1,1,'nfjds%40uhfis.cds','test123',21),(18,1,1,'Shshsh%40dhdhdh.com','dhehrheh',22),(19,1,1,'Dhehrh%40djdhdh.dhdhd','djdhdhd',23),(20,1,1,'Tester%40walkthrough.com','dhdhdhdh',24),(21,1,1,'Isoshdk%40hsops.oso','sospskdo',25),(22,1,1,'Jsododi%40jspsp.pso','jdpsoss',26),(23,1,1,'Melissa.a.lynett%40gmail.com','AndrewIsWearingGrey',27),(24,1,1,'Shshsh%40shdhdh.djdjdj','sjshsjd',28),(25,1,1,'Dhdhdh%40djdhdh.djdhd','shehdhdhdhdh',29),(26,1,1,'andrewtest%40test.com','pbkdf2$10000$41b577b7a744f907e037db86b82d8ea1c2e7c7a38b25df882b18ca0bc9e619892acfb84eed0861715f104762708e996154d5307f8be1deb978a58f5e186b8bad$e536dd46822cbf694e0b7cc6601b0b3b51069879fda1e4b89c77cd67783b80b0b5aa0f4e855585b6be0b67290ff02d86569b416fd223ba55e',30),(27,1,1,'a1%40test.com','pbkdf2$10000$42489d2826869b5c3df8aefa83168a0c56b5311ce36ce920b76d6a2d9dcee43de7d85a0b964725b00ed98ee0c7a96a53565380385e5f68e4f5c68264f76fc7ba$50ee40ec8d28c03664140044c4ee6ec4086098e25e2f260cea8757ae9ff3af036a4499d0c5a562b9f47be9ca0e6f650a8c67cefdb8cd0b320',31),(28,1,1,'a2%40test.com','pbkdf2$10000$22c9920564f01d8a3eef6bdc3575ab3f8c451399b0cd8df77c2a7a752606dfafd386ef4e731ee9b57fe445f4c578ec59e92d338e5efe4e7f48279cfee64e55e6$185c0786e48e0a6a46a1df0969f26fba466ea0d469d275a2b9c8d8f154d5237774aef8ddfe2aaafc6ee466be244fd91a0b7aea5d4d7fdde4d',32),(29,1,1,'a3%40test.com','pbkdf2$10000$c3014a9ee5f9c8261208666cdb0c424e676afd05c44f550318afa35a0b7c4a153c5302947dae22833cfa25898f7794cd1495aa9d42a261d05d9e5eb6c3e196ca$1480f783fa14d2ca9c112452f35a95800496cb2c92b5655f408097e482533abf02084efd412b6e4f613bc7cca30654c0a754ed5d36b764f1e519878468c3186a',33),(30,1,1,'a4%40test.com','pbkdf2$10000$dc5f6dc4561caed629af9f6367cbb8b81dce3764f7a7d480267ac803a4e69252bee37b1f8a0ad68baf7efe175d7f78692f8688aa7bfcb0984a306056a088cb34$d04711540ab09cafa0f6e8b02af24fa43a794e3bdaad0fc14a792b6192cc54a7c17bbf7844509bf6a3cdf502de10b88c878fad8d5d53e5161b26c978a6825be2',34),(31,1,1,'a5%40test.com','pbkdf2$10000$96c01d3d084c577e99629effeb000abcad856a9f8e4ee299989de805b146e975ad0bc4f6ab7f5f6cf7fc5b6deaacdd5316a917d44143547557c9ace2f711de45$97e8ab4b1a7dd17841c3022c97641aa924092c0ff77e79d0de0ae1f65f3637c68fb418b736db73d536f454387d52529b12a016590b64b925e07bc4ab4cf5435b',35),(32,1,1,'a6%40test.com','pbkdf2$10000$71ed62777f1d75c6b1d8b03b3067607b45dadd18c9fadb0042d93292814bb78b078e3459da1ffc68807f7b140f89d622270b52a9dafeee46f8a3a7633f34404d$dcf0c67f528e2a2329fd6ffcea56185f627f0a657ca960e4bab19eaa1b119722b924c37a817d584283470fded8c585418d38803b81e5218d8216237cb445edfa',36),(33,1,1,'a7%40test.com','pbkdf2$10000$8235f68ec4259ab069055a60e3e1658c7e374f0b32ff640804e7db78e2ef50014efc97505538eac2a2657e1683aacaa64c821cde69a03593fb333623e2ffb258$3203491860096dd7c83674f74dc4e512d11ee9e729e4733c3abf3bc1e3392f81ba11ea4c44fd5002ff6ab98a2cf17cb01e7f08f07e40ced0c56948f28b9be15b',37),(34,1,1,'a9%40test.com','pbkdf2$10000$f1fae1b66dc743855b8323b7a18065d1538ea03dee8a235700473fc0d0a056f096766cb8367145f225593f3ffbb6cf04a08973e3bd55e7fd6ed1b6db92e06d4a$4fa2437f72a63efd27f90db448fc23a85b4caf779b4e0048650f89fa62920fa75d4145e884b6ce11e0362753a1a846afa492d42ff0e0daa4ea5cc43a31b6ef46',38),(35,1,1,'a10%40test.com','pbkdf2$10000$1d93e46dd2b2b178f9c148e25d1061e51a7d02fdd7592d18fd9d4f44bb34b60811dae3fe685f5b0b5615fbfc5f283d17eacf4d3e434e33929e06de6c18ea37cb$1cfa39217b0cb2f712dbe7e0690d0b087416e4530275d01ac8b95a113c84f2d062d71b586bdf50b7337871c56c920e26f7950e04be0cc33c4839307b41245d67',39),(36,1,1,'a11%40test.com','pbkdf2$10000$5c564564011cb820e68066d8d6efa394cd109d68e5d36d2d4f80d00a19497b23053e7b58700dd3efb1dff1b2762f9f14df40105baeae385658766627d35d9502$a90e8a427860c1af1a44a5970885a4cf8cf60605e7cdcce880765177f6d5d824b14eead7b675f5fced401f2676c211fa993f81269fcf7e9b205d957cd602b485',40);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -655,7 +655,7 @@ CREATE TABLE `user` (
   CONSTRAINT `fk_user_ageRange` FOREIGN KEY (`ageRange`) REFERENCES `ageRange` (`ageRange`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_gender` FOREIGN KEY (`gender`) REFERENCES `gender` (`gender`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_userTypeId` FOREIGN KEY (`userTypeId`) REFERENCES `userType` (`userTypeId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -664,7 +664,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,1,'admin','admin',NULL,NULL,2),(7,1,'test1','test11',1,1,1),(8,1,'test2','',1,1,1),(9,1,'test2','lastnametest',1,1,1),(10,1,'adfadfadsf','afasdfad',1,1,1),(11,1,'Gloria','McPlot',1,1,1),(12,1,'','',1,1,1),(13,1,'Potato','Tomato',1,1,1),(14,1,'Nathan','Yim',1,1,1),(15,1,'A','A',1,1,1),(16,1,'m','bristow',1,1,1),(17,1,'Ian','Easterbrook',1,1,1),(18,1,'Chelsea','Haemel',1,1,1),(19,1,'Theo','Chan',1,1,1),(20,1,'','',1,1,1),(21,1,'','',1,1,1),(22,1,'Djdhrh','',1,1,1),(23,1,'Dhdhdhd','Dhdhdhd',1,1,1),(24,1,'Bob','Smith',1,1,1),(25,1,'','',1,1,1),(26,1,'','',1,1,1),(27,1,'Melissa','Lynett',1,1,1),(28,1,'','',1,1,1),(29,1,'Dhdhdhdh','',1,1,1),(30,1,'Andrew','I',1,1,1),(31,1,'','',1,1,1),(32,1,'','',1,1,1),(33,1,'','',1,1,1),(34,1,'Tester','',1,1,1),(35,1,'','',1,1,1),(36,1,'','',1,1,1),(37,1,'','',1,1,1);
+INSERT INTO `user` VALUES (1,1,'admin','admin',NULL,NULL,2),(7,1,'test1','test11',1,1,1),(8,1,'test2','',1,1,1),(9,1,'test2','lastnametest',1,1,1),(10,1,'adfadfadsf','afasdfad',1,1,1),(11,1,'Gloria','McPlot',1,1,1),(12,1,'','',1,1,1),(13,1,'Potato','Tomato',1,1,1),(14,1,'Nathan','Yim',1,1,1),(15,1,'A','A',1,1,1),(16,1,'m','bristow',1,1,1),(17,1,'Ian','Easterbrook',1,1,1),(18,1,'Chelsea','Haemel',1,1,1),(19,1,'Theo','Chan',1,1,1),(20,1,'','',1,1,1),(21,1,'','',1,1,1),(22,1,'Djdhrh','',1,1,1),(23,1,'Dhdhdhd','Dhdhdhd',1,1,1),(24,1,'Bob','Smith',1,1,1),(25,1,'','',1,1,1),(26,1,'','',1,1,1),(27,1,'Melissa','Lynett',1,1,1),(28,1,'','',1,1,1),(29,1,'Dhdhdhdh','',1,1,1),(30,1,'Andrew','I',1,1,1),(31,1,'','',1,1,1),(32,1,'','',1,1,1),(33,1,'','',1,1,1),(34,1,'Tester','',1,1,1),(35,1,'','',1,1,1),(36,1,'','',1,1,1),(37,1,'','',1,1,1),(38,1,'FirstName','LastName',1,1,1),(39,1,'FirstName','LastName',1,1,1),(40,1,'','',2,6,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -692,6 +692,39 @@ LOCK TABLES `userType` WRITE;
 INSERT INTO `userType` VALUES (2,'admin'),(1,'visitor');
 /*!40000 ALTER TABLE `userType` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `v_activeelements`
+--
+
+DROP TABLE IF EXISTS `v_activeelements`;
+/*!50001 DROP VIEW IF EXISTS `v_activeelements`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_activeelements` AS SELECT 
+ 1 AS `museumId`,
+ 1 AS `museumName`,
+ 1 AS `exhibitId`,
+ 1 AS `exhibitName`,
+ 1 AS `elementId`,
+ 1 AS `elementName`,
+ 1 AS `utilTime`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `v_activeexhibits`
+--
+
+DROP TABLE IF EXISTS `v_activeexhibits`;
+/*!50001 DROP VIEW IF EXISTS `v_activeexhibits`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_activeexhibits` AS SELECT 
+ 1 AS `museumId`,
+ 1 AS `museumName`,
+ 1 AS `exhibitId`,
+ 1 AS `exhibitName`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Temporary view structure for view `v_elementdetails`
@@ -1936,6 +1969,42 @@ DELIMITER ;
 USE `muse_dev`;
 
 --
+-- Final view structure for view `v_activeelements`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_activeelements`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_activeelements` AS select `x`.`museumId` AS `museumId`,`m`.`museumName` AS `museumName`,`e`.`exhibitId` AS `exhibitId`,`x`.`exhibitName` AS `exhibitName`,`e`.`elementId` AS `elementId`,`e`.`title` AS `elementName`,`e`.`utilTime` AS `utilTime` from ((`element` `e` left join `exhibit` `x` on(((`x`.`exhibitId` = `e`.`exhibitId`) and (`x`.`active` = 1)))) left join `museum` `m` on(((`m`.`museumId` = `x`.`museumId`) and (`m`.`active` = 1)))) where (`e`.`active` = 1) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_activeexhibits`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_activeexhibits`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_activeexhibits` AS select `x`.`museumId` AS `museumId`,`m`.`museumName` AS `museumName`,`x`.`exhibitId` AS `exhibitId`,`x`.`exhibitName` AS `exhibitName` from (`exhibit` `x` left join `museum` `m` on(((`m`.`museumId` = `x`.`museumId`) and (`m`.`active` = 1)))) where (`x`.`active` = 1) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `v_elementdetails`
 --
 
@@ -2088,4 +2157,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-16  3:16:40
+-- Dump completed on 2016-03-16 18:30:57
