@@ -1,34 +1,34 @@
-if dataType == 'exhibit'
-	thead
-		tr
-			td Exhibit Name
-			td(class='metrics') Views
-			td(class='metrics') Likes
-			td(class='metrics') Favourites
-
-	tbody
-		each exhibit in exhibits
+table
+	if dataType == 'exhibit'
+		thead
 			tr
-				td
-					button(class='list-group-item museum', type="button", value=exhibit.exhibitId) #{exhibit.exhibitName}
-				td #{exhibit.views}
-				td #{exhibit.likes}
-				td #{exhibit.favourites}
+				td Exhibit Name
+				td(class='metrics') Views
+				td(class='metrics') Likes
+				td(class='metrics') Favourites
 
-if dataType == 'element'
-	thead
-		tr
-			td Exhibit Name
-			td(class='metrics') Views
-			td(class='metrics') Likes
-			td(class='metrics') Favourites
-			td(class='metrics') Holding Power Index
+		tbody
+			each exhibit in exhibits
+				tr(id=exhibit.exhibitId)
+					td #{exhibit.exhibitName}
+					td #{exhibit.views}
+					td #{exhibit.likes}
+					td #{exhibit.favourites}
 
-	tbody
-		each element in elements
+	if dataType == 'element'
+		thead
 			tr
-				td(id='exhibitTitle') #{element.elementName}
-				td #{element.views}
-				td #{element.likes}
-				td #{element.favourites}
-				td #{element.holdingPwr}
+				td Exhibit Name
+				td(class='metrics') Views
+				td(class='metrics') Likes
+				td(class='metrics') Favourites
+				td(class='metrics') Holding Power Index
+
+		tbody
+			each element in elements
+				tr
+					td(id='exhibitTitle') #{element.elementName}
+					td #{element.views}
+					td #{element.likes}
+					td #{element.favourites}
+					td #{element.holdingPwr}

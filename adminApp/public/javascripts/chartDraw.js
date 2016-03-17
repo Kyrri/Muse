@@ -94,7 +94,8 @@ $(document).ready(function(){
       };
     }).dynatable({
       features:{
-        search: false
+        search: false,
+        sort: false
       },
      writers: {
         _rowWriter: myRowWriter
@@ -122,13 +123,11 @@ $(document).ready(function(){
 
     //Inject Element list page in place of Exhibit list page
     $(tableContainer+' table tbody tr').on('click', function(){
-      alert();
       var exhibitId = $(this).attr('id');
       exID = exhibitId;
       dataType = 'element';
       updateTable(true);
     });
-
   }
 
   //Creates/uploads the analytics table

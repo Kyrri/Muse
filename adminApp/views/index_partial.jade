@@ -48,9 +48,8 @@
 
 					tbody
 						each exhibit in exhibits
-							tr
-								td
-									button(class='list-group-item museum', type="button", value=exhibit.exhibitId) #{exhibit.exhibitName}
+							tr(id=exhibit.exhibitId)
+								td #{exhibit.exhibitName}
 								td #{exhibit.views}
 								td #{exhibit.likes}
 								td #{exhibit.favourites}
