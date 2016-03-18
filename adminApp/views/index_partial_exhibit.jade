@@ -23,6 +23,10 @@ table
 				td(class='metrics') Likes
 				td(class='metrics') Favourites
 				td(class='metrics') Holding Power Index
+				td(class='metrics') Avg Stopping Time
+				td(class='metrics') Min Stopping Time
+				td(class='metrics') Max Stopping Time
+				td(class='metrics') Std.
 
 		tbody
 			each element in elements
@@ -32,3 +36,7 @@ table
 					td #{element.likes}
 					td #{element.favourites}
 					td #{element.holdingPwr}
+					td #{element.avgDuration}
+					td #{element.minDuration}
+					td #{element.maxDuration}
+					td #{element.stdDuration}
