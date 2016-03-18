@@ -1,5 +1,5 @@
 // Our Environment Variables //
-const environment = 'dev';
+const environment = 'qa';
 
 var express = require('express');
 var app = require("express")();

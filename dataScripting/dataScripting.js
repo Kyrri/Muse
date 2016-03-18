@@ -5,8 +5,8 @@ var gaussian = require('gaussian');
 
 // testing paramters //
 const c_museumId = 1; // use the Demo Museum
-var c_year = 2016;
-var c_month = 2;
+var c_year = 2015;
+var c_month = 0;
 //var c_date = 15;
 
 var conn;
@@ -120,7 +120,7 @@ var vDate = function () {
 		/*var hours = Math.floor(Math.random()*4) + 11; // get hours between 11-3
 		var min = Math.floor(Math.random()*60) // get min
 		var sec = Math.floor(Math.random()*60) // get sec*/
-		d.setFullYear(c_year,Math.floor(Math.random()*4),Math.floor(Math.random()*28)+1);
+		d.setFullYear(c_year,c_month,Math.floor(Math.random()*28)+1);
 		d.setHours(rBusHours());
 		d.setMinutes(rMinSec());
 		d.setSeconds(rMinSec());
@@ -193,10 +193,18 @@ function prob(percentage) {
 
 function main() {
 	var userId = 5
+	var month = 0;
 	setInterval( function () {
-		if (userId <= 85) {
+		if (userId <= 274) {
 			userVisit(userId);
-			userId ++
+			userId ++;
+		} else { 
+			if (c_month < 12) {
+				userId = 5;
+				c_month++;
+			} else {
+				console.log("All the visits done.")
+			}
 		}
 	},500)
 }

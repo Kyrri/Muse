@@ -213,3 +213,6 @@ INSERT INTO `muse_qa`.`elementtagmapping` (`elementTagId`, `elementId`, `active`
 INSERT INTO `muse_qa`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '29', '1');
 INSERT INTO `muse_qa`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '30', '1');
 INSERT INTO `muse_qa`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '31', '1');
+
+alter table muse_qa.interaction auto_increment=1;
+alter table muse_qa.visit auto_increment=1;
