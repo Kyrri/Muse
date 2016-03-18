@@ -122,25 +122,48 @@ var museumId = null, exhibitId = null;
       var fromDate = req.body.fromDate; // hard code for now, will need to be passed as a parameter
       var toDate = req.body.ToDate; // hard code for now, will need to be passed as a parameter
 
+      console.log(toDate);
+      console.log(fromDate);
+
+      // truncate the ISO format, only need the date
+      if (fromDate == undefined) {
+        console.log("Error: fromDate undefined.");
+      } else {
+        fromDate = fromDate.toString().substring(0,10);
+      }
+      if (toDate == undefined) {
+        console.log("Error: toDate undefined.");
+      } else {
+        toDate = toDate.toString().substring(0,10);
+      }
+
       // hardcoding for gender
-      var age = 4;//undefined;
-      var gen = 1;//undefined;
+      var age = undefined;
+      var gen = undefined
+      var tagIds = undefined; // i.e [1,2,3];
       var isage = false;
       var isgen = false;
+      var istag = false;
 
       if (age != undefined) {
         ageClause = squel.select().from("user").field("userId").where("ageRange="+age).toString()
+        ageClauseDur = squel.select().from("visit").field("visitId").where("userId IN ("+ageClause+")").toString()
         isage = true;
-      }
+      } 
       if (gen != undefined) {
         genClause = squel.select().from("user").field("userId").where("gender="+gen).toString();
+        genClauseDur = squel.select().from("visit").field("visitId").where("userId IN ("+genClause+")").toString()
         isgen = true;
       }
-
-      // truncate the ISO format, only need the date
-      if (fromDate != undefined && toDate != undefined) {
-        fromDate.toString().substring(0,10);
-        toDate.toString().substring(0,10);
+      if (tagIds != undefined) {
+        var ids = "(";
+        for (x in tagIds) {
+          ids += tagIds[x] + ",";
+        }
+        ids = ids.substr(0,ids.length-1);
+        ids += ")";
+        tagClause = squel.select().from("elementTagMapping").field("elementId").where("elementTagId IN "+ids).toString();
+        istag = true;
       }
       
       if (dataType == "exhibit") {
@@ -157,8 +180,7 @@ var museumId = null, exhibitId = null;
                                               .where("i.tstamp>='"+fromDate+"'")
                                               .where("i.tstamp<='"+toDate+"'")
                                               .where("e.museumId="+museumId)
-                                              .group("e.exhibitId");
-        views.where("i.userId IN("+genClause+")");              
+                                              .group("e.exhibitId");            
 
         var likes = squel.select().from("v_activeelements", "e")
                                               .field("e.exhibitId")
@@ -187,6 +209,11 @@ var museumId = null, exhibitId = null;
           views.where("i.userId IN ("+ageClause+")");
           likes.where("i.userId IN ("+ageClause+")");
           favs.where("i.userId IN ("+ageClause+")");
+        }
+        if (istag) {
+          views.where("e.elementId IN ("+tagClause+")");
+          likes.where("e.elementId IN ("+tagClause+")");
+          favs.where("e.elementId IN ("+tagClause+")");
         }
 
         var aggViews = squel.select().from("v_activeexhibits", "x")
@@ -286,11 +313,19 @@ var museumId = null, exhibitId = null;
           views.where("i.userId IN ("+genClause+")");
           likes.where("i.userId IN ("+genClause+")");
           favs.where("i.userId IN ("+genClause+")");
+          dur.where("i.visitId IN ("+genClauseDur+")");
         }
         if (isage) {
           views.where("i.userId IN ("+ageClause+")");
           likes.where("i.userId IN ("+ageClause+")");
           favs.where("i.userId IN ("+ageClause+")");
+          dur.where("i.visitId IN ("+ageClauseDur+")");
+        }
+        if (istag) {
+          views.where("e.elementId IN ("+tagClause+")");
+          likes.where("e.elementId IN ("+tagClause+")");
+          favs.where("e.elementId IN ("+tagClause+")");
+          dur.where("e.elementId IN ("+tagClause+")");
         }
 
         var aggMetrics = squel.select().from("v_activeelements", "e")
