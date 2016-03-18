@@ -141,32 +141,6 @@ INSERT INTO `element` VALUES (1,1,'Luncheon of the Boating Party',1,1881,'Test d
 UNLOCK TABLES;
 
 --
--- Table structure for table `elementFacts`
---
-
-DROP TABLE IF EXISTS `elementFacts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `elementFacts` (
-  `elementFactId` int(11) NOT NULL AUTO_INCREMENT,
-  `elementId` int(11) NOT NULL,
-  `active` int(11) NOT NULL DEFAULT '1',
-  `factNumber` int(11) NOT NULL,
-  `factText` varchar(140) NOT NULL,
-  PRIMARY KEY (`elementFactId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `elementFacts`
---
-
-LOCK TABLES `elementFacts` WRITE;
-/*!40000 ALTER TABLE `elementFacts` DISABLE KEYS */;
-/*!40000 ALTER TABLE `elementFacts` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `elementTag`
 --
 
@@ -2164,4 +2138,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-17 22:56:16
+-- Dump completed on 2016-03-18  1:55:40
