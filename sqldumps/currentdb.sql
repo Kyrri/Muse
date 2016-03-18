@@ -351,7 +351,7 @@ CREATE TABLE `interaction` (
   CONSTRAINT `fk_interaction_interactionTypeId` FOREIGN KEY (`interactionTypeId`) REFERENCES `interactionType` (`interactionType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_interaction_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_interaction_visitId` FOREIGN KEY (`visitId`) REFERENCES `visit` (`visitId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -360,7 +360,7 @@ CREATE TABLE `interaction` (
 
 LOCK TABLES `interaction` WRITE;
 /*!40000 ALTER TABLE `interaction` DISABLE KEYS */;
-INSERT INTO `interaction` VALUES (1,'2016-03-14 23:14:15',3,34,4,13),(2,'2016-03-14 23:24:28',1,34,4,13),(3,'2016-03-14 23:37:10',4,34,4,13),(4,'2016-03-15 02:25:40',5,35,NULL,14),(6,'2016-03-15 02:26:24',4,35,15,14),(7,'2016-03-15 02:27:19',1,35,4,14),(8,'2016-03-15 02:27:23',6,35,NULL,14),(9,'2016-03-15 02:27:23',4,35,4,14),(10,'2016-03-16 06:55:26',5,33,NULL,15),(11,'2016-03-16 07:00:22',5,33,NULL,15),(12,'2016-03-16 07:18:14',1,33,4,15),(13,'2016-03-16 07:03:56',4,33,4,15),(14,'2016-03-16 07:03:56',2,33,4,15),(15,'2016-03-16 07:07:52',5,33,NULL,15),(16,'2016-03-16 07:10:15',5,33,NULL,15),(17,'2016-03-16 07:14:58',5,33,NULL,15),(18,'2016-03-16 07:15:47',5,33,NULL,15),(19,'2016-03-17 17:54:25',5,41,NULL,16),(20,'2016-03-17 17:54:30',1,41,4,16),(21,'2016-03-17 17:56:24',2,41,4,16),(22,'2016-03-17 17:56:24',4,41,4,16);
+INSERT INTO `interaction` VALUES (1,'2016-03-14 23:14:15',3,34,4,13),(2,'2016-03-14 23:24:28',1,34,4,13),(3,'2016-03-14 23:37:10',4,34,4,13),(4,'2016-03-15 02:25:40',5,35,NULL,14),(6,'2016-03-15 02:26:24',4,35,15,14),(7,'2016-03-15 02:27:19',1,35,4,14),(8,'2016-03-15 02:27:23',6,35,NULL,14),(9,'2016-03-15 02:27:23',4,35,4,14),(10,'2016-03-16 06:55:26',5,33,NULL,15),(11,'2016-03-16 07:00:22',5,33,NULL,15),(12,'2016-03-16 07:18:14',1,33,4,15),(13,'2016-03-16 07:03:56',4,33,4,15),(14,'2016-03-16 07:03:56',2,33,4,15),(15,'2016-03-16 07:07:52',5,33,NULL,15),(16,'2016-03-16 07:10:15',5,33,NULL,15),(17,'2016-03-16 07:14:58',5,33,NULL,15),(18,'2016-03-16 07:15:47',5,33,NULL,15),(19,'2016-03-17 17:54:25',5,41,NULL,16),(20,'2016-03-18 02:55:06',1,41,4,16),(21,'2016-03-17 17:56:24',2,41,4,16),(22,'2016-03-17 17:56:24',4,41,4,16),(23,'2016-03-17 23:22:24',5,41,NULL,16),(24,'2016-03-18 02:11:06',5,41,NULL,16),(25,'2016-03-18 02:55:03',5,41,NULL,16);
 /*!40000 ALTER TABLE `interaction` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1580,6 +1580,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_visit`(
 	IN vVisitDate date, 
     IN vUserId integer, 
     IN vMuseumId integer, 
+    in vTstamp timestamp,
     OUT vSuccess integer, 
     out vVisitId integer
 )
@@ -1590,13 +1591,17 @@ BEGIN
         
 	start transaction;
     
+    if vTstamp is null then 
+		select now() into vTstamp;
+	end if;
+    
     select count(*) into vExists from visit
     where visitDate=vVisitDate and userId=vUserId and museumId=vMuseumId;
     
     if vExists = 1 then 
 		select visitId into vVisitId from visit
         where visitDate=vVisitDate and userId=vUserId and museumId=vMuseumId;
-        call insert_interaction(5,vUserId,null,vVisitId,null,@o1);
+        call insert_interaction(5,vUserId,null,vVisitId,vTstamp,@o1);
         select 0 into vSuccess;
 	elseif vExists > 1 then 
 		select -1 into vSuccess;
@@ -1604,14 +1609,16 @@ BEGIN
 		INSERT INTO visit (
 			visitDate,
 			userId,
-			museumId
+			museumId, 
+            tstamp
 		) VALUES (
 			vVisitDate,
 			vUserId,
-			vMuseumId
+			vMuseumId,
+            vTstamp
 		);
         select last_insert_id() into vVisitId;
-        call insert_interaction(5,vUserId,null,vVisitId,null,@o1);
+        call insert_interaction(5,vUserId,null,vVisitId,vTstamp,@o1);
 		select @o1 into vSuccess;
 	end if;
 	
@@ -1645,8 +1652,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `loginPasswordReturn`(
 )
 BEGIN
 	DECLARE vvalidLogin TINYINT DEFAULT 0;
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-        SELECT -1 into vSuccess;
+    /*DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;*/
     
 	start transaction;
     
@@ -2157,4 +2164,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-17 17:29:04
+-- Dump completed on 2016-03-17 22:56:16

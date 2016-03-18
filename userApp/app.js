@@ -378,7 +378,7 @@ var sqlInsertVisit = function (params) {
   museumId = params.museumId 
   var str = "CALL insert_visit(CURDATE(),"; // default to the current date
       str += userId + ",";
-      str += museumId + ",@o1,@o2); SELECT @o1 AS 'success', @o2 AS 'visitId';";
+      str += museumId + ",null,@o1,@o2); SELECT @o1 AS 'success', @o2 AS 'visitId';";
   this.sqlStr = str;
 }
 
