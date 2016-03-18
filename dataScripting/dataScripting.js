@@ -5,8 +5,8 @@ var gaussian = require('gaussian');
 
 // testing paramters //
 const c_museumId = 1; // use the Demo Museum
-var c_year = 2015;
-var c_month = 0;
+var c_year = 2016;
+var c_month = 3;
 //var c_date = 15;
 
 var conn;
@@ -77,7 +77,12 @@ function userVisit (userId) {
 					var checkInSql, checkOutSql, likesSql, favsSql, visitEndSql, sqlStr2;
 
 					for (i=0;i<numElements;i++) {
-						elementChoose = Math.floor(Math.random()*elements.length); // select a random element //
+						if (Math.random() < 0.5) {
+							elementChoose = Math.floor(gaussian(elements.length/3,2).ppf(Math.random()));
+						} else {
+							elementChoose = Math.floor(gaussian(2*elements.length/3,1).ppf(Math.random()));
+						}
+						//elementChoose = Math.floor(Math.random()*elements.length); // select a random element //
 						elementCode = elements[elementChoose];
 						elements.splice(elementChoose,1); // remove chosen element from the list
 
@@ -89,9 +94,19 @@ function userVisit (userId) {
 						visitEndSql = "CALL insert_interaction(6,"+userId+",null,"+visitId+",'"+vt.sqlDate()+"',@o1); ";
 
 						sqlStr2 = checkInSql + checkOutSql;
-						if (prob(0.33)) { sqlStr2 += likesSql; } // 33% chance of liking
-						if (prob(0.20)) { sqlStr2 += favsSql; } // 20% chance of fav
-						if (i==numElements-1) { sqlStr2 += visitEndSql; } // end the visit on the last element
+
+						if ((elementCode % 7) == 0) {
+							if (prob(0.90)) { sqlStr2 += likesSql; } 
+							if (prob(0.80)) { sqlStr2 += favsSql; } 
+						} else if ((elementCode % 3) == 0) {
+							if (prob(0.50)) { sqlStr2 += likesSql; } 
+							if (prob(0.40)) { sqlStr2 += favsSql; } 
+						} else {
+							if (prob(0.33)) { sqlStr2 += likesSql; } // 33% chance of liking
+							if (prob(0.20)) { sqlStr2 += favsSql; } // 20% chance of fav
+						}
+
+						if (i==(numElements-1)) { sqlStr2 += visitEndSql; } // end the visit on the last element
 
 						//console.log(sqlStr2);
 						//console.log("Trying: " + sqlStr2);
@@ -104,7 +119,7 @@ function userVisit (userId) {
 						});
 		
 						vt.addWait(); // time to walk to the next element
-						if (i==numElements-1) { console.log("Success. Vist complete for user: "+userId+" on "+vt.sqlDate()); } 
+						if (i==(numElements-1)) { console.log("Success. Vist complete for user: "+userId+" on "+vt.sqlDate()); } 
 					}
 				}
 			});
@@ -147,7 +162,19 @@ var vDate = function () {
 	}
 	function rCheckinTime () {
 		// compute a randome check in time, mean 45, sd 15
-		return Math.floor(gaussian(45,255).ppf(Math.random()));
+		var chance = Math.random();
+		var mean;
+		if (chance < 0.33) {
+			mean = Math.floor(Math.random()*5)+15
+		} else if (chance < 0.67) {
+			mean = Math.floor(Math.random()*15)+30
+		} else if (chance < 0.9) {
+			mean = Math.floor(Math.random()*12)+45
+		} else {
+			mean = Math.floor(Math.random()*10)+60
+		}
+
+		return mean+Math.random();//Math.floor(gaussian(mean,(mean*0.8)*(mean*0.8)).ppf(Math.random()));
 	}
 	function rWaitTime () {
 		// compute a random time, i.e. for walking to next item
@@ -195,17 +222,10 @@ function main() {
 	var userId = 5
 	var month = 0;
 	setInterval( function () {
-		if (userId <= 274) {
+		if (userId <= 20) {
 			userVisit(userId);
 			userId ++;
-		} else { 
-			if (c_month < 12) {
-				userId = 5;
-				c_month++;
-			} else {
-				console.log("All the visits done.")
-			}
-		}
+		} 
 	},500)
 }
 main();
