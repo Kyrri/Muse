@@ -100,6 +100,7 @@ INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `pa
 INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('31', '1', 'A Bigger Grand Canyon ', '15', '1998', 'In 1982 David Hockney took a series of photographs of the Grand Canyon that he placed together to form a collage. Hockney returned to the Grand Canyon theme in 1986, producing a large-scale photo-collage of sixty photographs; and again in 1997, when he painted A composition for a bigger Grand Canyon.', 'http://nga.gov.au/hockney/big.jpg', '4');
 INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`, `utilTime`) VALUES ('32', '1', 'Ascanius Shooting the Stag of Sylvia', '16', '1682', 'Landscape with Ascanius Shooting the Stag of Sylvia is an 1682 oil on canvas painting by Claude Lorrain, a painter of the style of Classicism. ', 'https://upload.wikimedia.org/wikipedia/commons/e/ee/Ascanius_Shooting_the_Stag_of_Sylvia_1682_Claude_Lorrain.jpg', '4', '0');
 
+update `muse_qa`.`element` set utilTime=45;
 /* Code Elements */
 INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(1,1000,null);
 INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(2,1001,null);
