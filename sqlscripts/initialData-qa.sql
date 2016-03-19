@@ -18,25 +18,35 @@ Static data:
 /* User */
 /* The admin user */
 INSERT INTO `muse_qa`.`user` (`userId`, `active`, `firstName`, `lastName`, `gender`, `ageRange`, `userTypeId`) VALUES ('1', '1', 'super', 'admin', '1', '1', '2');
-INSERT INTO `muse_qa`.`login` (`loginId`, `active`, `loginType`, `login`, `pass`, `userId`) VALUES ('1', '1', '1', 'test%40test.com', 'pbkdf2$10000$0e9dcdc6127f44594691365f927eb37ec865b8c5a3fb5dcc6f2d17d368cd96d7550d254edb5e5802aad318226b4d698033223236c4cdb71dbe629ab5582a4021$ed0a6912657d74e849ddf4b54a9d6ee0d7a16d538e8010650fe29d22c65ccbcb5a3e0e4a6175855ed8b62a5d6a74d43e7f142e09b5e7df9b4ddc930ad6effeb1', '1');
+INSERT INTO `muse_qa`.`login` (`loginId`, `active`, `loginType`, `login`, `pass`, `userId`) VALUES ('1', '1', '1', 'admin\%40muse.com', 'pbkdf2$10000$0e9dcdc6127f44594691365f927eb37ec865b8c5a3fb5dcc6f2d17d368cd96d7550d254edb5e5802aad318226b4d698033223236c4cdb71dbe629ab5582a4021$ed0a6912657d74e849ddf4b54a9d6ee0d7a16d538e8010650fe29d22c65ccbcb5a3e0e4a6175855ed8b62a5d6a74d43e7f142e09b5e7df9b4ddc930ad6effeb1', '1');
 
+alter table `muse_qa`.`user` auto_increment = 1;
 INSERT INTO `muse_qa`.`user` (`userId`, `active`, `firstName`, `lastName`, `gender`, `ageRange`, `userTypeId`) VALUES ('2', '1', 'Tom', 'Collins', '1', '4', '1');
 INSERT INTO `muse_qa`.`user` (`userId`, `active`, `firstName`, `lastName`, `gender`, `ageRange`, `userTypeId`) VALUES ('3', '1', 'Mary', 'Jane', '2', '3', '1');
-INSERT INTO `muse_qa`.`login` (`loginId`, `active`, `loginType`, `login`, `pass`, `userId`) VALUES ('2', '1', '1', 'test1%40test.com', 'pbkdf2$10000$0e9dcdc6127f44594691365f927eb37ec865b8c5a3fb5dcc6f2d17d368cd96d7550d254edb5e5802aad318226b4d698033223236c4cdb71dbe629ab5582a4021$ed0a6912657d74e849ddf4b54a9d6ee0d7a16d538e8010650fe29d22c65ccbcb5a3e0e4a6175855ed8b62a5d6a74d43e7f142e09b5e7df9b4ddc930ad6effeb1', '2');
-INSERT INTO `muse_qa`.`login` (`loginId`, `active`, `loginType`, `login`, `pass`, `userId`) VALUES ('3', '1', '1', 'test2%40test.com', 'pbkdf2$10000$0e9dcdc6127f44594691365f927eb37ec865b8c5a3fb5dcc6f2d17d368cd96d7550d254edb5e5802aad318226b4d698033223236c4cdb71dbe629ab5582a4021$ed0a6912657d74e849ddf4b54a9d6ee0d7a16d538e8010650fe29d22c65ccbcb5a3e0e4a6175855ed8b62a5d6a74d43e7f142e09b5e7df9b4ddc930ad6effeb1', '3');
 INSERT INTO `muse_qa`.`user` (`userId`, `active`, `firstName`, `lastName`, `gender`, `ageRange`, `userTypeId`) VALUES ('4', '1', 'Moko', 'Na', '2', '2', '1');
-INSERT INTO `muse_qa`.`login` (`loginId`, `active`, `loginType`, `login`, `pass`, `userId`) VALUES ('4', '1', '1', 'test%40test.com', 'pbkdf2$10000$0e9dcdc6127f44594691365f927eb37ec865b8c5a3fb5dcc6f2d17d368cd96d7550d254edb5e5802aad318226b4d698033223236c4cdb71dbe629ab5582a4021$ed0a6912657d74e849ddf4b54a9d6ee0d7a16d538e8010650fe29d22c65ccbcb5a3e0e4a6175855ed8b62a5d6a74d43e7f142e09b5e7df9b4ddc930ad6effeb1', '1');
+INSERT INTO `muse_qa`.`login` (`loginId`, `active`, `loginType`, `login`, `pass`, `userId`) VALUES ('2', '1', '1', 'test1\%40test.com', 'pbkdf2$10000$0e9dcdc6127f44594691365f927eb37ec865b8c5a3fb5dcc6f2d17d368cd96d7550d254edb5e5802aad318226b4d698033223236c4cdb71dbe629ab5582a4021$ed0a6912657d74e849ddf4b54a9d6ee0d7a16d538e8010650fe29d22c65ccbcb5a3e0e4a6175855ed8b62a5d6a74d43e7f142e09b5e7df9b4ddc930ad6effeb1', '2');
+INSERT INTO `muse_qa`.`login` (`loginId`, `active`, `loginType`, `login`, `pass`, `userId`) VALUES ('3', '1', '1', 'test2\%40test.com', 'pbkdf2$10000$0e9dcdc6127f44594691365f927eb37ec865b8c5a3fb5dcc6f2d17d368cd96d7550d254edb5e5802aad318226b4d698033223236c4cdb71dbe629ab5582a4021$ed0a6912657d74e849ddf4b54a9d6ee0d7a16d538e8010650fe29d22c65ccbcb5a3e0e4a6175855ed8b62a5d6a74d43e7f142e09b5e7df9b4ddc930ad6effeb1', '3');
+INSERT INTO `muse_qa`.`login` (`loginId`, `active`, `loginType`, `login`, `pass`, `userId`) VALUES ('4', '1', '1', 'test3\%40test.com', 'pbkdf2$10000$0e9dcdc6127f44594691365f927eb37ec865b8c5a3fb5dcc6f2d17d368cd96d7550d254edb5e5802aad318226b4d698033223236c4cdb71dbe629ab5582a4021$ed0a6912657d74e849ddf4b54a9d6ee0d7a16d538e8010650fe29d22c65ccbcb5a3e0e4a6175855ed8b62a5d6a74d43e7f142e09b5e7df9b4ddc930ad6effeb1', '1');
 
 /* Add museums firts */
+alter table `muse_qa`.`museum` auto_increment = 1;
 INSERT INTO `muse_qa`.`museum` (`museumId`, `active`, `museumName`) VALUES ('1', '1', 'Muse Sample');
+INSERT INTO `muse_qa`.`museum` (`museumId`, `active`, `museumName`) VALUES ('2', '1', 'SYDE/Civil Design Symposium');
+
+/* Add museum admin permissions */
+alter table `muse_qa`.`museumPermission` auto_increment = 1;
+INSERT INTO `muse_qa`.`museumPermission` (`userId`, `museumId`) VALUES ('1', '1');
+INSERT INTO `muse_qa`.`museumPermission` (`userId`, `museumId`) VALUES ('1', '2');
 
 /* Add exhibits next */
+alter table `muse_qa`.`exhibit` auto_increment = 1;
 INSERT INTO `muse_qa`.`exhibit` (`exhibitId`, `active`, `exhibitName`, `museumId`) VALUES ('1', '1', 'Vincent van Gogh', '1');
 INSERT INTO `muse_qa`.`exhibit` (`exhibitId`, `active`, `exhibitName`, `museumId`) VALUES ('2', '1', 'Wassily Kandinsky', '1');
 INSERT INTO `muse_qa`.`exhibit` (`exhibitId`, `active`, `exhibitName`, `museumId`) VALUES ('3', '1', 'Portraits', '1');
 INSERT INTO `muse_qa`.`exhibit` (`exhibitId`, `active`, `exhibitName`, `museumId`) VALUES ('4', '1', 'Landscapes', '1');
 
 /* Add artists next */
+alter table `muse_qa`.`artist` auto_increment = 1;
 INSERT INTO `muse_qa`.`artist` (`artistId`, `artist`, `active`) VALUES ('1', 'Wassily Kandinsky', '1');
 INSERT INTO `muse_qa`.`artist` (`artistId`, `artist`, `active`) VALUES ('2', 'Leonardo da Vinci', '1');
 INSERT INTO `muse_qa`.`artist` (`artistId`, `artist`, `active`) VALUES ('3', 'James Abbott McNeill Whistler', '1');
@@ -56,6 +66,7 @@ INSERT INTO `muse_qa`.`artist` (`artistId`, `artist`, `active`) VALUES ('16', 'A
 
 /* Add an element */
 /*Exhibit 1*/
+alter table `muse_qa`.`element` auto_increment = 1;
 INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`, `utilTime`) VALUES ('1', '1', 'The Starry Night', '8', '1889', 'Van Gogh painted this piece in 1889 while he was in Saint Rémy seeking treatment in a mental asylum.', 'http://lh6.ggpht.com/HlgucZ0ylJAfZgusynnUwxNIgIp5htNhShF559x3dRXiuy_UdP3UQVLYW6c=s1200', '1', '');
 INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`, `utilTime`) VALUES ('2', '1', 'Irises', '8', '1889', 'Irises is one of many paintings and prints of irises by Vincent Van Gogh.', 'http://lh5.ggpht.com/Go9QucSIS0OASfQar5o3ziLZFJfpbzoEURXvSL2vpu9B8yvvarl7qhrZQKs=s1200', '1', '');
 INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`, `utilTime`) VALUES ('3', '1', 'The Potato Eaters', '8', '1885', 'The Potato Eaters is an oil painting by Dutch artist Vincent van Gogh painted in April 1885 in Nuenen, Netherlands. ', 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Van-willem-vincent-gogh-die-kartoffelesser-03850.jpg', '1', '');
@@ -95,6 +106,7 @@ INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `pa
 INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('31', '1', 'A Bigger Grand Canyon ', '15', '1998', 'In 1982 David Hockney took a series of photographs of the Grand Canyon that he placed together to form a collage. Hockney returned to the Grand Canyon theme in 1986, producing a large-scale photo-collage of sixty photographs; and again in 1997, when he painted A composition for a bigger Grand Canyon.', 'http://nga.gov.au/hockney/big.jpg', '4');
 INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`, `utilTime`) VALUES ('32', '1', 'Ascanius Shooting the Stag of Sylvia', '16', '1682', 'Landscape with Ascanius Shooting the Stag of Sylvia is an 1682 oil on canvas painting by Claude Lorrain, a painter of the style of Classicism. ', 'https://upload.wikimedia.org/wikipedia/commons/e/ee/Ascanius_Shooting_the_Stag_of_Sylvia_1682_Claude_Lorrain.jpg', '4', '0');
 
+update `muse_qa`.`element` set utilTime=45;
 /* Code Elements */
 INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(1,1000,null);
 INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(2,1001,null);
@@ -129,6 +141,7 @@ INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(30,1
 INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(31,1030,null);
 
 /* Adding Tags */
+alter table `muse_qa`.`elementtag` auto_increment = 1;
 INSERT INTO `muse_qa`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('1', 'Baroque', '3', '1');
 INSERT INTO `muse_qa`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('2', 'Abstract', '3', '1');
 INSERT INTO `muse_qa`.`elementtag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('3', 'Classicism', '3', '1');
@@ -200,3 +213,6 @@ INSERT INTO `muse_qa`.`elementtagmapping` (`elementTagId`, `elementId`, `active`
 INSERT INTO `muse_qa`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '29', '1');
 INSERT INTO `muse_qa`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '30', '1');
 INSERT INTO `muse_qa`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '31', '1');
+
+alter table muse_qa.interaction auto_increment=1;
+alter table muse_qa.visit auto_increment=1;

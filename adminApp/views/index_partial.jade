@@ -48,9 +48,8 @@
 
 					tbody
 						each exhibit in exhibits
-							tr
-								td
-									button(class='list-group-item museum', type="button", value=exhibit.exhibitId) #{exhibit.exhibitName}
+							tr(id=exhibit.exhibitId)
+								td #{exhibit.exhibitName}
 								td #{exhibit.views}
 								td #{exhibit.likes}
 								td #{exhibit.favourites}
@@ -63,6 +62,7 @@
 							td(class='metrics') Likes
 							td(class='metrics') Favourites
 							td(class='metrics') Holding Power Index
+							td(class='metrics') Average duration
 
 					tbody
 						each element in elements
@@ -72,6 +72,7 @@
 								td #{element.likes}
 								td #{element.favourites}
 								td #{element.holdingPwr}
+								td #{element.duration}
 
 .chartContainer
 	.titleHead

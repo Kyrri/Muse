@@ -1,3 +1,6 @@
+// Our Environment Variables //
+const environment = 'dev';
+
 var express = require('express');
 var app = require("express")();
 var routes = require('./routes');
@@ -9,13 +12,28 @@ var squel = squelModule.useFlavour('mysql');
 
 // MySQL connection
 var mysql = require('mysql');
-var conn = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'muse_dev',
-  multipleStatements: true
-});
+var conn;
+switch (environment) {
+  case 'dev' : 
+    conn = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: 'root',
+      database: 'muse_dev',
+      multipleStatements: true
+    });
+  break;
+  case 'qa' : 
+    conn = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: 'root',
+      database: 'muse_qa',
+      multipleStatements: true
+    });
+  break;
+}
+console.log('Connected to '+ environment + ' database ...');
 
 // Configuration
 app.set('views', __dirname + '/views');
@@ -360,7 +378,7 @@ var sqlInsertVisit = function (params) {
   museumId = params.museumId 
   var str = "CALL insert_visit(CURDATE(),"; // default to the current date
       str += userId + ",";
-      str += museumId + ",@o1,@o2); SELECT @o1 AS 'success', @o2 AS 'visitId';";
+      str += museumId + ",null,@o1,@o2); SELECT @o1 AS 'success', @o2 AS 'visitId';";
   this.sqlStr = str;
 }
 
@@ -439,7 +457,7 @@ function escapeRegExp(str) {
 
 // Run Server
 app.listen(3000, function(){
-  console.log("Listening on 3000");
+  console.log("Listening on 3000 ...");
 });
 
 

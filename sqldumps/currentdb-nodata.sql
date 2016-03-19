@@ -101,23 +101,6 @@ CREATE TABLE `element` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `elementFacts`
---
-
-DROP TABLE IF EXISTS `elementFacts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `elementFacts` (
-  `elementFactId` int(11) NOT NULL AUTO_INCREMENT,
-  `elementId` int(11) NOT NULL,
-  `active` int(11) NOT NULL DEFAULT '1',
-  `factNumber` int(11) NOT NULL,
-  `factText` varchar(140) NOT NULL,
-  PRIMARY KEY (`elementFactId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `elementTag`
 --
 
@@ -242,7 +225,7 @@ CREATE TABLE `interaction` (
   CONSTRAINT `fk_interaction_interactionTypeId` FOREIGN KEY (`interactionTypeId`) REFERENCES `interactionType` (`interactionType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_interaction_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_interaction_visitId` FOREIGN KEY (`visitId`) REFERENCES `visit` (`visitId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1362,6 +1345,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_visit`(
 	IN vVisitDate date, 
     IN vUserId integer, 
     IN vMuseumId integer, 
+    in vTstamp timestamp,
     OUT vSuccess integer, 
     out vVisitId integer
 )
@@ -1372,13 +1356,17 @@ BEGIN
         
 	start transaction;
     
+    if vTstamp is null then 
+		select now() into vTstamp;
+	end if;
+    
     select count(*) into vExists from visit
     where visitDate=vVisitDate and userId=vUserId and museumId=vMuseumId;
     
     if vExists = 1 then 
 		select visitId into vVisitId from visit
         where visitDate=vVisitDate and userId=vUserId and museumId=vMuseumId;
-        call insert_interaction(5,vUserId,null,vVisitId,null,@o1);
+        call insert_interaction(5,vUserId,null,vVisitId,vTstamp,@o1);
         select 0 into vSuccess;
 	elseif vExists > 1 then 
 		select -1 into vSuccess;
@@ -1386,14 +1374,16 @@ BEGIN
 		INSERT INTO visit (
 			visitDate,
 			userId,
-			museumId
+			museumId, 
+            tstamp
 		) VALUES (
 			vVisitDate,
 			vUserId,
-			vMuseumId
+			vMuseumId,
+            vTstamp
 		);
         select last_insert_id() into vVisitId;
-        call insert_interaction(5,vUserId,null,vVisitId,null,@o1);
+        call insert_interaction(5,vUserId,null,vVisitId,vTstamp,@o1);
 		select @o1 into vSuccess;
 	end if;
 	
@@ -1427,8 +1417,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `loginPasswordReturn`(
 )
 BEGIN
 	DECLARE vvalidLogin TINYINT DEFAULT 0;
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-        SELECT -1 into vSuccess;
+    /*DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        SELECT -1 into vSuccess;*/
     
 	start transaction;
     
@@ -1939,4 +1929,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-17 17:29:06
+-- Dump completed on 2016-03-18  1:55:42

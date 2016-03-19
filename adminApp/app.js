@@ -1,20 +1,38 @@
+// Our Environment Variables //
+const environment = 'qa';
+
 var express = require('express');
 var app = require("express")();
 //var routes = require('./routes');
 var bodyParser = require('body-parser')
 //var heatmap = require('heatmap');
 //var canvas = require('canvas');
-var fs = require('fs');
 
 // MySQL connection
 var mysql = require('mysql');
-var conn = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'muse_dev',
-  multipleStatements: true
-});
+var conn;
+switch (environment) {
+  case 'dev' : 
+    conn = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: 'root',
+      database: 'muse_dev',
+      multipleStatements: true
+    });
+  break;
+  case 'qa' : 
+    conn = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: 'root',
+      database: 'muse_qa',
+      multipleStatements: true
+    });
+  break;
+}
+console.log('Connected to '+ environment + ' database ...');
+
 var squel = require('squel');
 
 // Configuration
@@ -32,7 +50,7 @@ exports.loggedIn = false;
 
 // Global varibales 
 var userId = 1; // hardcoded for now, this is the userId of the admin user
-var museumId = null;
+var museumId = null, exhibitId = null;
 
 // Routes
    
@@ -83,6 +101,50 @@ var museumId = null;
       var fromDate = req.body.fromDate; // hard code for now, will need to be passed as a parameter
       var toDate = req.body.ToDate; // hard code for now, will need to be passed as a parameter
 
+      console.log(toDate);
+      console.log(fromDate);
+
+      // truncate the ISO format, only need the date
+      if (fromDate == undefined) {
+        console.log("Error: fromDate undefined.");
+      } else {
+        fromDate = fromDate.toString().substring(0,10);
+      }
+      if (toDate == undefined) {
+        console.log("Error: toDate undefined.");
+      } else {
+        toDate = toDate.toString().substring(0,10);
+      }
+
+      // hardcoding for gender
+      var age = undefined;
+      var gen = undefined
+      var tagIds = undefined; // i.e [1,2,3];
+      var isage = false;
+      var isgen = false;
+      var istag = false;
+
+      if (age != undefined) {
+        ageClause = squel.select().from("user").field("userId").where("ageRange="+age).toString()
+        ageClauseDur = squel.select().from("visit").field("visitId").where("userId IN ("+ageClause+")").toString()
+        isage = true;
+      } 
+      if (gen != undefined) {
+        genClause = squel.select().from("user").field("userId").where("gender="+gen).toString();
+        genClauseDur = squel.select().from("visit").field("visitId").where("userId IN ("+genClause+")").toString()
+        isgen = true;
+      }
+      if (tagIds != undefined) {
+        var ids = "(";
+        for (x in tagIds) {
+          ids += tagIds[x] + ",";
+        }
+        ids = ids.substr(0,ids.length-1);
+        ids += ")";
+        tagClause = squel.select().from("elementTagMapping").field("elementId").where("elementTagId IN "+ids).toString();
+        istag = true;
+      }
+      
       if (dataType == "exhibit") {
         console.log("Processing exhibit analytics ...");
 
@@ -96,9 +158,8 @@ var museumId = null;
                                               .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=1")
                                               .where("i.tstamp>='"+fromDate+"'")
                                               .where("i.tstamp<='"+toDate+"'")
-                                              .where("museumId="+museumId)
-                                              .group("e.exhibitId")
-                                              .toString();
+                                              .where("e.museumId="+museumId)
+                                              .group("e.exhibitId");            
 
         var likes = squel.select().from("v_activeelements", "e")
                                               .field("e.exhibitId")
@@ -106,9 +167,8 @@ var museumId = null;
                                               .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=2")
                                               .where("i.tstamp>='"+fromDate+"'")
                                               .where("i.tstamp<='"+toDate+"'")
-                                              .where("museumId="+museumId)
-                                              .group("e.exhibitId")
-                                              .toString();
+                                              .where("e.museumId="+museumId)
+                                              .group("e.exhibitId");
 
         var favs = squel.select().from("v_activeelements", "e")
                                               .field("e.exhibitId")
@@ -116,9 +176,24 @@ var museumId = null;
                                               .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=3")
                                               .where("i.tstamp>='"+fromDate+"'")
                                               .where("i.tstamp<='"+toDate+"'")
-                                              .where("museumId="+museumId)
-                                              .group("e.exhibitId")
-                                              .toString();
+                                              .where("e.museumId="+museumId)
+                                              .group("e.exhibitId");
+
+        if (isgen) {
+          views.where("i.userId IN ("+genClause+")");
+          likes.where("i.userId IN ("+genClause+")");
+          favs.where("i.userId IN ("+genClause+")");
+        }
+        if (isage) {
+          views.where("i.userId IN ("+ageClause+")");
+          likes.where("i.userId IN ("+ageClause+")");
+          favs.where("i.userId IN ("+ageClause+")");
+        }
+        if (istag) {
+          views.where("e.elementId IN ("+tagClause+")");
+          likes.where("e.elementId IN ("+tagClause+")");
+          favs.where("e.elementId IN ("+tagClause+")");
+        }
 
         var aggViews = squel.select().from("v_activeexhibits", "x")
                                       .field("x.museumId")
@@ -127,10 +202,10 @@ var museumId = null;
                                       .field("SUM(v.views)", "views")
                                       .field("SUM(l.likes)", "likes")
                                       .field("SUM(f.favs)", "favourites")
-                                      .left_join("("+views+")","v","v.exhibitId=x.exhibitId")
-                                      .left_join("("+likes+")","l","l.exhibitId=x.exhibitId")
-                                      .left_join("("+favs+")","f","f.exhibitId=x.exhibitId")
-                                      .where("museumId="+museumId)
+                                      .left_join("("+views.toString()+")","v","v.exhibitId=x.exhibitId")
+                                      .left_join("("+likes.toString()+")","l","l.exhibitId=x.exhibitId")
+                                      .left_join("("+favs.toString()+")","f","f.exhibitId=x.exhibitId")
+                                      .where("x.museumId="+museumId)
                                       .group("x.museumId")
                                       .group ("x.exhibitId")
                                       .group("x.exhibitName")
@@ -139,7 +214,7 @@ var museumId = null;
         //console.log('Generate QueryStr: ' + aggViews);
         //console.log('Generate QueryStr: ' + getExhibitsStr);
 
-        var sqlStr = getAgeRangeStr + getGenderStr + aggViews;
+        var sqlStr = getAgeRangeStr.toString() + getGenderStr.toString() + aggViews.toString();
 
         conn.query(sqlStr, function (err, results) {
           if (err) {
@@ -169,7 +244,10 @@ var museumId = null;
       } else if (dataType == "element") {
         console.log("Processing element analytics ...");
 
-        var exhibitId = req.body.exhibitId;
+
+        if ( req.body.exhibitId != undefined ) {
+          exhibitId = req.body.exhibitId;
+        } 
 
         var views = squel.select().from("v_activeelements", "e")
                                               .field("e.elementId")
@@ -178,8 +256,7 @@ var museumId = null;
                                               .where("i.tstamp>='"+fromDate+"'")
                                               .where("i.tstamp<='"+toDate+"'")
                                               .where("e.exhibitId="+exhibitId)
-                                              .group("e.elementId")
-                                              .toString();
+                                              .group("e.elementId");
 
         var likes = squel.select().from("v_activeelements", "e")
                                               .field("e.elementId")
@@ -188,8 +265,7 @@ var museumId = null;
                                               .where("i.tstamp>='"+fromDate+"'")
                                               .where("i.tstamp<='"+toDate+"'")
                                               .where("e.exhibitId="+exhibitId)
-                                              .group("e.elementId")
-                                              .toString();
+                                              .group("e.elementId");
 
         var favs = squel.select().from("v_activeelements", "e")
                                               .field("e.elementId")
@@ -198,18 +274,38 @@ var museumId = null;
                                               .where("i.tstamp>='"+fromDate+"'")
                                               .where("i.tstamp<='"+toDate+"'")
                                               .where("e.exhibitId="+exhibitId)
-                                              .group("e.elementId")
-                                              .toString();
+                                              .group("e.elementId");
 
         var dur = squel.select().from("v_activeelements", "e")
                                               .field("e.elementId")
                                               .field("AVG(i.duration)", "dur")
+                                              .field("MIN(i.duration)", "mind")
+                                              .field("MAX(i.duration)", "maxd")
+                                              .field("STDDEV(i.duration)", "stdd")
                                               .left_join("checkInDuration", "i", "i.elementId=e.elementId")
                                               .where("i.endTime>='"+fromDate+"'")
                                               .where("i.endTime<='"+toDate+"'")
                                               .where("e.exhibitId="+exhibitId)
-                                              .group("e.elementId")
-                                              .toString();
+                                              .group("e.elementId");
+
+        if (isgen) {
+          views.where("i.userId IN ("+genClause+")");
+          likes.where("i.userId IN ("+genClause+")");
+          favs.where("i.userId IN ("+genClause+")");
+          dur.where("i.visitId IN ("+genClauseDur+")");
+        }
+        if (isage) {
+          views.where("i.userId IN ("+ageClause+")");
+          likes.where("i.userId IN ("+ageClause+")");
+          favs.where("i.userId IN ("+ageClause+")");
+          dur.where("i.visitId IN ("+ageClauseDur+")");
+        }
+        if (istag) {
+          views.where("e.elementId IN ("+tagClause+")");
+          likes.where("e.elementId IN ("+tagClause+")");
+          favs.where("e.elementId IN ("+tagClause+")");
+          dur.where("e.elementId IN ("+tagClause+")");
+        }
 
         var aggMetrics = squel.select().from("v_activeelements", "e")
                                       .field("e.exhibitId")
@@ -218,11 +314,15 @@ var museumId = null;
                                       .field("v.views", "views")
                                       .field("l.likes", "likes")
                                       .field("f.favs", "favourites")
-                                      .field("d.dur/e.utilTime", "holdingPwr")
-                                      .left_join("("+views+")","v","v.elementId=e.elementId")
-                                      .left_join("("+likes+")","l","l.elementId=e.elementId")
-                                      .left_join("("+favs+")","f","f.elementId=e.elementId")
-                                      .left_join("("+dur+")","d","d.elementId=e.elementId")
+                                      .field("FORMAT(d.dur/e.utilTime,2)", "holdingPwr")
+                                      .field("FORMAT(d.dur,2)", "avgDuration")
+                                      .field("FORMAT(d.mind,2)", "minDuration")
+                                      .field("FORMAT(d.maxd,2)", "maxDuration")
+                                      .field("FORMAT(d.stdd,2)", "stdDuration")
+                                      .left_join("("+views.toString()+")","v","v.elementId=e.elementId")
+                                      .left_join("("+likes.toString()+")","l","l.elementId=e.elementId")
+                                      .left_join("("+favs.toString()+")","f","f.elementId=e.elementId")
+                                      .left_join("("+dur.toString()+")","d","d.elementId=e.elementId")
                                       .where("e.exhibitId="+exhibitId)
                                       .group("e.exhibitId")
                                       .group ("e.elementId")
@@ -367,5 +467,5 @@ var museumId = null;
 
 // Run Server
 app.listen(3333, function(){
-  console.log("Listening on 3333");
+  console.log("Listening on 3333 ...");
 });

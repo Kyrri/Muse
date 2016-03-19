@@ -17,3 +17,5 @@ FEB 23, 2016
 - created table visit
 - created table elementTagType
 - created view v_tags
+- created view v_elements
+- created view v_users
