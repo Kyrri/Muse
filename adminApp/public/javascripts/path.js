@@ -88,18 +88,18 @@ $(document).ready(function(){
 				var points = [];
 					result.forEach(function(location){
 						if(location.gridX!=null && location.gridY!=null){
-						var val = location.views;
-						if(val>max){
-							max=val;
+							var val = location.views;
+
+							max = Math.max(max, val);
+						  	var point = {
+						  		x: Math.floor((yAdjust*location.gridX)+(yAdjust/2)),
+							    y: Math.floor((xAdjust*location.gridY)+(xAdjust/2)),
+							    value: val
+						 	};
+
+						  points.push(point);
 						}
-					  	var point = {
-						    y: Math.floor((xAdjust*location.gridY)+(xAdjust/2)),
-						    x: Math.floor((yAdjust*location.gridX)+(yAdjust/2)),
-						    value: val
-					 	};
-					  points.push(point);
-					}
-				});
+					});
 
 				var data = { 
 				  max: max,

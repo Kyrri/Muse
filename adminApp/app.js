@@ -108,9 +108,10 @@ var museumId = null, exhibitId = null;
                                       .field("e.*")
                                       .field("l.*")
                                       .left_join("elementCode","c","c.elementId=e.elementId")
-                                      .left_join("location","l","l.locationId=l.locationId");
+                                      .left_join("location","l","l.locationId=c.locationId");
 
         var sqlStr = withCode.toString();
+
         conn.query(sqlStr, function (err, results) {
           if (err) {
             console.log('Tried: ' + sqlStr);
