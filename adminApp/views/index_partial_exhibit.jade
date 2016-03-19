@@ -1,19 +1,24 @@
-table
+-var count =0;
+table(id='dynamicElementsTable')
 	if dataType == 'exhibit'
-		thead
-			tr
-				td Exhibit Name
-				td(class='metrics') Views
-				td(class='metrics') Likes
-				td(class='metrics') Favourites
+			thead
+				tr
+					td Exhibit Name
+					td(class='metrics') Views
+					td(class='metrics') Likes
+					td(class='metrics') Favourites
 
-		tbody
-			each exhibit in exhibits
-				tr(id=exhibit.exhibitId)
-					td #{exhibit.exhibitName}
-					td #{exhibit.views}
-					td #{exhibit.likes}
-					td #{exhibit.favourites}
+			tbody
+				each exhibit in exhibits
+					if(exhibit.views)
+						tr(id=exhibit.exhibitId)
+							td #{exhibit.exhibitName}
+							td #{exhibit.views}
+							td #{exhibit.likes}
+							td #{exhibit.favourites}
+						-count++;
+				if(count<=0)
+					p  No data within this timeframe. Select a new time frame
 
 	if dataType == 'element'
 		thead
@@ -30,13 +35,17 @@ table
 
 		tbody
 			each element in elements
-				tr
-					td(id='exhibitTitle') #{element.elementName}
-					td #{element.views}
-					td #{element.likes}
-					td #{element.favourites}
-					td #{element.holdingPwr}
-					td #{element.avgDuration}
-					td #{element.minDuration}
-					td #{element.maxDuration}
-					td #{element.stdDuration}
+				if(element.views)
+					tr
+						td(id='exhibitTitle') #{element.elementName}
+						td #{element.views}
+						td #{element.likes}
+						td #{element.favourites}
+						td #{element.holdingPwr}
+						td #{element.avgDuration}
+						td #{element.minDuration}
+						td #{element.maxDuration}
+						td #{element.stdDuration}
+					-count++;
+				if(count<=0)
+					p  No data within this timeframe. Select a new time frame	
