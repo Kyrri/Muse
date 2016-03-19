@@ -11,6 +11,8 @@ var fs = require('fs');
 
 // MySQL connection
 var mysql = require('mysql');
+var squel = require('squel');
+
 var conn;
 switch (environment) {
   case 'dev' : 
@@ -33,8 +35,6 @@ switch (environment) {
   break;
 }
 console.log('Connected to '+ environment + ' database ...');
-
-var squel = require('squel');
 
 // Configuration
 app.set('views', __dirname + '/views');
@@ -120,7 +120,7 @@ var museumId = null, exhibitId = null;
       var getAgeRangeStr = squel.select().from("ageRange").toString() + "; ";
       var getGenderStr = squel.select().from("gender").toString() + "; ";
       var fromDate = req.body.fromDate; // hard code for now, will need to be passed as a parameter
-      var toDate = req.body.ToDate; // hard code for now, will need to be passed as a parameter
+      var toDate = req.body.toDate; // hard code for now, will need to be passed as a parameter
 
       console.log(toDate);
       console.log(fromDate);
