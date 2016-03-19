@@ -45,6 +45,7 @@ $(document).ready(function(){
 	        }
 	        count++;
       	});
+
     	params = JSON.stringify({ 
           'toDate'   : toDate,
           'fromDate' : fromDate

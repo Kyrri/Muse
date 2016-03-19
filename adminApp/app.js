@@ -1,5 +1,5 @@
 // Our Environment Variables //
-const environment = 'qa';
+const environment = 'dev';
 
 var express = require('express');
 var app = require("express")();
@@ -68,6 +68,7 @@ var museumId = null, exhibitId = null;
             console.log(err);
           } else {
             console.log('Success: ' + sqlStr);
+
             res.render('index', { 
               title: 'Muse Admin',
               museums : results
@@ -81,8 +82,96 @@ var museumId = null, exhibitId = null;
       });
     });
     app.post('/pathHP', function(req, res){
-       var results = [{'x':5, 'y': 1}, {'x':5, 'y': 1}, {'x':5, 'y': 1}, {'x':5, 'y': 2}, {'x':5, 'y': 2}];
-       res.send(results);
+      var fromDate = req.body.fromDate;
+      var toDate = req.body.toDate;
+      var result = [{'x':5, 'y': 1}, {'x':5, 'y': 1}, {'x':5, 'y': 1}, {'x':5, 'y': 2}, {'x':5, 'y': 2}];
+      var views = squel.select().from("v_activeelements", "e")
+                                              .field("e.elementId")
+                                              .field("COUNT(i.interactionId)", "views")
+                                              .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=1")
+                                              .where("i.tstamp>='"+fromDate+"'")
+                                              .where("i.tstamp<='"+toDate+"'")
+                                              .group("e.elementId");
+
+        var likes = squel.select().from("v_activeelements", "e")
+                                              .field("e.elementId")
+                                              .field("COUNT(i.interactionId)", "likes")
+                                              .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=2")
+                                              .where("i.tstamp>='"+fromDate+"'")
+                                              .where("i.tstamp<='"+toDate+"'")
+                                              .group("e.elementId");
+
+        var favs = squel.select().from("v_activeelements", "e")
+                                              .field("e.elementId")
+                                              .field("COUNT(i.interactionId)", "favs")
+                                              .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=3")
+                                              .where("i.tstamp>='"+fromDate+"'")
+                                              .where("i.tstamp<='"+toDate+"'")
+                                              .group("e.elementId");
+
+        var dur = squel.select().from("v_activeelements", "e")
+                                              .field("e.elementId")
+                                              .field("AVG(i.duration)", "dur")
+                                              .field("MIN(i.duration)", "mind")
+                                              .field("MAX(i.duration)", "maxd")
+                                              .field("STDDEV(i.duration)", "stdd")
+                                              .left_join("checkInDuration", "i", "i.elementId=e.elementId")
+                                              .where("i.endTime>='"+fromDate+"'")
+                                              .where("i.endTime<='"+toDate+"'")
+                                              .group("e.elementId");
+
+        // if (isgen) {
+        //   views.where("i.userId IN ("+genClause+")");
+        //   likes.where("i.userId IN ("+genClause+")");
+        //   favs.where("i.userId IN ("+genClause+")");
+        //   dur.where("i.visitId IN ("+genClauseDur+")");
+        // }
+        // if (isage) {
+        //   views.where("i.userId IN ("+ageClause+")");
+        //   likes.where("i.userId IN ("+ageClause+")");
+        //   favs.where("i.userId IN ("+ageClause+")");
+        //   dur.where("i.visitId IN ("+ageClauseDur+")");
+        // }
+        // if (istag) {
+        //   views.where("e.elementId IN ("+tagClause+")");
+        //   likes.where("e.elementId IN ("+tagClause+")");
+        //   favs.where("e.elementId IN ("+tagClause+")");
+        //   dur.where("e.elementId IN ("+tagClause+")");
+        // }
+
+        var aggMetrics = squel.select().from("v_activeelements", "e")
+                                      .field("e.elementId")
+                                      .field("e.elementName")
+                                      .field("v.views", "views")
+                                      .field("l.likes", "likes")
+                                      .field("f.favs", "favourites")
+                                      .field("FORMAT(d.dur/e.utilTime,2)", "holdingPwr")
+                                      .field("FORMAT(d.dur,2)", "avgDuration")
+                                      .field("FORMAT(d.mind,2)", "minDuration")
+                                      .field("FORMAT(d.maxd,2)", "maxDuration")
+                                      .field("FORMAT(d.stdd,2)", "stdDuration")
+                                      .left_join("("+views.toString()+")","v","v.elementId=e.elementId")
+                                      .left_join("("+likes.toString()+")","l","l.elementId=e.elementId")
+                                      .left_join("("+favs.toString()+")","f","f.elementId=e.elementId")
+                                      .left_join("("+dur.toString()+")","d","d.elementId=e.elementId")
+                                      .group ("e.elementId")
+                                      .group("e.elementName")
+                                      .toString() + ";";
+
+        var sqlStr = aggMetrics;
+        conn.query(sqlStr, function (err, results) {
+          if (err) {
+            console.log('Tried: ' + sqlStr);
+            console.log(err);
+          } else {
+            console.log(results);
+           // res.send(results);
+          }
+        });
+
+
+
+       res.send(result);
     });
 
     //  ENTRY PAGE //
@@ -98,11 +187,8 @@ var museumId = null, exhibitId = null;
       // stuff that will need to be sent for all data types
       var getAgeRangeStr = squel.select().from("ageRange").toString() + "; ";
       var getGenderStr = squel.select().from("gender").toString() + "; ";
-      var fromDate = req.body.fromDate; // hard code for now, will need to be passed as a parameter
-      var toDate = req.body.ToDate; // hard code for now, will need to be passed as a parameter
-
-      console.log(toDate);
-      console.log(fromDate);
+      var fromDate = req.body.fromDate;
+      var toDate = req.body.toDate; 
 
       // truncate the ISO format, only need the date
       if (fromDate == undefined) {
