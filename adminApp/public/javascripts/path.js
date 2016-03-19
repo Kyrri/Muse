@@ -6,27 +6,31 @@ $(document).ready(function(){
 	function createDatePickers(){
 	    var count = 0;
 
-	    $('.datePicker').each(function(){
-	      switch(count){
-	        case 0:
-	         $(this).datepicker({
-	          onSelect: function(date){
-	            updateHeatmap();
-	          }
-	         });
-	         $(this).datepicker("setDate", getLastWeek());
-	        break;
-	        case 1:
-	         $(this).datepicker({
-	          onSelect: function(date){
-	            updateHeatmap();
-	          }
-	         });
-	         $(this).datepicker("setDate", new Date());
-	         break;
-	      }
-	      count++;
-	    });
+	     $('.datePicker').each(function(){
+		      switch(count){
+		        case 0:
+		         $(this).datepicker({
+		          onSelect: function(date){
+		            $("#date_2").datepicker("option","minDate", date);
+		            updateTable(false);
+		          }
+		         });
+		         $(this).datepicker("option","maxDate", new Date());
+		         $(this).datepicker("setDate", getLastWeek());
+		        break;
+		        case 1:
+		         $(this).datepicker({
+		          onSelect: function(date){
+		            $("#date_1").datepicker("option","maxDate", date);
+		            updateTable(false);
+		          }
+		         });
+		         $(this).datepicker("option","minDate", new getLastWeek());
+		         $(this).datepicker("setDate", new Date());
+		         break;
+		      }
+		      count++;
+		    });
 	  }
 	//updates the Heatmap
 	function updateHeatmap(){
