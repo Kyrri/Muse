@@ -63,13 +63,13 @@ $(document).ready(function(){
 	      dataType: 'json',
 	        success: function(result) {
 	        	//Number of squares x-y on museum layout grid
-				var gridX = 20;
-				var gridY = 20;
+				var gridX = 12;
+				var gridY = 9;
+				var max = 0;
 
 				//width and height of canvas element
 				var width = $('#hpMapCanvas').attr('width');
 				var height = $('#hpMapCanvas').attr('height');
-
 				//coordinate adjustment to line up museum grid coordinates to heatMap coordinates
 				var xAdjust = (width/gridX);
 				var yAdjust = (height/gridY);
@@ -86,17 +86,23 @@ $(document).ready(function(){
 
 
 				var points = [];
-
-				result.forEach(function(location){
-				  var point = {
-				    x: Math.floor((xAdjust*location.x)-(xAdjust/2)),
-				    y: Math.floor((yAdjust*location.y)-(yAdjust/2)),
-				    value: 1
-				  };
-				  points.push(point);
+					result.forEach(function(location){
+						if(location.gridX!=null && location.gridY!=null){
+						var val = location.views;
+						if(val>max){
+							max=val;
+						}
+					  	var point = {
+						    y: Math.floor((xAdjust*location.gridY)+(xAdjust/2)),
+						    x: Math.floor((yAdjust*location.gridX)+(yAdjust/2)),
+						    value: val
+					 	};
+					  points.push(point);
+					}
 				});
 
 				var data = { 
+				  max: max,
 				  data: points 
 				};
 

@@ -1,5 +1,5 @@
 // Our Environment Variables //
-const environment = 'dev';
+const environment = 'qa';
 
 var express = require('express');
 var app = require("express")();
@@ -84,94 +84,44 @@ var museumId = null, exhibitId = null;
     app.post('/pathHP', function(req, res){
       var fromDate = req.body.fromDate;
       var toDate = req.body.toDate;
-      var result = [{'x':5, 'y': 1}, {'x':5, 'y': 1}, {'x':5, 'y': 1}, {'x':5, 'y': 2}, {'x':5, 'y': 2}];
+       if (fromDate == undefined) {
+        console.log("Error: fromDate undefined.");
+      } else {
+        fromDate = fromDate.toString().substring(0,10);
+      }
+      if (toDate == undefined) {
+        console.log("Error: toDate undefined.");
+      } else {
+        toDate = toDate.toString().substring(0,10);
+      }
       var views = squel.select().from("v_activeelements", "e")
                                               .field("e.elementId")
+                                              .field("e.elementName")
                                               .field("COUNT(i.interactionId)", "views")
                                               .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=1")
-                                              .where("i.tstamp>='"+fromDate+"'")
-                                              .where("i.tstamp<='"+toDate+"'")
-                                              .group("e.elementId");
+                                              // .where("i.tstamp>='"+fromDate+"'")
+                                              // .where("i.tstamp<='"+toDate+"'")
+                                              .group("e.elementId")
+                                              .group("e.elementName");
 
-        var likes = squel.select().from("v_activeelements", "e")
-                                              .field("e.elementId")
-                                              .field("COUNT(i.interactionId)", "likes")
-                                              .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=2")
-                                              .where("i.tstamp>='"+fromDate+"'")
-                                              .where("i.tstamp<='"+toDate+"'")
-                                              .group("e.elementId");
+        var withCode = squel.select().from("("+views.toString()+")", "e")
+                                      .field("e.*")
+                                      .field("l.*")
+                                      .left_join("elementCode","c","c.elementId=e.elementId")
+                                      .left_join("location","l","l.locationId=l.locationId");
 
-        var favs = squel.select().from("v_activeelements", "e")
-                                              .field("e.elementId")
-                                              .field("COUNT(i.interactionId)", "favs")
-                                              .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=3")
-                                              .where("i.tstamp>='"+fromDate+"'")
-                                              .where("i.tstamp<='"+toDate+"'")
-                                              .group("e.elementId");
-
-        var dur = squel.select().from("v_activeelements", "e")
-                                              .field("e.elementId")
-                                              .field("AVG(i.duration)", "dur")
-                                              .field("MIN(i.duration)", "mind")
-                                              .field("MAX(i.duration)", "maxd")
-                                              .field("STDDEV(i.duration)", "stdd")
-                                              .left_join("checkInDuration", "i", "i.elementId=e.elementId")
-                                              .where("i.endTime>='"+fromDate+"'")
-                                              .where("i.endTime<='"+toDate+"'")
-                                              .group("e.elementId");
-
-        // if (isgen) {
-        //   views.where("i.userId IN ("+genClause+")");
-        //   likes.where("i.userId IN ("+genClause+")");
-        //   favs.where("i.userId IN ("+genClause+")");
-        //   dur.where("i.visitId IN ("+genClauseDur+")");
-        // }
-        // if (isage) {
-        //   views.where("i.userId IN ("+ageClause+")");
-        //   likes.where("i.userId IN ("+ageClause+")");
-        //   favs.where("i.userId IN ("+ageClause+")");
-        //   dur.where("i.visitId IN ("+ageClauseDur+")");
-        // }
-        // if (istag) {
-        //   views.where("e.elementId IN ("+tagClause+")");
-        //   likes.where("e.elementId IN ("+tagClause+")");
-        //   favs.where("e.elementId IN ("+tagClause+")");
-        //   dur.where("e.elementId IN ("+tagClause+")");
-        // }
-
-        var aggMetrics = squel.select().from("v_activeelements", "e")
-                                      .field("e.elementId")
-                                      .field("e.elementName")
-                                      .field("v.views", "views")
-                                      .field("l.likes", "likes")
-                                      .field("f.favs", "favourites")
-                                      .field("FORMAT(d.dur/e.utilTime,2)", "holdingPwr")
-                                      .field("FORMAT(d.dur,2)", "avgDuration")
-                                      .field("FORMAT(d.mind,2)", "minDuration")
-                                      .field("FORMAT(d.maxd,2)", "maxDuration")
-                                      .field("FORMAT(d.stdd,2)", "stdDuration")
-                                      .left_join("("+views.toString()+")","v","v.elementId=e.elementId")
-                                      .left_join("("+likes.toString()+")","l","l.elementId=e.elementId")
-                                      .left_join("("+favs.toString()+")","f","f.elementId=e.elementId")
-                                      .left_join("("+dur.toString()+")","d","d.elementId=e.elementId")
-                                      .group ("e.elementId")
-                                      .group("e.elementName")
-                                      .toString() + ";";
-
-        var sqlStr = aggMetrics;
+        var sqlStr = withCode.toString();
         conn.query(sqlStr, function (err, results) {
           if (err) {
             console.log('Tried: ' + sqlStr);
             console.log(err);
           } else {
-            console.log(results);
-           // res.send(results);
+            res.send(results);
           }
         });
 
 
-
-       res.send(result);
+     // var result = [{'name': 'Crylolophosaurus','x':8, 'y': 8}, {'name': 'Native Copper', 'x':8, 'y': 10}, {'name': 'Duck-Billed Dinosaur','x':5, 'y': 5}, {'name': 'Captohinus Aguti','x':5, 'y': 8}];
     });
 
     //  ENTRY PAGE //

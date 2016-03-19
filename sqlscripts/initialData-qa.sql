@@ -107,38 +107,73 @@ INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `pa
 INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`, `utilTime`) VALUES ('32', '1', 'Ascanius Shooting the Stag of Sylvia', '16', '1682', 'Landscape with Ascanius Shooting the Stag of Sylvia is an 1682 oil on canvas painting by Claude Lorrain, a painter of the style of Classicism. ', 'https://upload.wikimedia.org/wikipedia/commons/e/ee/Ascanius_Shooting_the_Stag_of_Sylvia_1682_Claude_Lorrain.jpg', '4', '0');
 
 update `muse_qa`.`element` set utilTime=45;
+
+
+	/* Location elements */
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('0', '1', '3', '4');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('1', '1', '5', '4');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('2', '1', '7', '5');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('3', '1', '7', '8');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('4', '1', '5', '8');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('5', '1', '3', '8');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('6', '1', '0', '8');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('7', '1', '0', '5');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('8', '1', '2', '6');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('9', '1', '4', '6');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('10', '2', '1', '0');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('11', '2', '4', '0');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('12', '2', '5', '2');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('13', '2', '3', '3');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('14', '2', '0', '2');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('15', '2', '0', '1');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('16', '4', '1', '7');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('17', '3', '6', '0');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('18', '3', '8', '0');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('19', '3', '9', '1');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('20', '3', '9', '2');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('21', '3', '6', '6');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('22', '3', '6', '3');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('23', '3', '6', '3');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('24', '4', '7', '1');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('25', '4', '10', '4');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('26', '4', '11', '5');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('27', '4', '11', '7');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('28', '4', '9', '8');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('29', '4', '8', '6');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('30', '4', '8', '4');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('31', '4', '9', '6');
 /* Code Elements */
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(1,1000,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(2,1001,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(3,1002,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(4,1003,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(5,1004,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(6,1005,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(7,1006,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(8,1007,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(9,1008,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(10,1009,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(11,1010,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(12,1011,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(13,1012,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(14,1013,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(15,1014,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(16,1015,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(17,1016,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(18,1017,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(19,1018,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(20,1019,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(21,1020,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(22,1021,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(23,1022,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(24,1023,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(25,1024,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(26,1025,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(27,1026,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(28,1027,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(29,1028,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(30,1029,null);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(31,1030,null);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(1,1000,1);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(2,1001,2);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(3,1002,3);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(4,1003,4);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(5,1004,5);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(6,1005,6);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(7,1006,7);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(8,1007,8);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(9,1008,9);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(10,1009,10);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(11,1010,11);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(12,1011,12);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(13,1012,13);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(14,1013,14);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(15,1014,15);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(16,1015,16);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(17,1016,17);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(18,1017,18);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(19,1018,19);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(20,1019,20);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(21,1020,21);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(22,1021,22);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(23,1022,23);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(24,1023,24);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(25,1024,25);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(26,1025,26);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(27,1026,27);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(28,1027,28);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(29,1028,29);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(30,1029,30);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(31,1030,31);
 
 /* Adding Tags */
 alter table `muse_qa`.`elementtag` auto_increment = 1;
@@ -213,6 +248,7 @@ INSERT INTO `muse_qa`.`elementtagmapping` (`elementTagId`, `elementId`, `active`
 INSERT INTO `muse_qa`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '29', '1');
 INSERT INTO `muse_qa`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '30', '1');
 INSERT INTO `muse_qa`.`elementtagmapping` (`elementTagId`, `elementId`, `active`) VALUES ('8', '31', '1');
+
 
 alter table muse_qa.interaction auto_increment=1;
 alter table muse_qa.visit auto_increment=1;
