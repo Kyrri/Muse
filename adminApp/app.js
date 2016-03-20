@@ -93,9 +93,6 @@ var museumId = null, exhibitId = null;
       var fromDate = req.body.fromDate; // hard code for now, will need to be passed as a parameter
       var toDate = req.body.toDate; // hard code for now, will need to be passed as a parameter
 
-      console.log(toDate);
-      console.log(fromDate);
-
       // truncate the ISO format, only need the date
       if (fromDate == undefined) {
         console.log("Error: fromDate undefined.");
@@ -109,8 +106,9 @@ var museumId = null, exhibitId = null;
       }
 
       // hardcoding for gender
-      var age = undefined;
-      var gen = undefined
+      var age = req.body.age;
+      var gen = req.body.gen;
+      console.log(age +"   "+ gen);
       var tagIds = undefined; // i.e [1,2,3];
       var isage = false;
       var isgen = false;

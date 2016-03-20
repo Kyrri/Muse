@@ -13,31 +13,32 @@
 				h4 Filters
 			.filters
 				div(class='.btn-group-vertical')
-					div(class='dropdown .btn-group-verticalp')
-						button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='time') Time
-						ul(class='dropdown-menu time')
-							li
-								a(href='#') Days of the Week
-							li
-								a(href='#') Months
 					div(class='dropdown .btn-group-vertical')
 						button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='gender') Gender
 						ul(class='dropdown-menu gender')
+							li
+								a(href='#') None
 							each gen in gender
 								li
-									a(href='#') #{gen.genderDesc}
+									a(href='#', id='gentag_'+gen.gender) #{gen.genderDesc}
 					div(class='dropdown .btn-group-vertical')
 						button(class='btn btn-default dropdown-toggle ', type="button", data-toggle="dropdown", id='age') Age Range
 						ul(class='dropdown-menu age')
+							li
+								a(href='#') None
 							each age in ageRange
 								li
-									a(href='#') #{age.ageRangeDesc}
+									a(href='#', id='agetag_'+age.ageRange) #{age.ageRangeDesc}
+					div(class='checkboxContainer')
+						label.checkBoxHead Element Tags
+						label 
+							input(type='checkbox', name='tag', class='checkBox', id='tag+tagID')
+							| Tag Filter
 
 	.rightAlign
 		.titleHead
 			h4 Exhibit Metrics
 		#exhibitTable
-			-var count =0;
 			table(id='dynamicElementsTable')
 				if dataType == 'exhibit'
 						thead
@@ -49,15 +50,21 @@
 
 						tbody
 							each exhibit in exhibits
-								if(exhibit.views)
 									tr(id=exhibit.exhibitId)
 										td #{exhibit.exhibitName}
-										td #{exhibit.views}
-										td #{exhibit.likes}
-										td #{exhibit.favourites}
-									-count++;
-							if(count<=0)
-								p  No data within this timeframe. Select a new time frame
+										if(exhibit.views)
+											td #{exhibit.views}
+										else
+											td 0
+										if(exhibit.likes)
+											td #{exhibit.likes}
+										else
+											td 0
+										if(exhibit.favourites)
+											td #{exhibit.favourites}
+										else
+											td 0
+
 
 				if dataType == 'element'
 					thead
@@ -77,18 +84,40 @@
 							if(element.views)
 								tr
 									td(id='exhibitTitle') #{element.elementName}
-									td #{element.views}
-									td #{element.likes}
-									td #{element.favourites}
-									td #{element.holdingPwr}
-									td #{element.avgDuration}
-									td #{element.minDuration}
-									td #{element.maxDuration}
-									td #{element.stdDuration}
-								-count++;
-							if(count<=0)
-								p  No data within this timeframe. Select a new time frame
-			.chartContainer
+									if(element.views)
+										td #{element.views}
+									else
+										td 0
+									if(element.likes)
+										td #{element.likes}
+									else
+										td 0
+									if(element.favourites)
+										td #{element.favourites}
+									else
+										td 0
+									if(element.holdingPwr)
+										td #{element.holdingPwr}
+									else
+										td 0
+									if(element.avgDuration)
+										td #{element.avgDuration}
+									else
+										td 0
+									if element.minDuration
+										td #{element.minDuration}
+									else
+										td 0
+									if element.maxDuration
+										td #{element.maxDuration}
+									else
+										td 0
+									if element.stdDuration
+										td #{element.stdDuration}
+									else
+										td 0
+
+.chartContainer
 	.titleHead
 		h4 Exhibit Metrics
 	div#myPieChart
