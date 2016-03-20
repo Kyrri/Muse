@@ -12,7 +12,7 @@ $(document).ready(function(){
 		         $(this).datepicker({
 		          onSelect: function(date){
 		            $("#date_2").datepicker("option","minDate", date);
-		            updateTable(false);
+		            updateHeatmap();
 		          }
 		         });
 		         $(this).datepicker("option","maxDate", new Date());
@@ -22,7 +22,7 @@ $(document).ready(function(){
 		         $(this).datepicker({
 		          onSelect: function(date){
 		            $("#date_1").datepicker("option","maxDate", date);
-		            updateTable(false);
+		            updateHeatmap();
 		          }
 		         });
 		         $(this).datepicker("option","minDate", new getLastWeek());

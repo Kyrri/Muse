@@ -113,15 +113,6 @@ $(document).ready(function(){
       }
     }).data('dynatable');
     drawChart(1);
-      if(dataType=='element'){
-      $('.checkboxContainer').show();
-      $('.checkBox').on('click', function(){
-        updateTable(false);
-      });
-    }
-    else if(dataType=='exhibit'){
-      $('.checkboxContainer').hide();
-    }
 
     //Draw chart when a table column with metrics is clicked
     $(tableContainer+' table td.metrics').on('click', function(){
@@ -142,6 +133,8 @@ $(document).ready(function(){
          $('#'+val).addClass('activeFilter');
          $('#'+val).addClass($(this).attr('id'));
       };
+    });
+     $('#submitFilters').on('click', function(){
         updateTable(false);
     });
 

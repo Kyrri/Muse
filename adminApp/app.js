@@ -377,8 +377,8 @@ var museumId = null, exhibitId = null;
                                               .field("e.elementName")
                                               .field("COUNT(i.interactionId)", "views")
                                               .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=1")
-                                              // .where("i.tstamp>='"+fromDate+"'")
-                                              // .where("i.tstamp<='"+toDate+"'")
+                                              .where("i.tstamp>='"+fromDate+"'")
+                                              .where("i.tstamp<='"+toDate+"'")
                                               .group("e.elementId")
                                               .group("e.elementName");
 
