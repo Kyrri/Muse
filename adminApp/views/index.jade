@@ -7,8 +7,10 @@ block mainContainer
 	ol.breadcrumb(id='drillTrack')
 		li(id='museumCrumb')
 			a(href='#') Museum
+	.containerAdjust
+		h3(class='pageTitle') Analytics
 
-	div(class='list-group', id='museums')
-		each museum in museums
-			button(class='list-group-item museum', type="button", value=museum.museumId) #{museum.museumName}
-	div(id='exhibitContainer')
+		div(class='list-group', id='museums')
+			each museum in museums
+				button(class='list-group-item museum', type="button", value=museum.museumId) #{museum.museumName}
+		div(id='exhibitContainer')

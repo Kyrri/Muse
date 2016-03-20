@@ -34,7 +34,7 @@
 						each tag in tags
 							label 
 								input(type='checkbox', class='checkBox', id='tag_'+tag.elementTagId)
-								| #{tag.elementTag}
+								label(class='checkBoxLabel') #{tag.elementTag}
 					div(class='submitFilters')
 						button(id='submitFilters') Update
 
