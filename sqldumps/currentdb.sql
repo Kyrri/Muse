@@ -482,6 +482,8 @@ CREATE TABLE `location` (
   `locationId` int(11) NOT NULL AUTO_INCREMENT,
   `exhibitId` int(11) NOT NULL,
   `locationDesc` varchar(45) DEFAULT NULL,
+  `gridX` int(11) DEFAULT NULL,
+  `gridY` int(11) DEFAULT NULL,
   PRIMARY KEY (`locationId`),
   KEY `fk_location_exhibitId_idx` (`exhibitId`),
   CONSTRAINT `fk_location_exhibitId` FOREIGN KEY (`exhibitId`) REFERENCES `exhibit` (`exhibitId`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -2138,4 +2140,4 @@ USE `muse_dev`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-18  1:55:40
+-- Dump completed on 2016-03-19 13:54:04

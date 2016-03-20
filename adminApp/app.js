@@ -11,6 +11,8 @@ var fs = require('fs');
 
 // MySQL connection
 var mysql = require('mysql');
+var squel = require('squel');
+
 var conn;
 switch (environment) {
   case 'dev' : 
@@ -33,8 +35,6 @@ switch (environment) {
   break;
 }
 console.log('Connected to '+ environment + ' database ...');
-
-var squel = require('squel');
 
 // Configuration
 app.set('views', __dirname + '/views');
@@ -76,35 +76,6 @@ var museumId = null, exhibitId = null;
           }
         });
     });
-    app.get('/path', function(req, res){
-      // var heat = heatmap(500, 500, { radius : 20 });
-      // for (var i = 0; i < 200; i++) {
-
-      //     var x = 400;
-      //     var y = 20
-
-      //     heat.addPoint(x, y);
-      // }
-      //   for (var i = 0; i < 10; i++) {
-
-      //     var x = 200;
-      //     var y = 20
-
-      //     heat.addPoint(x, y);
-      // }
-      //   for (var i = 0; i < 5; i++) {
-
-      //     var x = 215;
-      //     var y = 20
-
-      //     heat.addPoint(x, y);
-      // }
-      // heat.draw();
-      // fs.writeFileSync('public/images/hpMap.png', heat.canvas.toBuffer());
-      res.render('path', {
-        title:'Path Analytics'
-      });
-    });
 
     //  ENTRY PAGE //
     app.get('/entry', function(req, res){
@@ -120,7 +91,7 @@ var museumId = null, exhibitId = null;
       var getAgeRangeStr = squel.select().from("ageRange").toString() + "; ";
       var getGenderStr = squel.select().from("gender").toString() + "; ";
       var fromDate = req.body.fromDate; // hard code for now, will need to be passed as a parameter
-      var toDate = req.body.ToDate; // hard code for now, will need to be passed as a parameter
+      var toDate = req.body.toDate; // hard code for now, will need to be passed as a parameter
 
       console.log(toDate);
       console.log(fromDate);
@@ -380,6 +351,54 @@ var museumId = null, exhibitId = null;
         });
 
       }
+    });
+    app.get('/path', function(req, res){
+      res.render('path', {
+        title:'Path Analytics'
+      });
+    });
+    app.post('/pathHP', function(req, res){
+      var fromDate = req.body.fromDate;
+      var toDate = req.body.toDate;
+       if (fromDate == undefined) {
+        console.log("Error: fromDate undefined.");
+      } else {
+        fromDate = fromDate.toString().substring(0,10);
+      }
+      if (toDate == undefined) {
+        console.log("Error: toDate undefined.");
+      } else {
+        toDate = toDate.toString().substring(0,10);
+      }
+      var views = squel.select().from("v_activeelements", "e")
+                                              .field("e.elementId")
+                                              .field("e.elementName")
+                                              .field("COUNT(i.interactionId)", "views")
+                                              .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=1")
+                                              // .where("i.tstamp>='"+fromDate+"'")
+                                              // .where("i.tstamp<='"+toDate+"'")
+                                              .group("e.elementId")
+                                              .group("e.elementName");
+
+        var withCode = squel.select().from("("+views.toString()+")", "e")
+                                      .field("e.*")
+                                      .field("l.*")
+                                      .left_join("elementCode","c","c.elementId=e.elementId")
+                                      .left_join("location","l","l.locationId=c.locationId");
+
+        var sqlStr = withCode.toString();
+
+        conn.query(sqlStr, function (err, results) {
+          if (err) {
+            console.log('Tried: ' + sqlStr);
+            console.log(err);
+          } else {
+            res.send(results);
+          }
+        });
+
+
+     // var result = [{'name': 'Crylolophosaurus','x':8, 'y': 8}, {'name': 'Native Copper', 'x':8, 'y': 10}, {'name': 'Duck-Billed Dinosaur','x':5, 'y': 5}, {'name': 'Captohinus Aguti','x':5, 'y': 8}];
     });
 
     app.post('/exec_sp',function(req,res){

@@ -1,3 +1,8 @@
-img{
-
+canvas{
+	background: url('/images/bigDemoMap.jpg');
+	background-repeat: no-repeat;
+}
+.heatmap-cavas{
+	height: 450;
+	width: 600;
 }

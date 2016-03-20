@@ -101,23 +101,6 @@ CREATE TABLE `element` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `elementFacts`
---
-
-DROP TABLE IF EXISTS `elementFacts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `elementFacts` (
-  `elementFactId` int(11) NOT NULL AUTO_INCREMENT,
-  `elementId` int(11) NOT NULL,
-  `active` int(11) NOT NULL DEFAULT '1',
-  `factNumber` int(11) NOT NULL,
-  `factText` varchar(140) NOT NULL,
-  PRIMARY KEY (`elementFactId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `elementTag`
 --
 
@@ -379,6 +362,8 @@ CREATE TABLE `location` (
   `locationId` int(11) NOT NULL AUTO_INCREMENT,
   `exhibitId` int(11) NOT NULL,
   `locationDesc` varchar(45) DEFAULT NULL,
+  `gridX` int(11) DEFAULT NULL,
+  `gridY` int(11) DEFAULT NULL,
   PRIMARY KEY (`locationId`),
   KEY `fk_location_exhibitId_idx` (`exhibitId`),
   CONSTRAINT `fk_location_exhibitId` FOREIGN KEY (`exhibitId`) REFERENCES `exhibit` (`exhibitId`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -1946,4 +1931,4 @@ USE `muse_qa`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-17 22:56:18
+-- Dump completed on 2016-03-19 13:54:05
