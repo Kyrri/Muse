@@ -12,6 +12,9 @@
 .chartContainer{
 	width: 78%;
 }
+.containerAdjust{
+	margin-top: 120px;
+}
 .titleHead{
 	background-color: #666666;
  	color: #FFFFFF;
@@ -67,12 +70,25 @@
 	color: #333333;
 	font-size: 12px;
 }
+.checkBoxLabel{
+	color: #333333;
+	font-size: 12px;
+	text-align: center;
+	padding-left: 5px;
+	font-weight: normal;
+	margin: 0px;
+}
+
 .checkBox{
 	text-align: center;
+	color: #333333;
 }
 .checkBoxHead{
 	border-bottom: 1px solid #d1d1d1;
 	text-align: center;
+	color: #333333;
+	font-size: 14px;
+	padding-top: 5px;
 }
 .btn
 {

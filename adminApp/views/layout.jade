@@ -29,12 +29,12 @@ html
 
 			.sidebar
 				.iconLinks
-					a
-						img#stopwatch(src="images/stopwatch.svg")
-					a
-						img#location(src="images/Location.svg")
-					a
-						img#pencil(src="images/Pencil.svg")
+					a(href='index')
+						img#stopwatch(src="images/stopwatch.svg", class='menuItem')
+					a(href='path')
+						img#location(src="images/Location.svg", class='menuItem')
+					a(href='entry')
+						img#pencil(src="images/Pencil.svg", class='menuItem')
 
 			.mainContainer
 				block mainContainer
