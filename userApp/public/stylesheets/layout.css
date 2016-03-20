@@ -2,6 +2,8 @@
 
 .menubar {
   width: 100%;
+  height: 14vw;
+  line-height: 14vw;
   background-color: #939598;
   color: #ffffff;
   margin: 0;
@@ -13,13 +15,6 @@
   content: " ";
   display: block;
   clear: both;
-}
-
-.menubar img {
-  height: 10vw;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  position: relative;
 }
 
 .menubarItem {
@@ -37,7 +32,8 @@
   font-weight: bold;
   font-size: 10vw;
   letter-spacing: 4px;
-  padding-top: 5px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 #menuHomeLink {
@@ -53,3 +49,10 @@ img#home {
   margin-top: 13px;
   margin-left: 13px;
 } 
+
+#homebutton {
+  color: #ffffff;
+  font-size: 9vw;
+  margin-top: 10px;
+  margin-left: 5px;
+}
