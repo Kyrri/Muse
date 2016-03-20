@@ -224,9 +224,6 @@ var museumId = null, exhibitId = null;
             else{
               res.render('index_partial_exhibit', {
               dataType : dataType,
-              ageRange : results[0],
-              gender : results[1],
-              tags : results[2],
               exhibits : results[3]
             });
             }
@@ -343,9 +340,6 @@ var museumId = null, exhibitId = null;
             else{
               res.render('index_partial_exhibit', {
                 dataType : dataType,
-                ageRange : results[0],
-                gender : results[1],
-                tags : results[2],
                 elements : results[3]
               });
             }
