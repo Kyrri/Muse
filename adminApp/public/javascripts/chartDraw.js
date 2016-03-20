@@ -118,11 +118,24 @@ $(document).ready(function(){
     $(tableContainer+' table td.metrics').on('click', function(){
       drawChart($(this).index());
     });
-
     //Update filters to replace base text with selected text
     $('.dropdown-menu li a').on('click', function(){
         var val = $(this).parent().parent().attr('class').split(' ')[1];
         $('#'+val).text($(this).text());
+          if($('#'+val).hasClass('activeFilter')){
+              var lastClass = $('#'+val).attr('class').split(' ').pop();
+              $('#'+val).removeClass(lastClass);
+              if($(this).attr('id')==null){
+                $('#'+val).removeClass('activeFilter');
+              }
+          }
+       if($(this).attr('id')!=null){
+         $('#'+val).addClass('activeFilter');
+         $('#'+val).addClass($(this).attr('id'));
+      };
+    });
+     $('#submitFilters').on('click', function(){
+        updateTable(false);
     });
 
     //Inject Element list page in place of Exhibit list page
@@ -140,6 +153,30 @@ $(document).ready(function(){
     var toDate;
     var fromDate;
     var id;
+    var gender = null;
+    var age = null;
+    var checks = [];
+    if($('#gender').length>0){
+      var lastClass = $('#gender').attr('class').split(' ').pop();
+      if(lastClass.indexOf("gentag_")>=0){
+        gender = lastClass.replace("gentag_", "");
+      }
+    }
+     if($('#age').length>0){
+      var lastClass = $('#age').attr('class').split(' ').pop();
+      if(lastClass.indexOf("agetag_")>=0){
+        age = lastClass.replace("agetag_", "");
+      }
+    }
+    $('.checkBox').each(function(){
+      if(this.checked){
+        checks.push($(this).attr('id').replace('tag_', ''));
+      }
+    });
+    if(checks.length<=0){
+      checks = null;
+    }
+
     if(dataType=='exhibit'){
       id=musID;
     }
@@ -171,6 +208,9 @@ $(document).ready(function(){
           'museumId' : id, 
           'toDate'   : toDate,
           'fromDate' : fromDate,
+          'age'      : age,
+          'gen'      : gender,
+          'tags'     : checks,
           'reload'   : reload
         });
       break;
@@ -180,6 +220,9 @@ $(document).ready(function(){
           'exhibitId': id,
           'toDate'   : toDate,
           'fromDate' : fromDate,
+          'age'      : age,
+          'gen'      : gender,
+          'tags'     : checks,
           'reload'   : reload
         });
       break;

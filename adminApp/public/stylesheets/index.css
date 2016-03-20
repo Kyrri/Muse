@@ -67,6 +67,13 @@
 	color: #333333;
 	font-size: 12px;
 }
+.checkBox{
+	text-align: center;
+}
+.checkBoxHead{
+	border-bottom: 1px solid #d1d1d1;
+	text-align: center;
+}
 .btn
 {
 	width: 120px;
