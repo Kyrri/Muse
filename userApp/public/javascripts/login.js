@@ -54,9 +54,16 @@ $(document).ready(function() {
 		return re.test(email);
 	}
 
-	$('.enter_login').click(function () {
-		$(this).parent('#splashscreen').fadeOut(500);
+	$('.enter_login').click(function (e) {
+		e.preventDefault();
+		$('#splashscreen').fadeOut(500);
 	})
+
+	if (localStorage.isSignedUp) {
+		$('#hasSignedUp').show();
+	} else {
+		$('#hasNotSignedUp').show();
+	}
 
 
 });

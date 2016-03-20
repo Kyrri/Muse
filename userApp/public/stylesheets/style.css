@@ -116,33 +116,40 @@ select
   font-weight: bold;
 }
 
-.enter_login, .enter_signup {
-  border: 2px solid #6d6f71;
+#hasSignedUp .enter_login, #hasNotSignedUp .enter_signup {
+  border: 2px solid #808285;
   border-radius: 15px;
   overflow:hidden;
   background-color: #808285;
-  width: 80%;
-  font-family: MuseoSans, Museo Sans;
-  text-transform: uppercase;
-  font-weight: lighter;
+  width: 65%;
+  font-family: MuseoSansThin, sans;
+  text-transform: ;
+  font-weight: bold;
   color: #ffffff;
-  font-size: 9vw;
+  font-size: 8vw;
   display: inline-block;
   text-decoration: none;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   margin-top: 20px;
   margin-bottom: 15px;
 }
+
+#hasSignedUp p, #hasNotSignedUp p{
+  text-align: center;
+}
+
+#hasSignedUp a, #hasNotSignedUp a {
+  color: #6D6E72;
+}
+
+
 
 .mainContainer {
     padding:15px;
     margin-top: 11vw;
 }
 
-.indexContainer {
-    padding:5%;
-}
 
 .additionalinfo {
   border: 2px solid #6d6f71;
@@ -156,30 +163,6 @@ select
   font-size: 8vw;
   display: inline-block;
   text-decoration: none;
-}
-
-.recent {
-  text-align: left;
-  margin-top: 25px;
-  margin-bottom: 20px;
-}
-
-.boxVisits {
-  background-color: #6d6f71;
-  color: #ffffff;
-  border: 2px solid #6d6f71;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-top: 5px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 95%;
-  text-align: center;
-}
-.recentVisit{
-  display: inline-block;
-  vertical-align:middle;
-  text-align:center;
 }
 
 .boxSignup {
@@ -261,14 +244,14 @@ select
   margin-top: 50px;
 }
 button, a.button, input.button, input[type='submit'] {
-  border: 2px solid #6d6f71;
+  border: 2px solid #939598;
   border-radius: 15px;
   overflow:hidden;
-  background-color: #808285;
+  background-color: #939598;
   width: 100%;
-  font-family: MuseoSans, Museo Sans;
-  text-transform: uppercase;
-  font-weight: lighter;
+  font-family: MuseoSansThin, sans;
+  text-transform: ;
+  font-weight: bold;
   color: #ffffff;
   font-size: 8vw;
   display: inline-block;
@@ -414,7 +397,7 @@ form#checkIn {
 
 /* Home/Index page */
 .planVisit{
-  margin-top: 30px;
+  margin-top: 30vh;
   margin-bottom: 10px;
   margin-left:auto;
   margin-right:auto;
@@ -426,10 +409,10 @@ form#checkIn {
   font-size: 7vw;
   padding-left: 13px;
   padding-right: 13px;
-  margin-top: 15px;
+  margin-top: 25px;
   margin-left:auto;
   margin-right:auto;
-  width: 80%;
+  width: 65%;
 }
 
 
