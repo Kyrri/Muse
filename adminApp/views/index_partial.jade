@@ -31,9 +31,10 @@
 									a(href='#', id='agetag_'+age.ageRange) #{age.ageRangeDesc}
 					div(class='checkboxContainer')
 						label.checkBoxHead Element Tags
-						label 
-							input(type='checkbox', name='tag', class='checkBox', id='tag+tagID')
-							| Tag Filter
+						each tag in tags
+							label 
+								input(type='checkbox', class='checkBox', id='tag_'+tag.elementTagId)
+								| #{tag.elementTag}
 
 	.rightAlign
 		.titleHead
@@ -117,7 +118,7 @@
 									else
 										td 0
 
-.chartContainer
-	.titleHead
-		h4 Exhibit Metrics
-	div#myPieChart
+	.chartContainer
+		.titleHead
+			h4 Exhibit Metrics
+		div#myPieChart

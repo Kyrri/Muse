@@ -90,6 +90,7 @@ var museumId = null, exhibitId = null;
       // stuff that will need to be sent for all data types
       var getAgeRangeStr = squel.select().from("ageRange").toString() + "; ";
       var getGenderStr = squel.select().from("gender").toString() + "; ";
+      var getTagIds = squel.select().from("elementtag").toString() + "; ";
       var fromDate = req.body.fromDate; // hard code for now, will need to be passed as a parameter
       var toDate = req.body.toDate; // hard code for now, will need to be passed as a parameter
 
@@ -108,8 +109,7 @@ var museumId = null, exhibitId = null;
       // hardcoding for gender
       var age = req.body.age;
       var gen = req.body.gen;
-      console.log(age +"   "+ gen);
-      var tagIds = undefined; // i.e [1,2,3];
+      var tagIds = req.body.tags; 
       var isage = false;
       var isgen = false;
       var istag = false;
@@ -204,7 +204,7 @@ var museumId = null, exhibitId = null;
         //console.log('Generate QueryStr: ' + aggViews);
         //console.log('Generate QueryStr: ' + getExhibitsStr);
 
-        var sqlStr = getAgeRangeStr.toString() + getGenderStr.toString() + aggViews.toString();
+        var sqlStr = getAgeRangeStr + getGenderStr + getTagIds + aggViews;
 
         conn.query(sqlStr, function (err, results) {
           if (err) {
@@ -217,7 +217,8 @@ var museumId = null, exhibitId = null;
               dataType : dataType,
               ageRange : results[0],
               gender : results[1],
-              exhibits : results[2]
+              tags : results[2],
+              exhibits : results[3]
             });
             }
             else{
@@ -225,7 +226,8 @@ var museumId = null, exhibitId = null;
               dataType : dataType,
               ageRange : results[0],
               gender : results[1],
-              exhibits : results[2]
+              tags : results[2],
+              exhibits : results[3]
             });
             }
           }
@@ -321,7 +323,7 @@ var museumId = null, exhibitId = null;
 
         //console.log('Generate QueryStr: ' + aggMetrics);
 
-        var sqlStr = getAgeRangeStr + getGenderStr + aggMetrics;
+        var sqlStr = getAgeRangeStr + getGenderStr + getTagIds + aggMetrics;
 
         conn.query(sqlStr, function (err, results) {
           if (err) {
@@ -334,7 +336,8 @@ var museumId = null, exhibitId = null;
                 dataType : dataType,
                 ageRange : results[0],
                 gender : results[1],
-                elements : results[2]
+                tags : results[2],
+                elements : results[3]
               });
             }
             else{
@@ -342,7 +345,8 @@ var museumId = null, exhibitId = null;
                 dataType : dataType,
                 ageRange : results[0],
                 gender : results[1],
-                elements : results[2]
+                tags : results[2],
+                elements : results[3]
               });
             }
           }

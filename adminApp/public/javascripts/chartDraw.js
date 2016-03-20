@@ -113,6 +113,15 @@ $(document).ready(function(){
       }
     }).data('dynatable');
     drawChart(1);
+      if(dataType=='element'){
+      $('.checkboxContainer').show();
+      $('.checkBox').on('click', function(){
+        updateTable(false);
+      });
+    }
+    else if(dataType=='exhibit'){
+      $('.checkboxContainer').hide();
+    }
 
     //Draw chart when a table column with metrics is clicked
     $(tableContainer+' table td.metrics').on('click', function(){
@@ -135,9 +144,6 @@ $(document).ready(function(){
       };
         updateTable(false);
     });
-    $('.checkbox').on('click', function(){
-        updateTable(false);
-    });
 
     //Inject Element list page in place of Exhibit list page
     $(tableContainer+' table tbody tr').on('click', function(){
@@ -156,6 +162,7 @@ $(document).ready(function(){
     var id;
     var gender = null;
     var age = null;
+    var checks = [];
     if($('#gender').length>0){
       var lastClass = $('#gender').attr('class').split(' ').pop();
       if(lastClass.indexOf("gentag_")>=0){
@@ -167,6 +174,14 @@ $(document).ready(function(){
       if(lastClass.indexOf("agetag_")>=0){
         age = lastClass.replace("agetag_", "");
       }
+    }
+    $('.checkBox').each(function(){
+      if(this.checked){
+        checks.push($(this).attr('id').replace('tag_', ''));
+      }
+    });
+    if(checks.length<=0){
+      checks = null;
     }
 
     if(dataType=='exhibit'){
@@ -202,6 +217,7 @@ $(document).ready(function(){
           'fromDate' : fromDate,
           'age'      : age,
           'gen'      : gender,
+          'tags'     : checks,
           'reload'   : reload
         });
       break;
@@ -213,6 +229,7 @@ $(document).ready(function(){
           'fromDate' : fromDate,
           'age'      : age,
           'gen'      : gender,
+          'tags'     : checks,
           'reload'   : reload
         });
       break;
