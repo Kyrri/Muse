@@ -8,15 +8,15 @@ block headScripts
 
 block mainContainer
 	h3(class='pageTitle') User Path
-	.alignSearch
-		.dateRange
-			input(type='text', class='datePicker', id='date_1')
-			p to
-			input(type='text', class='datePicker', id='date_2')
 
-	div(class='mapContainer')
-		div(class='titleHead')
-			h4 Holding Power Heatmap
-		div(id='hpHeatMap')
-			canvas(id='hpMapCanvas', width='600', height='450')
-	div(id='tooltip') 
+	div(class='list-group', id='museums')
+		each museum in museums
+			button(class='list-group-item museum', type="button", value=museum.museumId) #{museum.museumName}
+	.alignSearch
+	.dateRange
+		input(type='text', class='datePicker', id='date_1')
+		p to
+		input(type='text', class='datePicker', id='date_2')
+
+	div#partialContainer
+

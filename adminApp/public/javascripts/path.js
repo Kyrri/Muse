@@ -1,6 +1,58 @@
 $(document).ready(function(){
 	createDatePickers();
-	updateHeatmap();
+
+	//Map Constants
+	var gridX = 0;
+	var gridY = 0;
+
+	//Select Museum
+	$('.museum').on('click', function(){
+		var mus = $(this).val();
+		  $.ajax('/path',{
+	      type: "POST",
+	      dataType: 'html',
+	      success: function(results){
+	      	$('#partialContainer').html(results);
+	      		updateMap(mus);
+	      	if(gridX!=0 && gridY!=0){
+				updateHeatMap();
+	      	}
+	      	else{
+	      		$('#partialContainer').html("<p>No Valid Map</p>");
+	      	}
+	      }
+	    });
+	});
+
+	//Pick map and variables based on current museum map 
+
+	// SET GRID SIZE AND MAP LINKS HERE!!! //
+	function updateMap(musID){
+		var img = new Image();
+			img.onload = function(){
+			  var height = img.height;
+			  var width = img.width;
+			  $('#hpMapCanvas').attr('width', width);
+			  $('#hpMapCanvas').attr('height', height);
+			}
+		switch(parseInt(musID)){
+			//Sample Museum
+			case 1:
+				gridX = 12;
+				gridY = 9;
+				$('canvas').css({'background':'url(images/bigDemoMap.jpg)'});
+				img.src = 'images/bigDemoMap.jpg';
+				break;
+			//Symposium
+			case 2:
+				break;
+			//Doesn't Have a Map
+			default:
+				gridX = 0;
+				gridY = 0;
+				break;
+		}
+	}
 
 	//Creates the Datepickers Filters
 	function createDatePickers(){
@@ -12,7 +64,9 @@ $(document).ready(function(){
 		         $(this).datepicker({
 		          onSelect: function(date){
 		            $("#date_2").datepicker("option","minDate", date);
-		            updateHeatmap();
+	            	if($('#hpHeatMap').length){
+	            	 	updateHeatmap();
+	            	}
 		          }
 		         });
 		         $(this).datepicker("option","maxDate", new Date());
@@ -22,7 +76,9 @@ $(document).ready(function(){
 		         $(this).datepicker({
 		          onSelect: function(date){
 		            $("#date_1").datepicker("option","maxDate", date);
-		            updateHeatmap();
+		            if($('#hpHeatMap').length){
+		           		 updateHeatmap();
+		           	}
 		          }
 		         });
 		         $(this).datepicker("option","minDate", new getLastWeek());
@@ -64,8 +120,6 @@ $(document).ready(function(){
 	      dataType: 'json',
 	        success: function(result) {
 	        	//Number of squares x-y on museum layout grid
-				var gridX = 12;
-				var gridY = 9;
 				var max = 0;
 
 				//width and height of canvas element

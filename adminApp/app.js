@@ -349,9 +349,27 @@ var museumId = null, exhibitId = null;
       }
     });
     app.get('/path', function(req, res){
-      res.render('path', {
-        title:'Path Analytics'
-      });
+      var getValidMuseumsStr = squel.select().from("v_museumadminpermissions")
+                                      .where("userId="+userId).toString() + ";";
+        console.log('Generate QueryStr: ' + getValidMuseumsStr);
+
+        var sqlStr = getValidMuseumsStr;
+
+        conn.query(sqlStr, function (err, results) {
+          if (err) {
+            console.log('Tried: ' + sqlStr);
+            console.log(err);
+          } else {
+            console.log('Success: ' + sqlStr);
+               res.render('path', {
+                 title:'Path Analytics',
+                 museums: results
+              });
+          }
+        });
+    });
+    app.post('/path', function(req, res){
+      res.render('path_partial');
     });
     app.post('/pathHP', function(req, res){
       var fromDate = req.body.fromDate;
