@@ -36,8 +36,20 @@ $(document).ready(function() {
 		}
 		var fName = login_data[2].replace("fName=","");
 		var lName = login_data[3].replace("lName=","");
-		var gender = login_data[4].replace("gender=","");
-		var age = login_data[5].replace("ageRange=","");
+		var gender;
+		var age;
+		if(login_data[4]){
+			gender = login_data[4].replace("gender=","");
+		}
+		else{
+			gender = null;
+		}
+		if(login_data[5]){
+			age = login_data[5].replace("ageRange=","");
+		}else{
+			age = null;
+		}
+
 		var parameters = JSON.stringify({
 			"email": email,
 			"password": password,
