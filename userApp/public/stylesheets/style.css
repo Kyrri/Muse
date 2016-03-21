@@ -87,6 +87,7 @@ margin-left: 0px;
 
 input[type="text"],
 input[type="password"],
+input[type="number"],
 select
 {
 	font-size:5vw;
@@ -334,10 +335,16 @@ button.selected {
 
 /* Check In Page */
 
-.checkInContainer input[type="text"]{
-  width: 10%;
+.checkInContainer {
+  padding: 5%;
+}
+
+.checkInContainer input[type="number"] {
+  width: 15%;
   margin-left: 3px;
   margin-right: 3px;
+  font-size: 45px;
+  text-align: center;
 }
 
 .checkInContainer input[type="submit"] {
@@ -354,6 +361,12 @@ form#checkIn {
 
 .checkInContainer .welcome {
   width: auto;
+}
+
+#checkinFeedback {
+  font-size: 20px;
+  color: red;
+  margin-top: 10px;
 }
 
 
@@ -482,7 +495,8 @@ form#checkIn {
   display: block;
 }
 
-.infoControls {
+
+.infoControls, .checkInControls {
   box-sizing: border-box;
   position: fixed;
   z-index: 1;
@@ -491,12 +505,24 @@ form#checkIn {
   right: 0;
 }
 
+.infoControls a, .checkInControls a {
+  background-color: #808285;
+  border: 3px solid #6d6f71;
+  text-transform: uppercase;
+  font-family: Museo Sans, MuseoSans;
+  font-weight: normal;
+}
 
-.infoControls .button {
+
+.infoControls .button, .checkInControls .button {
   box-sizing: border-box;
   width: 50%;
   border-radius: 0;
   float: left;
   padding: 15px 5px;
   font-size: 7vw;
+}
+
+.checkInControls .button {
+  width: 100%;
 }

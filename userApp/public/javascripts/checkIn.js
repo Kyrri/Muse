@@ -1,19 +1,25 @@
 $(document).ready(function() {
-	$("form#checkIn :text").on('input',function () {
-	    if($(this).val().length == $(this).attr('maxlength')) {
+	$("form#checkIn .number").on('input',function () {
+		//debugger;
+		var val = $(this).val();
+		// 1 -> "1"
+	    if ((val + "").length == 1 && /[0-9]/.test(val + "")) {
 	    	if($(this).next("input").length){
 	    		$(this).next("input").focus();
 	    	}
+	    } else {
+			$(this).val("");
 	    }
 	});
-	$("form#checkIn :text").on('focus click',function () {
+	$("form#checkIn .number").on('focus click',function () {
 	   $(this).select();
 	});
 	$('#checkIn').on('submit', function(e){
 		e.preventDefault();
 		var code = "";
-		$("form#checkIn :input:text").each(function(){
-			code+=$(this).val();
+		$("form#checkIn .number").each(function(){
+			var val = $(this).val();
+			code+=(val+"");
 		});
 		if(code.length!==4){
 			//Not filled in, please fill in

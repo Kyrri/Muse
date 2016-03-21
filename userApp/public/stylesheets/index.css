@@ -23,6 +23,10 @@
   text-align: left;
 }
 
+.boxVisits p {
+  padding-left: 8px;
+}
+
 .recentVisit{
   display: inline-block;
   vertical-align:middle;

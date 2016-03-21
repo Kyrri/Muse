@@ -2,6 +2,7 @@ extends layout
 
 block headScripts
 	script(src="/javascripts/selectMuseum.js")
+	link(rel='stylesheet', href='stylesheets/selectMuseum.css')
 
 block mainContainer
 	.selectMuseumContainer
@@ -9,8 +10,8 @@ block mainContainer
 
 		.museumList
 			each val in data
-				button.select(value=val.museumId) #{val.museumName}
+				button.startVisitButton(value=val.museumId) #{val.museumName}
 
-		.next
+		//.next
 			a.button(id='startVisitButton') Start Visit
 			div(id='FB_startVisitButton', class='feedback')
