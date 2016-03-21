@@ -369,6 +369,9 @@ var museumId = null, exhibitId = null;
         });
     });
     app.post('/path', function(req, res){
+      if(req.body.museumID!=null){
+         museumId = req.body.museumID;
+      }
       res.render('path_partial');
     });
     app.post('/pathHP', function(req, res){
@@ -389,6 +392,7 @@ var museumId = null, exhibitId = null;
                                               .field("e.elementName")
                                               .field("COUNT(i.interactionId)", "views")
                                               .left_join("interaction", "i", "i.elementId=e.elementId AND i.interactionTypeId=1")
+                                              .where("e.museumId='"+museumId+"'")
                                               .where("i.tstamp>='"+fromDate+"'")
                                               .where("i.tstamp<='"+toDate+"'")
                                               .group("e.elementId")

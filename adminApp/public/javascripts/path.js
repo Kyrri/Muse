@@ -8,8 +8,13 @@ $(document).ready(function(){
 	//Select Museum
 	$('.museum').on('click', function(){
 		var mus = $(this).val();
+		params = JSON.stringify({ 
+          'museumID'   : mus
+        });
 		  $.ajax('/path',{
 	      type: "POST",
+	      contentType : 'application/json',
+	      data: params,
 	      dataType: 'html',
 	      success: function(results){
 	      	$('#partialContainer').html(results);
