@@ -1,9 +1,6 @@
 var index_url="/index";
 
 $(document).ready(function() {
-	$('input').on('blur',function(){
-		$('.feedback').text('');
-	});
 	$("#email").on("blur",  function(){
 		if(!validateEmail(decodeURIComponent($("#email").val())) && $("#email").val().length>0){
 			updateFeedback("email", "Email Invalid");
@@ -85,6 +82,7 @@ $(document).ready(function() {
 	function updateValidity(element){
 		if($(element).hasClass("invalid")){
 			$(element).removeClass("invalid");
+			$("#FB_"+element.replace('#','')).text("");
 		}
 	}
 	//should re-validate in server
