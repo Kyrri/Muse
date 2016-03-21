@@ -54,6 +54,7 @@ $(document).ready(function() {
             data: parameters,								
             success: function(result) {
             	if(result.Success){
+            		localStorage.isSignedUp = true;
             		window.location.replace(index_url);
             	}
             	else{

@@ -6,19 +6,16 @@ block mainContainer
 	.checkInContainer
 		h2(class='welcome') Enter 4-digit code:
 		form(id='checkIn')
-			input(type='text', maxlength="1")
-			input(type='text', maxlength="1")
-			input(type='text', maxlength="1")
-			input(type='text', maxlength="1")
-			br
+			input.number(type='number', max="9", min="0", maxlength="1")
+			input.number(type='number', max="9", min="0", maxlength="1")
+			input.number(type='number', max="9", min="0", maxlength="1")
+			input.number(type='number', max="9", min="0", maxlength="1")
 
 			input(type='submit', value='Check In')
 			div(id="checkinFeedback", class="feedback")
-			br
-			br
-		h2(class='Welcome') Or
-							h2 Tap NFC tag with NFC-enabled device
-							br
-							img(id='favbtn', src='../images/nfc.png' align='center' width='18%')
+
+	.checkInControls
+		a.button(id='endTourButton', href='index') End Tour
+
 
 			//- I did this one in a weird way. The text boxes need to be sized to be able to fit one character each. When you type one number it'll autojump to the next one. It'll look cool I promise...test out the page at /checkIn to see what I mean. If you decide you'd prefer the number entry to be one big text entry instead of seperated like this lemme know it's easy to change.

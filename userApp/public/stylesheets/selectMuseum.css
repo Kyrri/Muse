@@ -1,0 +1,17 @@
+
+.selectMuseumContainer {
+	padding: 5%;
+}
+
+.selectMuseumContainer {
+  text-align: center;
+}
+
+.museumList {
+  margin-top: 20px;
+}
+
+.museumList button {
+  margin-top: 20px;
+  width: 80%;
+}

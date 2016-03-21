@@ -1,28 +1,19 @@
 extends layout
 block headScripts
 	script(src='/javascripts/index.js')
+	link(rel='stylesheet', href='stylesheets/index.css')
 block mainContainer
 	.indexContainer
-		//h1#page-title= title
+
 		h2(class='welcome') Welcome, Visitor
-		//a(href="artInfo") Link to Art Info
-		//.upcoming
-			h3(class='welcome') Upcoming Visits
-			.boxVisits
-				h4 Upcoming Visit 1
-				p Text
-		//.recent
-			h3(class='welcome') Recent Visits
-			.boxVisits
-				h4 Recent Visit 1
-				p Text
 
 		.planVisit
-			a.button(href='selectMuseum') Start Visit
-			a.button(href='favourites') View Favorites
+			a.button(href='selectMuseum') Start New Visit
+			//a.button(href='favourites') View Favorites
 
 		.recent
 			h3(class='welcome') Recent Visits
-			#visits_accordion_recent
-				
+			#visits-list
+
+
 

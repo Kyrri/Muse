@@ -5,8 +5,14 @@ block mainContainer
 
 	#splashscreen
 		h1 MUSE
-		.enter_login(href='#') Log In
-		a.enter_signup(href='signup') Sign Up
+		div(id='hasSignedUp' style="display:none;")
+			.enter_login(href='#') Log In
+			p Don't have an account? 
+				a.enter_signup(href='signup') Sign Up
+		div(id='hasNotSignedUp' style="display:none;")
+			a.enter_signup(href='signup') Sign Up
+			p Already have an account? 
+				a.enter_login(href='#') Log In
 
 	.login_defaultContainer
 		form(name='login_form', id='login_form')
@@ -21,5 +27,3 @@ block mainContainer
 				div(id='FB_password', class='feedback')
 			input(type='submit', value='Log In') 
 
-	//.login_defaultContainer
-		a.button(href='signup') Sign Up

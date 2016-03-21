@@ -1,0 +1,45 @@
+
+.indexContainer {
+    padding:5%;
+}
+
+.recent {
+	font-family: MuseoSans, Museo Sans;
+	text-align: center;
+	margin-top: 10vh;
+	margin-bottom: 20px;
+}
+
+.boxVisits {
+  background-color: #939598;
+  color: #ffffff;
+  border: 2px solid #939598;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  text-align: left;
+}
+
+.boxVisits p {
+  padding-left: 8px;
+}
+
+.recentVisit{
+  display: inline-block;
+  vertical-align:middle;
+  
+}
+
+img#museum-pic {
+	display: block;
+	float: left;
+	width: 60px;
+}
+
+.recentVisit p {
+	margin:0;
+	padding-top:0;
+}

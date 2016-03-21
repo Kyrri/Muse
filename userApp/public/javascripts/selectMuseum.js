@@ -1,20 +1,20 @@
 $(document).ready( function () {
 
 	// make sure only one button can be selected at a time
-	$('.museumList button').click( function() {
-		$('.museumList button').removeClass('selected');
-		$(this).addClass('selected');
-		$('#startVisitButton')
-		$('#startVisitButton').show();
-	});
+	// $('.museumList button').click( function() {
+	// 	$('.museumList button').removeClass('selected');
+	// 	$(this).addClass('selected');
+	// 	$('#startVisitButton')
+	// 	$('#startVisitButton').show();
+	// });
 
-	$('#startVisitButton').on('submit', function () {
+	$('.startVisitButton').on('submit', function () {
 		console.log('clicked');
 	});
 
-	$('#startVisitButton').bind('click', function (e) {
+	$('.startVisitButton').bind('click', function (e) {
 		e.preventDefault(); // for debugging
-		var museumId = $('.museumList button.selected');
+		var museumId = $(this);
 		var sqlParams = JSON.stringify({
 			'qry' : 1,
 			'params' : {'museumId' : museumId.val()}
