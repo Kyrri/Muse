@@ -50,6 +50,10 @@ $(document).ready(function(){
 				break;
 			//Symposium
 			case 2:
+				gridX = 12;
+				gridY = 9;
+				$('canvas').css({'background':'url(images/DCmap.jpg)'});
+				img.src = 'images/DCmap.jpg';
 				break;
 			//Doesn't Have a Map
 			default:
