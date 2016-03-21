@@ -38,6 +38,7 @@ $(document).ready(function(){
 		var toDate;
 		var fromDate;
 		var params;
+
 		$('.datePicker').each(function(){
 	        switch(count){
 	          case 0:
@@ -84,7 +85,7 @@ $(document).ready(function(){
 				  radius: radius
 				});
 
-
+				var trackToolTip = [];
 				var points = [];
 					result.forEach(function(location){
 						if(location.gridX!=null && location.gridY!=null){
@@ -96,8 +97,14 @@ $(document).ready(function(){
 							    y: Math.floor((xAdjust*location.gridY)+(xAdjust/2)),
 							    value: val
 						 	};
-
+						 	var tip = {
+						 		x: location.gridX,
+						 		y: location.gridY,
+						 		value: val,
+						 		element: location.elementName
+						 	};
 						  points.push(point);
+						  trackToolTip.push(tip);
 						}
 					});
 
@@ -105,13 +112,40 @@ $(document).ready(function(){
 				  max: max,
 				  data: points 
 				};
-
 				heatmapInstance.setData(data);
 
+				$('#hpHeatMap').on('mousemove', function(evt){
+					var xMouse = evt.pageX - $('#hpMapCanvas').offset().left;
+					var yMouse = evt.pageY - $('#hpMapCanvas').offset().top;
+					var x = Math.floor(xMouse/xAdjust);
+					var y = Math.floor(yMouse/yAdjust);
+					var noMatch = true;
+					if(trackToolTip.length>0){
+						for(var i=0; i<trackToolTip.length; i++){
+							if(trackToolTip[i].x==x && trackToolTip[i].y==y){
+								$('#tooltip').text(trackToolTip[i].element+": "+trackToolTip[i].value);
+								$('#tooltip').css({left:evt.pageX, top:evt.pageY});
+								if(!$('#tooltip').is(':visible')){
+									$('#tooltip').show();
+								}
+								noMatch = false;
+								break;
+							}
+						}
+					}
+					if(noMatch){
+						if($('#tooltip').is(':visible')){
+							$('#tooltip').hide();
+						}
+					}
+				});
+
 	        }
+
 	    });
 	}
-	//get previous week
+
+		//get previous week
 	function getLastWeek(){
 	    var today = new Date();
 	    var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);

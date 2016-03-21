@@ -43,6 +43,9 @@ $(document).ready(function(){
     updateTable(true);
     $('#museums').hide();
   });
+  $('#drillTrack').tooltip({
+    track:true
+  });
 
 //upddtes DOM elements to incorperate injected page
   function createDatePickers(){
@@ -145,6 +148,7 @@ $(document).ready(function(){
       dataType = 'element';
       updateTable(true);
     });
+    $('.drillToolTip').tooltip();
   }
 
   //Creates/uploads the analytics table
@@ -203,6 +207,7 @@ $(document).ready(function(){
     }
     switch (dataType) {
       case 'exhibit' :
+        $('#subTitle').text("View Exhibits");
         params = JSON.stringify({ 
           'dataType' : dataType, 
           'museumId' : id, 
@@ -215,6 +220,7 @@ $(document).ready(function(){
         });
       break;
       case 'element' :
+        $('#subTitle').text("View Elements");
         params = JSON.stringify({ 
           'dataType' : dataType, 
           'exhibitId': id,
@@ -289,6 +295,7 @@ $(document).ready(function(){
         $('#exhibitContainer').html("");
         reload=true;
         $('#museums').show();
+        $('#subTitle').text("Select Museum");
       }
       else if($(this).attr("id")==='exhibitCrumb'){
         i=2;

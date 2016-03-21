@@ -6,3 +6,14 @@ canvas{
 	height: 450;
 	width: 600;
 }
+#tooltip{
+	padding: 8px;
+	position: absolute;
+	z-index: 9999;
+	max-width: 300px;
+	-webkit-box-shadow: 0 0 5px #aaa;
+	box-shadow: 0 0 5px #aaa;
+	border: 1px solid #aaaaaa;
+	background: #ffffff;
+	color: #222222;
+}

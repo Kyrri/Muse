@@ -1,14 +1,17 @@
 extends layout
 block headScripts
+	script(src='https://www.gstatic.com/charts/loader.js')
 	script(src='/javascripts/chartDraw.js')
 	link(rel='stylesheet', href='/stylesheets/index.css')
 
 block mainContainer 
-	ol.breadcrumb(id='drillTrack')
+	ol.breadcrumb(id='drillTrack', title='Navigate Breadcrumbs')
 		li(id='museumCrumb')
 			a(href='#') Museum
 	.containerAdjust
-		h3(class='pageTitle') Analytics
+		span
+			h3(class='pageTitle') Analytics -&nbsp;
+			h3(class='pageTitle', id='subTitle') Select Museum
 
 		div(class='list-group', id='museums')
 			each museum in museums

@@ -8,14 +8,12 @@ html
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		link(rel='stylesheet', href='/stylesheets/jquery.dynatable.css')
 		link(rel='stylesheet', href='/stylesheets/jquery-ui.min.css')
-		link(rel='stylesheet' href='//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css')
 
 		script(src='/javascripts/jquery-1.11.3.min.js')
+		script(src='/javascripts/jquery-ui.min.js')
 		script(src='/javascripts/bootstrap.min.js')
-		script(src='https://www.gstatic.com/charts/loader.js')
-
-		script(src='//code.jquery.com/ui/1.11.4/jquery-ui.js')
 		script(src='/javascripts/jquery.dynatable.js')
+		script(src='/javascripts/layout.js')
 		
 		
 		block headScripts
@@ -30,11 +28,11 @@ html
 			.sidebar
 				.iconLinks
 					a(href='index')
-						img#stopwatch(src="images/stopwatch.svg", class='menuItem')
+						img#stopwatch(src="images/stopwatch.svg", class='menuItem', title='View Analytics')
 					a(href='path')
-						img#location(src="images/Location.svg", class='menuItem')
+						img#location(src="images/Location.svg", class='menuItem', title='View User Path')
 					a(href='entry')
-						img#pencil(src="images/Pencil.svg", class='menuItem')
+						img#pencil(src="images/Pencil.svg", class='menuItem', title='Edit')
 
 			.mainContainer
 				block mainContainer
