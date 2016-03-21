@@ -21,5 +21,13 @@ $(document).ready( function () {
         	}
     	}
 	});
+    $.ajax('/index', {
+        type: "POST",                                  
+        success: function(results) {
+            if(results!=null && results!=""){
+                $('#welcome').text("Welcome, "+results);
+            }
+        }
+    });
 
 });

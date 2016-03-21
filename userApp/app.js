@@ -52,6 +52,7 @@ var prevID = null;
 
 // Variables - Lindsay turn into cookies
 var userId = null;
+var firstName = null;
 var visitId = null;
 var museumId = null;
 var elementCode = null;
@@ -199,9 +200,12 @@ var elementCode = null;
         res.redirect('/login');
       }
       else{
-         res.render('index', { title: 'Muse' });     
+         res.render('index', { 
+          title: 'Muse'
+        });     
       }
     });
+
   //  PRE VISIT  //
       app.get('/selectMuseum', function(req, res){
         if(!loggedIn){
@@ -220,6 +224,19 @@ var elementCode = null;
             }
           });
         }
+      });
+      app.post('/index', function(req, res){
+         if(firstName == null){
+            var sqlStr = "SELECT firstName FROM user WHERE userId='"+userId+"'";
+            conn.query(sqlStr, function(err, results) {
+              if (err) {
+                  console.log(err);
+              } else {
+                firstName = results[0].firstName;
+              }
+              });
+          }
+          res.send(firstName);
       });
 
       app.get('/favourites', function(req, res){
