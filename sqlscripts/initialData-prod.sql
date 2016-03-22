@@ -52,12 +52,13 @@ INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `pa
 INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `exhibitId`) VALUES ('38', '1', 'Peaches', '22', '2016', 'A robotic arm for picking soft fruits.', '5');
 INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `exhibitId`) VALUES ('39', '1', 'Driven', '23', '2016', 'This project aims to provide continuous and automated detection of lane change behaviours and their sentiment. A camera detects the face and a gyroscope is placed on a wheel for a user to operate on a driving simulator, and the data is fused, noise reduced, and given for a machine to learn detection of head turn and lane change start and ends. Potential applications focus on driver education including driving schools and live constructive feedback.', '5');
 
-INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('15', 'Image Processing', '1', '1');
-INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('16', 'Music', '1', '1');
-INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('17', 'Biomedical', '1', '1');
-INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('18', 'Paramedics', '1', '1');
-INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('19', 'Medical Image Retrieval', '1', '1');
-INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('20', 'Sleep', '1', '1');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('33', '5', '7', '12');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('34', '5', '9', '11');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('35', '5', '10', '12');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('36', '5', '7', '9');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('37', '5', '4', '10');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('38', '5', '6', '9');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('39', '5', '4', '9');
 
 INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(33,8000,33);
 INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(34,8001,34);
@@ -66,6 +67,14 @@ INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(36,8
 INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(37,8004,37);
 INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(38,8005,38);
 INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(39,8006,39);
+
+
+INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('15', 'Image Processing', '1', '1');
+INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('16', 'Music', '1', '1');
+INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('17', 'Biomedical', '1', '1');
+INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('18', 'Paramedics', '1', '1');
+INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('19', 'Medical Image Retrieval', '1', '1');
+INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('20', 'Sleep', '1', '1');
 
 
 INSERT INTO `muse_qa`.`elementTagMapping` (`elementTagId`, `elementId`, `active`) VALUES ('15', '33', '');
@@ -77,10 +86,3 @@ INSERT INTO `muse_qa`.`elementTagMapping` (`elementTagId`, `elementId`) VALUES (
 INSERT INTO `muse_qa`.`elementTagMapping` (`elementTagId`, `elementId`) VALUES ('15', '39');
 INSERT INTO `muse_qa`.`elementTagMapping` (`elementTagId`, `elementId`) VALUES ('16', '33');
 
-INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('33', '5', '7', '12');
-INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('34', '5', '9', '11');
-INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('35', '5', '10', '12');
-INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('36', '5', '7', '9');
-INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('37', '5', '4', '10');
-INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('38', '5', '6', '9');
-INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('39', '5', '4', '9');
