@@ -1,7 +1,7 @@
-canvas{
+canvas {
 	background-repeat: no-repeat;
 }
-#tooltip{
+#tooltip {
 	padding: 8px;
 	position: absolute;
 	z-index: 9999;
@@ -11,4 +11,12 @@ canvas{
 	border: 1px solid #aaaaaa;
 	background: #ffffff;
 	color: #222222;
+}
+
+#pathContainer {
+	margin-top: 150px;
+}
+
+#partialContainer {
+	margin-top: 20px;
 }

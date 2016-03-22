@@ -7,16 +7,19 @@ block headScripts
 	link(rel='stylesheet', href='/stylesheets/path.css')
 
 block mainContainer
-	h3(class='pageTitle') User Path
+	#titlebar 
+		h3 User Path
 
-	div(class='list-group', id='museums')
-		each museum in museums
-			button(class='list-group-item museum', type="button", value=museum.museumId) #{museum.museumName}
-	.alignSearch
-	.dateRange
-		input(type='text', class='datePicker', id='date_1')
-		p to
-		input(type='text', class='datePicker', id='date_2')
+	#pathContainer
+		h3(class='pageTitle', id='subTitle') Select Museum
+		div(class='list-group', id='museums')
+			each museum in museums
+				button(class='list-group-item museum', type="button", value=museum.museumId) #{museum.museumName}
+		.alignSearch
+		.dateRange
+			input(type='text', class='datePicker', id='date_1')
+			p to
+			input(type='text', class='datePicker', id='date_2')
 
-	div#partialContainer
+		div#partialContainer
 

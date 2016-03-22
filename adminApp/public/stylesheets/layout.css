@@ -1,0 +1,33 @@
+
+
+/* Side bar */
+
+.sidebar {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100px;
+  height: 100vh;
+  background-color: #b3b3b3;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  opacity: 0.75;
+  z-index: 3;
+}
+
+.iconLinks {
+  margin-top: 120px;
+}
+
+.iconLinks a {
+	display: block;
+	color: #7F7F7F;
+	font-size: 50px;
+	margin-bottom: 40px;
+  cursor: pointer;
+}
+
+.iconLinks a.active {
+	color: #333333;
+}
