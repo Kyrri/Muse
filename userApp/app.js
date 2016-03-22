@@ -1,5 +1,6 @@
 // Our Environment Variables //
-const environment = 'dev';
+const environment = 'qa';
+const ip = process.env.APP_IP_ADDRESS || "127.0.0.1";
 
 var express = require('express');
 var app = require("express")();
@@ -473,7 +474,7 @@ function escapeRegExp(str) {
 }
 
 // Run Server
-app.listen(3000, function(){
+app.listen(3000, ip, function(){
   console.log("Listening on 3000 ...");
 });
 
