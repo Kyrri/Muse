@@ -1,19 +1,10 @@
 /* Museum Level */
 
-#drillTrack {
-	width: 70%;
-	font-size: 15px;
-	position: fixed;
-	z-index:3;
-	top:60px;
-	left:100px;
-	margin:0;
-}
 .chartContainer{
 	width: 78%;
 }
 .containerAdjust{
-	margin-top: 120px;
+	margin-top: 170px;
 }
 .titleHead{
 	background-color: #666666;
@@ -99,16 +90,23 @@
 
 .alignSearch{
 	display: table;
-	padding: 10px;
+	padding: 10px 0px;
 	width: 78%;
 }
+
 .dateRange {
 	display: table-cell;
 	text-align: left;
 }
+
+.dateRange h4 {
+	float: left;
+}
+
 .datePicker{
 	text-align: center;
 	width: 100px;
+	cursor: pointer;
 }
 
 .dateRange p {
@@ -153,4 +151,5 @@
 .exhibitTable td , .elementTable td {
 	padding: 5px;
 }
+
 

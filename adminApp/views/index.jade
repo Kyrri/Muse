@@ -4,14 +4,14 @@ block headScripts
 	script(src='/javascripts/chartDraw.js')
 	link(rel='stylesheet', href='/stylesheets/index.css')
 
-block mainContainer 
-	ol.breadcrumb(id='drillTrack', title='Navigate Breadcrumbs')
-		li(id='museumCrumb')
-			a(href='#') Museum
+block mainContainer
+	#titlebar 
+		h3 Views and Holding Power
+		ol.breadcrumb(id='drillTrack', title='Navigate Breadcrumbs')
+			li(id='museumCrumb')
+				a(href='#') Museum
 	.containerAdjust
-		span
-			h3(class='pageTitle') Analytics -&nbsp;
-			h3(class='pageTitle', id='subTitle') Select Museum
+		h3(class='pageTitle', id='subTitle') Select Museum
 
 		div(class='list-group', id='museums')
 			each museum in museums

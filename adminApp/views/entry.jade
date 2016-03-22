@@ -3,8 +3,9 @@ block headScripts
 	script(src='/javascripts/entry.js')
 	
 block mainContainer
-	h3(class='pageTitle') Edit
-	//h2 Parameters
+	#titlebar 
+		h3 Edit
+
 	.parameters
 		#selectMuseum
 			label(for='museum') Select Museum:
@@ -25,7 +26,7 @@ block mainContainer
 		div(id='tab1',class='tab-pane fade in active')
 			.elements		
 				.elementsEdit
-					h1 Elements	
+					h1 
 					#show
 						//label(for='active') Show:
 						select(type='text',name='active',id='vElementsTable-activeSelector',class="text ui-widget-content ui-corner-all")

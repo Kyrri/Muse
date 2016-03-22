@@ -1,5 +1,6 @@
 google.charts.load('current', {packages: ['corechart']});
 var tableContainer = '#exhibitTable';
+
 //id of current museum
 var musID;
 var exID;
@@ -42,6 +43,7 @@ $(document).ready(function(){
     dataType = 'exhibit';
     updateTable(true);
     $('#museums').hide();
+
   });
   $('#drillTrack').tooltip({
     track:true
@@ -207,9 +209,9 @@ $(document).ready(function(){
     }
     switch (dataType) {
       case 'exhibit' :
-        $('#subTitle').text("View Exhibits");
+        $('#subTitle').text("Exhibits");
         params = JSON.stringify({ 
-          'dataType' : dataType, 
+          'dataType' : dataType,
           'museumId' : id, 
           'toDate'   : toDate,
           'fromDate' : fromDate,
@@ -220,7 +222,7 @@ $(document).ready(function(){
         });
       break;
       case 'element' :
-        $('#subTitle').text("View Elements");
+        $('#subTitle').text("Elements");
         params = JSON.stringify({ 
           'dataType' : dataType, 
           'exhibitId': id,
@@ -274,7 +276,7 @@ $(document).ready(function(){
           idName = 'exhibitCrumb';
           break;
         case 2:
-          nextDrill = 'Art Elements'
+          nextDrill = 'Art Elements';
           idName = 'elementCrumb';
           break;
         default:
