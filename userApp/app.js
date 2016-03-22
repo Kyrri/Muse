@@ -402,7 +402,7 @@ var sqlInsertVisit = function (params) {
 
 var sqlGetvElementDetailsByCode = function (params) {
   this.sqlStr = squel.select()
-                        .from("v_elementDetails")
+                        .from("v_elementdetails")
                         .where(squel.expr()
                           .and("elementCode=" + params.elementCode)
                           .and("active=1")
