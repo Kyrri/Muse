@@ -43,6 +43,8 @@ INSERT INTO `muse_qa`.`artist` (`artistId`, `artist`, `active`) VALUES ('21', 'C
 INSERT INTO `muse_qa`.`artist` (`artistId`, `artist`, `active`) VALUES ('22', 'Ian Easterbrook, Daniel Saunders, Matthew Van Gennip, Prarthana Chandran', '1');
 INSERT INTO `muse_qa`.`artist` (`artistId`, `artist`, `active`) VALUES ('23', 'Christopher Ngan, Joshua Cheung, Angela Gu, Clement Fun', '1');
 
+INSERT INTO `muse_qa`.`artist` (`artistId`, `artist`, `active`) VALUES ('24', 'Andrew Illmann, Evelyn Zhang, Lindsay Paterson, Taylor Martin', '1');
+
 /*Add Element*/
 INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`, `utilTime`) VALUES ('33', '1', 'TrackConductr', '17', '2016', 'TrackConductr provides baton gesture control for conducting virtual orchestras. It allows conductors to conduct the playback of pre-recorded audio tracks using a simple laptop camera and without altering the baton. TrackConductr extracts the tempo from a conductor’s natural gestures in real-time and dynamically changes the tempo of a MIDI file as it plays.', 'http://i.imgur.com/Rv3E5pJ.jpg', '5', '');
 INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('34', '1', 'BCI Wheelchair', '18', '2016', 'This design team is developing a training simulation for severely disabled users (e.g. those with ALS, paralysis, tetraplegia, etc.) to control a wheelchair using mental commands. This brain-computer interface (BCI) takes the user’s thought as input for the wheelchair’s movement. The simulation allows the user to control their movement in a virtual environment and test the system’s streamlined control scheme and the obstacle avoidance measures.', 'http://i.imgur.com/bowTpnW.png', '5');
@@ -51,6 +53,8 @@ INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `pa
 INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `imageLink`, `exhibitId`) VALUES ('37', '1', 'Cozie', '21', '2016', 'Cozie is a smart blanket that tracks a user\'s sleep activity, and heats them to an optimal temperature throughout the night to decrease sleep onset time and increase slow wave sleep.', 'http://i.imgur.com/FlAYnFr.jpg', '5');
 INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `exhibitId`) VALUES ('38', '1', 'Peaches', '22', '2016', 'A robotic arm for picking soft fruits.', '5');
 INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `exhibitId`) VALUES ('39', '1', 'Driven', '23', '2016', 'This project aims to provide continuous and automated detection of lane change behaviours and their sentiment. A camera detects the face and a gyroscope is placed on a wheel for a user to operate on a driving simulator, and the data is fused, noise reduced, and given for a machine to learn detection of head turn and lane change start and ends. Potential applications focus on driver education including driving schools and live constructive feedback.', '5');
+INSERT INTO `muse_qa`.`element` (`elementId`, `active`, `title`, `artistId`, `paintYear`, `description`, `exhibitId`) VALUES ('40', '1', 'Muse', '24', '2016', 'This project aims to create a system to track this data, specifically visitor path, elements viewed, and stopping time. Methods employed will included using sensors to track visitor movement and the design of a user experience to incentivize a user to perform actions whereby their interactions can be recorded. The system will consist of a mobile app where visitor will be able to generate a path through an exhibit, then check-in to and interact with exhibit elements.', '5');
+
 
 INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('33', '5', '7', '12');
 INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('34', '5', '9', '11');
@@ -59,14 +63,17 @@ INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) V
 INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('37', '5', '4', '10');
 INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('38', '5', '6', '9');
 INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('39', '5', '4', '9');
+INSERT INTO `muse_qa`.`location` (`locationId`, `exhibitId`, `gridX`, `gridY`) VALUES ('40', '5', '8', '11');
 
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(33,8000,33);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(34,8001,34);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(35,8002,35);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(36,8003,36);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(37,8004,37);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(38,8005,38);
-INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(39,8006,39);
+
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(33,7354,33);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(34,7472,34);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(35,8672,35);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(36,1374,36);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(37,8263,37);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(38,6241,38);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(39,4571,39);
+INSERT INTO `muse_qa`.`elementcode`(`elementId`,`code`,`locationId`) VALUES(40,5371,39);
 
 
 INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('15', 'Image Processing', '1', '1');
@@ -75,7 +82,7 @@ INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTyp
 INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('18', 'Paramedics', '1', '1');
 INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('19', 'Medical Image Retrieval', '1', '1');
 INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('20', 'Sleep', '1', '1');
-
+INSERT INTO `muse_qa`.`elementTag` (`elementTagId`, `elementTag`, `elementTagTypeId`, `active`) VALUES ('21', 'Analytics', '1', '1');
 
 INSERT INTO `muse_qa`.`elementTagMapping` (`elementTagId`, `elementId`, `active`) VALUES ('15', '33', '');
 INSERT INTO `muse_qa`.`elementTagMapping` (`elementTagId`, `elementId`) VALUES ('17', '34');
@@ -86,3 +93,4 @@ INSERT INTO `muse_qa`.`elementTagMapping` (`elementTagId`, `elementId`) VALUES (
 INSERT INTO `muse_qa`.`elementTagMapping` (`elementTagId`, `elementId`) VALUES ('15', '39');
 INSERT INTO `muse_qa`.`elementTagMapping` (`elementTagId`, `elementId`) VALUES ('16', '33');
 
+INSERT INTO `muse_qa`.`elementTagMapping` (`elementTagId`, `elementId`) VALUES ('21', '40');
