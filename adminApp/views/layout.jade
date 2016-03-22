@@ -8,6 +8,8 @@ html
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		link(rel='stylesheet', href='/stylesheets/jquery.dynatable.css')
 		link(rel='stylesheet', href='/stylesheets/jquery-ui.min.css')
+		link(rel='stylesheet', href='/stylesheets/layout.css')
+		link(rel='stylesheet', href='/stylesheets/font-awesome.min.css')
 
 		script(src='/javascripts/jquery-1.11.3.min.js')
 		script(src='/javascripts/jquery-ui.min.js')
@@ -27,12 +29,12 @@ html
 
 			.sidebar
 				.iconLinks
-					a(href='index')
-						img#stopwatch(src="images/stopwatch.svg", class='menuItem', title='View Analytics')
-					a(href='path')
-						img#location(src="images/Location.svg", class='menuItem', title='View User Path')
-					a(href='entry')
-						img#pencil(src="images/Pencil.svg", class='menuItem', title='Edit')
+					a.menuItem.index(href='index', title='Views and Holding Power')
+						i(class="fa fa-cog fa-lg")
+					a.menuItem.path(href='path', title='View User Path')
+						i(class="fa fa-map-marker fa-lg")
+					a.menuItem.entry(href='entry', title='Edit')
+						i(class="fa fa-pencil fa-lg")
 
 			.mainContainer
 				block mainContainer
