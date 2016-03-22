@@ -1,5 +1,6 @@
 // Our Environment Variables //
 const environment = 'qa';
+const ip = process.env.APP_IP_ADDRESS || "127.0.0.1";
 
 var express = require('express');
 var app = require("express")();
@@ -524,6 +525,6 @@ var museumId = null, exhibitId = null;
     });
 
 // Run Server
-app.listen(3333, function(){
+app.listen(3333, ip, function(){
   console.log("Listening on 3333 ...");
 });
