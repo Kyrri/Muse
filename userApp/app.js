@@ -1,5 +1,5 @@
 // Our Environment Variables //
-const environment = 'qa  ';
+const environment = 'qa';
 
 var express = require('express');
 var app = require("express")();
@@ -323,6 +323,7 @@ app.use(expressSession({secret:"secretText"}));
                         .toString();
           conn.query(sqlStr, function (err,results) {
             if (err) {
+              console.log("Tried: "+sqlStr);
               console.log(err);
             } else {
               //console.log(results);
@@ -350,7 +351,7 @@ app.use(expressSession({secret:"secretText"}));
                 var thisElementCode = req.session.elementCode;
                   // remove the elementCode for visitStart and visitEnd interactions
                   if ( params.interactionTypeId == 5 || params.interactionTypeId == 6 ) {
-                    thisElementCode = null;
+                    req.session.elementCode = null;
                   }
                   var str = "CALL insert_interaction(";
                       str += params.interactionTypeId + ",";
@@ -358,9 +359,10 @@ app.use(expressSession({secret:"secretText"}));
                       str += thisElementCode + ",";
                       str += req.session.visitId + ",";
                       str += params.timestamp + ",@o1); SELECT @o1 AS 'success';";
-                  var sqlStr = str;
-                conn.query(sqlStr, function (err,results) {
+                console.log("Generating "+str);
+                conn.query(str, function (err,results) {
                   if (err) {
+                    console.log("Tried: "+str);
                     console.log(err);   
                   }
                 });
@@ -402,7 +404,26 @@ app.use(expressSession({secret:"secretText"}));
                         )
                         .toString();
           case 3:
-            var thisElementCode = req.session.elementCode;
+                var thisElementCode = req.session.elementCode;
+                  // remove the elementCode for visitStart and visitEnd interactions
+                  if ( params.interactionTypeId == 5 || params.interactionTypeId == 6 ) {
+                    req.session.elementCode = null;
+                  }
+                  var str = "CALL insert_interaction(";
+                      str += params.interactionTypeId + ",";
+                      str += req.session.userId + ",";
+                      str += thisElementCode + ",";
+                      str += req.session.visitId + ",";
+                      str += params.timestamp + ",@o1); SELECT @o1 AS 'success';";
+                sqlStr = str;
+                console.log("Generating "+sqlStr);
+                conn.query(sqlStr, function (err,results) {
+                  if (err) {
+                    console.log("Tried: "+sqlStr);
+                    console.log(err);   
+                  }
+                });
+            break;
   // remove the elementCode for visitStart and visitEnd interactions
   if ( params.interactionTypeId == 5 || params.interactionTypeId == 6 ) {
     thisElementCode = null;
@@ -427,6 +448,7 @@ app.use(expressSession({secret:"secretText"}));
 
         conn.query(sqlStr, function (err, results) {
           if (err) {
+            console.log("Trying: "+sqlStr);
             console.log(err);
           } else {
             //console.log(results);
