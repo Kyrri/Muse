@@ -1,5 +1,5 @@
 // Our Environment Variables //
-const environment = 'dev';
+const environment = 'qa';
 
 var express = require('express');
 var app = require("express")();
@@ -9,7 +9,8 @@ var password = require('password-hash-and-salt');
 var moment = require('moment');
 var squelModule = require('squel');
 var squel = squelModule.useFlavour('mysql');
-
+var cookieParser = require('cookie-parser');
+var expressSession = require('express-session');
 // MySQL connection
 var mysql = require('mysql');
 var conn;
@@ -43,19 +44,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(cookieParser());
+app.use(expressSession({secret:"secretText"}));
 
-// Important Exports
-var loggedIn = false;
 
-// Routes
-var prevID = null;
 
 // Variables - Lindsay turn into cookies
-var userId = null;
-var firstName = null;
-var visitId = null;
-var museumId = null;
-var elementCode = null;
   
   //  FACEBOOK LOGIN  //
     // app.get('/:var(|login)?', function(req, res){
@@ -63,7 +57,7 @@ var elementCode = null;
     // });
   //  INSECURE LOGIN/SIGNUP  //
     app.get('/:var(|login)?', function(req, res){
-      if(loggedIn){
+      if(req.session.loggedIn){
         res.redirect('/index');
       }
       else{
@@ -84,7 +78,6 @@ var elementCode = null;
       sqlStr += loginType + ",";
       sqlStr += "@o1, @o2, @o3); SELECT @o1, @o2, @o3;";
 
-      console.log(sqlStr);
       conn.query(sqlStr, function(err, results) {
         if (err) {
             console.log(err);
@@ -99,7 +92,7 @@ var elementCode = null;
                 }));
             } else {
                 var passCheck = results[1][0]['@o2'];
-                userId = results[1][0]['@o3'];
+                req.session.userId = results[1][0]['@o3'];
                 if (passCheck.length == 270) {
                   // hash value is valid
                   password(passEnter).verifyAgainst(passCheck, function(error, verified) {
@@ -113,12 +106,12 @@ var elementCode = null;
                               "Message": "Incorrect Password"
                           }));
                       } else {
-                          loggedIn = true;
+                          req.session.loggedIn = true;
                           res.send(JSON.stringify({
                               "Success": true, 
                               "ErrType": null, 
                               "Message": "Login Successful",
-                              "userId": userId
+                              "userId": req.session.userId
                           }));
                       }
                   });
@@ -135,7 +128,7 @@ var elementCode = null;
     });
 
     app.get('/signup', function(req, res){
-      if (loggedIn) {
+      if (req.session.loggedIn) {
         res.redirect('/index');
       } else {
         var ageRangeQuery = squel.select().from("ageRange").toString() + ";";
@@ -183,8 +176,8 @@ var elementCode = null;
                 //User Already Exists
               }
               else{
-              loggedIn = true;
-              userId = results[1][0]['@o3'];
+              req.session.loggedIn = true;
+              req.session.userId = results[1][0]['@o3'];
               res.send(JSON.stringify({"Success": true, "ErrType": null, "Message": "Create User Successful"}));
               }
             }
@@ -193,10 +186,16 @@ var elementCode = null;
       });
      
     });
+    app.get('/logout', function(req, res){
+      req.clearCookie('loggedIn');
+      req.clearCookie('userId');
+      req.clearCookie('firstName');
+      console.log(req.session);
+    });
 
-  //  STARTING PAGE  //
+  // //  STARTING PAGE  //
     app.get('/index', function(req, res){
-      if(!loggedIn){
+      if(!req.session.loggedIn){
         res.redirect('/login');
       }
       else{
@@ -206,13 +205,16 @@ var elementCode = null;
       }
     });
 
-  //  PRE VISIT  //
+  // //  PRE VISIT  //
       app.get('/selectMuseum', function(req, res){
-        if(!loggedIn){
+        if(!req.session.loggedIn){
           res.redirect('/login');
         }
         else{
-          conn.query(factory.sqlGen(0).sqlStr, function (err, results) {
+            var sqlStr = squel.select()
+                        .from("museum")
+                        .toString();
+          conn.query(sqlStr, function (err, results) {
             //console.log(results);
             if (err) {
               console.log(err)
@@ -226,21 +228,26 @@ var elementCode = null;
         }
       });
       app.post('/index', function(req, res){
-         if(firstName == null){
-            var sqlStr = "SELECT firstName FROM user WHERE userId='"+userId+"'";
+        var firstName;
+         if(req.session.firstName){
+            var sqlStr = "SELECT firstName FROM user WHERE userId='"+req.session.userId+"'";
             conn.query(sqlStr, function(err, results) {
               if (err) {
                   console.log(err);
               } else {
+                req.session.firstName = results[0].firstName;
                 firstName = results[0].firstName;
               }
               });
+          }
+          else{
+            firstName = req.session.firstName;
           }
           res.send(firstName);
       });
 
       app.get('/favourites', function(req, res){
-        if(!loggedIn){
+        if(!req.session.loggedIn){
         res.redirect('/login');
         }
         else{
@@ -250,7 +257,7 @@ var elementCode = null;
 
       //  DURING VISIT //
       app.get('/checkIn', function(req, res){
-        if(!loggedIn){
+        if(!req.session.loggedIn){
           res.redirect('/login');
         }
         else{
@@ -260,8 +267,18 @@ var elementCode = null;
 
       app.post('/checkIn', function(req, res){
 
-        var sqlParams = {"elementCode":req.body.code};
-        conn.query(factory.sqlGen(2,sqlParams).sqlStr, function (err,results) {
+        var params = {"elementCode":req.body.code};
+        req.session.elementCode = req.body.code;
+
+        var sqlStr = squel.select()
+                        .from("v_elementDetails")
+                        .where(squel.expr()
+                          .and("elementCode=" + params.elementCode)
+                          .and("active=1")
+                          .and("museumId=" + req.session.museumId)
+                        )
+                        .toString();
+        conn.query(sqlStr, function (err,results) {
           if (err) {
             console.log(err);
           } else {
@@ -279,7 +296,7 @@ var elementCode = null;
 
 
       app.get('/tap', function(req, res){
-        if(!loggedIn){
+        if(!req.session.loggedIn){
           res.redirect('/login');
         }
         else{
@@ -289,13 +306,22 @@ var elementCode = null;
 
       app.get('/info/', function (req, res) {
         // needed to replace wuth a url paramter, because the javascripts were not loading
-        if(!loggedIn){
+        if(!req.session.loggedIn){
           res.redirect('/login');
         }
         else{
-          elementCode = req.query.id;
-          var sqlParams = {"elementCode":elementCode};
-          conn.query(factory.sqlGen(2,sqlParams).sqlStr, function (err,results) {
+          req.session.elementCode= req.query.id;
+          var elementCode = req.query.id;
+          var params = {"elementCode":elementCode};
+           var sqlStr = squel.select()
+                        .from("v_elementDetails")
+                        .where(squel.expr()
+                          .and("elementCode=" + params.elementCode)
+                          .and("active=1")
+                          .and("museumId=" + req.session.museumId)
+                        )
+                        .toString();
+          conn.query(sqlStr, function (err,results) {
             if (err) {
               console.log(err);
             } else {
@@ -311,16 +337,29 @@ var elementCode = null;
                 });
               } else {
                 var now = moment.utc();
-                if(prevID!==null){
+                if(req.session.prevID){
                   //update previous checkin with new timestamp
                 }
                 //new checkin
-                prevID = elementCode;
+                req.session.prevID = elementCode;
                 //console.log(results[0]);
                 res.render('info', { title : results[0].elementName, data : results[0] });
                 // checkins interaction 
-                var checkinParams = {"interactionTypeId":1, "timestamp":null};
-                conn.query( factory.sqlGen(3,checkinParams).sqlStr, function (err,results) {
+                var params = {"interactionTypeId":1, "timestamp":null};
+
+                var thisElementCode = req.session.elementCode;
+                  // remove the elementCode for visitStart and visitEnd interactions
+                  if ( params.interactionTypeId == 5 || params.interactionTypeId == 6 ) {
+                    thisElementCode = null;
+                  }
+                  var str = "CALL insert_interaction(";
+                      str += params.interactionTypeId + ",";
+                      str += req.session.userId + ",";
+                      str += thisElementCode + ",";
+                      str += req.session.visitId + ",";
+                      str += params.timestamp + ",@o1); SELECT @o1 AS 'success';";
+                  var sqlStr = str;
+                conn.query(sqlStr, function (err,results) {
                   if (err) {
                     console.log(err);   
                   }
@@ -337,14 +376,63 @@ var elementCode = null;
       });
 
       app.post('/exec_query', function (req, res) {
-        conn.query(factory.sqlGen(req.body.qry, req.body.params).sqlStr, function (err, results) {
+        var sqlStr;
+        var params = req.body.params;
+        switch(req.body.qry){
+          case 0:
+           sqlStr = squel.select()
+                        .from("museum")
+                        .toString();
+                        break;
+          case 1:
+              req.session.museumId = params.museumId;
+          var str = "CALL insert_visit(CURDATE(),"; // default to the current date
+          str += req.session.userId + ",";
+          str += params.museumId + ",null,@o1,@o2); SELECT @o1 AS 'success', @o2 AS 'visitId';";
+
+            sqlStr = str;
+            break;
+          case 2:
+            sqlStr = squel.select()
+                        .from("v_elementDetails")
+                        .where(squel.expr()
+                          .and("elementCode=" + params.elementCode)
+                          .and("active=1")
+                          .and("museumId=" + req.session.museumId)
+                        )
+                        .toString();
+          case 3:
+            var thisElementCode = req.session.elementCode;
+  // remove the elementCode for visitStart and visitEnd interactions
+  if ( params.interactionTypeId == 5 || params.interactionTypeId == 6 ) {
+    thisElementCode = null;
+  }
+  var str = "CALL insert_interaction(";
+      str += params.interactionTypeId + ",";
+      str += req.session.userId + ",";
+      str += thisElementCode + ",";
+      str += req.session.visitId + ",";
+      str += params.times
+      sqlstr = str;
+      break;
+          case 4:
+            sqlStr = squel.select()
+                        .from('v_visits')
+                        .where('userId='+req.session.userId)
+                        .order('visitDate',false)
+                        .limit(3)
+                        .toString();
+                        break;
+        }
+
+        conn.query(sqlStr, function (err, results) {
           if (err) {
             console.log(err);
           } else {
             //console.log(results);
             switch (req.body.qry) {
               case 1 :
-                visitId = results[1][0]['visitId'];
+                req.session.visitId = results[1][0]['visitId'];
                 res.send(true);
                 break;
               default :
@@ -357,23 +445,23 @@ var elementCode = null;
 
 //  SQL Builder Functions  //
 function Factory () {
-  this.sqlGen = function (queryNum,params) {
+  this.sqlGen = function (queryNum,params, req) {
     var sqlStr;
     switch (queryNum) {
       case 0 : 
         sqlStr = new sqlGetMuseums();
         break;
       case 1 :
-        sqlStr = new sqlInsertVisit(params);
+        sqlStr = new sqlInsertVisit(params, req);
         break;
       case 2 : 
-        sqlStr = new sqlGetvElementDetailsByCode(params);
+        sqlStr = new sqlGetvElementDetailsByCode(params, req);
         break;
       case 3 :
-        sqlStr = new sqlInsertInteraction(params);
+        sqlStr = new sqlInsertInteraction(params, req);
         break;
       case 4 :
-        sqlStr = new sqlGetRecentVisits();
+        sqlStr = new sqlGetRecentVisits(req);
         break;
     }
     //console.log(params);
@@ -391,62 +479,64 @@ var sqlGetMuseums = function () {
                         .toString();
 }
 
-var sqlInsertVisit = function (params) {
-  museumId = params.museumId 
+var sqlInsertVisit = function (params, req) {
+  req.session.museumId = params.museumId;
   var str = "CALL insert_visit(CURDATE(),"; // default to the current date
-      str += userId + ",";
-      str += museumId + ",null,@o1,@o2); SELECT @o1 AS 'success', @o2 AS 'visitId';";
+      str += req.session.userId + ",";
+      str += params.museumId + ",null,@o1,@o2); SELECT @o1 AS 'success', @o2 AS 'visitId';";
+
   this.sqlStr = str;
 }
 
-var sqlGetvElementDetailsByCode = function (params) {
+var sqlGetvElementDetailsByCode = function (params, req) {
   this.sqlStr = squel.select()
                         .from("v_elementDetails")
                         .where(squel.expr()
                           .and("elementCode=" + params.elementCode)
                           .and("active=1")
-                          .and("museumId=" + museumId)
+                          .and("museumId=" + req.session.museumId)
                         )
                         .toString();
 
 }
 
-var sqlInsertInteraction = function (params) {
+var sqlInsertInteraction = function (params, req) {
   // grabs a bunch of data elements from the global variables
   // will fail if global variables are null because pages were skipped
-  var thisElementCode = elementCode
+  var thisElementCode = req.session.elementCode;
   // remove the elementCode for visitStart and visitEnd interactions
   if ( params.interactionTypeId == 5 || params.interactionTypeId == 6 ) {
     thisElementCode = null;
   }
   var str = "CALL insert_interaction(";
       str += params.interactionTypeId + ",";
-      str += userId + ",";
+      str += req.session.userId + ",";
       str += thisElementCode + ",";
-      str += visitId + ",";
+      str += req.session.visitId + ",";
       str += params.timestamp + ",@o1); SELECT @o1 AS 'success';";
   this.sqlStr = str;
 }
 
-var sqlGetRecentVisits = function (params) {
+var sqlGetRecentVisits = function (params, req) {
+
   this.sqlStr = squel.select()
                         .from('v_visits')
-                        .where('userId='+userId)
+                        .where('userId='+req.session.userId)
                         .order('visitDate',false)
                         .limit(3)
                         .toString();
 }
 
-function testRun () {
-  userId = 33;
-  visitId = 4;
-  var params = {'userId':userId};
-  //console.log(params);
-  //console.log(factory.sqlGen(3,params).sqlStr)
-  conn.query(factory.sqlGen(4).sqlStr, function (err, results) {
-    console.log(results);
-  });
-}
+// function testRun () {
+//   req.cookie('userId', 33);
+//   visitId = 4;
+//   var params = {'userId':req.cookie.userId};
+//   //console.log(params);
+//   //console.log(factory.sqlGen(3,params).sqlStr)
+//   conn.query(factory.sqlGen(4).sqlStr, function (err, results) {
+//     console.log(results);
+//   });
+// }
 function escapeRegExp(str) {
   return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
         switch (char) {
