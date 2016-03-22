@@ -91,7 +91,7 @@ var museumId = null, exhibitId = null;
       // stuff that will need to be sent for all data types
       var getAgeRangeStr = squel.select().from("ageRange").toString() + "; ";
       var getGenderStr = squel.select().from("gender").toString() + "; ";
-      var getTagIds = squel.select().from("elementtag").toString() + "; ";
+      var getTagIds = squel.select().from("elementTag").toString() + "; ";
       var fromDate = req.body.fromDate; // hard code for now, will need to be passed as a parameter
       var toDate = req.body.toDate; // hard code for now, will need to be passed as a parameter
 
