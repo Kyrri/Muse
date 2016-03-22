@@ -2,12 +2,12 @@
 
 @font-face{
   font-family: MuseoSansFive;
-  src: 'MuseoSans_500-webfont.ttf';
+  src: url('MuseoSans_500-webfont.ttf');
 }
 
 @font-face{
   font-family: MuseoFive;
-  src: 'Museo500-Regular-webfont.ttf';
+  src: url('Museo500-Regular-webfont.ttf');
 }
 
 @font-face{
@@ -43,7 +43,7 @@
   width: 100vw;
 }
 #header1 {
-  font-family: MuseoFive, Museo;
+  font-family: MuseoFive;
   text-transform: uppercase;
   color: #333333;
   font-size: 40px;
@@ -226,10 +226,12 @@
 
 }
 
+#vElementsTable tr {
+}
+
 #vElementsTable th {
-  text-transform: uppercase;
-  padding: 7px;
-  text-align: center;
+  text-align: left;
+  white-space: nowrap;
 }
 
 #vElementsTable .dynatable-per-page-label {
@@ -249,8 +251,8 @@ td {
   text-align: left;
 }
 th {
-  padding: 5px;
-  background-color: #8beabf;
+  padding: 2px;
+  background-color: #ffffff;
 }
 
 .clickLink {

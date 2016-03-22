@@ -1,5 +1,8 @@
 $(document).ready(function(){
 
+	$('#selectExhibit').hide();
+	$('#entryContainer').hide();
+
 	// PAGE VARIABLES
 	var selectedTagType = '';
 
@@ -343,6 +346,7 @@ $(document).ready(function(){
 			undefined,
 			$('#vElementsTable-activeSelector').val()
 		);
+		$('#selectExhibit').show();
 		$('#exhibitSelector').prop('disabled', false);
 	});
 	$('#exhibitSelector').change(function(){
@@ -352,6 +356,7 @@ $(document).ready(function(){
 			$(this).val(),
 			$('#vElementsTable-activeSelector').val()
 		);
+		$('#entryContainer').show();
 		$('#addElementButton').prop('disabled', false);
 		$('#deleteElementButton').prop('disabled', false);
 		$('#restoreElementButton').prop('disabled', false);
