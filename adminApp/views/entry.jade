@@ -13,7 +13,6 @@ block mainContainer
 		#selectExhibit
 			label(for='exhibit') Select Exhibit:
 			select(type='text',name='museum',id='exhibitSelector',class="text ui-widget-content ui-corner-all")
-			option(disabled) Select museum first
 	#entryContainer
 		ul.nav.nav-tabs
 			li.active
@@ -24,7 +23,7 @@ block mainContainer
 				a(data-toggle='tab',href='#tab3') Other
 		.tab-content
 			div(id='tab1',class='tab-pane fade in active')
-				.elements		
+				.elements
 					.elementsEdit
 						h1 
 						#show
@@ -106,13 +105,13 @@ block mainContainer
 							thead
 								th Active
 								th Exhibit
+								th Code
 								th Element
 								th Artist
 								th Year
-								th Description
-								th Image Link
-								th Num Tags
-								th Code
+								th.longrow Description
+								//th Image Link
+								//th Num Tags
 							tbody
 
 			div(id='tab2',class='tab-pane fade')

@@ -294,3 +294,7 @@ th {
 #selectElement label {
   font-size: 20px;
 }
+
+.longrow {
+  width : 300px;
+}
