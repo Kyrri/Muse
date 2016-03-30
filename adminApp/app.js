@@ -1,5 +1,5 @@
 // Our Environment Variables //
-const environment = 'qa';
+const environment = 'qa_from_server';
 
 var express = require('express');
 var app = require("express")();
@@ -27,6 +27,16 @@ switch (environment) {
   case 'qa' : 
     conn = mysql.createConnection({
       host: 'localhost',
+      user: 'root',
+      password: 'root',
+      database: 'muse_qa',
+      multipleStatements: true
+    });
+  break;
+  case 'qa_from_server' : 
+    conn = mysql.createConnection({
+      host: 'localhost',
+      port: 3307,
       user: 'root',
       password: 'root',
       database: 'muse_qa',
