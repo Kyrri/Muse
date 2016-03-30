@@ -347,7 +347,7 @@ app.use(expressSession({secret:"secretText"}));
                 // checkins interaction 
                 var params = {"interactionTypeId":1, "timestamp":null};
 
-                var thisElementCode = req.session.elementCode;
+                var thisElementCode = elementCode;
                   // remove the elementCode for visitStart and visitEnd interactions
                   if ( params.interactionTypeId == 5 || params.interactionTypeId == 6 ) {
                     thisElementCode = null;

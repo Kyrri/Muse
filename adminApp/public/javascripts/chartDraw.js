@@ -97,26 +97,49 @@ $(document).ready(function(){
       };
 
     //Initalize dynatable
-    $(tableContainer+ ' table').bind('dynatable:init', function(e, dynatable){
-      dynatable.queries.functions['exhibitName'] = function(record, queryValue) {
-        return (record.exhibitName.toUpperCase().indexOf(queryValue.toUpperCase()) > -1);
-      };
-    }).dynatable({
-      features:{
-        search: false,
-        sort: false
-      },
-     writers: {
-        _rowWriter: myRowWriter
-      },
-      readers: {
-        _rowReader: myRowReader
-      },
-      inputs:{
-        //Set custom search bar (can be moved wherever we want)
-        queries: $('#exhibitName')
-      }
-    }).data('dynatable');
+    if(dataType=='exhibit'){
+      $(tableContainer+ ' table').bind('dynatable:init', function(e, dynatable){
+        dynatable.queries.functions['searchBar'] = function(record, queryValue) {
+          return (record.exhibitName.toUpperCase().indexOf(queryValue.toUpperCase()) > -1);
+        };
+      }).dynatable({
+        features:{
+          search: false,
+          sort: false
+        },
+       writers: {
+          _rowWriter: myRowWriter
+        },
+        readers: {
+          _rowReader: myRowReader
+        },
+        inputs:{
+          //Set custom search bar (can be moved wherever we want)
+          queries: $('#searchBar')
+        }
+      }).data('dynatable');
+    }
+    else if(dataType=='element'){
+      $(tableContainer+ ' table').bind('dynatable:init', function(e, dynatable){
+        dynatable.queries.functions['searchBar'] = function(record, queryValue) {
+          return (record.elementName.toUpperCase().indexOf(queryValue.toUpperCase()) > -1);
+        };
+      }).dynatable({
+        features:{
+          search: false
+        },
+       writers: {
+          _rowWriter: myRowWriter
+        },
+        readers: {
+          _rowReader: myRowReader
+        },
+        inputs:{
+          //Set custom search bar (can be moved wherever we want)
+          queries: $('#searchBar')
+        }
+      }).data('dynatable');
+    }
     drawChart(1);
 
     //Draw chart when a table column with metrics is clicked

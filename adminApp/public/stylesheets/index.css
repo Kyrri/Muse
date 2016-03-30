@@ -141,7 +141,7 @@
 	cursor: pointer;
 }
 
-.dynatable-head {
+.dynatable-head, .dynatable-head a {
 	color: #6baf8f;
 }
 
